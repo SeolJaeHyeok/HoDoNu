@@ -34,7 +34,7 @@ function AvartarImage({ alt, src, width, height, handleClick }: IAvartar) {
 }
 
 AvartarImage.defaultProps = {
-  src: 'http://via.placeholder.com/640x360',
+  src: 'https://placehold.jp/50x50.png',
   width: 50,
   height: 50,
 };
