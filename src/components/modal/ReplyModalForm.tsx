@@ -8,7 +8,7 @@ interface ReplyUserProps {
   receiverName: string;
 }
 
-const ReplyModalForm = ({ receiverEmail, receiverName }: ReplyUserProps) => {
+export default function ReplyModalForm({ receiverEmail, receiverName }: ReplyUserProps) {
   return (
     <>
       <CustomModal>
@@ -30,9 +30,7 @@ const ReplyModalForm = ({ receiverEmail, receiverName }: ReplyUserProps) => {
       </CustomModal>
     </>
   );
-};
-
-export default ReplyModalForm;
+}
 
 const ModalTitle = styled.h2`
   font-size: 22px;
