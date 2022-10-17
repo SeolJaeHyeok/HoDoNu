@@ -10,7 +10,6 @@ interface CustomInputProps {
   inputProps?: { maxLength: number; 'aria-label': string };
   // eslint-disable-next-line no-unused-vars
   handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  size?: 'small';
   custom?: any;
 }
 
@@ -22,13 +21,11 @@ interface CustomInputProps {
  * @param {string} type - input type
  * @param {object} inputProps - maxLength, aria-label만 정의됨 추후 다른 값 필요시 추가 가능
  *
- * @param {string} size - small만 가능 default는 normal
  * @param {object} custom - sx안에 들어가는 값(padding, margin...)
  * @param {(e) => void} handleChange - handleChange 함수
  */
 export default function CustomInput(props: CustomInputProps) {
-  const { required, error, label, placeholder, type, inputProps, size, custom, handleChange } =
-    props;
+  const { required, error, label, placeholder, type, inputProps, custom, handleChange } = props;
 
   return (
     <TextField
@@ -40,7 +37,6 @@ export default function CustomInput(props: CustomInputProps) {
       required={required}
       error={error}
       inputProps={inputProps}
-      size={size}
       sx={{ custom }}
     />
   );
