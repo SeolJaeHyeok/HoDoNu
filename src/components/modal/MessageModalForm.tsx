@@ -6,15 +6,6 @@ interface MessageUserProps {
   name: string;
   email: string;
 }
-const ModalTitle = styled.h2`
-  font-size: 22px;
-`;
-const ModalCotent = styled.p`
-  width: 433px;
-  height: 330px;
-  margin-top: 10px;
-`;
-const UserName = styled.span``;
 
 export default function MessageModalForm({ name, email }: MessageUserProps) {
   return (
@@ -27,3 +18,13 @@ export default function MessageModalForm({ name, email }: MessageUserProps) {
     </CustomModal>
   );
 }
+
+const ModalTitle = styled.h2`
+  font-size: 22px;
+`;
+const ModalCotent = styled.p`
+  width: 433px;
+  height: 330px;
+  margin-top: 10px;
+`;
+const UserName = styled.span``;

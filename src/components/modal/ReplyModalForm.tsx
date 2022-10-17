@@ -3,11 +3,6 @@ import CustomModal from './CustomModal';
 import styled from '@emotion/styled';
 import Button from '@mui/material/Button';
 
-const ModalTitle = styled.h2`
-  font-size: 22px;
-`;
-const UserName = styled.span``;
-
 interface ReplyUserProps {
   receiverEmail: string;
   receiverName: string;
@@ -38,3 +33,8 @@ const ReplyModalForm = ({ receiverEmail, receiverName }: ReplyUserProps) => {
 };
 
 export default ReplyModalForm;
+
+const ModalTitle = styled.h2`
+  font-size: 22px;
+`;
+const UserName = styled.span``;

@@ -10,19 +10,6 @@ interface ModalProps {
   children: React.ReactNode;
   value?: string;
 }
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 433,
-  height: 404,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-  borderRadius: '12px',
-};
 
 export default function CustomModal({ children }: ModalProps) {
   const [open, setOpen] = useState<boolean>(false);
@@ -47,3 +34,17 @@ export default function CustomModal({ children }: ModalProps) {
     </>
   );
 }
+
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 433,
+  height: 404,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+  borderRadius: '12px',
+};
