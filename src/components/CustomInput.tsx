@@ -15,7 +15,7 @@ interface CustomInputProps {
 }
 
 /**
- * @param {boolean} required - 필수 값 유무
+ * @param {boolean} required - input 필수 값 유무
  * @param {boolean} error - 에러값
  * @param {string} label - label
  * @param {string} placeholder - placeholder
