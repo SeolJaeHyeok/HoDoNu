@@ -30,7 +30,7 @@ interface ButtonProps {
  * @param {() => void} handleClick - 버튼을 클릭했을 때 실행할 함수
  */
 
-function CustomButton({
+export default function CustomButton({
   children,
   type,
   disabled,
@@ -65,5 +65,3 @@ function CustomButton({
     </Button>
   );
 }
-
-export default CustomButton;
