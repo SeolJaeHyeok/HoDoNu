@@ -1,7 +1,7 @@
 import { Avatar } from '@mui/material';
 import React from 'react';
 
-interface IAvartar {
+interface AvatarProps {
   alt?: string;
   src?: string;
   width?: number;
@@ -18,7 +18,7 @@ interface IAvartar {
  * @param {() => void} handleClick - 이미지를 클릭했을 때 실행할 함수
  */
 
-function AvartarImage({ alt, src, width, height, handleClick }: IAvartar) {
+function AvatarImage({ alt, src, width, height, handleClick }: AvatarProps) {
   return (
     <Avatar
       alt={alt}
@@ -33,10 +33,10 @@ function AvartarImage({ alt, src, width, height, handleClick }: IAvartar) {
   );
 }
 
-AvartarImage.defaultProps = {
+AvatarImage.defaultProps = {
   src: 'https://placehold.jp/50x50.png',
   width: 50,
   height: 50,
 };
 
-export default AvartarImage;
+export default AvatarImage;
