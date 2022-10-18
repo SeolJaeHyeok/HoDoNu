@@ -7,7 +7,7 @@ interface ButtonProps {
   onClick?: any;
 }
 
-enum FilterState {
+const enum FilterState {
   '최신순' = 'recent',
   '조회순' = 'views',
 }
