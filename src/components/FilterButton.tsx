@@ -7,10 +7,10 @@ interface ButtonProps {
   onClick?: any;
 }
 
-const enum FilterState {
-  '최신순' = 'recent',
-  '조회순' = 'views',
-}
+// const enum FilterState {
+//   '최신순' = 'recent',
+//   '조회순' = 'views',
+// }
 
 /**
  * @param {string} value - button안에 들어갈 값
@@ -25,7 +25,6 @@ export default function FilterButton({ value, clicked, onClick }: ButtonProps) {
     mr: '6px',
   };
 
-  const ButtonContainer = styled.div``;
   const Button = styled.button`
     font-weight: ${clicked ? '600' : '400'};
     height: 28px;
