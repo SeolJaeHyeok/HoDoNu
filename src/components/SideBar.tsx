@@ -61,7 +61,7 @@ export default function CustomSideBar() {
     } else if (router.pathname === '/management') {
       setTargetMenus(adminSideBarMenus);
     }
-  }, []);
+  }, [router.pathname]);
 
   return (
     <Box sx={{ display: 'flex' }}>
