@@ -11,7 +11,6 @@ import { userSideBarMenus } from '../utils/const/sidebarMenus';
 const drawerWidth = 240;
 
 export default function ResponsiveDrawer() {
-  console.log(userSideBarMenus);
   const drawer = (
     <div>
       <Toolbar />
