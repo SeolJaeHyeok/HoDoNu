@@ -5,22 +5,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import {
-  Link as MuiLink,
-  AppBar,
-  Box,
-  IconButton,
-  Typography,
-  MenuItem,
-  Menu,
-} from '@mui/material';
+import { Link as MuiLink, AppBar, Box, IconButton, Typography } from '@mui/material';
 import { alpha } from '@mui/material';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import MenuIcon from '@mui/icons-material/Menu';
 
 import CustomAvatar from '@components/CustomAvartar';
 import CustomButton from '@components/CustomButton';
 import { theme } from 'src/styles/theme';
+import ResponsiveNavMenu from './ResponsiveNavMenu';
 
 export default function NavBar() {
   const router = useRouter();
@@ -37,29 +29,6 @@ export default function NavBar() {
   const handleClick = () => {};
   const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
-  //menu
-  const pages = ['home', '게시판', '채용'];
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-
-  const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleMenuItem = (e: React.MouseEvent<HTMLElement>) => {
-    if (e.currentTarget.innerText === 'home') {
-      router.push(`/`);
-    } else if (e.currentTarget.innerText === '게시판') {
-      router.push(`/board`);
-    } else {
-      router.push(`/recruit`);
-    }
-  };
-
   return (
     <AppBar position="static" elevation={1} sx={{ backgroundColor: alpha('#17A8FF', 0.6) }}>
       <Box
@@ -71,25 +40,7 @@ export default function NavBar() {
           marginY: 1,
         }}
       >
-        <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
-          <IconButton size="large" aria-label="menu" onClick={handleMenuClick}>
-            <MenuIcon />
-          </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleMenuClose}
-            sx={{
-              display: { xs: 'block', sm: 'none' },
-            }}
-          >
-            {pages.map(page => (
-              <MenuItem key={page} onClick={handleMenuItem}>
-                <Typography textAlign="center">{page}</Typography>
-              </MenuItem>
-            ))}
-          </Menu>
-        </Box>
+        <ResponsiveNavMenu />
         <Image src={'/wellcheck.png'} alt="logo" width={80} height={35} />
         <Box
           sx={{
@@ -133,25 +84,9 @@ export default function NavBar() {
             </MuiLink>
           </Link>
         </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            '& > :not(style) + :not(style)': {
-              ml: 1,
-            },
-          }}
-        >
+        <Box sx={style}>
           {isLogin ? (
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                '& > :not(style) + :not(style)': {
-                  ml: 1,
-                },
-              }}
-            >
+            <Box sx={style}>
               <IconButton onClick={handleClick}>
                 <NotificationsNoneIcon sx={{ color: '#fff' }} />
               </IconButton>
@@ -204,4 +139,12 @@ const linkStyle = {
   },
   padding: 1,
   borderRadius: 1,
+};
+
+const style = {
+  display: 'flex',
+  alignItems: 'center',
+  '& > :not(style) + :not(style)': {
+    ml: 1,
+  },
 };
