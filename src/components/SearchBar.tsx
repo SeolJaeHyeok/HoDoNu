@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { useMemo, useState } from 'react';
 
 export default function SearchBar() {
