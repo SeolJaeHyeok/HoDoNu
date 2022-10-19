@@ -119,7 +119,7 @@ export default function NavBar() {
               </CustomButton>
             </Box>
           )}
-          {!isAdmin && (
+          {isAdmin && (
             <Typography fontWeight="500" fontSize="0.85rem" sx={{ color: '#fff' }}>
               관리자 계정입니다.{' '}
             </Typography>
