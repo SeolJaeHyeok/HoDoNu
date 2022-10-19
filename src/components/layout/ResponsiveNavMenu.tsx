@@ -1,15 +1,15 @@
 import React from 'react';
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 
-import { Box, IconButton, Typography, MenuItem, Menu } from '@mui/material';
+import Link from 'next/link';
 
+import { Link as MuiLink, Box, IconButton, MenuItem, Menu } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
 export default function ResponsiveNavMenu() {
-  const router = useRouter();
-
+  const menuItems: any = { home: '/', 게시판: '/board', 채용: '/recruit' };
   const pages = ['home', '게시판', '채용'];
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -21,15 +21,6 @@ export default function ResponsiveNavMenu() {
     setAnchorEl(null);
   };
 
-  const handleMenuItem = (e: React.MouseEvent<HTMLElement>) => {
-    if (e.currentTarget.innerText === 'home') {
-      router.push(`/`);
-    } else if (e.currentTarget.innerText === '게시판') {
-      router.push(`/board`);
-    } else {
-      router.push(`/recruit`);
-    }
-  };
   return (
     <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
       <IconButton size="large" aria-label="menu" onClick={handleMenuClick}>
@@ -44,8 +35,10 @@ export default function ResponsiveNavMenu() {
         }}
       >
         {pages.map(page => (
-          <MenuItem key={page} onClick={handleMenuItem}>
-            <Typography textAlign="center">{page}</Typography>
+          <MenuItem key={page}>
+            <Link href={menuItems[page]}>
+              <MuiLink underline="none">{page}</MuiLink>
+            </Link>
           </MenuItem>
         ))}
       </Menu>
