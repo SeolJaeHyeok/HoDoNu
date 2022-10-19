@@ -18,7 +18,7 @@ interface AvatarProps {
  * @param {() => void} handleClick - 이미지를 클릭했을 때 실행할 함수
  */
 
-function CustomAvatarImage({ alt, src, width, height, handleClick }: AvatarProps) {
+export default function CustomAvatarImage({ alt, src, width, height, handleClick }: AvatarProps) {
   return (
     <Avatar
       alt={alt}
@@ -38,5 +38,3 @@ CustomAvatarImage.defaultProps = {
   width: 50,
   height: 50,
 };
-
-export default CustomAvatarImage;

@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
+import LoadingSpinner from './LoadingSpinner';
 
 const modules = {
   toolbar: [
@@ -35,7 +36,7 @@ const formats = [
 export default function FormEditor() {
   const QuillWrapper = dynamic(() => import('react-quill'), {
     ssr: false,
-    loading: () => <p>Loading ...</p>,
+    loading: () => <LoadingSpinner />,
   });
   return <QuillWrapper modules={modules} formats={formats} theme="snow" />;
 }
