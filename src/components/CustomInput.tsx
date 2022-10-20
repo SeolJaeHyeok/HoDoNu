@@ -11,6 +11,7 @@ interface CustomInputProps {
   // eslint-disable-next-line no-unused-vars
   handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   custom?: any;
+  value?: string;
 }
 
 /**
@@ -25,7 +26,8 @@ interface CustomInputProps {
  * @param {(e) => void} handleChange - handleChange 함수
  */
 export default function CustomInput(props: CustomInputProps) {
-  const { required, error, label, placeholder, type, inputProps, custom, handleChange } = props;
+  const { required, error, label, placeholder, type, inputProps, custom, handleChange, value } =
+    props;
 
   return (
     <TextField
@@ -38,6 +40,7 @@ export default function CustomInput(props: CustomInputProps) {
       error={error}
       inputProps={inputProps}
       sx={custom}
+      value={value}
     />
   );
 }
