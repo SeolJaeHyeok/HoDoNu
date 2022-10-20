@@ -37,7 +37,7 @@ export default function CustomInput(props: CustomInputProps) {
       required={required}
       error={error}
       inputProps={inputProps}
-      sx={{ custom }}
+      sx={custom}
     />
   );
 }
