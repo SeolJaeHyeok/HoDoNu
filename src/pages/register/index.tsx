@@ -29,24 +29,27 @@ export default function Register() {
       <RegisterWrapper>
         <RegisterTitle>회원가입</RegisterTitle>
         <RegisterSubTitle>아래 모든 내용을 기입해주세요.</RegisterSubTitle>
-        <Label>이름</Label>
+        <Label htmlFor="userName">이름</Label>
         <TextField
+          id="userName"
           placeholder="이름을 입력해주세요."
           sx={{
             width: '450px',
             mt: '8px',
           }}
         />
-        <Label>아이디</Label>
+        <Label htmlFor="userId">아이디</Label>
         <TextField
+          id="userId"
           placeholder="이메일을 입력해주세요."
           sx={{
             width: '450px',
             mt: '8px',
           }}
         />
-        <Label>비밀번호</Label>
+        <Label htmlFor="password">비밀번호</Label>
         <TextField
+          id="password"
           type="password"
           placeholder="비밀번호를 입력해주세요."
           sx={{
@@ -54,8 +57,9 @@ export default function Register() {
             mt: '8px',
           }}
         />
-        <Label>비밀번호 확인</Label>
+        <Label htmlFor="checkPassword">비밀번호 확인</Label>
         <TextField
+          id="checkPassword"
           type="password"
           placeholder="비밀번호를 다시 입력해주세요."
           sx={{
@@ -63,23 +67,25 @@ export default function Register() {
             mt: '8px',
           }}
         />
-        <Label>생년월일</Label>
-        <TextField type="date" sx={{ width: 220, mt: '8px' }} />
-        <Label>직업</Label>
+        <Label htmlFor="birthDate">생년월일</Label>
+        <TextField id="birthDate" type="date" sx={{ width: 220, mt: '8px' }} />
+        <Label htmlFor="job">직업</Label>
         <TextField
+          id="job"
           placeholder="의사 or 간호사만 입력해주세요."
           sx={{
             width: '450px',
             mt: '8px',
           }}
         />
-        <Label>소속 기관 ( 병원 주소 )</Label>
+        <Label htmlFor="organization">소속 기관 ( 병원 주소 )</Label>
         <PostalCodeContainer
           style={{
             marginTop: '8px',
           }}
         >
           <TextField
+            id="organization"
             placeholder="우편번호"
             value={zipCode}
             sx={{
