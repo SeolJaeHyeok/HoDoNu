@@ -70,14 +70,10 @@ export default function Register() {
         <Label htmlFor="birthDate">생년월일</Label>
         <TextField id="birthDate" type="date" sx={{ width: 220, mt: '8px' }} />
         <Label htmlFor="job">직업</Label>
-        <TextField
-          id="job"
-          placeholder="의사 or 간호사만 입력해주세요."
-          sx={{
-            width: '450px',
-            mt: '8px',
-          }}
-        />
+        <JobSelect>
+          <option value="doctor">의사</option>
+          <option value="nurse">간호사</option>
+        </JobSelect>
         <Label htmlFor="organization">소속 기관 ( 병원 주소 )</Label>
         <PostalCodeContainer
           style={{
@@ -169,4 +165,13 @@ const GoToLogin = styled.p`
   font-size: 14px;
   margin-top: 10px;
   text-align: center;
+`;
+
+const JobSelect = styled.select`
+  display: block;
+  width: 450px;
+  height: 56px;
+  padding: 16.5px 14px;
+  border-radius: 3px;
+  border: 1px solid #adabab;
 `;
