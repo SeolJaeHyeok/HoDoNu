@@ -4,13 +4,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import { Link as MuiLink, AppBar, Box, IconButton, Typography } from '@mui/material';
+import { Link as MuiLink, AppBar, Box, IconButton, Typography, Button } from '@mui/material';
 import { alpha } from '@mui/material';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 
 import CustomAvatar from '@components/CustomAvartar';
-import CustomButton from '@components/CustomButton';
-import { theme } from 'src/styles/theme';
 import ResponsiveNavMenu from './ResponsiveNavMenu';
 
 export default function NavBar() {
@@ -22,7 +20,7 @@ export default function NavBar() {
    * 아직 기능 구현 전이라 모든 버튼에 handleClick 함수 적용해 놓았습니다. 추후 분리 예정입니다.
    */
   // eslint-disable-next-line no-unused-vars
-  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [isLogin, setIsLogin] = useState<boolean>(false);
   // eslint-disable-next-line no-unused-vars
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const handleClick = () => {};
@@ -100,22 +98,22 @@ export default function NavBar() {
                 },
               }}
             >
-              <CustomButton
-                color="#fff"
-                bgColor={theme.palette.primary.main}
-                hoverBgColor={theme.palette.secondary.dark}
+              <Button
+                variant="outlined"
+                color="secondary"
+                sx={{ color: '#fff' }}
                 onClick={handleClick}
               >
                 로그인
-              </CustomButton>
-              <CustomButton
-                color="#fff"
-                bgColor={theme.palette.primary.main}
-                hoverBgColor={theme.palette.secondary.dark}
+              </Button>
+              <Button
+                variant="outlined"
+                color="secondary"
+                sx={{ color: '#fff' }}
                 onClick={handleClick}
               >
                 회원가입
-              </CustomButton>
+              </Button>
             </Box>
           )}
           {isAdmin && (
