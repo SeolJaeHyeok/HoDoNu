@@ -1,7 +1,7 @@
-import CustomInput from '@components/CustomInput';
 import styled from '@emotion/styled';
-import CustomButton from '@components/CustomButton';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 import { useState } from 'react';
 
 export default function Register() {
@@ -30,45 +30,45 @@ export default function Register() {
         <RegisterTitle>회원가입</RegisterTitle>
         <RegisterSubTitle>아래 모든 내용을 기입해주세요.</RegisterSubTitle>
         <Label>이름</Label>
-        <CustomInput
+        <TextField
           placeholder="이름을 입력해주세요."
-          custom={{
+          sx={{
             width: '450px',
             mt: '8px',
           }}
         />
         <Label>아이디</Label>
-        <CustomInput
+        <TextField
           placeholder="이메일을 입력해주세요."
-          custom={{
+          sx={{
             width: '450px',
             mt: '8px',
           }}
         />
         <Label>비밀번호</Label>
-        <CustomInput
+        <TextField
           type="password"
           placeholder="비밀번호를 입력해주세요."
-          custom={{
+          sx={{
             width: '450px',
             mt: '8px',
           }}
         />
         <Label>비밀번호 확인</Label>
-        <CustomInput
+        <TextField
           type="password"
           placeholder="비밀번호를 다시 입력해주세요."
-          custom={{
+          sx={{
             width: '450px',
             mt: '8px',
           }}
         />
         <Label>생년월일</Label>
-        <CustomInput type="date" custom={{ width: 220, mt: '8px' }} />
+        <TextField type="date" sx={{ width: 220, mt: '8px' }} />
         <Label>직업</Label>
-        <CustomInput
+        <TextField
           placeholder="의사 or 간호사만 입력해주세요."
-          custom={{
+          sx={{
             width: '450px',
             mt: '8px',
           }}
@@ -79,31 +79,38 @@ export default function Register() {
             marginTop: '8px',
           }}
         >
-          <CustomInput
+          <TextField
             placeholder="우편번호"
             value={zipCode}
-            custom={{
+            sx={{
               width: '225px',
             }}
           />
-          <CustomButton width={225} height={56} type={'outlined'} onClick={handleClickOpen}>
+          <Button
+            variant="outlined"
+            onClick={handleClickOpen}
+            sx={{
+              width: 225,
+              height: 56,
+            }}
+          >
             주소 검색
-          </CustomButton>
+          </Button>
         </PostalCodeContainer>
         <AddressContainer>
-          <CustomInput
+          <TextField
             placeholder="주소"
             value={roadAddress}
-            custom={{
+            sx={{
               width: '450px',
               mt: '8px',
             }}
           />
-          <CustomInput
+          <TextField
             placeholder="상세 주소"
             value={detailAddress}
-            handleChange={handleDetailAddress}
-            custom={{
+            onChange={handleDetailAddress}
+            sx={{
               width: '450px',
               mt: '8px',
               mb: '10px',
@@ -111,9 +118,16 @@ export default function Register() {
           />
         </AddressContainer>
 
-        <CustomButton width={450} height={56} type={'contained'} color="white">
+        <Button
+          variant="contained"
+          sx={{
+            width: 450,
+            height: 56,
+            color: 'white',
+          }}
+        >
           등록하기
-        </CustomButton>
+        </Button>
         <GoToLogin>로그인으로 돌아가시겠습니까?</GoToLogin>
       </RegisterWrapper>
     </form>
