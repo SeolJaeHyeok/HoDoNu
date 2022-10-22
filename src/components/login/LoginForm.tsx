@@ -39,8 +39,8 @@ export default function LoginForm() {
               placeholder="email@email.com"
               {...register('email')}
               size="small"
+              helperText={errors.email ? errors.email.message : null}
             />
-            {errors.email && <Typography variant="caption">{errors.email.message}</Typography>}
           </Stack>
           <Stack spacing={1}>
             <Typography variant="subtitle2">비밀번호</Typography>
@@ -50,10 +50,8 @@ export default function LoginForm() {
               label="password"
               placeholder="password"
               size="small"
+              helperText={errors.password ? errors.password.message : null}
             />
-            {errors.password && (
-              <Typography variant="caption">{errors.password.message}</Typography>
-            )}
           </Stack>
 
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>

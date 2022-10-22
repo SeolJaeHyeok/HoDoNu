@@ -6,7 +6,7 @@ export default function LoginPage() {
     <>
       <Container
         sx={{
-          width: '26%',
+          width: '380px',
           mt: 10,
           '& > :not(style) + :not(style)': {
             mt: 5,
