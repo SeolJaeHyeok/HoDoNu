@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginValidationSchema } from 'src/utils/validationSchema';
+import axios from 'axios';
 
 // 비밀번호 찾기
 // 아이디 찾기
@@ -22,8 +23,16 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm<UserLoginForm>({ resolver: yupResolver(loginValidationSchema) });
 
-  const onSubmit: SubmitHandler<UserLoginForm> = data => {
+  const onSubmit: SubmitHandler<UserLoginForm> = async data => {
     console.log(data);
+    try {
+      const res = await axios.post(`url`, {
+        email: data.email,
+        password: data.password,
+      });
+    } catch (err) {
+      console.log(err);
+    }
     reset({ email: '', password: '' });
   };
 
@@ -35,6 +44,7 @@ export default function LoginForm() {
             <Typography variant="subtitle2">이메일</Typography>
             <TextField
               id="outlined"
+              type="email"
               label="email"
               placeholder="email@email.com"
               {...register('email')}
@@ -47,6 +57,7 @@ export default function LoginForm() {
             <TextField
               {...register('password')}
               id="outlined"
+              type="password"
               label="password"
               placeholder="password"
               size="small"
