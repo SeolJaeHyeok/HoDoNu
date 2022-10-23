@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginValidationSchema } from 'src/utils/validationSchema';
-import axios from 'axios';
+// import axios from 'axios';
 
 // 비밀번호 찾기
 // 아이디 찾기
@@ -25,14 +25,14 @@ export default function LoginForm() {
 
   const onSubmit: SubmitHandler<UserLoginForm> = async data => {
     console.log(data);
-    try {
-      const res = await axios.post(`url`, {
-        email: data.email,
-        password: data.password,
-      });
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    //   const res = await axios.post(`url`, {
+    //     email: data.email,
+    //     password: data.password,
+    //   });
+    // } catch (err) {
+    //   console.log(err);
+    // }
     reset({ email: '', password: '' });
   };
 
