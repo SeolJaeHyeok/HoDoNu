@@ -3,12 +3,54 @@ import { useDaumPostcodePopup } from 'react-daum-postcode';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+interface RegisterFormProps {
+  name: string;
+  email: string;
+  password: string;
+  checkPassword: string;
+  phoneNumber: string;
+  birthDate: string;
+  jobCategory: string;
+}
 
 export default function Register() {
-  const [zipCode, setZipcode] = useState<string>('');
-  const [roadAddress, setRoadAddress] = useState<string>('');
-  const [detailAddress, setDetailAddress] = useState<string>('');
+  const [hospitalAddressNumber, setHospitalAddressNumber] = useState<string>();
+  const [hospitalAddress, setHospitalAddress] = useState<string>('');
+  const [hospitalAddressDetail, setHospitalAddressDetail] = useState<string>('');
+  const [registerUserData, setRegisterUserData] = useState<any>();
 
+  const registerSchema = yup.object({
+    name: yup.string().required('이름을 입력해주세요!'),
+    email: yup.string().email('이메일 형식을 맞춰주세요!').required('이메일을 입력해주세요!'),
+    password: yup
+      .string()
+      .min(8, '최소 8글자 이상 입력해주세요!')
+      .required('비밀번호를 입력해주세요!')
+      .matches(
+        /^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%#?&])[A-Za-zd@$!%*#?&]{8,20}/,
+        '비밀번호는 특수 문자 포함 8자 이상 20자 이하입니다.'
+      ),
+    checkPassword: yup
+      .string()
+      .oneOf([yup.ref('password'), null], '비밀번호가 일치하지 않습니다!')
+      .required('비밀번호를 다시 입력해주세요!'),
+    phoneNumber: yup.string().required('전화번호를 입력해주세요!'),
+    birthDate: yup.string().required('생년월일을 입력해주세요!'),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormProps>({
+    resolver: yupResolver(registerSchema),
+  });
+
+  // 주소 관련 함수
   const open = useDaumPostcodePopup();
 
   const handleClickOpen = () => {
@@ -16,16 +58,23 @@ export default function Register() {
   };
 
   const handleComplete = (data: any) => {
-    setZipcode(data.zonecode); // 추가
-    setRoadAddress(data.roadAddress); // 추가
+    setHospitalAddressNumber(data.zonecode);
+    setHospitalAddress(data.roadAddress);
   };
 
   const handleDetailAddress = (e: any) => {
-    setDetailAddress(e.target.value);
+    setHospitalAddressDetail(e.target.value);
   };
 
+  // react-hook-form 관련 홤수
+  const handleMergeFormData = (data: RegisterFormProps) => {
+    setRegisterUserData({ ...data, hospitalAddressNumber, hospitalAddress, hospitalAddressDetail });
+  };
+
+  console.log(registerUserData);
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(data => handleMergeFormData(data))}>
       <RegisterWrapper>
         <RegisterTitle>회원가입</RegisterTitle>
         <RegisterSubTitle>아래 모든 내용을 기입해주세요.</RegisterSubTitle>
@@ -37,7 +86,10 @@ export default function Register() {
             width: '450px',
             mt: '8px',
           }}
+          {...register('name')}
         />
+        {<ErrorMsg>{errors.name?.message}</ErrorMsg>}
+
         <Label htmlFor="userId">아이디</Label>
         <TextField
           id="userId"
@@ -46,7 +98,10 @@ export default function Register() {
             width: '450px',
             mt: '8px',
           }}
+          {...register('email')}
         />
+        {<ErrorMsg>{errors.email?.message}</ErrorMsg>}
+
         <Label htmlFor="password">비밀번호</Label>
         <TextField
           id="password"
@@ -56,7 +111,10 @@ export default function Register() {
             width: '450px',
             mt: '8px',
           }}
+          {...register('password')}
         />
+        {<ErrorMsg>{errors.password?.message}</ErrorMsg>}
+
         <Label htmlFor="checkPassword">비밀번호 확인</Label>
         <TextField
           id="checkPassword"
@@ -66,13 +124,33 @@ export default function Register() {
             width: '450px',
             mt: '8px',
           }}
+          {...register('checkPassword')}
         />
+        {<ErrorMsg>{errors.checkPassword?.message}</ErrorMsg>}
+
+        <Label htmlFor="phoneNumber">전화번호</Label>
+        <TextField
+          id="phoneNumber"
+          placeholder="전화번호를 입력해주세요."
+          sx={{
+            width: '450px',
+            mt: '8px',
+          }}
+          {...register('phoneNumber')}
+        />
+        {<ErrorMsg>{errors.phoneNumber?.message}</ErrorMsg>}
         <Label htmlFor="birthDate">생년월일</Label>
-        <TextField id="birthDate" type="date" sx={{ width: 220, mt: '8px' }} />
+        <TextField
+          id="birthDate"
+          type="date"
+          sx={{ width: 220, mt: '8px' }}
+          {...register('birthDate')}
+        />
+        {<ErrorMsg>{errors.birthDate?.message}</ErrorMsg>}
         <Label htmlFor="job">직업</Label>
-        <JobSelect>
-          <option value="doctor">의사</option>
-          <option value="nurse">간호사</option>
+        <JobSelect {...register('jobCategory')}>
+          <option value="Doctor">의사</option>
+          <option value="Nurse">간호사</option>
         </JobSelect>
         <Label htmlFor="organization">소속 기관 ( 병원 주소 )</Label>
         <PostalCodeContainer
@@ -83,7 +161,7 @@ export default function Register() {
           <TextField
             id="organization"
             placeholder="우편번호"
-            value={zipCode}
+            value={hospitalAddressNumber}
             sx={{
               width: '225px',
             }}
@@ -102,7 +180,7 @@ export default function Register() {
         <AddressContainer>
           <TextField
             placeholder="주소"
-            value={roadAddress}
+            value={hospitalAddress}
             sx={{
               width: '450px',
               mt: '8px',
@@ -110,7 +188,7 @@ export default function Register() {
           />
           <TextField
             placeholder="상세 주소"
-            value={detailAddress}
+            value={hospitalAddressDetail}
             onChange={handleDetailAddress}
             sx={{
               width: '450px',
@@ -127,6 +205,7 @@ export default function Register() {
             height: 56,
             color: 'white',
           }}
+          type="submit"
         >
           등록하기
         </Button>
@@ -174,4 +253,10 @@ const JobSelect = styled.select`
   padding: 16.5px 14px;
   border-radius: 3px;
   border: 1px solid #adabab;
+`;
+
+const ErrorMsg = styled.span`
+  display: block;
+  margin-top: 8px;
+  color: red;
 `;
