@@ -8,19 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { userApi } from 'src/apis/user/user';
 import { useRouter } from 'next/router';
-
-interface RegisterFormProps {
-  name: string;
-  email: string;
-  password: string;
-  checkPassword: string;
-  phoneNumber: string;
-  birth: string;
-  jobCategory: string;
-  hospitalAddressNumber?: string;
-  hospitalAddress?: string;
-  hospitalAddressDetail?: string;
-}
+import { RegisterUserInfo } from 'src/interfaces/user/registerUserInfo';
 
 export default function Register() {
   const [hospitalAddressNumber, setHospitalAddressNumber] = useState<string>();
@@ -50,7 +38,7 @@ export default function Register() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterFormProps>({
+  } = useForm<RegisterUserInfo>({
     resolver: yupResolver(registerSchema),
   });
 
@@ -71,7 +59,7 @@ export default function Register() {
   };
 
   // react-hook-form 관련 홤수
-  const handleMergeFormData = async (data: RegisterFormProps) => {
+  const handleMergeFormData = async (data: RegisterUserInfo) => {
     const registerUserData = {
       ...data,
       hospitalAddressNumber,
@@ -82,7 +70,7 @@ export default function Register() {
     await handleRequestUserData(registerUserData);
   };
 
-  const handleRequestUserData = async (registerUserData: RegisterFormProps) => {
+  const handleRequestUserData = async (registerUserData: RegisterUserInfo) => {
     try {
       await userApi.register(registerUserData);
       router.push('/login');
