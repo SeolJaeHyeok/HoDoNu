@@ -93,8 +93,8 @@ export default function Register() {
             mt: '8px',
           }}
           {...register('name')}
+          helperText={<ErrorMsg>{errors.name?.message}</ErrorMsg>}
         />
-        {<ErrorMsg>{errors.name?.message}</ErrorMsg>}
 
         <Label htmlFor="userId">아이디</Label>
         <TextField
@@ -105,8 +105,8 @@ export default function Register() {
             mt: '8px',
           }}
           {...register('email')}
+          helperText={<ErrorMsg>{errors.email?.message}</ErrorMsg>}
         />
-        {<ErrorMsg>{errors.email?.message}</ErrorMsg>}
 
         <Label htmlFor="password">비밀번호</Label>
         <TextField
@@ -118,8 +118,8 @@ export default function Register() {
             mt: '8px',
           }}
           {...register('password')}
+          helperText={<ErrorMsg>{errors.password?.message}</ErrorMsg>}
         />
-        {<ErrorMsg>{errors.password?.message}</ErrorMsg>}
 
         <Label htmlFor="checkPassword">비밀번호 확인</Label>
         <TextField
@@ -131,8 +131,8 @@ export default function Register() {
             mt: '8px',
           }}
           {...register('checkPassword')}
+          helperText={<ErrorMsg>{errors.checkPassword?.message}</ErrorMsg>}
         />
-        {<ErrorMsg>{errors.checkPassword?.message}</ErrorMsg>}
 
         <Label htmlFor="phoneNumber">전화번호</Label>
         <TextField
@@ -143,16 +143,18 @@ export default function Register() {
             mt: '8px',
           }}
           {...register('phoneNumber')}
+          helperText={<ErrorMsg>{errors.phoneNumber?.message}</ErrorMsg>}
         />
-        {<ErrorMsg>{errors.phoneNumber?.message}</ErrorMsg>}
+
         <Label htmlFor="birthDate">생년월일</Label>
         <TextField
           id="birthDate"
           type="date"
           sx={{ width: 220, mt: '8px' }}
           {...register('birth')}
+          helperText={<ErrorMsg>{errors.birth?.message}</ErrorMsg>}
         />
-        {<ErrorMsg>{errors.birth?.message}</ErrorMsg>}
+
         <Label htmlFor="job">직업</Label>
         <JobSelect {...register('jobCategory')}>
           <option value="Doctor">의사</option>
