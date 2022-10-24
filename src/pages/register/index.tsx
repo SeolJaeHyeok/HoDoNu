@@ -79,9 +79,9 @@ export default function Register() {
     await handleRequestUserData();
   };
 
-  const handleRequestUserData = async () => {
+  const handleRequestUserData = () => {
     try {
-      await userApi.register(registerUserData);
+      userApi.register(registerUserData);
       router.push('/login');
     } catch (e: any) {
       alert(e.response.data.message);
