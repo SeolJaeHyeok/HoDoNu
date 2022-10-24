@@ -45,8 +45,6 @@ export default function LoginForm() {
   const mutation = useMutation('login', loginAPI, {
     onSuccess: data => {
       const { token, refreshToken } = data.result;
-      // sessionStorage.setItem('token', token);
-      // sessionStorage.setItem('refreshToken', refreshToken);
       saveUserInfo(token, refreshToken);
     },
     onError: (e: Error) => {
