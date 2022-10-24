@@ -1,10 +1,22 @@
-import BoardList from '@components/common/BoardList';
+import BoardList from '@components/Board/BoardList';
 import styled from '@emotion/styled';
 
 const freeArticles = [
   {
-    createdAt: '2022-10-21T07:57:43.146Z',
-    articleId: 8678686,
+    createdAt: '2021-10-22T07:57:43.146Z',
+    articleId: 1,
+    title: '안녕하세요dasdasdasdasdasdasdsadasdsa',
+    hits: 0,
+    user: {
+      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
+      email: 'dohee@test.com',
+      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
+      nickname: 'frozen_apricot_gamefowl',
+    },
+  },
+  {
+    createdAt: '2022-06-21T07:57:43.146Z',
+    articleId: 2,
     title: '안녕하세요',
     hits: 0,
     user: {
@@ -15,8 +27,8 @@ const freeArticles = [
     },
   },
   {
-    createdAt: '2022-10-21T07:57:43.146Z',
-    articleId: 856798707,
+    createdAt: '2012-10-21T07:57:43.146Z',
+    articleId: 545,
     title: '안녕하세요',
     hits: 0,
     user: {
@@ -27,8 +39,8 @@ const freeArticles = [
     },
   },
   {
-    createdAt: '2022-10-21T07:57:43.146Z',
-    articleId: 746765978,
+    createdAt: '2022-10-23T07:57:43.146Z',
+    articleId: 32,
     title: '안녕하세요',
     hits: 0,
     user: {
@@ -39,20 +51,8 @@ const freeArticles = [
     },
   },
   {
-    createdAt: '2022-10-21T07:57:43.146Z',
-    articleId: 64363769870,
-    title: '안녕하세요',
-    hits: 0,
-    user: {
-      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-      email: 'dohee@test.com',
-      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-      nickname: 'frozen_apricot_gamefowl',
-    },
-  },
-  {
-    createdAt: '2022-10-21T07:57:43.146Z',
-    articleId: 4262468769780,
+    createdAt: '2022-10-05T07:57:43.146Z',
+    articleId: 132,
     title: '안녕하세요',
     hits: 0,
     user: {
@@ -64,131 +64,131 @@ const freeArticles = [
   },
 ];
 
-// const doctorArticles = [
-//   {
-//     createdAt: '2022-10-21T07:57:43.146Z',
-//     articleId: 12313534534,
-//     title: '안녕하세요',
-//     hits: 0,
-//     user: {
-//       userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-//       email: 'dohee@test.com',
-//       imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-//       nickname: 'frozen_apricot_gamefowl',
-//     },
-//   },
-//   {
-//     createdAt: '2022-10-21T07:57:43.146Z',
-//     articleId: 434324234,
-//     title: '안녕하세요',
-//     hits: 0,
-//     user: {
-//       userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-//       email: 'dohee@test.com',
-//       imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-//       nickname: 'frozen_apricot_gamefowl',
-//     },
-//   },
-//   {
-//     createdAt: '2022-10-21T07:57:43.146Z',
-//     articleId: 43242423,
-//     title: '안녕하세요',
-//     hits: 0,
-//     user: {
-//       userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-//       email: 'dohee@test.com',
-//       imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-//       nickname: 'frozen_apricot_gamefowl',
-//     },
-//   },
-//   {
-//     createdAt: '2022-10-21T07:57:43.146Z',
-//     articleId: 4324235246,
-//     title: '안녕하세요',
-//     hits: 0,
-//     user: {
-//       userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-//       email: 'dohee@test.com',
-//       imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-//       nickname: 'frozen_apricot_gamefowl',
-//     },
-//   },
-//   {
-//     createdAt: '2022-10-21T07:57:43.146Z',
-//     articleId: 6454564,
-//     title: '안녕하세요',
-//     hits: 0,
-//     user: {
-//       userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-//       email: 'dohee@test.com',
-//       imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-//       nickname: 'frozen_apricot_gamefowl',
-//     },
-//   },
-// ];
+const doctorArticles = [
+  {
+    createdAt: '2022-10-21T07:57:43.146Z',
+    articleId: 986,
+    title: '안녕하세요',
+    hits: 0,
+    user: {
+      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
+      email: 'dohee@test.com',
+      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
+      nickname: 'frozen_apricot_gamefowl',
+    },
+  },
+  {
+    createdAt: '2022-10-21T07:57:43.146Z',
+    articleId: 1233,
+    title: '안녕하세요',
+    hits: 0,
+    user: {
+      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
+      email: 'dohee@test.com',
+      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
+      nickname: 'frozen_apricot_gamefowl',
+    },
+  },
+  {
+    createdAt: '2022-10-21T07:57:43.146Z',
+    articleId: 6,
+    title: '안녕하세요',
+    hits: 0,
+    user: {
+      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
+      email: 'dohee@test.com',
+      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
+      nickname: 'frozen_apricot_gamefowl',
+    },
+  },
+  {
+    createdAt: '2022-10-21T07:57:43.146Z',
+    articleId: 75,
+    title: '안녕하세요',
+    hits: 0,
+    user: {
+      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
+      email: 'dohee@test.com',
+      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
+      nickname: 'frozen_apricot_gamefowl',
+    },
+  },
+  {
+    createdAt: '2022-10-21T07:57:43.146Z',
+    articleId: 91,
+    title: '안녕하세요',
+    hits: 0,
+    user: {
+      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
+      email: 'dohee@test.com',
+      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
+      nickname: 'frozen_apricot_gamefowl',
+    },
+  },
+];
 
-// const nurseArticles = [
-//   {
-//     createdAt: '2022-10-21T07:57:43.146Z',
-//     articleId: 432,
-//     title: '안녕하세요',
-//     hits: 0,
-//     user: {
-//       userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-//       email: 'dohee@test.com',
-//       imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-//       nickname: 'frozen_apricot_gamefowl',
-//     },
-//   },
-//   {
-//     createdAt: '2022-10-21T07:57:43.146Z',
-//     articleId: 3211,
-//     title: '안녕하세요',
-//     hits: 0,
-//     user: {
-//       userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-//       email: 'dohee@test.com',
-//       imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-//       nickname: 'frozen_apricot_gamefowl',
-//     },
-//   },
-//   {
-//     createdAt: '2022-10-21T07:57:43.146Z',
-//     articleId: 432342,
-//     title: '안녕하세요',
-//     hits: 0,
-//     user: {
-//       userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-//       email: 'dohee@test.com',
-//       imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-//       nickname: 'frozen_apricot_gamefowl',
-//     },
-//   },
-//   {
-//     createdAt: '2022-10-21T07:57:43.146Z',
-//     articleId: 43243242,
-//     title: '안녕하세요',
-//     hits: 0,
-//     user: {
-//       userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-//       email: 'dohee@test.com',
-//       imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-//       nickname: 'frozen_apricot_gamefowl',
-//     },
-//   },
-//   {
-//     createdAt: '2022-10-21T07:57:43.146Z',
-//     articleId: 53464564,
-//     title: '안녕하세요',
-//     hits: 0,
-//     user: {
-//       userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-//       email: 'dohee@test.com',
-//       imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-//       nickname: 'frozen_apricot_gamefowl',
-//     },
-//   },
-// ];
+const nurseArticles = [
+  {
+    createdAt: '2022-10-21T07:57:43.146Z',
+    articleId: 432,
+    title: '안녕하세요',
+    hits: 0,
+    user: {
+      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
+      email: 'dohee@test.com',
+      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
+      nickname: 'frozen_apricot_gamefowl',
+    },
+  },
+  {
+    createdAt: '2022-10-21T07:57:43.146Z',
+    articleId: 3211,
+    title: '안녕하세요',
+    hits: 0,
+    user: {
+      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
+      email: 'dohee@test.com',
+      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
+      nickname: 'frozen_apricot_gamefowl',
+    },
+  },
+  {
+    createdAt: '2022-10-21T07:57:43.146Z',
+    articleId: 109,
+    title: '안녕하세요',
+    hits: 0,
+    user: {
+      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
+      email: 'dohee@test.com',
+      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
+      nickname: 'frozen_apricot_gamefowl',
+    },
+  },
+  {
+    createdAt: '2022-10-21T07:57:43.146Z',
+    articleId: 192,
+    title: '안녕하세요',
+    hits: 0,
+    user: {
+      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
+      email: 'dohee@test.com',
+      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
+      nickname: 'frozen_apricot_gamefowl',
+    },
+  },
+  {
+    createdAt: '2022-10-21T07:57:43.146Z',
+    articleId: 183,
+    title: '안녕하세요',
+    hits: 0,
+    user: {
+      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
+      email: 'dohee@test.com',
+      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
+      nickname: 'frozen_apricot_gamefowl',
+    },
+  },
+];
 
 export default function Home() {
   return (
@@ -196,9 +196,8 @@ export default function Home() {
       <SliderContainer>Slider</SliderContainer>
       <BoardContainer>
         <BoardList type="main" articles={freeArticles} />
-        <BoardItemContainer>자유 게시판</BoardItemContainer>
-        <BoardItemContainer>의사 게시판</BoardItemContainer>
-        <BoardItemContainer>간호사 게시판</BoardItemContainer>
+        <BoardList type="board" articles={doctorArticles} />
+        <BoardList type="board" articles={nurseArticles} />
       </BoardContainer>
     </HomeContainer>
   );
@@ -219,11 +218,6 @@ const BoardContainer = styled.div`
   gap: 10px;
   margin-bottom: 50px;
   padding: 0 20px;
-`;
-
-const BoardItemContainer = styled.div`
-  height: 500px;
-  background-color: green;
 `;
 
 // TODO - API 배포되면 요청을 통해 받아온 데이터로 변경
