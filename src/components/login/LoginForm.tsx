@@ -42,7 +42,7 @@ export default function LoginForm() {
     setUserInfo({ role, userId });
   };
 
-  const mutation = useMutation('login', loginAPI, {
+  const mutation = useMutation(['login'], loginAPI, {
     onSuccess: data => {
       const { token, refreshToken } = data.result;
       saveUserInfo(token, refreshToken);
