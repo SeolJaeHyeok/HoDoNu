@@ -10,6 +10,11 @@ import { userApi } from 'src/apis/user/user';
 import { useRouter } from 'next/router';
 import { RegisterUserInfo } from 'src/interfaces/user/registerUserInfo';
 
+interface AddressProps {
+  zonecode: string;
+  roadAddress: string;
+}
+
 export default function Register() {
   const [hospitalAddressNumber, setHospitalAddressNumber] = useState<string>();
   const [hospitalAddress, setHospitalAddress] = useState<string>('');
@@ -49,7 +54,7 @@ export default function Register() {
     open({ onComplete: handleComplete });
   };
 
-  const handleComplete = (data: any) => {
+  const handleComplete = (data: AddressProps) => {
     setHospitalAddressNumber(data.zonecode);
     setHospitalAddress(data.roadAddress);
   };
