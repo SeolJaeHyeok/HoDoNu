@@ -1,10 +1,16 @@
+import { useRouter } from 'next/router';
 import { Link as MuiLink, Button, Stack, Box, TextField, Typography } from '@mui/material';
 import Link from 'next/link';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { loginValidationSchema } from 'src/utils/validationSchema';
-// import axios from 'axios';
+import { useSetRecoilState } from 'recoil';
+import { useMutation } from 'react-query';
+import jwt from 'jsonwebtoken';
+
+import { loginAPI } from 'src/apis/login';
+import { loginValidationSchema } from '@utils/validationSchema';
+import { userInfoState } from 'src/atoms/userAtom';
 
 // 비밀번호 찾기
 // 아이디 찾기
@@ -15,25 +21,45 @@ interface UserLoginForm {
 }
 
 export default function LoginForm() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
-    // watch,
     reset,
     formState: { errors },
   } = useForm<UserLoginForm>({ resolver: yupResolver(loginValidationSchema) });
 
+  const setUserInfo = useSetRecoilState(userInfoState);
+
+  const saveUserInfo = (token: string, refreshToken: string) => {
+    sessionStorage.setItem('token', token);
+    sessionStorage.setItem('refreshToken', refreshToken);
+
+    const decodedToken = jwt.decode(token);
+    const { role, userId }: any = decodedToken;
+
+    setUserInfo({ role, userId });
+  };
+
+  const mutation = useMutation('login', loginAPI, {
+    onSuccess: data => {
+      const { token, refreshToken } = data.result;
+      // sessionStorage.setItem('token', token);
+      // sessionStorage.setItem('refreshToken', refreshToken);
+      saveUserInfo(token, refreshToken);
+    },
+    onError: (e: Error) => {
+      console.log(e.message);
+      alert(e.message);
+    },
+  });
+
   const onSubmit: SubmitHandler<UserLoginForm> = async data => {
-    console.log(data);
-    // try {
-    //   const res = await axios.post(`url`, {
-    //     email: data.email,
-    //     password: data.password,
-    //   });
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    const { email, password } = data;
+    mutation.mutate({ email, password });
     reset({ email: '', password: '' });
+    router.push('/home');
   };
 
   return (

@@ -1,9 +1,11 @@
-import axios from 'axios';
+import { instance } from './index';
+// import axios from 'axios';
 
-const instance = axios.create({
-  baseURL: process.env.NODE_ENV === 'development' ? 'http://' : 'http://',
-});
+interface LoginAPI {
+  email: string;
+  password: string;
+}
 
-export const login = (bodyData: string) => {
-  instance.post(`login`, { bodyData });
+export const loginAPI = async ({ email, password }: LoginAPI) => {
+  return instance.post(`user/signin`, { email, password }).then(res => res.data);
 };
