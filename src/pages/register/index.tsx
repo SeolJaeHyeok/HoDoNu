@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -66,7 +66,7 @@ export default function Register() {
     setHospitalAddress(data.roadAddress);
   };
 
-  const handleDetailAddress = (e: any) => {
+  const handleDetailAddress = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setHospitalAddressDetail(e.target.value);
   };
 
