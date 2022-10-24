@@ -53,7 +53,7 @@ export default function LoginForm() {
     },
   });
 
-  const onSubmit: SubmitHandler<UserLoginForm> = async data => {
+  const onLoginFormSubmit: SubmitHandler<UserLoginForm> = async data => {
     const { email, password } = data;
     mutation.mutate({ email, password });
     reset({ email: '', password: '' });
@@ -62,7 +62,7 @@ export default function LoginForm() {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onLoginFormSubmit)}>
         <Stack spacing={1}>
           <Stack spacing={1}>
             <Typography variant="subtitle2">이메일</Typography>

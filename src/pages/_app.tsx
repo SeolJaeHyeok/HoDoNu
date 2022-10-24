@@ -10,7 +10,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
   return (
     <RecoilRoot>
-      <QueryClientProvider client={queryClient} contextSharing={true}>
+      <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <Layout>
             <Component {...pageProps} />
