@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { userApi } from 'src/apis/user/user';
+import { useRouter } from 'next/router';
 
 interface RegisterFormProps {
   name: string;
@@ -13,7 +15,7 @@ interface RegisterFormProps {
   password: string;
   checkPassword: string;
   phoneNumber: string;
-  birthDate: string;
+  birth: string;
   jobCategory: string;
 }
 
@@ -23,25 +25,25 @@ export default function Register() {
   const [hospitalAddressDetail, setHospitalAddressDetail] = useState<string>('');
   const [registerUserData, setRegisterUserData] = useState<any>();
 
+  const router = useRouter();
+
   const registerSchema = yup.object({
     name: yup.string().required('이름을 입력해주세요!'),
     email: yup.string().email('이메일 형식을 맞춰주세요!').required('이메일을 입력해주세요!'),
     password: yup
       .string()
       .min(8, '최소 8글자 이상 입력해주세요!')
-      .required('비밀번호를 입력해주세요!')
-      .matches(
-        /^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%#?&])[A-Za-zd@$!%*#?&]{8,20}/,
-        '비밀번호는 특수 문자 포함 8자 이상 20자 이하입니다.'
-      ),
+      .max(20, '최대 20글자까지 입력가능합니다!')
+      .required('비밀번호를 입력해주세요!'),
     checkPassword: yup
       .string()
       .oneOf([yup.ref('password'), null], '비밀번호가 일치하지 않습니다!')
       .required('비밀번호를 다시 입력해주세요!'),
     phoneNumber: yup.string().required('전화번호를 입력해주세요!'),
-    birthDate: yup.string().required('생년월일을 입력해주세요!'),
+    birth: yup.string().required('생년월일을 입력해주세요!'),
   });
 
+  // react-hook-form 관련
   const {
     register,
     handleSubmit,
@@ -67,11 +69,24 @@ export default function Register() {
   };
 
   // react-hook-form 관련 홤수
-  const handleMergeFormData = (data: RegisterFormProps) => {
-    setRegisterUserData({ ...data, hospitalAddressNumber, hospitalAddress, hospitalAddressDetail });
+  const handleMergeFormData = async (data: RegisterFormProps) => {
+    await setRegisterUserData({
+      ...data,
+      hospitalAddressNumber,
+      hospitalAddress,
+      hospitalAddressDetail,
+    });
+    await handleRequestUserData();
   };
 
-  console.log(registerUserData);
+  const handleRequestUserData = async () => {
+    try {
+      await userApi.register(registerUserData);
+      router.push('/login');
+    } catch (e: any) {
+      alert(e.response.data.message);
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(data => handleMergeFormData(data))}>
@@ -144,9 +159,9 @@ export default function Register() {
           id="birthDate"
           type="date"
           sx={{ width: 220, mt: '8px' }}
-          {...register('birthDate')}
+          {...register('birth')}
         />
-        {<ErrorMsg>{errors.birthDate?.message}</ErrorMsg>}
+        {<ErrorMsg>{errors.birth?.message}</ErrorMsg>}
         <Label htmlFor="job">직업</Label>
         <JobSelect {...register('jobCategory')}>
           <option value="Doctor">의사</option>
