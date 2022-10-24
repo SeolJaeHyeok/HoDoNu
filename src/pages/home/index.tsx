@@ -1,67 +1,68 @@
+import BoardList from '@components/common/BoardList';
 import styled from '@emotion/styled';
 
-// const freeArticles = [
-//   {
-//     createdAt: '2022-10-21T07:57:43.146Z',
-//     articleId: 8678686,
-//     title: '안녕하세요',
-//     hits: 0,
-//     user: {
-//       userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-//       email: 'dohee@test.com',
-//       imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-//       nickname: 'frozen_apricot_gamefowl',
-//     },
-//   },
-//   {
-//     createdAt: '2022-10-21T07:57:43.146Z',
-//     articleId: 856798707,
-//     title: '안녕하세요',
-//     hits: 0,
-//     user: {
-//       userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-//       email: 'dohee@test.com',
-//       imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-//       nickname: 'frozen_apricot_gamefowl',
-//     },
-//   },
-//   {
-//     createdAt: '2022-10-21T07:57:43.146Z',
-//     articleId: 746765978,
-//     title: '안녕하세요',
-//     hits: 0,
-//     user: {
-//       userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-//       email: 'dohee@test.com',
-//       imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-//       nickname: 'frozen_apricot_gamefowl',
-//     },
-//   },
-//   {
-//     createdAt: '2022-10-21T07:57:43.146Z',
-//     articleId: 64363769870,
-//     title: '안녕하세요',
-//     hits: 0,
-//     user: {
-//       userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-//       email: 'dohee@test.com',
-//       imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-//       nickname: 'frozen_apricot_gamefowl',
-//     },
-//   },
-//   {
-//     createdAt: '2022-10-21T07:57:43.146Z',
-//     articleId: 4262468769780,
-//     title: '안녕하세요',
-//     hits: 0,
-//     user: {
-//       userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-//       email: 'dohee@test.com',
-//       imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-//       nickname: 'frozen_apricot_gamefowl',
-//     },
-//   },
-// ];
+const freeArticles = [
+  {
+    createdAt: '2022-10-21T07:57:43.146Z',
+    articleId: 8678686,
+    title: '안녕하세요',
+    hits: 0,
+    user: {
+      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
+      email: 'dohee@test.com',
+      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
+      nickname: 'frozen_apricot_gamefowl',
+    },
+  },
+  {
+    createdAt: '2022-10-21T07:57:43.146Z',
+    articleId: 856798707,
+    title: '안녕하세요',
+    hits: 0,
+    user: {
+      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
+      email: 'dohee@test.com',
+      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
+      nickname: 'frozen_apricot_gamefowl',
+    },
+  },
+  {
+    createdAt: '2022-10-21T07:57:43.146Z',
+    articleId: 746765978,
+    title: '안녕하세요',
+    hits: 0,
+    user: {
+      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
+      email: 'dohee@test.com',
+      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
+      nickname: 'frozen_apricot_gamefowl',
+    },
+  },
+  {
+    createdAt: '2022-10-21T07:57:43.146Z',
+    articleId: 64363769870,
+    title: '안녕하세요',
+    hits: 0,
+    user: {
+      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
+      email: 'dohee@test.com',
+      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
+      nickname: 'frozen_apricot_gamefowl',
+    },
+  },
+  {
+    createdAt: '2022-10-21T07:57:43.146Z',
+    articleId: 4262468769780,
+    title: '안녕하세요',
+    hits: 0,
+    user: {
+      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
+      email: 'dohee@test.com',
+      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
+      nickname: 'frozen_apricot_gamefowl',
+    },
+  },
+];
 
 // const doctorArticles = [
 //   {
@@ -194,6 +195,7 @@ export default function Home() {
     <HomeContainer>
       <SliderContainer>Slider</SliderContainer>
       <BoardContainer>
+        <BoardList type="main" articles={freeArticles} />
         <BoardItemContainer>자유 게시판</BoardItemContainer>
         <BoardItemContainer>의사 게시판</BoardItemContainer>
         <BoardItemContainer>간호사 게시판</BoardItemContainer>
