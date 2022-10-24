@@ -17,13 +17,15 @@ interface RegisterFormProps {
   phoneNumber: string;
   birth: string;
   jobCategory: string;
+  hospitalAddressNumber?: string;
+  hospitalAddress?: string;
+  hospitalAddressDetail?: string;
 }
 
 export default function Register() {
   const [hospitalAddressNumber, setHospitalAddressNumber] = useState<string>();
   const [hospitalAddress, setHospitalAddress] = useState<string>('');
   const [hospitalAddressDetail, setHospitalAddressDetail] = useState<string>('');
-  const [registerUserData, setRegisterUserData] = useState<any>();
 
   const router = useRouter();
 
@@ -70,18 +72,19 @@ export default function Register() {
 
   // react-hook-form 관련 홤수
   const handleMergeFormData = async (data: RegisterFormProps) => {
-    await setRegisterUserData({
+    const registerUserData = {
       ...data,
       hospitalAddressNumber,
       hospitalAddress,
       hospitalAddressDetail,
-    });
-    await handleRequestUserData();
+    };
+
+    await handleRequestUserData(registerUserData);
   };
 
-  const handleRequestUserData = () => {
+  const handleRequestUserData = async (registerUserData: RegisterFormProps) => {
     try {
-      userApi.register(registerUserData);
+      await userApi.register(registerUserData);
       router.push('/login');
     } catch (e: any) {
       alert(e.response.data.message);
