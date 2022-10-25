@@ -7,5 +7,5 @@ interface LoginAPI {
 }
 
 export const loginAPI = async ({ email, password }: LoginAPI) => {
-  return instance.post(`user/signin`, { email, password }).then(res => res.data);
+  return instance.post(`users/signin`, { email, password }).then(res => res.data);
 };

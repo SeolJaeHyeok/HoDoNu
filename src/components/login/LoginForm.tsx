@@ -6,11 +6,11 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useSetRecoilState } from 'recoil';
 import { useMutation } from 'react-query';
-import jwt from 'jsonwebtoken';
 
 import { loginAPI } from 'src/apis/login';
 import { loginValidationSchema } from '@utils/validationSchema';
 import { userInfoState } from 'src/atoms/userAtom';
+import { decodeJWT } from '@utils/decodeJWT';
 
 // 비밀번호 찾기
 // 아이디 찾기
@@ -36,7 +36,7 @@ export default function LoginForm() {
     sessionStorage.setItem('token', token);
     sessionStorage.setItem('refreshToken', refreshToken);
 
-    const decodedToken = jwt.decode(token);
+    const decodedToken = decodeJWT(token);
     const { role, userId }: any = decodedToken;
 
     setUserInfo({ role, userId });
@@ -44,8 +44,8 @@ export default function LoginForm() {
 
   const mutation = useMutation(['login'], loginAPI, {
     onSuccess: data => {
-      const { token, refreshToken } = data.result;
-      saveUserInfo(token, refreshToken);
+      const { accessToken, refreshToken } = data.result;
+      saveUserInfo(accessToken, refreshToken);
     },
     onError: (e: Error) => {
       console.log(e.message);
@@ -57,7 +57,7 @@ export default function LoginForm() {
     const { email, password } = data;
     mutation.mutate({ email, password });
     reset({ email: '', password: '' });
-    router.push('/home');
+    router.push('/');
   };
 
   return (
