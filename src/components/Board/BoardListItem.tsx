@@ -45,7 +45,7 @@ const ItemNumber = styled.span`
   font-weight: 600;
 `;
 
-const ItemTitle = styled.span`
+const ItemTitle = styled.a`
   width: 150px;
   padding: 0 5px;
   overflow: hidden;
@@ -64,13 +64,15 @@ const AuthorContainer = styled.div`
   align-items: center;
 `;
 
-const ItemAuthor = styled.span`
+const ItemAuthor = styled.button`
   width: 150px;
   padding: 0 5px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   cursor: pointer;
+  border: none;
+  background-color: inherit;
 
   &:hover {
     text-decoration: underline;

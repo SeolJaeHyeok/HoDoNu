@@ -5,12 +5,12 @@ export function convertTime(date: string) {
   const diff = end - start; // 경과 시간
 
   const times = [
-    { time: '분', milliSeconds: 1000 * 60 },
-    { time: '시간', milliSeconds: 1000 * 60 * 60 },
-    { time: '일', milliSeconds: 1000 * 60 * 60 * 24 },
-    { time: '개월', milliSeconds: 1000 * 60 * 60 * 24 * 30 },
     { time: '년', milliSeconds: 1000 * 60 * 60 * 24 * 365 },
-  ].reverse();
+    { time: '개월', milliSeconds: 1000 * 60 * 60 * 24 * 30 },
+    { time: '일', milliSeconds: 1000 * 60 * 60 * 24 },
+    { time: '시간', milliSeconds: 1000 * 60 * 60 },
+    { time: '분', milliSeconds: 1000 * 60 },
+  ];
 
   // 년 단위부터 알맞는 단위 찾기
   for (const value of times) {
