@@ -8,7 +8,7 @@ import { useSetRecoilState } from 'recoil';
 import { useMutation } from 'react-query';
 
 import { loginValidationSchema } from '@utils/validationSchema';
-import { userInfoState } from 'src/atoms/userAtom';
+import { isLoginState, userInfoState } from 'src/atoms/userAtom';
 import { decodeJWT } from '@utils/decodeJWT';
 import authApi from 'src/apis/auth/auth';
 
@@ -31,6 +31,7 @@ export default function LoginForm() {
   } = useForm<UserLoginForm>({ resolver: yupResolver(loginValidationSchema) });
 
   const setUserInfo = useSetRecoilState(userInfoState);
+  const setIsLogin = useSetRecoilState(isLoginState);
 
   const saveUserInfo = (token: string, refreshToken: string) => {
     sessionStorage.setItem('token', token);
@@ -40,6 +41,7 @@ export default function LoginForm() {
     const { role, userId }: any = decodedToken;
 
     setUserInfo({ role, userId });
+    setIsLogin(true);
   };
 
   const mutation = useMutation(['login'], authApi.login, {
