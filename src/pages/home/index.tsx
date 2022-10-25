@@ -1,5 +1,7 @@
 import BoardList from '@components/Board/BoardList';
+import Carousel from '@components/Board/Carousel';
 import styled from '@emotion/styled';
+import Link from 'next/link';
 
 const freeArticles = [
   {
@@ -193,7 +195,17 @@ const nurseArticles = [
 export default function Home() {
   return (
     <HomeContainer>
-      <SliderContainer>Slider</SliderContainer>
+      <Carousel>
+        <Link href={'#'}>
+          <CarouselImage src={'/assets/images/wellcheck.avif'} />
+        </Link>
+        <Link href={'#'}>
+          <CarouselImage src={'/assets/images/wellcheck.avif'} />
+        </Link>
+        <Link href={'#'}>
+          <CarouselImage src={'/assets/images/wellcheck.avif'} />
+        </Link>
+      </Carousel>
       <BoardContainer>
         <BoardList type="main" articles={freeArticles} />
         <BoardList type="board" articles={doctorArticles} />
@@ -205,18 +217,16 @@ export default function Home() {
 
 const HomeContainer = styled.div``;
 
-const SliderContainer = styled.div`
-  width: 100%;
-  height: 500px;
-  background-color: grey;
-  margin-bottom: 30px;
-`;
-
 const BoardContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
-  margin-bottom: 50px;
+  margin: 50px 0px;
+`;
+
+const CarouselImage = styled.img`
+  height: 400px;
+  width: 100%;
 `;
 
 // TODO - API 배포되면 요청을 통해 받아온 데이터로 변경

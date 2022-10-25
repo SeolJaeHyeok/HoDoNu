@@ -31,7 +31,6 @@ const BoardTitle = styled.h1`
   /* margin-bottom: 20px; */
   text-align: center;
   padding: 20px 0px;
-
   background-color: #e6edf0;
   cursor: pointer;
 

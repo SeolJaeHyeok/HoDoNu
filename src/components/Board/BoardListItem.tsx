@@ -42,8 +42,8 @@ const ItemTitle = styled.span`
   cursor: pointer;
 
   &:hover {
-    transform: scale(1.05);
     text-decoration: underline;
+    font-weight: 500;
   }
 `;
 
