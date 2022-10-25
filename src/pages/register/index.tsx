@@ -6,7 +6,7 @@ import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { userApi } from 'src/apis/user/user';
+import { userApi } from 'src/apis/auth/user';
 import { useRouter } from 'next/router';
 import { RegisterUserInfo } from 'src/interfaces/user/registerUserInfo';
 
