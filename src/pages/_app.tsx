@@ -5,11 +5,16 @@ import { ThemeProvider } from '@mui/material';
 import { theme } from '../styles/theme';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { RecoilRoot } from 'recoil';
+import { isLoginState } from 'src/atoms/userAtom';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
+  const initializeRecoilState = ({ set }: any) => {
+    set(isLoginState, true);
+  };
+
   return (
-    <RecoilRoot>
+    <RecoilRoot initializeState={initializeRecoilState}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <Layout>
