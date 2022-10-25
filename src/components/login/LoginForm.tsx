@@ -7,10 +7,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useSetRecoilState } from 'recoil';
 import { useMutation } from 'react-query';
 
-import { loginAPI } from 'src/apis/login';
 import { loginValidationSchema } from '@utils/validationSchema';
 import { userInfoState } from 'src/atoms/userAtom';
 import { decodeJWT } from '@utils/decodeJWT';
+import authApi from 'src/apis/auth/auth';
 
 // 비밀번호 찾기
 // 아이디 찾기
@@ -42,7 +42,7 @@ export default function LoginForm() {
     setUserInfo({ role, userId });
   };
 
-  const mutation = useMutation(['login'], loginAPI, {
+  const mutation = useMutation(['login'], authApi.login, {
     onSuccess: data => {
       const { accessToken, refreshToken } = data.result;
       saveUserInfo(accessToken, refreshToken);
