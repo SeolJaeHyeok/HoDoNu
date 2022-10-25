@@ -195,17 +195,19 @@ const nurseArticles = [
 export default function Home() {
   return (
     <HomeContainer>
-      <Carousel>
-        <Link href={'#'}>
-          <CarouselImage src={'/assets/images/wellcheck.avif'} />
-        </Link>
-        <Link href={'#'}>
-          <CarouselImage src={'/assets/images/wellcheck.avif'} />
-        </Link>
-        <Link href={'#'}>
-          <CarouselImage src={'/assets/images/wellcheck.avif'} />
-        </Link>
-      </Carousel>
+      <MainCarouselContainer>
+        <Carousel>
+          <Link href={'#'}>
+            <CarouselImage src={'/assets/images/wellcheck.avif'} />
+          </Link>
+          <Link href={'#'}>
+            <CarouselImage src={'/assets/images/wellcheck.avif'} />
+          </Link>
+          <Link href={'#'}>
+            <CarouselImage src={'/assets/images/wellcheck.avif'} />
+          </Link>
+        </Carousel>
+      </MainCarouselContainer>
       <BoardContainer>
         <BoardList type="main" articles={freeArticles} />
         <BoardList type="board" articles={doctorArticles} />
@@ -224,9 +226,15 @@ const BoardContainer = styled.div`
   margin: 50px 0px;
 `;
 
+const MainCarouselContainer = styled.div`
+  width: 1200px;
+  margin: 50px auto;
+`;
+
 const CarouselImage = styled.img`
   height: 400px;
   width: 100%;
+  cursor: pointer;
 `;
 
 // TODO - API 배포되면 요청을 통해 받아온 데이터로 변경

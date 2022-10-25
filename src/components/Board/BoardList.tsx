@@ -13,12 +13,11 @@ export default function BoardList({ type, articles }: ListProps) {
   const boardName = 'free';
   return (
     <ListContainer type={type}>
-      <Container>
-        <Link href={`/board/${boardName}`}>
-          <BoardTitle>자유 게시판</BoardTitle>
-        </Link>
-        <BoardNavBar />
-      </Container>
+      <Link href={`/board/${boardName}`}>
+        <BoardTitle>자유 게시판</BoardTitle>
+      </Link>
+      <BoardNavBar />
+
       {articles.map(article => (
         <BoardListItem {...article} key={article.articleId} />
       ))}
@@ -28,7 +27,7 @@ export default function BoardList({ type, articles }: ListProps) {
 
 const BoardTitle = styled.h1`
   font-size: 24px;
-  /* margin-bottom: 20px; */
+  border-radius: 20px 20px 0 0;
   text-align: center;
   padding: 20px 0px;
   background-color: #e6edf0;
@@ -41,10 +40,5 @@ const BoardTitle = styled.h1`
 `;
 
 const ListContainer = styled.div<{ type: string | undefined }>`
-  /* width: 100%; */
   margin: 40px;
-`;
-
-const Container = styled.div`
-  border-radius: 30px;
 `;
