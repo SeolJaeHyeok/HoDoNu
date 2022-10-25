@@ -214,10 +214,9 @@ const SliderContainer = styled.div`
 
 const BoardContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
   margin-bottom: 50px;
-  padding: 0 20px;
 `;
 
 // TODO - API 배포되면 요청을 통해 받아온 데이터로 변경

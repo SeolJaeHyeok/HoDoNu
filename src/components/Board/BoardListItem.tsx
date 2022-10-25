@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { ArticleProps } from '@interfaces/article';
 import { convertTime } from '@utils/func';
 import Link from 'next/link';
+import { ArticleProps } from 'src/interfaces/article';
 
 export default function BoardListItem(props: ArticleProps) {
   const { articleId, title, user, createdAt } = props;
@@ -21,11 +21,11 @@ export default function BoardListItem(props: ArticleProps) {
 
 const ItemContainer = styled.div`
   width: 100%;
-  padding: 10px;
+  padding: 10px 0px;
   margin-bottom: 5px;
   border-bottom: 1px solid black;
   display: grid;
-  grid-template-columns: 0.5fr 1fr 2fr 1fr;
+  grid-template-columns: 0.5fr 1fr 1fr 0.5fr;
   text-align: center;
 `;
 
@@ -43,6 +43,7 @@ const ItemTitle = styled.span`
 
   &:hover {
     transform: scale(1.05);
+    text-decoration: underline;
   }
 `;
 
