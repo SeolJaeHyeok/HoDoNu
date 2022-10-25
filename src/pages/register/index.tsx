@@ -6,7 +6,7 @@ import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { userApi } from 'src/apis/auth/user';
+import authApi from 'src/apis/auth/auth';
 import { useRouter } from 'next/router';
 import { RegisterUserInfo } from 'src/interfaces/user/registerUserInfo';
 
@@ -77,7 +77,7 @@ export default function Register() {
 
   const handleRequestUserData = async (registerUserData: RegisterUserInfo) => {
     try {
-      await userApi.register(registerUserData);
+      await authApi.register(registerUserData);
       router.push('/login');
     } catch (e: any) {
       alert(e.response.data.message);
