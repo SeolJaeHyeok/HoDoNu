@@ -13,21 +13,31 @@ export default function CustomDrawer() {
   const [targetMenus, setTargetMenus] = useState<string[]>([]);
   const router = useRouter();
 
+  console.log(router);
   const handleMenuClick = (menu: string) => {
     router.push(SideBarPath[menu]);
   };
 
   // URL을 통해 현재 페이지에 맞는 사이드바 검증
   useEffect(() => {
-    if (router.pathname.includes('/board/')) {
+    if (
+      router.asPath === '/board' ||
+      router.asPath === '/board/free' ||
+      router.asPath === '/board/doctor' ||
+      router.asPath === '/board/nurse'
+    ) {
       return setTargetMenus(boardSideBarMenus);
     }
 
-    if (router.pathname.includes('/mypage/')) {
+    if (router.asPath === '/mypage/edit' || router.asPath === '/mypage/articles') {
       return setTargetMenus(userSideBarMenus);
     }
 
-    if (router.pathname.includes('/admin/')) {
+    if (
+      router.asPath === '/admin/user' ||
+      router.asPath === '/admin/recruit' ||
+      router.asPath === '/admin/board'
+    ) {
       return setTargetMenus(adminSideBarMenus);
     }
   }, [router.pathname]);
