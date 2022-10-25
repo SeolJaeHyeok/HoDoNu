@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import CustomAvatarImage from './CustomAvartar';
 
-export default function Comment() {
+// isCotent가 true이면 댓글 내용까지 보여주고 false이면 시간이랑 닉네임만 사용한다.
+export default function Comment({ isContent }: { isContent: boolean }) {
   return (
     <CommentWrapper>
       <CommentContainer>
@@ -10,7 +11,9 @@ export default function Comment() {
           <NameContent>엠서클</NameContent>
           <TimeContent>약 20시간 전</TimeContent>
         </ContentContainer>
-        <CommentContent>정말 최고인거 같아요! 저도 그 의견에 동참합니다!</CommentContent>
+        {isContent && (
+          <CommentContent>정말 최고인거 같아요! 저도 그 의견에 동참합니다!</CommentContent>
+        )}
       </CommentContainer>
     </CommentWrapper>
   );
