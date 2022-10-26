@@ -1,9 +1,14 @@
 import { instance } from '..';
 
+interface ParamsProps {
+  page?: number;
+  perPage?: number;
+}
+
 const boardApi = {
-  getAllFreeBoards: (params: any) => instance.get(`/free/articles`, { params }),
-  getAllDoctorBoards: (params?: any) => instance.get('/doctor/articles', { params }),
-  getAllNurseBoards: (params?: any) => instance.get('/nurse/articles', { params }),
+  getAllFreeBoards: (params?: ParamsProps) => instance.get(`/free/articles`, { params }),
+  getAllDoctorBoards: (params?: ParamsProps) => instance.get('/free/articles', { params }),
+  getAllNurseBoards: (params?: ParamsProps) => instance.get('/nurse/articles', { params }),
 };
 
 export default boardApi;
