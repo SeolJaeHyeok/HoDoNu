@@ -1,5 +1,5 @@
+import CreateForm from '@components/board/CreateForm';
 import { Container, Box, Typography } from '@mui/material';
-import CreateForm from '@components/board/createForm';
 
 export default function createBoard() {
   /**

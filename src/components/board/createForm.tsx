@@ -2,10 +2,12 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { boardValidationSchema } from '@utils/validationSchema';
 import { TextField, Stack, Button, Box } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 import FormEditor from '@components/FormEditor';
-// import { useMutation } from 'react-query';
-// import boardApi from 'src/apis/auth/board';
+import { useMutation } from 'react-query';
+import boardApi from 'src/apis/auth/board';
+import { useRouter } from 'next/router';
+import TempFormEditor from '@components/TempFormEditor';
 
 interface ArticleForm {
   images: string;
@@ -15,37 +17,42 @@ interface ArticleForm {
 }
 
 export default function CreateForm() {
-  /**
-   * 게시판 선택
-   * 게시글 제목
-   * 게시글 내용
-   * 생성, 취소 버튼
-   */
   const {
-    // register,
+    register,
     handleSubmit,
-    // reset,
+    setValue,
+    watch,
+    trigger,
     // formState: { errors },
   } = useForm<ArticleForm>({ resolver: yupResolver(boardValidationSchema) });
+  const router = useRouter();
 
-  const onSubmit: SubmitHandler<ArticleForm> = data => {
+  const mutation = useMutation(['createArticle'], boardApi.create, {
+    onSuccess: data => {
+      console.log(data);
+    },
+    onError: (e: Error) => {
+      console.log(e.message);
+      alert(e.message);
+    },
+  });
+
+  const onSubmit: SubmitHandler<ArticleForm> = async data => {
     console.log(data);
+    const { title, category, content, images } = data;
+
+    // 게시글 생성
+    mutation.mutate({ title, category, content, images });
+    router.push('/'); // 해당 게시글로 보내기
   };
+  const boards = ['자유 게시판', '의사 게시판'];
 
-  // const mutation = useMutation(['createArticle'], boardApi.create, {
-  //   onSuccess: data => {
-  //     console.log(data);
-  //   },
-  //   onError: (e: Error) => {
-  //     console.log(e.message);
-  //     alert(e.message);
-  //   },
-  // });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setCurrency(e.target.value);
-
-  const currencies = ['자유 게시판', '의사 게시판'];
-  const [currency, setCurrency] = useState<string>('자유게시판');
+  const onEditorStateChange = (editorState: any) => {
+    editorState = editorState !== '<p><br></p>' ? editorState : '';
+    setValue('content', editorState);
+    trigger('content', { shouldFocus: true });
+  };
+  const editorContent = watch('content');
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack
@@ -59,15 +66,13 @@ export default function CreateForm() {
       >
         <TextField
           id="component-outlined"
-          label="게시판"
           select
-          value={currency}
-          onChange={handleChange}
           SelectProps={{
             native: true,
           }}
+          {...register('category')}
         >
-          {currencies.map(option => {
+          {boards.map(option => {
             return (
               <option key={option} value={option}>
                 {option}
@@ -75,8 +80,15 @@ export default function CreateForm() {
             );
           })}
         </TextField>
-        <TextField type="text" id="outlined" label="제목" placeholder="제목을 입력해주세요." />
-        <FormEditor />
+        <TextField
+          type="text"
+          id="outlined"
+          label="제목"
+          placeholder="제목을 입력해주세요."
+          {...register('title')}
+        />
+        <FormEditor value={editorContent} onChange={onEditorStateChange} />
+        <TempFormEditor value={editorContent} onChange={onEditorStateChange} />
       </Stack>
       <Box
         sx={{
