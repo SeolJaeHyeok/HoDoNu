@@ -68,6 +68,12 @@ const articles = [
   },
 ];
 
+/*
+  TODO  
+  -[] API 연결 후 테스트
+  -[] 같은 양식으로 의사, 간호사 게시판 만들기
+*/
+
 export default function FreeBoard() {
   return <BoardList articles={articles} />;
 }

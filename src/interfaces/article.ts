@@ -10,5 +10,6 @@ export interface ArticleProps {
   articleId: number;
   title: string;
   hits: number;
+  comments: number;
   user: UserProps;
 }
