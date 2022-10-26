@@ -1,6 +1,6 @@
+import { UserInfo } from 'src/interfaces/user/userInfo';
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-import { UserInfo } from 'src/interfaces/user/getUserinfo';
 
 const sessionStorage = typeof window !== 'undefined' ? window.sessionStorage : undefined;
 
