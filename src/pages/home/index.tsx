@@ -2,6 +2,9 @@ import BoardList from '@components/Main/MainBoardList';
 import Carousel from '@components/Main/MainCarousel';
 import styled from '@emotion/styled';
 import Link from 'next/link';
+import boardApi from 'src/apis/board';
+import { useQuery } from 'react-query';
+// import { ArticleProps } from 'src/interfaces/article';
 
 const freeArticles = [
   {
@@ -193,6 +196,14 @@ const nurseArticles = [
 ];
 
 export default function Home() {
+  const params = { page: 5, perPage: 5 };
+
+  // Test
+  const { data } = useQuery(['article', 'free'], () => boardApi.getAllFreeBoards(params), {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
+  console.log(data);
   return (
     <HomeContainer>
       <MainCarouselContainer>
@@ -239,5 +250,9 @@ const CarouselImage = styled.img`
 
 // TODO - API 배포되면 요청을 통해 받아온 데이터로 변경
 // function getServerSideProps() {
-//     const {} =
+//   return {
+//     props: {
+
+//     }
+//   }
 // }
