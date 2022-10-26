@@ -4,6 +4,8 @@ import { boardValidationSchema } from '@utils/validationSchema';
 import { TextField, Stack, Button, Box } from '@mui/material';
 import React, { useState } from 'react';
 import FormEditor from '@components/FormEditor';
+// import { useMutation } from 'react-query';
+// import boardApi from 'src/apis/auth/board';
 
 interface ArticleForm {
   images: string;
@@ -29,6 +31,16 @@ export default function CreateForm() {
   const onSubmit: SubmitHandler<ArticleForm> = data => {
     console.log(data);
   };
+
+  // const mutation = useMutation(['createArticle'], boardApi.create, {
+  //   onSuccess: data => {
+  //     console.log(data);
+  //   },
+  //   onError: (e: Error) => {
+  //     console.log(e.message);
+  //     alert(e.message);
+  //   },
+  // });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setCurrency(e.target.value);
 
@@ -56,7 +68,6 @@ export default function CreateForm() {
           }}
         >
           {currencies.map(option => {
-            console.log(option);
             return (
               <option key={option} value={option}>
                 {option}
