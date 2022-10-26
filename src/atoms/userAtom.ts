@@ -1,9 +1,6 @@
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-export type UserInfo = {
-  role: string | null;
-  userId: string | null;
-};
+import { UserInfo } from 'src/interfaces/user/getUserinfo';
 
 const sessionStorage = typeof window !== 'undefined' ? window.sessionStorage : undefined;
 

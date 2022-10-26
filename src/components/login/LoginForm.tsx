@@ -19,7 +19,6 @@ interface UserLoginForm {
   email: string;
   password: string;
 }
-
 export default function LoginForm() {
   const router = useRouter();
 
@@ -38,9 +37,8 @@ export default function LoginForm() {
     sessionStorage.setItem('refreshToken', refreshToken);
 
     const decodedToken = decodeJWT(token);
-    const { role, userId }: any = decodedToken;
-
-    setUserInfo({ role, userId });
+    const { role, userId, jobCategory }: any = decodedToken;
+    setUserInfo({ role, userId, jobCategory });
     setIsLogin(true);
   };
 
@@ -58,6 +56,7 @@ export default function LoginForm() {
   const onLoginFormSubmit: SubmitHandler<UserLoginForm> = async data => {
     const { email, password } = data;
     mutation.mutate({ email, password });
+
     reset({ email: '', password: '' });
     router.push('/');
   };
