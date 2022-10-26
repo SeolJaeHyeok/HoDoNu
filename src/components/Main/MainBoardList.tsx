@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import { ArticleProps } from 'src/interfaces/article';
-import BoardListItem from './BoardListItem';
-import BoardNavBar from './BoardNavBar';
+import BoardListItem from './MainBoardListItem';
+import BoardNavBar from './MainBoardNavBar';
 
 interface ListProps {
   type?: string;
