@@ -54,7 +54,7 @@ const articles = [
     comments: 12313,
   },
   {
-    createdAt: '2022-10-05T07:57:43.146Z',
+    createdAt: '2022-09-28T07:57:43.146Z',
     articleId: 132,
     title: '안녕하세요',
     hits: 0,

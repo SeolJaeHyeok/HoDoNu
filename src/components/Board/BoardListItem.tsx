@@ -40,14 +40,13 @@ export default function BoardListItem(props: ArticleProps) {
           }}
         />
         {hits}
-
         <ChatIcon
           sx={{
             fontSize: '16px',
             marginRight: '2px',
           }}
         />
-        {comments}
+        {comments.toLocaleString()}회
       </ItemFooter>
     </ItemContainer>
   );
