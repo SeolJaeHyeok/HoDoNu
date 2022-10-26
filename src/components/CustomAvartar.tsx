@@ -28,6 +28,9 @@ export default function CustomAvatarImage({ alt, src, width, height, handleClick
         width,
         height,
         borderRadius: '50%',
+        ':hover': {
+          cursor: 'pointer',
+        },
       }}
     />
   );
