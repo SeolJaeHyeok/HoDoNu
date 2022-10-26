@@ -3,17 +3,27 @@ import CustomAvatarImage from './CustomAvartar';
 
 // isCotent가 true이면 댓글 내용까지 보여주고 false이면 시간이랑 닉네임만 사용한다.
 export default function Comment({ isContent, content }: any) {
-  // console.log(content);
-
   return (
     <CommentWrapper>
       <CommentContainer>
-        <CustomAvatarImage src={content?.userImage} />
-        <ContentContainer>
-          <NameContent>{content?.userNickname}</NameContent>
-          <TimeContent>약 20시간 전</TimeContent>
-        </ContentContainer>
-        {isContent && <CommentContent>{content.content}</CommentContent>}
+        {isContent ? (
+          <>
+            <CustomAvatarImage src={content.user.imgUrl} />
+            <ContentContainer>
+              <NameContent>{content.user.nickname}</NameContent>
+              <TimeContent>약 20시간 전</TimeContent>
+            </ContentContainer>
+            <CommentContent>{content?.content}</CommentContent>
+          </>
+        ) : (
+          <>
+            <CustomAvatarImage src={content.result.user.imgUrl} />
+            <ContentContainer>
+              <NameContent>{content.result.user.nickname}</NameContent>
+              <TimeContent>약 20시간 전</TimeContent>
+            </ContentContainer>
+          </>
+        )}
       </CommentContainer>
     </CommentWrapper>
   );
@@ -21,6 +31,7 @@ export default function Comment({ isContent, content }: any) {
 
 const CommentWrapper = styled.div`
   width: 600px;
+  margin-bottom: 30px;
 `;
 const CommentContainer = styled.div`
   display: flex;
@@ -33,7 +44,7 @@ const CommentContent = styled.p`
 const ContentContainer = styled.div`
   padding-top: 10px;
   margin-left: 10px;
-  width: 70px;
+  width: 170px;
 `;
 const NameContent = styled.p`
   font-size: 16px;
@@ -45,3 +56,14 @@ const TimeContent = styled.p`
   color: #6a7280;
   width: 70px;
 `;
+
+// <CustomAvatarImage src={content?.result?.user?.imgUrl} />
+// <ContentContainer>
+//   {isContent ? (
+//     <NameContent>{content.user.nickname}</NameContent>
+//   ) : (
+//     <NameContent>{content?.result?.user?.nickname}</NameContent>
+//   )}
+//   <TimeContent>약 20시간 전</TimeContent>
+// </ContentContainer>
+// {isContent && <CommentContent>{content?.content}</CommentContent>}

@@ -4,18 +4,32 @@ import styled from '@emotion/styled';
 import CommentIcon from '@mui/icons-material/Comment';
 import { Button } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
+import detailApi from 'src/apis/board/detail';
 
 export default function ArticleContent({ contents }: any) {
   console.log(contents);
+  const [commentRequestData, setCommentRequestData] = useState({
+    category: 'Free',
+    content: '',
+    articleId: contents?.result.articleId,
+  });
 
-  const [commentInput, setCommentInput] = useState<string>('');
+  const handleChangeCommentInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setCommentRequestData({
+      category: 'Free',
+      content: e.target.value,
+      articleId: contents.result.articleId,
+    });
+  };
+
+  // 현재 게시글이 존재하지 않습니다 오류! => 게시글 조회가 가능하면 댓글 가능할 것 같음!
+  const handleRequestCommentData = async () => {
+    await detailApi.commentRegister(commentRequestData);
+  };
 
   const handleClickCommentRegister = () => {
     console.log('등록 완료!');
-  };
-
-  const handleChangeCommentInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setCommentInput(e.target.value);
+    handleRequestCommentData();
   };
 
   return (
@@ -25,8 +39,8 @@ export default function ArticleContent({ contents }: any) {
         <BlankContent></BlankContent>
         <BoardContent>
           <Comment isContent={false} content={contents} />
-          <BoardTitle>{contents.title}</BoardTitle>
-          <BoardSubTitle>{contents.content}</BoardSubTitle>
+          <BoardTitle>{contents.result.title}</BoardTitle>
+          <BoardSubTitle>{contents.result.content}</BoardSubTitle>
           <CommentWrapper>
             <CommentIcon
               sx={{
@@ -36,7 +50,7 @@ export default function ArticleContent({ contents }: any) {
             <CommentTitle>댓글</CommentTitle>
           </CommentWrapper>
           <CommnetInputContainer>
-            <CommentTextArea onChange={handleChangeCommentInput} value={commentInput} />
+            <CommentTextArea onChange={handleChangeCommentInput} />
             <Button
               variant="outlined"
               sx={{
@@ -49,7 +63,7 @@ export default function ArticleContent({ contents }: any) {
               댓글 등록
             </Button>
           </CommnetInputContainer>
-          {contents?.comments?.map((content: any, i: number) => {
+          {contents?.result?.comments?.map((content: any, i: number) => {
             return <Comment key={i} content={content} isContent={true} />;
           })}
         </BoardContent>

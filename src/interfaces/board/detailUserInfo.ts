@@ -10,3 +10,9 @@ export interface ContentProps {
   userNickname: string;
   isContent?: boolean;
 }
+
+export interface CommentProps {
+  category: string;
+  content: string;
+  articleId: number;
+}
