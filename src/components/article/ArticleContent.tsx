@@ -3,18 +3,31 @@ import CustomSideBar from '@components/SideBar/CustomSideBar';
 import styled from '@emotion/styled';
 import CommentIcon from '@mui/icons-material/Comment';
 import { Button } from '@mui/material';
+import { ChangeEvent, useState } from 'react';
 
-export default function ArticleContent() {
+export default function ArticleContent({ contents }: any) {
+  console.log(contents);
+
+  const [commentInput, setCommentInput] = useState<string>('');
+
+  const handleClickCommentRegister = () => {
+    console.log('등록 완료!');
+  };
+
+  const handleChangeCommentInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setCommentInput(e.target.value);
+  };
+
   return (
     <BoardWrapper>
       <CustomSideBar />
       <BoardContainer>
         <BlankContent></BlankContent>
         <BoardContent>
-          <Comment isContent={false} />
-          <BoardTitle>안녕하세요 나는 타이틀입니다.</BoardTitle>
-          <BoardSubTitle>정말요?? 반가워요 나는 컨텐츠들이에요</BoardSubTitle>
-          <CommentWrapper style={{}}>
+          <Comment isContent={false} content={contents} />
+          <BoardTitle>{contents.title}</BoardTitle>
+          <BoardSubTitle>{contents.content}</BoardSubTitle>
+          <CommentWrapper>
             <CommentIcon
               sx={{
                 fontSize: '28px',
@@ -23,7 +36,7 @@ export default function ArticleContent() {
             <CommentTitle>댓글</CommentTitle>
           </CommentWrapper>
           <CommnetInputContainer>
-            <CommentTextArea />
+            <CommentTextArea onChange={handleChangeCommentInput} value={commentInput} />
             <Button
               variant="outlined"
               sx={{
@@ -31,10 +44,14 @@ export default function ArticleContent() {
                 float: 'right',
                 mt: '8px',
               }}
+              onClick={handleClickCommentRegister}
             >
               댓글 등록
             </Button>
           </CommnetInputContainer>
+          {contents?.comments?.map((content: any, i: number) => {
+            return <Comment key={i} content={content} isContent={true} />;
+          })}
         </BoardContent>
       </BoardContainer>
     </BoardWrapper>

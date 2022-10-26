@@ -1,0 +1,26 @@
+{
+  "result": {
+    "boardId": 3,
+    "userId": "78970eab-dfa6-4243-b0b0-8de4b88d0baa",
+    "userNickname": "김토끼",
+    "userImage": "https://www.notion.so/Response-DTO-0c8e6e861042455d8f97c57e6a2f2155",
+    "title": "안녕하세요",
+    "content": "새로운 커뮤니티에서는 새로운 마음으로!",
+    "hits": 4,
+    "createdAt": "2021-10-31T10:36:52",
+    "comments": [
+      {
+        "userId": "78970eab-dfa6-4243-b0b0-8de4b88d0baa",
+        "userNickname": "김토끼",
+        "userImage": "https://www.notion.so/Response-DTO-0c8e6e861042455d8f97c57e6a2f2155",
+        "content": "반가워요오오오"
+      },
+      {
+        "userId": "78970eab-dfa6-4243-b0b0-8de4b88d0baa",
+        "userNickname": "김토끼",
+        "userImage": "https://www.notion.so/Response-DTO-0c8e6e861042455d8f97c57e6a2f2155",
+        "content": "돈 많아요? 난 많은데 ㅋ"
+      }
+    ]
+  }
+}
