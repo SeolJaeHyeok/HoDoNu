@@ -12,7 +12,6 @@ interface ArticleForm {
   content: string;
 }
 
-type BoardType = '자유게시판' | '간호사 게시판' | '의사 게시판';
 export default function CreateForm() {
   /**
    * 게시판 선택
@@ -21,10 +20,10 @@ export default function CreateForm() {
    * 생성, 취소 버튼
    */
   const {
-    register,
+    // register,
     handleSubmit,
-    reset,
-    formState: { errors },
+    // reset,
+    // formState: { errors },
   } = useForm<ArticleForm>({ resolver: yupResolver(boardValidationSchema) });
 
   const onSubmit: SubmitHandler<ArticleForm> = data => {
@@ -34,7 +33,7 @@ export default function CreateForm() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setCurrency(e.target.value);
 
   const currencies = ['자유 게시판', '의사 게시판'];
-  const [currency, setCurrency] = useState<BoardType>('자유게시판');
+  const [currency, setCurrency] = useState<string>('자유게시판');
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack
