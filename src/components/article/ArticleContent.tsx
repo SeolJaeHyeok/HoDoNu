@@ -6,7 +6,7 @@ import CommentIcon from '@mui/icons-material/Comment';
 import { Button } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import detailApi from 'src/apis/board/detail';
+import detailApi from '@apis/board/detail';
 
 export default function ArticleContent({ contents }: any) {
   const queryClient = useQueryClient();

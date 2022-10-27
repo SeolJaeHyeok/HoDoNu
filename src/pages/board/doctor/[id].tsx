@@ -1,6 +1,6 @@
 import ArticleContent from '@components/article/ArticleContent';
 import { useQuery } from 'react-query';
-import detailApi from 'src/apis/board/detail';
+import detailApi from '@apis/board/detail';
 
 export default function Doctor({ content }: any) {
   const detailQuery = useQuery(['detailContent'], detailApi.getDetailData, {

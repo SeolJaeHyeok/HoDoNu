@@ -1,4 +1,4 @@
-import { CommentProps } from 'src/interfaces/board/detailUserInfo';
+import { CommentProps } from '@interfaces/board/detailUserInfo';
 import { instance } from '../index';
 
 const detailApi = {
