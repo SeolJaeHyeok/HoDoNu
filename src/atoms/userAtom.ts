@@ -8,9 +8,9 @@ const { persistAtom } = recoilPersist({
   storage: sessionStorage,
 });
 
-export const isLoginState = atom<boolean>({
+export const isLoginState = atom<any>({
   key: 'isLogin',
-  default: false,
+  default: null,
   effects_UNSTABLE: [persistAtom],
 });
 

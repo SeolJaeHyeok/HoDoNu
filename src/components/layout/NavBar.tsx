@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -9,7 +9,7 @@ import { alpha } from '@mui/material';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 
 import ResponsiveNavMenu from './ResponsiveNavMenu';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import { isLoginState } from 'src/atoms/userAtom';
 import AvartarMenu from './AvartarMenu';
 import NavButton from './NavButton';
@@ -26,7 +26,18 @@ export default function NavBar() {
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const handleClick = () => {};
 
-  const isLogin = useRecoilValue(isLoginState);
+  const [isLogin, setIsLogin] = useRecoilState(isLoginState);
+  const [temp, setTemp] = useState<boolean>(false);
+
+  useEffect(() => {
+    const sessionStorage = typeof window !== 'undefined' ? window.sessionStorage : undefined;
+    const aaa = sessionStorage?.getItem('token');
+    if (aaa) {
+      setTemp(true);
+    } else {
+      setTemp(false);
+    }
+  }, [temp]);
 
   const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
@@ -86,7 +97,7 @@ export default function NavBar() {
           </Link>
         </Box>
         <Box sx={style}>
-          {isLogin ? (
+          {temp ? (
             <Box sx={style}>
               <IconButton onClick={handleClick}>
                 <NotificationsNoneIcon sx={{ color: '#fff' }} />
