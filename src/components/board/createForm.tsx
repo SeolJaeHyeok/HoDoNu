@@ -3,12 +3,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { boardValidationSchema } from '@utils/validationSchema';
 import { TextField, Stack, Button, Box } from '@mui/material';
 import React from 'react';
-// import FormEditor from '@components/FormEditor';
+import FormEditor from '@components/FormEditor';
 import { useMutation } from 'react-query';
 import boardApi from 'src/apis/board';
 // import { useRouter } from 'next/router';
 import TempFormEditor from '@components/TempFormEditor';
 import { useEffect } from 'react';
+import TempFormEditor2 from '@components/TempFormEditor2';
 
 interface ArticleForm {
   images: string;
@@ -23,10 +24,10 @@ export default function CreateForm() {
     handleSubmit,
     setValue,
     // formState: { errors },
-  } = useForm<ArticleForm>({ resolver: yupResolver(boardValidationSchema) });
+  } = useForm<ArticleForm>({ resolver: yupResolver(boardValidationSchema), mode: onchange });
   // const router = useRouter();
 
-  const mutation = useMutation(['createArticle'], boardApi.createFreeBoards, {
+  const mutation = useMutation(['createArticle'], boardApi.createFreeBoard, {
     onSuccess: data => {
       console.log(data);
     },
@@ -36,9 +37,9 @@ export default function CreateForm() {
     },
   });
 
-  useEffect(() => {
-    register('content', { required: true, minLength: 11 });
-  }, [register]);
+  // useEffect(() => {
+  //   register('content');
+  // }, [register]);
 
   const onSubmit: SubmitHandler<ArticleForm> = async data => {
     console.log(data);
@@ -89,8 +90,9 @@ export default function CreateForm() {
           placeholder="제목을 입력해주세요."
           {...register('title')}
         />
-        {/* <FormEditor value={editorContent} onChange={onEditorStateChange} /> */}
-        <TempFormEditor onChange={onEditorStateChange} />
+        <FormEditor onChange={onEditorStateChange} />
+        {/* <TempFormEditor onChange={onEditorStateChange} /> */}
+        <TempFormEditor2 onChange={onEditorStateChange} />
       </Stack>
       <Box
         sx={{
