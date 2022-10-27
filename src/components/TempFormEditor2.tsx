@@ -26,6 +26,7 @@ export default function TempFormEditor2({ onChange }: any) {
     console.log('imgHandler');
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
+    // document.body.appendChild(input);
     input.setAttribute('accept', 'image/*');
     input.click();
     const formData = new FormData();

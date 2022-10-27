@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { boardValidationSchema } from '@utils/validationSchema';
 import { TextField, Stack, Button, Box } from '@mui/material';
 import React from 'react';
-import FormEditor from '@components/FormEditor';
+// import FormEditor from '@components/FormEditor';
 import { useMutation } from 'react-query';
 import boardApi from 'src/apis/board';
 // import { useRouter } from 'next/router';
@@ -90,7 +90,7 @@ export default function CreateForm() {
           placeholder="제목을 입력해주세요."
           {...register('title')}
         />
-        <FormEditor onChange={onEditorStateChange} />
+        {/* <FormEditor onChange={onEditorStateChange} /> */}
         {/* <TempFormEditor onChange={onEditorStateChange} /> */}
         <TempFormEditor2 onChange={onEditorStateChange} />
       </Stack>
