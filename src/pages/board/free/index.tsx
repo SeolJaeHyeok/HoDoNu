@@ -2,8 +2,8 @@ import boardApi from '@apis/board';
 import BoardList from '@components/Board/BoardList';
 import FilterButton from '@components/FilterButton';
 import SearchBar from '@components/SearchBar';
+import Pagination from '@components/Pagination';
 import styled from '@emotion/styled';
-import { Pagination } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
@@ -11,7 +11,7 @@ import { useQuery } from 'react-query';
 /*
   TODO  
   -[O] API 연결 후 테스트
-  -[] Pagination - useInfinityquery
+  -[O] Pagination - 데이터 담아서 테스트 필요, perPage 설정 필요
   -[] 검색
   -[] 같은 양식으로 의사, 간호사 게시판 만들기
   -[] SSR 적용하기
@@ -20,23 +20,35 @@ import { useQuery } from 'react-query';
 export default function FreeBoard() {
   const router = useRouter();
   const [sort, setSort] = useState<string | string[] | undefined>(router.query.sort);
-  const [page] = useState<string | string[] | undefined>(router.query.page);
+  const [page, setPage] = useState<string | string[] | undefined>(router.query.page);
   const [perPage] = useState<string | string[] | undefined>(router.query.perPage);
 
-  const { data: res } = useQuery(
-    ['board', 'free', sort, page, perPage],
-    () => boardApi.getAllFreeBoards({ page, perPage, sort }),
-    {
-      staleTime: 30000,
-      cacheTime: 30000,
-    }
+  const { data: res } = useQuery(['board', 'free', sort, page, perPage], () =>
+    boardApi.getAllFreeBoards({ page, perPage, sort })
   );
 
   const handleSortClick = (sort: string) => {
+    // Sort 정렬 기준 설정
     setSort(() => sort);
+
+    // 해당 값으로 URL 변경
     router.push({
       query: {
         page,
+        perPage,
+        sort,
+      },
+    });
+  };
+
+  const handlePageNavigate = (pageNumber: number) => {
+    // Page 정렬 기준 설정
+    setPage(() => String(pageNumber + 1));
+
+    // 해당 값으로 URL 변경
+    router.push({
+      query: {
+        page: pageNumber + 1,
         perPage,
         sort,
       },
@@ -61,7 +73,10 @@ export default function FreeBoard() {
         </div>
       </BoardHeader>
       <BoardList articles={res?.data.result.articles} />
-      <Pagination />
+      <Pagination
+        length={Math.ceil(res?.data.result.articles.length / Number(perPage))}
+        handler={pageNumber => handlePageNavigate(pageNumber)}
+      />
     </BoardContainer>
   );
 }
