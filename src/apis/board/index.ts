@@ -1,8 +1,9 @@
 import { instance } from '..';
 
 interface ParamsProps {
-  page?: number;
-  perPage?: number;
+  page?: string | string[] | undefined;
+  perPage?: string | string[] | undefined;
+  sort?: string | string[] | undefined;
 }
 
 const boardApi = {

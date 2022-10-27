@@ -1,4 +1,4 @@
-import BoardList from '@components/Main/MainBoardList';
+import MainBoardList from '@components/Main/MainBoardList';
 import Carousel from '@components/Main/MainCarousel';
 import styled from '@emotion/styled';
 import Link from 'next/link';
@@ -9,13 +9,31 @@ export default function Home() {
   const params = { page: 1, perPage: 5 };
 
   const { data: freeArticles } = useQuery(
-    ['article', 'free'],
+    ['main', 'board', 'free'],
     () => boardApi.getAllFreeBoards(params),
     {
       staleTime: Infinity,
       cacheTime: Infinity,
     }
   );
+
+  // TODO - Nurse, Doctor 게시판 API 완성 되면 데이터 변경
+  // const { data: doctorArticles } = useQuery(
+  //   ['main', 'board', 'doctor'],
+  //   () => boardApi.getAllDoctorBoards(params),
+  //   {
+  //     staleTime: Infinity,
+  //     cacheTime: Infinity,
+  //   }
+  // );
+  // const { data: nurseArticles } = useQuery(
+  //   ['main', 'board', 'nurse'],
+  //   () => boardApi.getAllNurseBoards(params),
+  //   {
+  //     staleTime: Infinity,
+  //     cacheTime: Infinity,
+  //   }
+  // );
 
   return (
     <>
@@ -33,9 +51,9 @@ export default function Home() {
         </Carousel>
       </MainCarouselContainer>
       <BoardContainer>
-        <BoardList category={'자유 게시판'} articles={freeArticles?.data.result.articles} />
-        <BoardList category={'의사 게시판'} articles={freeArticles?.data.result.articles} />
-        <BoardList category={'간호사 게시판'} articles={freeArticles?.data.result.articles} />
+        <MainBoardList category={'자유 게시판'} articles={freeArticles?.data.result.articles} />
+        <MainBoardList category={'의사 게시판'} articles={freeArticles?.data.result.articles} />
+        <MainBoardList category={'간호사 게시판'} articles={freeArticles?.data.result.articles} />
       </BoardContainer>
     </>
   );
