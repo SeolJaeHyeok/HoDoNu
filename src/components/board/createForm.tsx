@@ -7,8 +7,8 @@ import FormEditor from '@components/FormEditor';
 import { useMutation } from 'react-query';
 import boardApi from 'src/apis/board';
 // import { useRouter } from 'next/router';
-import TempFormEditor from '@components/TempFormEditor';
-import { useEffect } from 'react';
+// import TempFormEditor from '@components/TempFormEditor';
+// import { useEffect } from 'react';
 import TempFormEditor2 from '@components/TempFormEditor2';
 
 interface ArticleForm {
@@ -24,7 +24,7 @@ export default function CreateForm() {
     handleSubmit,
     setValue,
     // formState: { errors },
-  } = useForm<ArticleForm>({ resolver: yupResolver(boardValidationSchema), mode: onchange });
+  } = useForm<ArticleForm>({ resolver: yupResolver(boardValidationSchema) });
   // const router = useRouter();
 
   const mutation = useMutation(['createArticle'], boardApi.createFreeBoard, {
