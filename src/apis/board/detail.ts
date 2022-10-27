@@ -10,7 +10,7 @@ const detailApi = {
       },
     });
   },
-  commentFetch: () => {
+  getDetailData: () => {
     return instance.get('/free/articles/1', {
       headers: {
         'Content-Type': 'application/json',

@@ -7,11 +7,15 @@ import { ChangeEvent, useState } from 'react';
 import detailApi from 'src/apis/board/detail';
 
 export default function ArticleContent({ contents }: any) {
-  console.log(contents);
+  // console.log(contents);
+  // console.log('렌더링!');
+  // console.log(2);
+  console.log('ArticleContent');
+
   const [commentRequestData, setCommentRequestData] = useState({
     category: 'Free',
     content: '',
-    articleId: contents?.result.articleId,
+    articleId: contents?.result?.articleId,
   });
 
   const handleChangeCommentInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -22,14 +26,18 @@ export default function ArticleContent({ contents }: any) {
     });
   };
 
-  // 현재 게시글이 존재하지 않습니다 오류! => 게시글 조회가 가능하면 댓글 가능할 것 같음!
-  const handleRequestCommentData = async () => {
-    await detailApi.commentRegister(commentRequestData);
+  const handleRequestCommentData = () => {
+    detailApi.commentRegister(commentRequestData);
   };
 
-  const handleClickCommentRegister = () => {
+  // 호진FIXME: 현재 새로고침해야 댓글이 등록된다! => setCommentRequestData를 통해서 content를 비워줌과 동시에 빈값으로 상태를 변경시켜도 등록이 바로 되지 않는다!
+  const handleClickCommentRegister = async () => {
     console.log('등록 완료!');
-    handleRequestCommentData();
+    await handleRequestCommentData();
+    setCommentRequestData({
+      ...commentRequestData,
+      content: '',
+    });
   };
 
   return (
@@ -39,8 +47,8 @@ export default function ArticleContent({ contents }: any) {
         <BlankContent></BlankContent>
         <BoardContent>
           <Comment isContent={false} content={contents} />
-          <BoardTitle>{contents.result.title}</BoardTitle>
-          <BoardSubTitle>{contents.result.content}</BoardSubTitle>
+          <BoardTitle>{contents?.result?.title}</BoardTitle>
+          <BoardSubTitle>{contents?.result?.content}</BoardSubTitle>
           <CommentWrapper>
             <CommentIcon
               sx={{
@@ -50,7 +58,10 @@ export default function ArticleContent({ contents }: any) {
             <CommentTitle>댓글</CommentTitle>
           </CommentWrapper>
           <CommnetInputContainer>
-            <CommentTextArea onChange={handleChangeCommentInput} />
+            <CommentTextArea
+              value={commentRequestData.content}
+              onChange={handleChangeCommentInput}
+            />
             <Button
               variant="outlined"
               sx={{

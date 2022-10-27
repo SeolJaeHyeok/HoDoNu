@@ -8,18 +8,18 @@ export default function Comment({ isContent, content }: any) {
       <CommentContainer>
         {isContent ? (
           <>
-            <CustomAvatarImage src={content.user.imgUrl} />
+            <CustomAvatarImage src={content?.user?.imgUrl} />
             <ContentContainer>
-              <NameContent>{content.user.nickname}</NameContent>
+              <NameContent>{content?.user?.nickname}</NameContent>
               <TimeContent>약 20시간 전</TimeContent>
             </ContentContainer>
             <CommentContent>{content?.content}</CommentContent>
           </>
         ) : (
           <>
-            <CustomAvatarImage src={content.result.user.imgUrl} />
+            <CustomAvatarImage src={content?.result?.user.imgUrl} />
             <ContentContainer>
-              <NameContent>{content.result.user.nickname}</NameContent>
+              <NameContent>{content?.result?.user.nickname}</NameContent>
               <TimeContent>약 20시간 전</TimeContent>
             </ContentContainer>
           </>
