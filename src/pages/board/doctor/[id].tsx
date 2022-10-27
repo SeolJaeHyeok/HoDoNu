@@ -1,3 +1,5 @@
+import ArticleContent from '@components/article/ArticleContent';
+
 export default function Doctor() {
-  return <div>닥터입니다.</div>;
+  return <ArticleContent />;
 }
