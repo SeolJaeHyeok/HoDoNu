@@ -8,7 +8,7 @@ import { useSetRecoilState } from 'recoil';
 import { useMutation } from 'react-query';
 
 import { loginValidationSchema } from '@utils/validationSchema';
-import { userInfoState } from 'src/atoms/userAtom';
+import { isLoginState, userInfoState } from 'src/atoms/userAtom';
 import { decodeJWT } from '@utils/decodeJWT';
 import authApi from 'src/apis/auth/auth';
 
@@ -19,7 +19,6 @@ interface UserLoginForm {
   email: string;
   password: string;
 }
-
 export default function LoginForm() {
   const router = useRouter();
 
@@ -31,15 +30,16 @@ export default function LoginForm() {
   } = useForm<UserLoginForm>({ resolver: yupResolver(loginValidationSchema) });
 
   const setUserInfo = useSetRecoilState(userInfoState);
+  const setIsLogin = useSetRecoilState(isLoginState);
 
   const saveUserInfo = (token: string, refreshToken: string) => {
     sessionStorage.setItem('token', token);
     sessionStorage.setItem('refreshToken', refreshToken);
 
     const decodedToken = decodeJWT(token);
-    const { role, userId }: any = decodedToken;
-
-    setUserInfo({ role, userId });
+    const { role, userId, jobCategory }: any = decodedToken;
+    setUserInfo({ role, userId, jobCategory });
+    setIsLogin(true);
   };
 
   const mutation = useMutation(['login'], authApi.login, {
@@ -56,6 +56,7 @@ export default function LoginForm() {
   const onLoginFormSubmit: SubmitHandler<UserLoginForm> = async data => {
     const { email, password } = data;
     mutation.mutate({ email, password });
+
     reset({ email: '', password: '' });
     router.push('/');
   };

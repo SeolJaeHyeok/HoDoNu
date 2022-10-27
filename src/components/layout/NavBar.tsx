@@ -4,12 +4,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import { Link as MuiLink, AppBar, Box, IconButton, Typography, Button } from '@mui/material';
+import { Link as MuiLink, AppBar, Box, IconButton, Typography } from '@mui/material';
 import { alpha } from '@mui/material';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 
-import CustomAvatar from '@components/CustomAvartar';
 import ResponsiveNavMenu from './ResponsiveNavMenu';
+import { useRecoilValue } from 'recoil';
+import { isLoginState } from 'src/atoms/userAtom';
+import AvartarMenu from './AvartarMenu';
+import NavButton from './NavButton';
 
 export default function NavBar() {
   const router = useRouter();
@@ -20,10 +23,11 @@ export default function NavBar() {
    * 아직 기능 구현 전이라 모든 버튼에 handleClick 함수 적용해 놓았습니다. 추후 분리 예정입니다.
    */
   // eslint-disable-next-line no-unused-vars
-  const [isLogin, setIsLogin] = useState<boolean>(false);
-  // eslint-disable-next-line no-unused-vars
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const handleClick = () => {};
+
+  const isLogin = useRecoilValue(isLoginState);
+
   const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
   return (
@@ -38,14 +42,14 @@ export default function NavBar() {
         }}
       >
         <ResponsiveNavMenu />
-        <Image src={'/wellcheck.png'} alt="logo" width={80} height={35} />
+        <Image src={'/assets/images/wellcheck.png'} alt="logo" width={80} height={35} />
         <Box
           sx={{
             display: { xs: 'none', sm: 'flex' },
             flexWrap: 'wrap',
             justifyContent: 'center',
             '& > :not(style) + :not(style)': {
-              ml: 2,
+              ml: 1,
             },
           }}
           onClick={preventDefault}
@@ -87,34 +91,10 @@ export default function NavBar() {
               <IconButton onClick={handleClick}>
                 <NotificationsNoneIcon sx={{ color: '#fff' }} />
               </IconButton>
-              <CustomAvatar alt="profile" />
+              <AvartarMenu />
             </Box>
           ) : (
-            <Box
-              sx={{
-                display: { sm: 'flex', xs: 'none' },
-                '& > :not(style) + :not(style)': {
-                  ml: 1.5,
-                },
-              }}
-            >
-              <Button
-                variant="outlined"
-                color="secondary"
-                sx={{ color: '#fff' }}
-                onClick={handleClick}
-              >
-                로그인
-              </Button>
-              <Button
-                variant="outlined"
-                color="secondary"
-                sx={{ color: '#fff' }}
-                onClick={handleClick}
-              >
-                회원가입
-              </Button>
-            </Box>
+            <NavButton />
           )}
           {isAdmin && (
             <Typography fontWeight="500" fontSize="0.85rem" sx={{ color: '#fff' }}>
