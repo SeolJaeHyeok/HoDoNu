@@ -38,6 +38,9 @@ export default function TempFormEditor({ onChange }: any) {
     clipboard: {
       matchVisual: false,
     },
+    handlers: {
+      // image: imageHandler
+    },
   };
 
   return (
@@ -48,7 +51,6 @@ export default function TempFormEditor({ onChange }: any) {
         theme="snow"
         style={{ height: '200px' }}
         onChange={onChange}
-        // value={value}
       />
     </FormEditorContainer>
   );

@@ -3,10 +3,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { boardValidationSchema } from '@utils/validationSchema';
 import { TextField, Stack, Button, Box } from '@mui/material';
 import React from 'react';
-import FormEditor from '@components/FormEditor';
+// import FormEditor from '@components/FormEditor';
 import { useMutation } from 'react-query';
 import boardApi from 'src/apis/board';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import TempFormEditor from '@components/TempFormEditor';
 import { useEffect } from 'react';
 
@@ -22,13 +22,11 @@ export default function CreateForm() {
     register,
     handleSubmit,
     setValue,
-    watch,
-    trigger,
     // formState: { errors },
   } = useForm<ArticleForm>({ resolver: yupResolver(boardValidationSchema) });
-  const router = useRouter();
+  // const router = useRouter();
 
-  const mutation = useMutation(['createArticle'], boardApi.create, {
+  const mutation = useMutation(['createArticle'], boardApi.createFreeBoards, {
     onSuccess: data => {
       console.log(data);
     },

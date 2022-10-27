@@ -9,5 +9,5 @@ export const boardValidationSchema = yup.object({
   images: yup.string(),
   category: yup.string().required(),
   title: yup.string().required(),
-  content: yup.string().required(),
+  content: yup.string().required().length(10),
 });
