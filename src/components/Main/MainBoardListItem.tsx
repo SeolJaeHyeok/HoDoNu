@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ArticleProps } from 'src/interfaces/article';
 
 export default function BoardListItem(props: ArticleProps) {
-  const { articleId, title, user, createdAt } = props;
+  const { articleId, title, user, createdAt, id } = props;
   const boardName = 'free';
 
   const handleAvartarClick = () => {
@@ -18,7 +18,7 @@ export default function BoardListItem(props: ArticleProps) {
 
   return (
     <ItemContainer>
-      <ItemNumber>{articleId}</ItemNumber>
+      <ItemNumber>{id}</ItemNumber>
       <Link href={`/${boardName}/${articleId}`}>
         <ItemTitle>{title}</ItemTitle>
       </Link>
@@ -26,7 +26,7 @@ export default function BoardListItem(props: ArticleProps) {
         <CustomAvatarImage handleClick={handleAvartarClick} width={20} height={20} />
         <ItemAuthor onClick={handleAuthorClick}>{user.nickname}</ItemAuthor>
       </AuthorContainer>
-      <ItemCreatedTime>{convertTime(createdAt)}</ItemCreatedTime>
+      <ItemCreatedTime>{convertTime(createdAt.toString())}</ItemCreatedTime>
     </ItemContainer>
   );
 }

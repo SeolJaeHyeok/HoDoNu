@@ -5,20 +5,22 @@ import BoardListItem from './MainBoardListItem';
 import BoardNavBar from './MainBoardNavBar';
 
 interface ListProps {
-  type?: string;
+  category?: string;
   articles: ArticleProps[];
 }
 
-export default function BoardList({ type, articles }: ListProps) {
-  const boardName = 'free';
+export default function BoardList({ category, articles }: ListProps) {
   return (
-    <ListContainer type={type}>
-      <Link href={`/board/${boardName}`}>
-        <BoardTitle>자유 게시판</BoardTitle>
-      </Link>
+    <ListContainer>
+      {category && (
+        <Link href={`/board/${category}`}>
+          <BoardTitle>{category}</BoardTitle>
+        </Link>
+      )}
+
       <BoardNavBar />
 
-      {articles.map(article => (
+      {articles?.slice(0, 5).map(article => (
         <BoardListItem {...article} key={article.articleId} />
       ))}
     </ListContainer>
@@ -39,6 +41,6 @@ const BoardTitle = styled.h1`
   }
 `;
 
-const ListContainer = styled.div<{ type: string | undefined }>`
+const ListContainer = styled.div`
   margin: 40px;
 `;

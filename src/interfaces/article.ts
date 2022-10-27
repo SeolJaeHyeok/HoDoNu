@@ -6,10 +6,13 @@ export interface UserProps {
 }
 
 export interface ArticleProps {
-  createdAt: string;
+  id: number;
+  createdAt: Date;
   articleId: number;
+  userId: string;
   title: string;
   hits: number;
-  comments: number;
+  isActive: boolean;
   user: UserProps;
+  comments: number;
 }
