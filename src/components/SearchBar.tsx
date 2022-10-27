@@ -2,12 +2,23 @@ import styled from '@emotion/styled';
 import debounce from 'lodash/debounce';
 import { useMemo, useState } from 'react';
 
-export default function SearchBar() {
+interface SearchBarProps {
+  width?: number;
+  height?: number;
+  // eslint-disable-next-line no-unused-vars
+  requestFunc?: (query: string) => void;
+}
+
+export default function SearchBar({ width, height, requestFunc }: SearchBarProps) {
   // loadsh에 대한 구현은 추후에 자세하게 작업하겠습니다!
   const [query, setQuery] = useState('');
+
   const handleChange = (e: any) => {
     debouncedSearch(e.target.value);
-    console.log(query);
+
+    if (requestFunc) {
+      requestFunc(query);
+    }
   };
 
   const debouncedSearch = useMemo(
@@ -20,24 +31,20 @@ export default function SearchBar() {
 
   return (
     <>
-      <SearchBarWrapper>
+      <SearchBarWrapper width={width} height={height}>
         <SearchInput onChange={handleChange} placeholder="검색어를 입력해주세요" />
-        <SearchButton />
       </SearchBarWrapper>
     </>
   );
 }
 
-const SearchBarWrapper = styled.div`
+const SearchBarWrapper = styled.div<SearchBarProps>`
   position: relative;
   display: flex;
-  width: 400px;
-  height: 48px;
+  width: ${props => (props.width ? `${props.width}px` : '400px')};
+  height: ${props => (props.height ? `${props.height}px` : '48px')};
   border: 2px solid black;
   border-radius: 6px;
-  // 작성 후에 코드 지우기
-  margin-left: 20px;
-  margin-top: 20px;
 `;
 const SearchInput = styled.input`
   border: none;
@@ -45,14 +52,4 @@ const SearchInput = styled.input`
   outline: none;
   font-size: 16px;
   padding-left: 10px;
-`;
-const SearchButton = styled.button`
-  position: absolute;
-  width: 25px;
-  height: 25px;
-  background: url('/assets/images/searchIcon.svg');
-  top: 10px;
-  right: 15px;
-  border: none;
-  cursor: pointer;
 `;
