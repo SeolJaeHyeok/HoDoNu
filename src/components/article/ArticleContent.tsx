@@ -7,10 +7,12 @@ import { Button } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import detailApi from '@apis/board/detail';
+import ArticleUserInfo from './\bArticleUserInfo';
 
 export default function ArticleContent({ contents }: any) {
   const queryClient = useQueryClient();
 
+  // 댓글 등록 로직
   const [commentRequestDataForm, setCommentRequestData] = useState({
     category: 'Free',
     content: '',
@@ -52,7 +54,7 @@ export default function ArticleContent({ contents }: any) {
       <BoardContainer>
         <BlankContent></BlankContent>
         <BoardContent>
-          <Comment isContent={false} content={contents} />
+          <ArticleUserInfo content={contents} />
           <BoardTitle>{contents?.result?.title}</BoardTitle>
           <BoardSubTitle>{contents?.result?.content}</BoardSubTitle>
           <CommentWrapper>
@@ -81,7 +83,15 @@ export default function ArticleContent({ contents }: any) {
             </Button>
           </CommnetInputContainer>
           {contents?.result?.comments?.map((content: any, i: number) => {
-            return <Comment key={i} content={content} isContent={true} />;
+            return (
+              <Comment
+                key={i}
+                content={content}
+                userId={contents.result.userId}
+                commentId={content.commentId}
+                commentUserId={content.user.userId}
+              />
+            );
           })}
         </BoardContent>
       </BoardContainer>
@@ -140,5 +150,5 @@ const CommentTextArea = styled.textarea`
   resize: none;
   padding: 10px 15px;
   border-radius: 15px;
-  width: 600px;
+  width: 700px;
 `;

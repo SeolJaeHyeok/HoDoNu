@@ -16,3 +16,7 @@ export interface CommentProps {
   content: string;
   articleId: number;
 }
+
+export interface CommentDeleteProps {
+  commentDeleteId: number;
+}

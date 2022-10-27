@@ -1,9 +1,17 @@
-import { CommentProps } from '@interfaces/board/detailUserInfo';
+import { CommentDeleteProps, CommentProps } from '@interfaces/board/detailUserInfo';
 import { instance } from '../index';
 
 const detailApi = {
   commentRegister: (commentRequestData: CommentProps) => {
     return instance.post('/free/comments', commentRequestData, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    });
+  },
+  commentDelete: (commentDeleteId: CommentDeleteProps) => {
+    return instance.delete(`/free/comments/${commentDeleteId}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${sessionStorage.getItem('token')}`,
