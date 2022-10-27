@@ -7,7 +7,7 @@ export const loginValidationSchema = yup.object({
 
 export const boardValidationSchema = yup.object({
   images: yup.string(),
-  category: yup.string(),
-  title: yup.string(),
-  content: yup.string(),
+  category: yup.string().required(),
+  title: yup.string().required(),
+  content: yup.string().required(),
 });

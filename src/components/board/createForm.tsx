@@ -5,9 +5,10 @@ import { TextField, Stack, Button, Box } from '@mui/material';
 import React from 'react';
 import FormEditor from '@components/FormEditor';
 import { useMutation } from 'react-query';
-import boardApi from 'src/apis/auth/board';
+import boardApi from 'src/apis/board';
 import { useRouter } from 'next/router';
 import TempFormEditor from '@components/TempFormEditor';
+import { useEffect } from 'react';
 
 interface ArticleForm {
   images: string;
@@ -37,22 +38,25 @@ export default function CreateForm() {
     },
   });
 
+  useEffect(() => {
+    register('content', { required: true, minLength: 11 });
+  }, [register]);
+
   const onSubmit: SubmitHandler<ArticleForm> = async data => {
     console.log(data);
     const { title, category, content, images } = data;
 
     // 게시글 생성
     mutation.mutate({ title, category, content, images });
-    router.push('/'); // 해당 게시글로 보내기
+    // router.push('/'); // 해당 게시글로 보내기
   };
   const boards = ['자유 게시판', '의사 게시판'];
 
   const onEditorStateChange = (editorState: any) => {
     editorState = editorState !== '<p><br></p>' ? editorState : '';
     setValue('content', editorState);
-    trigger('content', { shouldFocus: true });
   };
-  const editorContent = watch('content');
+  // const editorContent = watch('content');
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack
@@ -87,8 +91,8 @@ export default function CreateForm() {
           placeholder="제목을 입력해주세요."
           {...register('title')}
         />
-        <FormEditor value={editorContent} onChange={onEditorStateChange} />
-        <TempFormEditor value={editorContent} onChange={onEditorStateChange} />
+        {/* <FormEditor value={editorContent} onChange={onEditorStateChange} /> */}
+        <TempFormEditor onChange={onEditorStateChange} />
       </Stack>
       <Box
         sx={{

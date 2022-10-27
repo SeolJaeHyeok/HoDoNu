@@ -1,10 +1,9 @@
 import styled from '@emotion/styled';
 import dynamic from 'next/dynamic';
-import { useMemo } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import LoadingSpinner from './LoadingSpinner';
 
-export default function TempFormEditor({ onChange, value }: any) {
+export default function TempFormEditor({ onChange }: any) {
   const QuillWrapper = dynamic(() => import('react-quill'), {
     ssr: false,
     loading: () => <LoadingSpinner />,
@@ -27,21 +26,19 @@ export default function TempFormEditor({ onChange, value }: any) {
     'video',
   ];
 
-  const modules = useMemo(() => {
-    return {
-      toolbar: [
-        [{ header: '1' }, { header: '2' }, { font: [] }],
-        [{ size: [] }],
-        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-        [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-        ['link', 'image', 'video'],
-        ['clean'],
-      ],
-      clipboard: {
-        matchVisual: false,
-      },
-    };
-  }, []);
+  const modules = {
+    toolbar: [
+      [{ header: '1' }, { header: '2' }, { font: [] }],
+      [{ size: [] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+      ['link', 'image', 'video'],
+      ['clean'],
+    ],
+    clipboard: {
+      matchVisual: false,
+    },
+  };
 
   return (
     <FormEditorContainer>
@@ -51,7 +48,7 @@ export default function TempFormEditor({ onChange, value }: any) {
         theme="snow"
         style={{ height: '200px' }}
         onChange={onChange}
-        value={value}
+        // value={value}
       />
     </FormEditorContainer>
   );
