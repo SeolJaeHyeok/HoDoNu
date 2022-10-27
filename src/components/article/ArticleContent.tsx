@@ -1,22 +1,30 @@
 import Comment from '@components/Comment';
 import CustomSideBar from '@components/SideBar/CustomSideBar';
 import styled from '@emotion/styled';
+import { CommentProps } from '@interfaces/board/detailUserInfo';
 import CommentIcon from '@mui/icons-material/Comment';
 import { Button } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
 import detailApi from 'src/apis/board/detail';
 
 export default function ArticleContent({ contents }: any) {
-  // console.log(contents);
-  // console.log('렌더링!');
-  // console.log(2);
-  console.log('ArticleContent');
+  const queryClient = useQueryClient();
 
-  const [commentRequestData, setCommentRequestData] = useState({
+  const [commentRequestDataForm, setCommentRequestData] = useState({
     category: 'Free',
     content: '',
     articleId: contents?.result?.articleId,
   });
+
+  const requestCommentData = useMutation(
+    (commentRequestDataForm: CommentProps) => detailApi.commentRegister(commentRequestDataForm),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('detailContent');
+      },
+    }
+  );
 
   const handleChangeCommentInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setCommentRequestData({
@@ -27,15 +35,13 @@ export default function ArticleContent({ contents }: any) {
   };
 
   const handleRequestCommentData = () => {
-    detailApi.commentRegister(commentRequestData);
+    requestCommentData.mutate(commentRequestDataForm);
   };
 
-  // 호진FIXME: 현재 새로고침해야 댓글이 등록된다! => setCommentRequestData를 통해서 content를 비워줌과 동시에 빈값으로 상태를 변경시켜도 등록이 바로 되지 않는다!
-  const handleClickCommentRegister = async () => {
-    console.log('등록 완료!');
-    await handleRequestCommentData();
+  const handleClickCommentRegister = () => {
+    handleRequestCommentData();
     setCommentRequestData({
-      ...commentRequestData,
+      ...commentRequestDataForm,
       content: '',
     });
   };
@@ -59,7 +65,7 @@ export default function ArticleContent({ contents }: any) {
           </CommentWrapper>
           <CommnetInputContainer>
             <CommentTextArea
-              value={commentRequestData.content}
+              value={commentRequestDataForm.content}
               onChange={handleChangeCommentInput}
             />
             <Button
