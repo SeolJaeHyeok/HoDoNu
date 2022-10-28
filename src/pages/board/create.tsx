@@ -16,7 +16,7 @@ export default function createBoard() {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        mt: 10,
+        mt: 6,
       }}
     >
       <Box

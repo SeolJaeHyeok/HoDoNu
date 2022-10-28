@@ -14,8 +14,16 @@ export interface ArticleProps {
 }
 
 export interface ArticleForm {
-  images: string;
-  category: string; // Free, Doctor, Nurse union으로 관리
+  category: Category;
   title: string;
   content: string;
+}
+
+export enum Category {
+  // eslint-disable-next-line no-unused-vars
+  DOCTOR = 'Doctor',
+  // eslint-disable-next-line no-unused-vars
+  NURSE = 'Nurse',
+  // eslint-disable-next-line no-unused-vars
+  FREE = 'Free',
 }

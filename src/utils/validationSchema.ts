@@ -1,3 +1,4 @@
+import { Category } from '@interfaces/article';
 import * as yup from 'yup';
 
 export const loginValidationSchema = yup.object({
@@ -6,8 +7,7 @@ export const loginValidationSchema = yup.object({
 });
 
 export const boardValidationSchema = yup.object({
-  images: yup.string(),
-  category: yup.string().required(),
-  title: yup.string().required(),
-  content: yup.string().required(),
+  category: yup.mixed().oneOf(Object.values(Category)).required(),
+  title: yup.string().required().max(50),
+  content: yup.string().required().min(10),
 });
