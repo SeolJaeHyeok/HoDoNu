@@ -20,6 +20,7 @@ export default function CreateForm() {
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<ArticleForm>({ resolver: yupResolver(boardValidationSchema) });
 
@@ -39,6 +40,11 @@ export default function CreateForm() {
     const { title, category, content } = data;
     // 게시글 생성
     mutation.mutate({ title, category, content });
+  };
+
+  const handleCancle = () => {
+    reset();
+    router.back();
   };
 
   const onEditorStateChange = (editorState: any) => {
@@ -94,7 +100,7 @@ export default function CreateForm() {
         <Button type="submit" variant="contained" sx={buttonStyle}>
           게시글 등록
         </Button>
-        <Button variant="contained" sx={buttonStyle}>
+        <Button variant="contained" sx={buttonStyle} onClick={handleCancle}>
           취소
         </Button>
       </Box>
