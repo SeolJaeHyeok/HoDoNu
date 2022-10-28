@@ -122,6 +122,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 1rem;
+  margin-top: 1rem;
 `;
 
 const CardContainer = styled.div`

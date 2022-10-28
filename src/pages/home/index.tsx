@@ -6,7 +6,7 @@ import boardApi from 'src/apis/board';
 import { useQuery } from 'react-query';
 
 export default function Home() {
-  const params = { page: 1, perPage: 5 };
+  const params = { page: '1', perPage: '5' };
 
   const { data: freeArticles } = useQuery(
     ['main', 'board', 'free'],
