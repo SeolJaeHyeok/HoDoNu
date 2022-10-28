@@ -5,14 +5,14 @@ import SearchBar from '@components/SearchBar';
 import Pagination from '@components/Pagination';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 /*
   TODO  
   -[O] API 연결 후 테스트
-  -[O] Pagination - 데이터 많이 담아서 테스트 필요
+  -[O] Pagination - 테스트 완료, 해당 페이지에 Data가 없는 경우 예외 처리
   -[] 검색
   -[] 같은 양식으로 의사, 간호사 게시판 만들기
   -[] SSR 적용하기
@@ -20,12 +20,17 @@ import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 export default function FreeBoard() {
   const router = useRouter();
-  const [sort, setSort] = useState<string | string[] | undefined>(router.query.sort);
-  const [page, setPage] = useState<string | string[] | undefined>(router.query.page);
-  const [perPage, setPerPage] = useState<string | string[] | undefined>(router.query.perPage);
+  const [sort, setSort] = useState<string | string[] | undefined>('CreatedAt');
+  const [page, setPage] = useState<string | string[] | undefined>('1');
+  const [perPage, setPerPage] = useState<string | string[] | undefined>('10');
 
-  const { data: res } = useQuery(['board', 'free', sort, page, perPage], () =>
-    boardApi.getAllFreeBoards({ page, perPage, sort })
+  const { data: res } = useQuery(
+    ['board', 'free', sort, page, perPage],
+    () => boardApi.getAllFreeBoards({ page, perPage, sort }),
+    {
+      cacheTime: 300000, // 5분간 데이터 캐싱
+      staleTime: 300000,
+    }
   );
 
   // 총 페이지 수
@@ -65,6 +70,7 @@ export default function FreeBoard() {
   const handlePerPage = (e: any) => {
     // Per Page 정렬 기준 설정
     setPerPage(() => e.target.value);
+    setPage('1');
 
     // 해당 값으로 URL 변경
     router.push({

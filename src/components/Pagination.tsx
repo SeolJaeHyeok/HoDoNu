@@ -28,7 +28,7 @@ export default function Pagination({ length, show, start, handler }: PaginationP
   }, [start]);
 
   // 버튼(Card) 클릭 시 페이지 상태관리 및 props의 handler(maybe routing) 실행
-  const numberingHandler = (e: React.MouseEvent<HTMLDivElement>, pageNumber: number) => {
+  const numberingHandler = (pageNumber: number) => {
     if (pageNumber >= 0 && pageNumber < length) {
       setPageKey(pageNumber);
       handler(pageNumber);
@@ -41,8 +41,8 @@ export default function Pagination({ length, show, start, handler }: PaginationP
         {/* 맨 앞으로 */}
         <Card
           disable={pageKey === 0}
-          onClick={e => {
-            if (pageKey > 0) numberingHandler(e, 0);
+          onClick={() => {
+            if (pageKey > 0) numberingHandler(0);
           }}
         >
           <KeyboardDoubleArrowLeftIcon />
@@ -50,8 +50,8 @@ export default function Pagination({ length, show, start, handler }: PaginationP
         {/* 한 페이지 앞 */}
         <Card
           disable={pageKey === 0}
-          onClick={e => {
-            numberingHandler(e, pageKey - 1);
+          onClick={() => {
+            numberingHandler(pageKey - 1);
           }}
         >
           <KeyboardArrowLeftIcon />
@@ -61,8 +61,8 @@ export default function Pagination({ length, show, start, handler }: PaginationP
         {/* show 단위 이동 */}
         {pageKey >= show && (
           <Card
-            onClick={e => {
-              numberingHandler(e, (Math.floor(pageKey / show) - 1) * show);
+            onClick={() => {
+              numberingHandler((Math.floor(pageKey / show) - 1) * show);
             }}
           >
             ...
@@ -75,8 +75,8 @@ export default function Pagination({ length, show, start, handler }: PaginationP
             <Card
               key={page}
               selected={page === pageKey}
-              onClick={e => {
-                numberingHandler(e, page);
+              onClick={() => {
+                numberingHandler(page);
               }}
             >
               {page + 1}
@@ -85,8 +85,8 @@ export default function Pagination({ length, show, start, handler }: PaginationP
         {/* show 단위 이동 */}
         {pageKey < Math.floor(length / show) * show - (length % show ? 0 : show) && (
           <Card
-            onClick={e => {
-              numberingHandler(e, (Math.floor(pageKey / show) + 1) * show);
+            onClick={() => {
+              numberingHandler((Math.floor(pageKey / show) + 1) * show);
             }}
           >
             ...
@@ -97,8 +97,8 @@ export default function Pagination({ length, show, start, handler }: PaginationP
         {/* 한 페이지 뒤 */}
         <Card
           disable={pageKey === length - 1}
-          onClick={e => {
-            numberingHandler(e, pageKey + 1);
+          onClick={() => {
+            numberingHandler(pageKey + 1);
           }}
         >
           <KeyboardArrowRightIcon />
@@ -106,8 +106,8 @@ export default function Pagination({ length, show, start, handler }: PaginationP
         {/* 맨 뒤로 */}
         <Card
           disable={pageKey === length - 1}
-          onClick={e => {
-            if (pageKey < length - 1) numberingHandler(e, length - 1);
+          onClick={() => {
+            if (pageKey < length - 1) numberingHandler(length - 1);
           }}
         >
           <KeyboardDoubleArrowRightIcon />
