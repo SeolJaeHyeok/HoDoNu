@@ -151,4 +151,5 @@ const CommentTextArea = styled.textarea`
   padding: 10px 15px;
   border-radius: 15px;
   width: 700px;
+  overflow: hidden;
 `;

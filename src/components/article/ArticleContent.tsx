@@ -7,7 +7,7 @@ import { Button } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import detailApi from '@apis/board/detail';
-import ArticleUserInfo from './\bArticleUserInfo';
+import ArticleUserInfo from './ArticleUserInfo';
 
 export default function ArticleContent({ contents }: any) {
   const queryClient = useQueryClient();
@@ -152,4 +152,5 @@ const CommentTextArea = styled.textarea`
   padding: 10px 15px;
   border-radius: 15px;
   width: 700px;
+  overflow: hidden;
 `;

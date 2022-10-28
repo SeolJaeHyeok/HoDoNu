@@ -30,8 +30,15 @@ const detailApi = {
       },
     });
   },
-  getDetailData: () => {
-    return instance.get('/free/articles/1', {
+  getDetailData: (articleId?: number) => {
+    return instance.get(`/free/articles/${articleId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  },
+  getDetailAllData: () => {
+    return instance.get(`/free/articles`, {
       headers: {
         'Content-Type': 'application/json',
       },

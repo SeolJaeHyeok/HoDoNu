@@ -1,21 +1,3 @@
-import ArticleContent from '@components/article/ArticleContent';
-import { useQuery } from 'react-query';
-import detailApi from '@apis/board/detail';
-
-export default function Doctor({ content }: any) {
-  const detailQuery = useQuery(['detailContent'], detailApi.getDetailData, {
-    initialData: content,
-  });
-
-  return <ArticleContent contents={detailQuery.data?.data} />;
+export default function Free() {
+  return <div>자유입니다.</div>;
 }
-
-// 게시글 조회가 가능하면 위에 API를 사용하고 가능하지 않을때는 아래의 mock 데이터를 사용!
-export const getServerSideProps = async () => {
-  const { data }: any = await detailApi.getDetailData();
-  return {
-    props: {
-      content: data,
-    },
-  };
-};
