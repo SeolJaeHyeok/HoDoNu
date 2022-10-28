@@ -20,3 +20,9 @@ export interface CommentProps {
 export interface CommentDeleteProps {
   commentDeleteId: number;
 }
+export interface CommentUpdateProps {
+  commentUpdateId: number;
+  commentUpdateMsg: {
+    content: string;
+  };
+}

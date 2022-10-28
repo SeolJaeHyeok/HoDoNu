@@ -72,6 +72,7 @@ export default function ArticleContent({ contents }: any) {
             />
             <Button
               variant="outlined"
+              type="submit"
               sx={{
                 display: 'block',
                 float: 'right',
@@ -87,7 +88,7 @@ export default function ArticleContent({ contents }: any) {
               <Comment
                 key={i}
                 content={content}
-                userId={contents.result.userId}
+                userId={content.articleCreator}
                 commentId={content.commentId}
                 commentUserId={content.user.userId}
               />

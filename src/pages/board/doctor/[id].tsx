@@ -6,7 +6,6 @@ export default function Doctor({ content }: any) {
   const detailQuery = useQuery(['detailContent'], detailApi.getDetailData, {
     initialData: content,
   });
-  console.log(detailQuery);
 
   return <ArticleContent contents={detailQuery.data?.data} />;
 }
