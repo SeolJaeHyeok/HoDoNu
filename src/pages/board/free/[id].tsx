@@ -4,15 +4,14 @@ import detailApi from '@apis/board/detail';
 
 export default function Doctor({ content }: any) {
   console.log(content);
-  // const detailQuery = useQuery(
-  //   ['detailContent'],
-  //   () => detailApi.getDetailData(content.result.articleId),
-  //   {
-  //     initialData: content,
-  //   }
-  // );
-  // return <ArticleContent contents={detailQuery.data?.data} />;
-  return <div>안녕</div>;
+  const detailQuery = useQuery(
+    ['detailContent'],
+    () => detailApi.getDetailData(content.result.articleId),
+    {
+      initialData: content,
+    }
+  );
+  return <ArticleContent contents={detailQuery.data?.data} />;
 }
 
 // export const getServerSideProps = async () => {
@@ -42,19 +41,19 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  // const { data }: any = await detailApi.getDetailData(1);
-  // // const { data } = await detailApi.getDetailData(1);
-  // console.log('data', data);
+  const { data }: any = await detailApi.getDetailData(1);
+  // const { data } = await detailApi.getDetailData(1);
+  console.log('data', data);
 
-  // if (!params) {
-  //   return {
-  //     notFound: true,
-  //   };
-  // }
+  if (!params) {
+    return {
+      notFound: true,
+    };
+  }
 
-  // if (!data) {
-  //   return { notFound: true };
-  // }
+  if (!data) {
+    return { notFound: true };
+  }
 
   return {
     props: {
