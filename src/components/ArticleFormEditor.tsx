@@ -27,6 +27,7 @@ export default function ArticleFormEditor({ onChange }: any, { ...props }) {
 
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
+    // 아래 코드는 후에 크로스 브라우징 문제가 있을 수 있다고 해서 추가해놨습니다.
     // document.body.appendChild(input);
     input.setAttribute('accept', 'image/*');
     input.click();

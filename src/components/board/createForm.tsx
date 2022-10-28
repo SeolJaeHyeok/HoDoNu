@@ -1,21 +1,20 @@
 import { useRouter } from 'next/router';
+
 import { useMutation } from 'react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { TextField, Stack, Button, Box } from '@mui/material';
 
+import ArticleFormEditor from '@components/ArticleFormEditor';
 import boardApi from 'src/apis/board';
 import { boardValidationSchema } from '@utils/validationSchema';
-import ArticleFormEditor from '@components/ArticleFormEditor';
 import { ArticleForm, Category } from '@interfaces/article';
 
 export default function CreateForm() {
   const router = useRouter();
 
-  console.log(router);
-
-  const curBoard = Category.FREE;
+  const initBoard = router.query.category ? router.query.category : Category.FREE;
 
   const {
     register,
@@ -38,7 +37,6 @@ export default function CreateForm() {
   const onSubmit: SubmitHandler<ArticleForm> = async data => {
     console.log(data);
     const { title, category, content } = data;
-
     // 게시글 생성
     mutation.mutate({ title, category, content });
   };
@@ -67,13 +65,14 @@ export default function CreateForm() {
             native: true,
           }}
           {...register('category')}
-          defaultValue={curBoard}
+          defaultValue={initBoard}
           helperText={errors.category ? errors.category.message : null}
         >
           <option value={Category.NURSE}>간호사 게시판</option>
           <option value={Category.DOCTOR}>의사 게시판</option>
           <option value={Category.FREE}>자유 게시판</option>
         </TextField>
+
         <TextField
           type="text"
           id="outlined"
@@ -82,6 +81,7 @@ export default function CreateForm() {
           {...register('title')}
           helperText={errors.title ? errors.title.message : null}
         />
+
         <ArticleFormEditor onChange={onEditorStateChange} />
       </Stack>
       <Box
