@@ -29,7 +29,7 @@ export default function FreeBoard() {
   );
 
   // 총 페이지 수
-  const TOTAL_PAGE = Math.ceil(res?.data.result.articles.length / Number(perPage));
+  const TOTAL_PAGE = Math.ceil(res?.data.result.count / Number(perPage));
 
   // 최신 순, 조회순 정렬
   const handleSortClick = (sort: string) => {
