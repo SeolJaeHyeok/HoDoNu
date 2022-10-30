@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -27,6 +27,10 @@ export default function NavBar() {
   const handleClick = () => {};
 
   const isLogin = useRecoilValue(isLoginState);
+
+  useEffect(() => {
+    console.log(isLogin);
+  }, [isLogin]);
 
   const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 

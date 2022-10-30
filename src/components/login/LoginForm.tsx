@@ -55,6 +55,9 @@ export default function LoginForm() {
 
   const onLoginFormSubmit: SubmitHandler<UserLoginForm> = async data => {
     const { email, password } = data;
+    //test
+    setIsLogin(true);
+
     mutation.mutate({ email, password });
 
     reset({ email: '', password: '' });
