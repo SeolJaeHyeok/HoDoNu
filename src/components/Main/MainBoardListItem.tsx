@@ -12,7 +12,6 @@ export default function BoardListItem({
   id,
   category,
 }: ArticleProps) {
-  console.log(category);
   const handleAvartarClick = () => {
     alert('메인페이지에서 게시판 안에 있는 프로필 이미지 클릭 시 발생시킬 함수');
   };

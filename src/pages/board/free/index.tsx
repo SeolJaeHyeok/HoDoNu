@@ -84,6 +84,7 @@ export default function FreeBoard() {
     });
   };
 
+  // TODO: SideBar 공통 Layout으로 분리, Navbar 위에 덮는 문제 해결
   return (
     <>
       <CustomSideBar />
@@ -127,10 +128,11 @@ export default function FreeBoard() {
 }
 
 const BoardContainer = styled.div`
-  width: 800px;
+  width: 900px;
   display: flex;
   justify-content: center;
   flex-direction: column;
+  margin: 0 auto;
 `;
 
 const BoardHeader = styled.div`

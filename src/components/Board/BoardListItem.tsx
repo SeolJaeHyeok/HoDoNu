@@ -22,9 +22,9 @@ export default function BoardListItem(props: ArticleProps) {
   return (
     <ItemContainer>
       <ItemHeader>
-        <CustomAvatarImage src={user.imgUrl} width={30} height={30} />
-        <AuthorButton onClick={handleAuthorClick}>{user.nickname},</AuthorButton>
-        <ItemCreatedTime>{convertTime(createdAt.toString())}</ItemCreatedTime>
+        <CustomAvatarImage src={user?.imgUrl} width={30} height={30} />
+        <AuthorButton onClick={handleAuthorClick}>{user?.nickname},</AuthorButton>
+        <ItemCreatedTime>{convertTime(createdAt!.toString())}</ItemCreatedTime>
         <BookmarkBorderIcon className="bookmark-btn" onClick={handleBookmarkClick} />
       </ItemHeader>
       <ItemContent>
@@ -53,7 +53,7 @@ export default function BoardListItem(props: ArticleProps) {
 }
 
 const ItemContainer = styled.div`
-  width: 800px;
+  width: 900px;
   border-bottom: 1px solid #f3f2f5;
   padding: 10px 0px;
   position: relative;

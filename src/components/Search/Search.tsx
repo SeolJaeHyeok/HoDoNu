@@ -10,8 +10,6 @@ const Search = ({ category }: { category: string }) => {
   const scrollRef = useRef(null);
   const [index, setIndex] = useState(-1);
 
-  // console.log(results);
-
   return (
     <Wrap>
       <SearchForm

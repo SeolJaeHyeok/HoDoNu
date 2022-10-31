@@ -13,7 +13,6 @@ export default function CustomDrawer() {
   const [targetMenus, setTargetMenus] = useState<string[]>([]);
   const router = useRouter();
 
-  console.log(router);
   const handleMenuClick = (menu: string) => {
     router.push(SideBarPath[menu]);
   };
