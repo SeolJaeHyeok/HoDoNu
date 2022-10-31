@@ -46,7 +46,7 @@ export default function BoardListItem(props: ArticleProps) {
             marginRight: '2px',
           }}
         />
-        {comments?.toLocaleString()}회
+        {comments?.toLocaleString()}개
       </ItemFooter>
     </ItemContainer>
   );
