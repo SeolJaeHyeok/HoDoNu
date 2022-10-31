@@ -49,15 +49,3 @@ const RegisterSubTitle = styled.p`
   color: #8692a6;
   margin-top: 21px;
 `;
-
-const Label = styled.label`
-  display: block;
-  margin-top: 14px;
-  font-size: 14px;
-`;
-
-const ErrorMsg = styled.span`
-  display: block;
-  margin-top: 8px;
-  color: red;
-`;
