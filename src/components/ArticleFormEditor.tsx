@@ -41,8 +41,9 @@ export default function ArticleFormEditor({ onChange }: any, { ...props }) {
       }
 
       try {
+        // useMutation을 사용하면 컴포넌트가 사라지는 이슈가 있어 useMutation을 사용하지 않았습니다.
+        // 추후 더 공부해보고 수정 예정입니다.
         const res = await boardApi.createArticleImg(formData);
-        console.log('success', res.data);
         const IMG_URL = res.data.result;
 
         const range = editor.getSelection().index + 1;

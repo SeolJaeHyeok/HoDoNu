@@ -88,7 +88,7 @@ export default function CreateForm() {
           helperText={errors.title ? errors.title.message : null}
         />
 
-        <ArticleFormEditor onChange={onEditorStateChange} />
+        <ArticleFormEditor onChange={onEditorStateChange} height="250px" />
       </Stack>
       <Box
         sx={{
