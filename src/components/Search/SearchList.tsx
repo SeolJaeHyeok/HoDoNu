@@ -10,7 +10,7 @@ const SearchList = React.forwardRef(({ results, index, searchText }: any, ref) =
         <SearchItem
           ref={ref}
           isFocus={index === idx ? true : false}
-          key={result.sickCd}
+          key={result.id}
           result={result}
           searchText={searchText}
         />

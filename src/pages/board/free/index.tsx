@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import Search from '@components/Search/Search';
+import CustomSideBar from '@components/SideBar/CustomSideBar';
 
 /*
   TODO  
@@ -32,8 +33,6 @@ export default function FreeBoard() {
       staleTime: 300000,
     }
   );
-
-  console.log(res?.data.result.articles);
 
   // 총 페이지 수
   const TOTAL_PAGE = Math.ceil(res?.data.result.count / Number(perPage));
@@ -86,41 +85,44 @@ export default function FreeBoard() {
   };
 
   return (
-    <BoardContainer>
-      <BoardHeader>
-        <div>
-          <FilterButton
-            value={'최신순'}
-            clicked={router.query.sort === 'CreatedAt'}
-            onClick={() => handleSortClick('CreatedAt')}
-          />
-          <FilterButton
-            value={'조회순'}
-            clicked={router.query.sort === 'Hits'}
-            onClick={() => handleSortClick('Hits')}
-          />
-        </div>
-        <Search />
-        <FormControl>
-          <InputLabel id="perpage-label"></InputLabel>
-          <Select
-            sx={{
-              height: '30px',
-              width: '150px',
-            }}
-            labelId="perpage-label"
-            value={perPage}
-            onChange={handlePerPage}
-          >
-            <MenuItem value={5}>5개씩 보기</MenuItem>
-            <MenuItem value={10}>10개씩 보기</MenuItem>
-            <MenuItem value={20}>20개씩 보기</MenuItem>
-          </Select>
-        </FormControl>
-      </BoardHeader>
-      <BoardList articles={res?.data.result.articles} />
-      <Pagination length={TOTAL_PAGE} handler={pageNumber => handlePageNavigate(pageNumber)} />
-    </BoardContainer>
+    <>
+      <CustomSideBar />
+      <BoardContainer>
+        <BoardHeader>
+          <div>
+            <FilterButton
+              value={'최신순'}
+              clicked={router.query.sort === 'CreatedAt'}
+              onClick={() => handleSortClick('CreatedAt')}
+            />
+            <FilterButton
+              value={'조회순'}
+              clicked={router.query.sort === 'Hits'}
+              onClick={() => handleSortClick('Hits')}
+            />
+          </div>
+          <Search category="free" />
+          <FormControl>
+            <InputLabel id="perpage-label"></InputLabel>
+            <Select
+              sx={{
+                height: '30px',
+                width: '150px',
+              }}
+              labelId="perpage-label"
+              value={perPage}
+              onChange={handlePerPage}
+            >
+              <MenuItem value={5}>5개씩 보기</MenuItem>
+              <MenuItem value={10}>10개씩 보기</MenuItem>
+              <MenuItem value={20}>20개씩 보기</MenuItem>
+            </Select>
+          </FormControl>
+        </BoardHeader>
+        <BoardList articles={res?.data.result.articles} />
+        <Pagination length={TOTAL_PAGE} handler={pageNumber => handlePageNavigate(pageNumber)} />
+      </BoardContainer>
+    </>
   );
 }
 

@@ -29,7 +29,15 @@ export default function BoardList({ category, articles }: ListProps) {
       <BoardNavBar />
 
       {articles?.slice(0, 5).map(article => (
-        <BoardListItem {...article} key={article.articleId} />
+        <BoardListItem
+          category={CATEGORY_TABLE[category as string]}
+          articleId={article.articleId}
+          createdAt={article.createdAt}
+          title={article.title}
+          id={article.id}
+          user={article.user}
+          key={article.articleId}
+        />
       ))}
     </ListContainer>
   );

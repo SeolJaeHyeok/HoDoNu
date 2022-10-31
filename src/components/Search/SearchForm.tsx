@@ -10,6 +10,7 @@ const ArrowUp = 'ArrowUp';
 const Escape = 'Escape';
 
 interface SearchProps {
+  category: string;
   index?: number;
   setIndex: Dispatch<SetStateAction<number>>;
   searchText?: string;
@@ -20,6 +21,7 @@ interface SearchProps {
 }
 
 export default function SearchForm({
+  category,
   index,
   setIndex,
   searchText,
@@ -28,26 +30,41 @@ export default function SearchForm({
   results,
   setResults,
 }: SearchProps) {
+  const debouncedSearchText = useDebounce(searchText, 200);
+  const [isComposing, setIsComposing] = useState<boolean>(false);
+
   const { data: searchedData } = useQuery(
-    ['search', searchText],
-    () => boardApi.getAllFreeBoards(),
+    ['search', category, searchText],
+    () => {
+      if (category === 'free') {
+        return boardApi.getAllFreeBoards();
+      }
+
+      if (category === 'doctor') {
+        return boardApi.getAllDoctorBoards();
+      }
+
+      if (category === 'nurse') {
+        return boardApi.getAllNurseBoards();
+      }
+    },
     {
       onSuccess: () => {
         if (debouncedSearchText === '') return;
         const filteredData = searchedData?.data.result.articles.filter(
           (result: any) => !result.title.includes(debouncedSearchText)
         );
+        console.log(debouncedSearchText);
+        console.log(filteredData);
         setResults(filteredData);
       },
+      staleTime: 300000,
+      cacheTime: 300000,
     }
   );
 
-  const debouncedSearchText = useDebounce(searchText, 200);
-  const [isComposing, setIsComposing] = useState<boolean>(false);
-
   const onSearchSubmit = (e: React.KeyboardEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(debouncedSearchText);
     setSearchText('');
   };
 
@@ -57,6 +74,7 @@ export default function SearchForm({
     setIndex(-1);
   };
 
+  // 자동 완성 검색 결과 키보드 이동 handler
   const handleKeyArrow = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (isComposing) return;
 
@@ -71,7 +89,7 @@ export default function SearchForm({
         index === 0 ? setIndex(results.length - 1) : setIndex(prev => prev - 1);
         scrollRef.current?.scrollIntoView({ bebehavior: 'smooth', block: 'center' });
         break;
-      case Escape: // esc key를 눌렀을때,
+      case Escape:
         setSearchText('');
         setResults([]);
         setIndex(-1);

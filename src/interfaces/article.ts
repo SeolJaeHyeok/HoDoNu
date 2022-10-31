@@ -5,14 +5,18 @@ export interface UserProps {
   nickname: string;
 }
 
-export interface ArticleProps {
-  id: number;
-  createdAt: Date;
-  articleId: number;
-  userId: string;
-  title: string;
-  hits: number;
-  isActive: boolean;
-  user: UserProps;
-  comments: number;
+export interface ArticleProps extends ArticleCategoryProps {
+  id?: number;
+  createdAt?: Date;
+  articleId?: number;
+  userId?: string;
+  title?: string;
+  hits?: number;
+  isActive?: boolean;
+  user?: UserProps;
+  comments?: number;
+}
+
+export interface ArticleCategoryProps {
+  category: string;
 }

@@ -18,22 +18,22 @@ export default function Home() {
   );
 
   // TODO - Nurse, Doctor 게시판 API 완성 되면 데이터 변경
-  // const { data: doctorArticles } = useQuery(
-  //   ['main', 'board', 'doctor'],
-  //   () => boardApi.getAllDoctorBoards(params),
-  //   {
-  //     staleTime: Infinity,
-  //     cacheTime: Infinity,
-  //   }
-  // );
-  // const { data: nurseArticles } = useQuery(
-  //   ['main', 'board', 'nurse'],
-  //   () => boardApi.getAllNurseBoards(params),
-  //   {
-  //     staleTime: Infinity,
-  //     cacheTime: Infinity,
-  //   }
-  // );
+  const { data: doctorArticles } = useQuery(
+    ['main', 'board', 'doctor'],
+    () => boardApi.getAllDoctorBoards(params),
+    {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    }
+  );
+  const { data: nurseArticles } = useQuery(
+    ['main', 'board', 'nurse'],
+    () => boardApi.getAllNurseBoards(params),
+    {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    }
+  );
 
   return (
     <>
@@ -52,8 +52,8 @@ export default function Home() {
       </MainCarouselContainer>
       <BoardContainer>
         <MainBoardList category={'자유 게시판'} articles={freeArticles?.data.result.articles} />
-        <MainBoardList category={'의사 게시판'} articles={freeArticles?.data.result.articles} />
-        <MainBoardList category={'간호사 게시판'} articles={freeArticles?.data.result.articles} />
+        <MainBoardList category={'의사 게시판'} articles={doctorArticles?.data.result.articles} />
+        <MainBoardList category={'간호사 게시판'} articles={nurseArticles?.data.result.articles} />
       </BoardContainer>
     </>
   );
