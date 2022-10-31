@@ -1,3 +1,5 @@
+import { ArticleProps } from '@interfaces/article';
+import { AxiosResponse } from 'axios';
 import { instance } from '..';
 
 interface ParamsProps {
@@ -7,9 +9,12 @@ interface ParamsProps {
 }
 
 const boardApi = {
-  getAllFreeBoards: (params?: ParamsProps) => instance.get(`/free/articles`, { params }),
-  getAllDoctorBoards: (params?: ParamsProps) => instance.get('/free/articles', { params }),
-  getAllNurseBoards: (params?: ParamsProps) => instance.get('/nurse/articles', { params }),
+  getAllFreeBoards: (params?: ParamsProps): Promise<AxiosResponse<ArticleProps[]>> =>
+    instance.get(`/free/articles`, { params }),
+  getAllDoctorBoards: (params?: ParamsProps): Promise<AxiosResponse<ArticleProps[]>> =>
+    instance.get('/free/articles', { params }),
+  getAllNurseBoards: (params?: ParamsProps): Promise<AxiosResponse<ArticleProps[]>> =>
+    instance.get('/nurse/articles', { params }),
 };
 
 export default boardApi;
