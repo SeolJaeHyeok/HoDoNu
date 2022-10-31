@@ -39,7 +39,7 @@ export default function BoardListItem(props: ArticleProps) {
             marginRight: '2px',
           }}
         />
-        {hits}
+        {hits?.toLocaleString()}회
         <ChatIcon
           sx={{
             fontSize: '16px',

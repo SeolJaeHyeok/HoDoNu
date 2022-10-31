@@ -1,14 +1,14 @@
 import boardApi from '@apis/board';
 import BoardList from '@components/Board/BoardList';
-import FilterButton from '@components/FilterButton';
+
 import Pagination from '@components/Pagination';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import Search from '@components/Search/Search';
+
 import CustomSideBar from '@components/SideBar/CustomSideBar';
+import BoardHeader from '@components/Board/BoardHeader';
 
 /*
   TODO  
@@ -21,42 +21,21 @@ import CustomSideBar from '@components/SideBar/CustomSideBar';
 
 export default function FreeBoard() {
   const router = useRouter();
-  const [sort, setSort] = useState<string | string[] | undefined>('CreatedAt');
-  const [page, setPage] = useState<string | string[] | undefined>('1');
-  const [perPage, setPerPage] = useState<string | string[] | undefined>('10');
 
-  const { data: res } = useQuery(
-    ['board', 'free', sort, page, perPage],
-    () => boardApi.getAllFreeBoards({ page, perPage, sort }),
-    {
-      cacheTime: 300000, // 5분간 데이터 캐싱
-      staleTime: 300000,
-    }
+  const [sort, setSort] = useState('CreatedAt');
+  const [page, setPage] = useState('1');
+  const [perPage, setPerPage] = useState('10');
+  const { data: res } = useQuery(['board', 'free', sort, page, perPage], () =>
+    boardApi.getAllFreeBoards({ page, perPage, sort })
   );
 
   // 총 페이지 수
   const TOTAL_PAGE = Math.ceil(res?.data.result.count / Number(perPage));
 
-  // 최신 순, 조회순 정렬
-  const handleSortClick = (sort: string) => {
-    // Sort 정렬 기준 설정
-    setSort(() => sort);
-    setPage('1');
-
-    // 해당 값으로 URL 변경
-    router.push({
-      query: {
-        page,
-        perPage,
-        sort,
-      },
-    });
-  };
-
   // Pagination - page
   const handlePageNavigate = (pageNumber: number) => {
     // Page 정렬 기준 설정
-    setPage(() => String(pageNumber + 1));
+    setPage(String(pageNumber + 1));
 
     // 해당 값으로 URL 변경
     router.push({
@@ -68,58 +47,20 @@ export default function FreeBoard() {
     });
   };
 
-  // 모아보기 - perPage
-  const handlePerPage = (e: any) => {
-    // Per Page 정렬 기준 설정
-    setPerPage(() => e.target.value);
-    setPage('1');
-
-    // 해당 값으로 URL 변경
-    router.push({
-      query: {
-        page,
-        perPage: e.target.value,
-        sort,
-      },
-    });
-  };
-
   // TODO: SideBar 공통 Layout으로 분리, Navbar 위에 덮는 문제 해결
   return (
     <>
       <CustomSideBar />
       <BoardContainer>
-        <BoardHeader>
-          <div>
-            <FilterButton
-              value={'최신순'}
-              clicked={router.query.sort === 'CreatedAt'}
-              onClick={() => handleSortClick('CreatedAt')}
-            />
-            <FilterButton
-              value={'조회순'}
-              clicked={router.query.sort === 'Hits'}
-              onClick={() => handleSortClick('Hits')}
-            />
-          </div>
-          <Search category="free" />
-          <FormControl>
-            <InputLabel id="perpage-label"></InputLabel>
-            <Select
-              sx={{
-                height: '30px',
-                width: '150px',
-              }}
-              labelId="perpage-label"
-              value={perPage}
-              onChange={handlePerPage}
-            >
-              <MenuItem value={5}>5개씩 보기</MenuItem>
-              <MenuItem value={10}>10개씩 보기</MenuItem>
-              <MenuItem value={20}>20개씩 보기</MenuItem>
-            </Select>
-          </FormControl>
-        </BoardHeader>
+        <BoardHeader
+          setSort={setSort}
+          setPage={setPage}
+          setPerPage={setPerPage}
+          sort={sort}
+          page={page}
+          perPage={perPage}
+          category="free"
+        />
         <BoardList articles={res?.data.result.articles} />
         <Pagination length={TOTAL_PAGE} handler={pageNumber => handlePageNavigate(pageNumber)} />
       </BoardContainer>
@@ -133,11 +74,4 @@ const BoardContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   margin: 0 auto;
-`;
-
-const BoardHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 20px 0px;
 `;
