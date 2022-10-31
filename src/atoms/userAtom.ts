@@ -1,9 +1,6 @@
+import { UserInfo } from 'src/interfaces/user/userInfo';
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-export interface UserInfo {
-  role: string;
-  userId: string;
-}
 
 const sessionStorage = typeof window !== 'undefined' ? window.sessionStorage : undefined;
 
@@ -11,11 +8,14 @@ const { persistAtom } = recoilPersist({
   storage: sessionStorage,
 });
 
-export const userInfoState = atom<UserInfo>({
+export const isLoginState = atom<boolean>({
+  key: 'isLogin',
+  default: false,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const userInfoState = atom<UserInfo | null>({
   key: 'userInfo',
-  default: {
-    role: '',
-    userId: '',
-  },
+  default: null,
   effects_UNSTABLE: [persistAtom],
 });

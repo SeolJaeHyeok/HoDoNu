@@ -8,14 +8,14 @@ interface LoginAPI {
 
 const authApi = {
   register: (regisetUserData: RegisterUserInfo) => {
-    return instance.post('/user/signup', regisetUserData, {
+    return instance.post('/users/signup', regisetUserData, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
   },
   login: ({ email, password }: LoginAPI) =>
-    instance.post(`users/signin`, { email, password }).then(res => res.data),
+    instance.post(`/users/signin`, { email, password }).then(res => res.data),
 };
 
 export default authApi;
