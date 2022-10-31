@@ -4,13 +4,12 @@ import Link from 'next/link';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useSetRecoilState } from 'recoil';
 import { useMutation } from 'react-query';
 
 import { loginValidationSchema } from '@utils/validationSchema';
-import { isLoginState, userInfoState } from 'src/atoms/userAtom';
-import { decodeJWT } from '@utils/decodeJWT';
 import authApi from 'src/apis/auth/auth';
+import { useUserActions } from '@utils/useUserAction';
+// import { NextApiRequest } from 'next';
 
 // 비밀번호 찾기
 // 아이디 찾기
@@ -28,24 +27,13 @@ export default function LoginForm() {
     reset,
     formState: { errors },
   } = useForm<UserLoginForm>({ resolver: yupResolver(loginValidationSchema) });
-
-  const setUserInfo = useSetRecoilState(userInfoState);
-  const setIsLogin = useSetRecoilState(isLoginState);
-
-  const saveUserInfo = (token: string, refreshToken: string) => {
-    sessionStorage.setItem('token', token);
-    sessionStorage.setItem('refreshToken', refreshToken);
-
-    const decodedToken = decodeJWT(token);
-    const { role, userId, jobCategory }: any = decodedToken;
-    setUserInfo({ role, userId, jobCategory });
-    setIsLogin(true);
-  };
+  const userAction = useUserActions();
 
   const mutation = useMutation(['login'], authApi.login, {
     onSuccess: data => {
-      const { accessToken, refreshToken } = data.result;
-      saveUserInfo(accessToken, refreshToken);
+      userAction.login(data);
+      // const { accessToken, refreshToken } = data.result;
+      // saveUserInfo(accessToken, refreshToken);
     },
     onError: (e: Error) => {
       console.log(e.message);
@@ -55,9 +43,11 @@ export default function LoginForm() {
 
   const onLoginFormSubmit: SubmitHandler<UserLoginForm> = async data => {
     const { email, password } = data;
+
     mutation.mutate({ email, password });
 
     reset({ email: '', password: '' });
+    // console.log('req', req);
     router.push('/');
   };
 

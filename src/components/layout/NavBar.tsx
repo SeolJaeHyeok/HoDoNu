@@ -39,6 +39,10 @@ export default function NavBar() {
     }
   }, [temp]);
 
+  useEffect(() => {
+    console.log(isLogin);
+  }, [isLogin]);
+
   const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
   return (
