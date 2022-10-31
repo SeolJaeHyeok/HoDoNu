@@ -8,9 +8,12 @@ import { ChangeEvent, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import detailApi from '@apis/board/detail';
 import ArticleUserInfo from './ArticleUserInfo';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '@atoms/userAtom';
 
 export default function ArticleContent({ contents }: any) {
   const queryClient = useQueryClient();
+  const loginUserId = useRecoilValue(userInfoState);
 
   // 댓글 등록 로직
   const [commentRequestDataForm, setCommentRequestData] = useState({
@@ -88,7 +91,7 @@ export default function ArticleContent({ contents }: any) {
               <Comment
                 key={i}
                 content={content}
-                userId={content.articleCreator}
+                userId={loginUserId.userId}
                 commentId={content.commentId}
                 commentUserId={content.user.userId}
               />
