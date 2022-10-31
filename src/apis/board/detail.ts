@@ -1,12 +1,19 @@
 import {
   CommentDeleteProps,
+  CommentDeleteResponseAPI,
   CommentProps,
+  CommentRegisterResponseAPI,
   CommentUpdateProps,
-} from '@interfaces/board/detailUserInfo';
+  CommentUpdateResponseAPI,
+  GetDetailDataResponseAPI,
+} from '@interfaces/board/detailUserInfoType';
+import { AxiosResponse } from 'axios';
 import { instance } from '../index';
 
 const detailApi = {
-  commentRegister: (commentRequestData: CommentProps) => {
+  commentRegister: (
+    commentRequestData: CommentProps
+  ): Promise<AxiosResponse<CommentRegisterResponseAPI>> => {
     return instance.post('/free/comments', commentRequestData, {
       headers: {
         'Content-Type': 'application/json',
@@ -14,7 +21,9 @@ const detailApi = {
       },
     });
   },
-  commentDelete: (commentDeleteId: CommentDeleteProps) => {
+  commentDelete: (
+    commentDeleteId: CommentDeleteProps
+  ): Promise<AxiosResponse<CommentDeleteResponseAPI>> => {
     return instance.delete(`/free/comments/${commentDeleteId}`, {
       headers: {
         'Content-Type': 'application/json',
@@ -22,7 +31,10 @@ const detailApi = {
       },
     });
   },
-  commentUpdate: ({ commentUpdateId, commentUpdateMsg }: CommentUpdateProps) => {
+  commentUpdate: ({
+    commentUpdateId,
+    commentUpdateMsg,
+  }: CommentUpdateProps): Promise<AxiosResponse<CommentUpdateResponseAPI>> => {
     return instance.patch(`/free/comments/${commentUpdateId}`, commentUpdateMsg, {
       headers: {
         'Content-Type': 'application/json',
@@ -30,7 +42,7 @@ const detailApi = {
       },
     });
   },
-  getDetailData: (articleId?: number) => {
+  getDetailData: (articleId?: number): Promise<AxiosResponse<GetDetailDataResponseAPI>> => {
     return instance.get(`/free/articles/${articleId}`, {
       headers: {
         'Content-Type': 'application/json',

@@ -1,10 +1,11 @@
 import ArticleContent from '@components/article/ArticleContent';
 import { useQuery } from 'react-query';
 import detailApi from '@apis/board/detail';
+import { ContentProps, ParamsProps } from '@interfaces/board/detailUserInfoType';
 
-export default function Doctor({ content }: any) {
+export default function Doctor({ content }: ContentProps) {
   console.log('content', content);
-  const detailQuery = useQuery(
+  const detailQuery = useQuery<any>(
     ['detailContent'],
     () => detailApi.getDetailData(content.result.articleId),
     {
@@ -26,13 +27,9 @@ export default function Doctor({ content }: any) {
 // };
 
 export const getStaticPaths = async () => {
-  console.log('start');
   const { data } = await detailApi.getDetailAllData();
-  console.log(1);
-  console.log('result', data);
-
-  const paths = data.result.articles.map((list: any) => ({
-    params: { id: list.articleId.toString() },
+  const paths = data.result.articles.map((article: { articleId: number }) => ({
+    params: { id: article.articleId.toString() },
   }));
 
   return {
@@ -41,7 +38,7 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async ({ params }: any) => {
+export const getStaticProps = async ({ params }: ParamsProps) => {
   const { data }: any = await detailApi.getDetailData(params.id);
 
   if (!params) {

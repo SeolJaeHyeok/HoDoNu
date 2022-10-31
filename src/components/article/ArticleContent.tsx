@@ -1,7 +1,7 @@
 import Comment from '@components/Comment';
 import CustomSideBar from '@components/SideBar/CustomSideBar';
 import styled from '@emotion/styled';
-import { CommentProps } from '@interfaces/board/detailUserInfo';
+import { CommentProps } from '@interfaces/board/detailUserInfoType';
 import CommentIcon from '@mui/icons-material/Comment';
 import { Button } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
