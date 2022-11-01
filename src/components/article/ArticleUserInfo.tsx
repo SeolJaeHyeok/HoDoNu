@@ -1,13 +1,22 @@
 import CustomAvatarImage from '@components/CustomAvartar';
 import styled from '@emotion/styled';
 
-export default function ArticleUserInfo({ content }: any) {
+interface ArticleUserInfoProps {
+  content: {
+    user: {
+      imgUrl: string;
+      nickname: string;
+    };
+  };
+}
+
+export default function ArticleUserInfo({ content }: ArticleUserInfoProps) {
   console.log(content);
   return (
     <CommentContainer>
-      <CustomAvatarImage src={content?.result?.user.imgUrl} />
+      <CustomAvatarImage src={content?.user.imgUrl} />
       <ContentContainer>
-        <NameContent>{content?.result?.user.nickname}</NameContent>
+        <NameContent>{content?.user.nickname}</NameContent>
         <TimeContent>약 20시간 전</TimeContent>
       </ContentContainer>
     </CommentContainer>

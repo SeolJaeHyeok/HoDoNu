@@ -16,7 +16,7 @@ export interface BoardUserInfo {
   comments: string[];
 }
 
-export interface ContentProps extends Omit<BoardUserInfo, 'user' | 'images'> {}
+export interface ContentProps extends Omit<BoardUserInfo, 'images'> {}
 
 export interface ContentMapProps {
   articleCreator: string;
