@@ -11,6 +11,7 @@ import detailApi from '@apis/board/detail';
 import ArticleUserInfo from './ArticleUserInfo';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
+import { useRouter } from 'next/router';
 
 interface CommentRequestDataState {
   category: string;
@@ -18,9 +19,15 @@ interface CommentRequestDataState {
   articleId: string;
 }
 export default function ArticleContent({ result }: { result: ContentProps }) {
+  console.log(result);
   const queryClient = useQueryClient();
   const loginUserId = useRecoilValue(userInfoState);
-  console.log(result);
+  const router = useRouter();
+
+  // 게시글 수정 클릭시 router에 값 넣어서 보내기!
+  const handleMoveToEdit = () => {
+    router.push(`/board/edit/id?=${result.articleId}&category=${commentRequestDataForm.category}`);
+  };
 
   // 댓글 등록 로직
   const [commentRequestDataForm, setCommentRequestData] = useState<CommentRequestDataState>({
@@ -70,10 +77,18 @@ export default function ArticleContent({ result }: { result: ContentProps }) {
             {/* 호진 TODO: image를 받아올때 hydration error 발생 , 이미지 사이즈 조절 이슈*/}
             <BoardSubTitleContainer
               dangerouslySetInnerHTML={{ __html: result?.content }}
-              style={{ width: '750px' }}
             ></BoardSubTitleContainer>
-            {result?.content}
           </BoardSubTitle>
+          <BoardButtonContainer>
+            {loginUserId.userId === result?.userId && (
+              <>
+                <Button variant="outlined" onClick={handleMoveToEdit}>
+                  수정
+                </Button>
+                <Button variant="outlined">삭제</Button>
+              </>
+            )}
+          </BoardButtonContainer>
           <CommentWrapper>
             <CommentIcon
               sx={{
@@ -145,6 +160,10 @@ const BoardSubTitle = styled.p`
   color: #24292f;
   border-top: 1px solid #f1f3f5;
   border-bottom: 1px solid #f1f3f5;
+`;
+
+const BoardButtonContainer = styled.div`
+  text-align: right;
 `;
 
 const BoardSubTitleContainer = styled.div``;
