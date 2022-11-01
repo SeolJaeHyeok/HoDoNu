@@ -14,12 +14,16 @@ const detailApi = {
   commentRegister: (
     commentRequestData: CommentProps
   ): Promise<AxiosResponse<CommentRegisterResponseAPI>> => {
-    return instance.post(`/free/comments`, commentRequestData, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-      },
-    });
+    return instance.post(
+      `/${commentRequestData.category.toLowerCase()}/comments`,
+      commentRequestData,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        },
+      }
+    );
   },
   commentDelete: (
     commentDeleteId: CommentDeleteProps
