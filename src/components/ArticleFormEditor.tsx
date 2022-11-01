@@ -22,7 +22,6 @@ export default function ArticleFormEditor({ onChange }: any, { ...props }) {
   const QuillRef = useRef<any>(null);
 
   const imageHandler = async () => {
-    console.log('imgHandler');
     const editor = await QuillRef.current?.getEditor();
 
     const input = document.createElement('input');
@@ -34,7 +33,6 @@ export default function ArticleFormEditor({ onChange }: any, { ...props }) {
     const formData = new FormData();
 
     input.addEventListener('change', async () => {
-      console.log('change');
       const file = input.files;
       if (file !== null) {
         formData.append('images', file[0]);

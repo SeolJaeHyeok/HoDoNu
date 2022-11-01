@@ -12,7 +12,7 @@ import { boardValidationSchema } from '@utils/validationSchema';
 import { ArticleForm } from '@interfaces/article';
 import { categoryAssertion } from '@utils/const/category';
 
-export default function CreateForm() {
+export default function ArticleCreateForm() {
   const router = useRouter();
 
   const initBoard = router.query.category ? router.query.category : categoryAssertion.FREE;
@@ -37,7 +37,6 @@ export default function CreateForm() {
   });
 
   const onSubmit: SubmitHandler<ArticleForm> = async data => {
-    console.log(data);
     const { title, category, content } = data;
     // 게시글 생성
     mutation.mutate({ title, category, content });
