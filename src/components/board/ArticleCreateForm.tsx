@@ -12,7 +12,7 @@ import { boardValidationSchema } from '@utils/validationSchema';
 import { ArticleForm } from '@interfaces/article';
 import { categoryAssertion } from '@utils/const/category';
 
-export default function CreateForm() {
+export default function ArticleCreateForm() {
   const router = useRouter();
 
   const initBoard = router.query.category ? router.query.category : categoryAssertion.FREE;
