@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import { RegisterUserInfo } from 'src/interfaces/user/registerUserInfo';
 import { instance } from '../index';
 
@@ -7,14 +8,14 @@ interface LoginAPI {
 }
 
 const authApi = {
-  register: (regisetUserData: RegisterUserInfo) => {
+  register: (regisetUserData: RegisterUserInfo): Promise<AxiosResponse<any, any>> => {
     return instance.post('/users/signup', regisetUserData, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
   },
-  login: ({ email, password }: LoginAPI) =>
+  login: ({ email, password }: LoginAPI): Promise<AxiosResponse<any, any>> =>
     instance.post(`/users/signin`, { email, password }).then(res => res.data),
 };
 

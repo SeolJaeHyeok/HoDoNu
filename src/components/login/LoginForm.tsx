@@ -8,7 +8,7 @@ import { useMutation } from 'react-query';
 
 import { loginValidationSchema } from '@utils/validationSchema';
 import authApi from 'src/apis/auth/auth';
-import { useUserActions } from '@utils/useUserAction';
+import { useUserActions } from '@utils/hooks/useUserAction';
 // import { NextApiRequest } from 'next';
 
 // 비밀번호 찾기
@@ -32,8 +32,6 @@ export default function LoginForm() {
   const mutation = useMutation(['login'], authApi.login, {
     onSuccess: data => {
       userAction.login(data);
-      // const { accessToken, refreshToken } = data.result;
-      // saveUserInfo(accessToken, refreshToken);
     },
     onError: (e: Error) => {
       console.log(e.message);
@@ -47,7 +45,6 @@ export default function LoginForm() {
     mutation.mutate({ email, password });
 
     reset({ email: '', password: '' });
-    // console.log('req', req);
     router.push('/');
   };
 

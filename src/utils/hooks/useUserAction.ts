@@ -1,6 +1,6 @@
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
-import { decodeJWT } from './decodeJWT';
+import { decodeJWT } from '../decodeJWT';
 import { isLoginState, userInfoState } from 'src/atoms/userAtom';
 
 export function useUserActions() {
