@@ -8,9 +8,11 @@ import LoadingSpinner from './LoadingSpinner';
 const ReactQuill = dynamic(
   async () => {
     const { default: RQ } = await import('react-quill');
-    return function comp({ forwardedRef, ...props }: any) {
+    const aaa = ({ forwardedRef, ...props }: any) => {
+      // console.log('forwardedRef', forwardedRef);
       return <RQ ref={forwardedRef} {...props} />;
     };
+    return aaa;
   },
   {
     ssr: false,
