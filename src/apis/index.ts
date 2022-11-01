@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const sessionStorage = typeof window !== 'undefined' ? window.sessionStorage : undefined;
+
 export const instance = axios.create({
   baseURL:
     process.env.NODE_ENV === 'development'
