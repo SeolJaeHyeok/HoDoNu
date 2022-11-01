@@ -11,12 +11,17 @@ import ArticleUserInfo from './ArticleUserInfo';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
 
+interface CommentRequestDataState {
+  category: string;
+  content: string;
+  articleId: string;
+}
 export default function ArticleContent({ result }: { result: ContentProps }) {
   const queryClient = useQueryClient();
   const loginUserId = useRecoilValue(userInfoState);
 
   // 댓글 등록 로직
-  const [commentRequestDataForm, setCommentRequestData] = useState({
+  const [commentRequestDataForm, setCommentRequestData] = useState<CommentRequestDataState>({
     category: 'Free',
     content: '',
     articleId: result?.articleId,

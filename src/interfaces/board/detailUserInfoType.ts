@@ -37,7 +37,7 @@ export interface ParamsProps {
 export interface CommentProps {
   category: string;
   content: string;
-  articleId: number;
+  articleId: string;
 }
 
 export interface CommentDeleteProps {
