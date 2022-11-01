@@ -1,14 +1,22 @@
-export interface ContentProps {
-  articleId: number;
-  comments: string[];
-  content: string;
+export interface BoardUserInfo {
   createdAt: string;
-  hits: number;
-  images: string[];
-  isActive: boolean;
+  articleId: string;
   userId: string;
   title: string;
+  content: string;
+  hits: number;
+  isActive: boolean;
+  user: {
+    userId: string;
+    imgUrl: string;
+    nickname: string;
+    email: string;
+  };
+  images: string[];
+  comments: string[];
 }
+
+export interface ContentProps extends Omit<BoardUserInfo, 'user' | 'images'> {}
 
 export interface ContentMapProps {
   articleCreator: string;
@@ -75,22 +83,6 @@ export interface CommentUpdateResponseAPI {
 }
 
 export interface GetDetailDataResponseAPI {
-  result: {
-    createdAt: string;
-    articleId: string;
-    userId: string;
-    title: string;
-    content: string;
-    hits: number;
-    isActive: boolean;
-    user: {
-      userId: string;
-      imgUrl: string;
-      nickname: string;
-      email: string;
-    };
-    images: string[];
-    comments: string[];
-  };
+  result: BoardUserInfo;
   status: number;
 }

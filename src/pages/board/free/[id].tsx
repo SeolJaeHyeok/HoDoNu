@@ -14,16 +14,6 @@ export default function Free({ content }: any) {
   return <ArticleContent result={detailQuery.data?.data?.result} />;
 }
 
-// export const getServerSideProps = async () => {
-//   const { data }: any = await detailApi.getDetailData(1);
-//   console.log(1);
-//   return {
-//     props: {
-//       content: data,
-//     },
-//   };
-// };
-
 export const getStaticPaths = async () => {
   const { data } = await detailApi.getDetailAllData();
   const paths = data.result.articles.map((article: { articleId: number }) => ({

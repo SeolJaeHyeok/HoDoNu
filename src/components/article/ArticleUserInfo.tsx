@@ -2,6 +2,7 @@ import CustomAvatarImage from '@components/CustomAvartar';
 import styled from '@emotion/styled';
 
 export default function ArticleUserInfo({ content }: any) {
+  console.log(content);
   return (
     <CommentContainer>
       <CustomAvatarImage src={content?.result?.user.imgUrl} />

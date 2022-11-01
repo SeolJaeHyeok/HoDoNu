@@ -1,6 +1,6 @@
 import detailApi from '@apis/board/detail';
 import styled from '@emotion/styled';
-import { CommentDeleteProps } from '@interfaces/board/detailUserInfo';
+import { CommentDeleteProps } from '@interfaces/board/detailUserInfoType';
 import { Button } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
@@ -32,7 +32,7 @@ export default function Comment({ content, userId, commentUserId, commentId }: a
   });
 
   // 댓글 수정 로직
-  const handleUpdateCommentData = async () => {
+  const handleUpdateCommentData = () => {
     setIsEdit(!isEdit);
   };
 
@@ -42,8 +42,8 @@ export default function Comment({ content, userId, commentUserId, commentId }: a
     });
   };
 
-  const handleRegisetUpdateComment = async () => {
-    await updateCommentData.mutate({
+  const handleRegisetUpdateComment = () => {
+    updateCommentData.mutate({
       commentUpdateId: commentId,
       commentUpdateMsg: commentUpdateData,
     });
