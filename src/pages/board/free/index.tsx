@@ -52,27 +52,29 @@ export default function FreeBoard() {
   return (
     <>
       <CustomSideBar />
-      {!res ? (
-        <BoardSkeleton />
-      ) : (
-        <BoardContainer>
-          <BoardHeader
-            setSort={setSort}
-            setPage={setPage}
-            setPerPage={setPerPage}
-            sort={sort}
-            page={page}
-            perPage={perPage}
-            category={res?.data.result.category.toLowerCase()}
-          />
+      <BoardContainer>
+        {!res ? (
+          <BoardSkeleton />
+        ) : (
+          <>
+            <BoardHeader
+              setSort={setSort}
+              setPage={setPage}
+              setPerPage={setPerPage}
+              sort={sort}
+              page={page}
+              perPage={perPage}
+              category={res?.data.result.category.toLowerCase()}
+            />
 
-          <BoardList
-            category={res.data.result.category.toLowerCase()}
-            articles={res.data.result.articles}
-          />
-          <Pagination length={TOTAL_PAGE} handler={pageNumber => handlePageNavigate(pageNumber)} />
-        </BoardContainer>
-      )}
+            <BoardList
+              category={res.data.result.category.toLowerCase()}
+              articles={res.data.result.articles}
+            />
+          </>
+        )}
+        <Pagination length={TOTAL_PAGE} handler={pageNumber => handlePageNavigate(pageNumber)} />
+      </BoardContainer>
     </>
   );
 }
