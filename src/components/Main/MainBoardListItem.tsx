@@ -4,7 +4,7 @@ import { convertTime } from '@utils/func';
 import Link from 'next/link';
 import { ArticleProps } from 'src/interfaces/article';
 
-export default function BoardListItem({
+export default function MainBoardListItem({
   articleId,
   title,
   user,
