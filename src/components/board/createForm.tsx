@@ -9,12 +9,13 @@ import { TextField, Stack, Button, Box } from '@mui/material';
 import ArticleFormEditor from '@components/ArticleFormEditor';
 import boardApi from 'src/apis/board';
 import { boardValidationSchema } from '@utils/validationSchema';
-import { ArticleForm, Category } from '@interfaces/article';
+import { ArticleForm } from '@interfaces/article';
+import { categoryAssertion } from '@utils/const/category';
 
 export default function CreateForm() {
   const router = useRouter();
 
-  const initBoard = router.query.category ? router.query.category : Category.FREE;
+  const initBoard = router.query.category ? router.query.category : categoryAssertion.FREE;
 
   const {
     register,
@@ -74,9 +75,9 @@ export default function CreateForm() {
           defaultValue={initBoard}
           helperText={errors.category ? errors.category.message : null}
         >
-          <option value={Category.NURSE}>간호사 게시판</option>
-          <option value={Category.DOCTOR}>의사 게시판</option>
-          <option value={Category.FREE}>자유 게시판</option>
+          <option value={categoryAssertion.NURSE}>간호사 게시판</option>
+          <option value={categoryAssertion.DOCTOR}>의사 게시판</option>
+          <option value={categoryAssertion.FREE}>자유 게시판</option>
         </TextField>
 
         <TextField

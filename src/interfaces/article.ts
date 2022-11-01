@@ -14,16 +14,7 @@ export interface ArticleProps {
 }
 
 export interface ArticleForm {
-  category: Category;
+  category: 'Doctor' | 'Nurse' | 'Free';
   title: string;
   content: string;
-}
-
-export enum Category {
-  // eslint-disable-next-line no-unused-vars
-  DOCTOR = 'Doctor',
-  // eslint-disable-next-line no-unused-vars
-  NURSE = 'Nurse',
-  // eslint-disable-next-line no-unused-vars
-  FREE = 'Free',
 }
