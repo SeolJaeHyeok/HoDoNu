@@ -2,6 +2,7 @@ import detailApi from '@apis/board/detail';
 import styled from '@emotion/styled';
 import { CommentDeleteProps } from '@interfaces/board/detailUserInfoType';
 import { Button } from '@mui/material';
+import { convertTime } from '@utils/func';
 import { ChangeEvent, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import CustomAvatarImage from './CustomAvartar';
@@ -61,7 +62,7 @@ export default function Comment({ content, userId, commentUserId, commentId }: a
         <CustomAvatarImage src={content?.user?.imgUrl} />
         <ContentContainer>
           <NameContent>{content?.user?.nickname}</NameContent>
-          <TimeContent>약 20시간 전</TimeContent>
+          <TimeContent>{convertTime(content?.createdAt)}</TimeContent>
         </ContentContainer>
         {isEdit ? (
           <CommentTextArea

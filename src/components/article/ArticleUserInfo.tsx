@@ -1,8 +1,10 @@
 import CustomAvatarImage from '@components/CustomAvartar';
 import styled from '@emotion/styled';
+import { convertTime } from '@utils/func';
 
 interface ArticleUserInfoProps {
   content: {
+    createdAt: string;
     user: {
       imgUrl: string;
       nickname: string;
@@ -11,13 +13,12 @@ interface ArticleUserInfoProps {
 }
 
 export default function ArticleUserInfo({ content }: ArticleUserInfoProps) {
-  console.log(content);
   return (
     <CommentContainer>
       <CustomAvatarImage src={content?.user.imgUrl} />
       <ContentContainer>
         <NameContent>{content?.user.nickname}</NameContent>
-        <TimeContent>약 20시간 전</TimeContent>
+        <TimeContent>{convertTime(content?.createdAt)}</TimeContent>
       </ContentContainer>
     </CommentContainer>
   );
