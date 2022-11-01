@@ -8,6 +8,7 @@ import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
 import boardApi from '@apis/board';
 
+// eslint-disable-next-line no-unused-vars
 export default function EditForm({ data, category }: any) {
   // const { title, content } = data;
   const router = useRouter();

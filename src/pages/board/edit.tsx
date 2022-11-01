@@ -3,14 +3,18 @@ import { Container, Box, Typography } from '@mui/material';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { useQuery } from 'react-query';
+// eslint-disable-next-line no-unused-vars
 import { useRecoilState } from 'recoil';
 
 export default function Edit() {
+  // eslint-disable-next-line no-unused-vars
   const router = useRouter();
   // const { category, articleId } = router.query;
   const category = 'Free';
   const articleId = 29;
+  // eslint-disable-next-line no-unused-vars
   const [data, setData] = useState({
     title: 'ssr',
     content:
