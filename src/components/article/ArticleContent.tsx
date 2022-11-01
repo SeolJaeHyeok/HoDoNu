@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger-with-children */
 import Comment from '@components/Comment';
 import CustomSideBar from '@components/SideBar/CustomSideBar';
 import styled from '@emotion/styled';
@@ -19,6 +20,7 @@ interface CommentRequestDataState {
 export default function ArticleContent({ result }: { result: ContentProps }) {
   const queryClient = useQueryClient();
   const loginUserId = useRecoilValue(userInfoState);
+  console.log(result);
 
   // 댓글 등록 로직
   const [commentRequestDataForm, setCommentRequestData] = useState<CommentRequestDataState>({
@@ -64,7 +66,14 @@ export default function ArticleContent({ result }: { result: ContentProps }) {
         <BoardContent>
           <ArticleUserInfo content={result} />
           <BoardTitle>{result?.title}</BoardTitle>
-          <BoardSubTitle>{result?.content}</BoardSubTitle>
+          <BoardSubTitle>
+            {/* 호진 TODO: image를 받아올때 hydration error 발생 , 이미지 사이즈 조절 이슈*/}
+            <BoardSubTitleContainer
+              dangerouslySetInnerHTML={{ __html: result?.content }}
+              style={{ width: '750px' }}
+            ></BoardSubTitleContainer>
+            {result?.content}
+          </BoardSubTitle>
           <CommentWrapper>
             <CommentIcon
               sx={{
@@ -122,6 +131,7 @@ const BlankContent = styled.div`
 `;
 const BoardContent = styled.div`
   flex-grow: 3;
+  /* width: 750px; */
 `;
 const BoardTitle = styled.h1`
   font-size: 25px;
@@ -136,6 +146,8 @@ const BoardSubTitle = styled.p`
   border-top: 1px solid #f1f3f5;
   border-bottom: 1px solid #f1f3f5;
 `;
+
+const BoardSubTitleContainer = styled.div``;
 
 const CommentWrapper = styled.div`
   display: flex;
