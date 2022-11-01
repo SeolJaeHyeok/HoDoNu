@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
 import LoadingSpinner from './LoadingSpinner';
@@ -33,10 +34,26 @@ const formats = [
   'video',
 ];
 
-export default function FormEditor() {
+export default function FormEditor({ onChange, value }: any) {
   const QuillWrapper = dynamic(() => import('react-quill'), {
     ssr: false,
     loading: () => <LoadingSpinner />,
   });
-  return <QuillWrapper modules={modules} formats={formats} theme="snow" />;
+
+  return (
+    <FormEditorContainer>
+      <QuillWrapper
+        modules={modules}
+        formats={formats}
+        theme="snow"
+        style={{ height: '200px' }}
+        onChange={onChange}
+        value={value}
+      />
+    </FormEditorContainer>
+  );
 }
+
+const FormEditorContainer = styled.div`
+  height: 250px;
+`;

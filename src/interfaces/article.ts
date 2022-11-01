@@ -20,3 +20,9 @@ export interface ArticleProps extends ArticleCategoryProps {
 export interface ArticleCategoryProps {
   category: string;
 }
+
+export interface ArticleForm {
+  category: 'Doctor' | 'Nurse' | 'Free';
+  title: string;
+  content: string;
+}
