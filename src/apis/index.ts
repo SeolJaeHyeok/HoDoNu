@@ -11,3 +11,8 @@ export const instance = axios.create({
     },
   },
 });
+
+instance.interceptors.request.use((config: any) => {
+  config.headers.Authorization = `Bearer ${sessionStorage?.getItem('token')}`;
+  return config;
+});
