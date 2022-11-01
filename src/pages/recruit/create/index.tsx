@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { Button, TextField } from '@mui/material';
-import { useState } from 'react';
 
 /**
 1. 회사 이름
@@ -14,9 +13,6 @@ import { useState } from 'react';
  */
 
 export default function RecruitCreatePage() {
-  const [hospitalAddressNumber, setHospitalAddressNumber] = useState<string>();
-  const [hospitalAddress, setHospitalAddress] = useState<string>('');
-  const [hospitalAddressDetail, setHospitalAddressDetail] = useState<string>('');
   return (
     <form>
       <RegisterWrapper>
@@ -94,7 +90,7 @@ export default function RecruitCreatePage() {
           <TextField
             id="organization"
             placeholder="우편번호"
-            value={hospitalAddressNumber}
+            value={'우편 번호'}
             sx={{
               width: '225px',
             }}
@@ -113,7 +109,7 @@ export default function RecruitCreatePage() {
         <AddressContainer>
           <TextField
             placeholder="주소"
-            value={hospitalAddress}
+            value={'주소'}
             sx={{
               width: '450px',
               mt: '8px',
@@ -121,7 +117,7 @@ export default function RecruitCreatePage() {
           />
           <TextField
             placeholder="상세 주소"
-            value={hospitalAddressDetail}
+            value={'상세 주소'}
             onChange={e => console.log('상세 주소 : ', e.target.value)}
             sx={{
               width: '450px',
