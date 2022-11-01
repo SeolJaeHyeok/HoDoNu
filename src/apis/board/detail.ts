@@ -56,6 +56,14 @@ const detailApi = {
       },
     });
   },
+  deleteBoard: (articleId: string) => {
+    return instance.delete(`/free/articles/${articleId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    });
+  },
 };
 
 export default detailApi;

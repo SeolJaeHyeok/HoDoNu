@@ -19,7 +19,6 @@ interface CommentRequestDataState {
   articleId: string;
 }
 export default function ArticleContent({ result }: { result: ContentProps }) {
-  console.log(result);
   const queryClient = useQueryClient();
   const loginUserId = useRecoilValue(userInfoState);
   const router = useRouter();
@@ -27,6 +26,19 @@ export default function ArticleContent({ result }: { result: ContentProps }) {
   // 게시글 수정 클릭시 router에 값 넣어서 보내기!
   const handleMoveToEdit = () => {
     router.push(`/board/edit/id?=${result.articleId}&category=${commentRequestDataForm.category}`);
+  };
+
+  // 게시글 삭제
+  const requestDeleteBoard = useMutation(detailApi.deleteBoard, {
+    onSuccess: data => {
+      console.log(data);
+      queryClient.invalidateQueries('detailContent');
+    },
+  });
+
+  const handleDeleteBoard = () => {
+    console.log('삭제');
+    requestDeleteBoard.mutate(result.articleId);
   };
 
   // 댓글 등록 로직
@@ -85,7 +97,9 @@ export default function ArticleContent({ result }: { result: ContentProps }) {
                 <Button variant="outlined" onClick={handleMoveToEdit}>
                   수정
                 </Button>
-                <Button variant="outlined">삭제</Button>
+                <Button variant="outlined" onClick={handleDeleteBoard}>
+                  삭제
+                </Button>
               </>
             )}
           </BoardButtonContainer>
