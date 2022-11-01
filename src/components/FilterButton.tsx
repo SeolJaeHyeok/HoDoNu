@@ -15,7 +15,7 @@ interface ButtonProps {
 /**
  * @param {string} value - button안에 들어갈 값
  * @param {boolean} clicked - 클릭 여부
- * @param {(e) => void} handleClick - handleClick 함수 ( clicked 여부를 알 수 있는 state )
+ * @param {(e) => void} onClick - onClick 함수 ( clicked 여부를 알 수 있는 state )
  */
 
 export default function FilterButton({ value, clicked, onClick }: ButtonProps) {
