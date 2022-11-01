@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -9,7 +9,7 @@ import { alpha } from '@mui/material';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 
 import ResponsiveNavMenu from './ResponsiveNavMenu';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { isLoginState } from 'src/atoms/userAtom';
 import AvartarMenu from './AvartarMenu';
 import NavButton from './NavButton';
@@ -18,30 +18,10 @@ export default function NavBar() {
   const router = useRouter();
   const curPath = router.pathname;
 
-  /**
-   * 아래 state 값들과 handleClick 함수는 추후에 로그인, 회원가입, 쪽지 기능 구현 후 수정 예정입니다.
-   * 아직 기능 구현 전이라 모든 버튼에 handleClick 함수 적용해 놓았습니다. 추후 분리 예정입니다.
-   */
   // eslint-disable-next-line no-unused-vars
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const isLogin = useRecoilValue(isLoginState);
   const handleClick = () => {};
-
-  const [isLogin, setIsLogin] = useRecoilState(isLoginState);
-  const [temp, setTemp] = useState<boolean>(false);
-
-  useEffect(() => {
-    const sessionStorage = typeof window !== 'undefined' ? window.sessionStorage : undefined;
-    const aaa = sessionStorage?.getItem('token');
-    if (aaa) {
-      setTemp(true);
-    } else {
-      setTemp(false);
-    }
-  }, [temp]);
-
-  useEffect(() => {
-    console.log(isLogin);
-  }, [isLogin]);
 
   const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
@@ -101,7 +81,7 @@ export default function NavBar() {
           </Link>
         </Box>
         <Box sx={style}>
-          {temp ? (
+          {isLogin ? (
             <Box sx={style}>
               <IconButton onClick={handleClick}>
                 <NotificationsNoneIcon sx={{ color: '#fff' }} />
