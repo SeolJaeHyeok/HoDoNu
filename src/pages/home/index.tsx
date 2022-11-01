@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 import boardApi from 'src/apis/board';
 import { useQuery } from 'react-query';
+import MainBoardSkeleton from '@components/Main/MainBoardSkeleton';
 
 export default function Home() {
   const params = { page: '1', perPage: '5' };
@@ -51,9 +52,21 @@ export default function Home() {
         </Carousel>
       </MainCarouselContainer>
       <BoardContainer>
-        <MainBoardList category={'자유 게시판'} articles={freeArticles?.data.result.articles} />
-        <MainBoardList category={'의사 게시판'} articles={doctorArticles?.data.result.articles} />
-        <MainBoardList category={'간호사 게시판'} articles={nurseArticles?.data.result.articles} />
+        {!freeArticles || !doctorArticles || !nurseArticles ? (
+          <MainBoardSkeleton />
+        ) : (
+          <>
+            <MainBoardList category={'자유 게시판'} articles={freeArticles.data.result.articles} />
+            <MainBoardList
+              category={'의사 게시판'}
+              articles={doctorArticles?.data.result.articles}
+            />
+            <MainBoardList
+              category={'간호사 게시판'}
+              articles={nurseArticles?.data.result.articles}
+            />
+          </>
+        )}
       </BoardContainer>
     </>
   );

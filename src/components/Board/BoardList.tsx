@@ -3,15 +3,15 @@ import { ArticleProps } from '@interfaces/article';
 import BoardListItem from './BoardListItem';
 
 interface BoardProps {
+  category: 'free' | 'doctor' | 'nurse';
   articles: ArticleProps[];
 }
 
-// any -> 다른 브랜치에서 만든 ArticleProps로 변경
-export default function BoardList({ articles }: BoardProps) {
+export default function BoardList({ category, articles }: BoardProps) {
   return (
     <BoardListContainer>
-      {articles?.map((article: any) => (
-        <BoardListItem key={article.articleId} {...article} />
+      {articles.map((article: any) => (
+        <BoardListItem key={article.articleId} category={category} {...article} />
       ))}
     </BoardListContainer>
   );

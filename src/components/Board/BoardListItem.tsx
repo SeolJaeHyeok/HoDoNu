@@ -8,8 +8,7 @@ import { ArticleProps } from '@interfaces/article';
 import { convertTime } from '@utils/func';
 
 export default function BoardListItem(props: ArticleProps) {
-  const { createdAt, articleId, title, hits, user, comments } = props;
-  const boardName = 'free';
+  const { createdAt, articleId, title, hits, user, comments, category } = props;
 
   const handleAuthorClick = () => {
     alert('TODO: 작성자 누르면 메세지 보내기 보여주기');
@@ -28,7 +27,7 @@ export default function BoardListItem(props: ArticleProps) {
         <BookmarkBorderIcon className="bookmark-btn" onClick={handleBookmarkClick} />
       </ItemHeader>
       <ItemContent>
-        <Link href={`/board/${boardName}/${articleId}`}>
+        <Link href={`/board/${category}/${articleId}`}>
           <ItemTitle>{title}</ItemTitle>
         </Link>
       </ItemContent>

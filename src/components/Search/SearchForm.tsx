@@ -36,7 +36,7 @@ export default function SearchForm({
   const { data: searchedData } = useQuery(
     ['search', category, searchText],
     () => {
-      // TODO: 게시판 검색 API 완성 후 교체
+      // TODO: 게시판 검색 API 완성 후 Hook으로 분리 후 교체
       if (category === 'free') {
         return boardApi.getAllFreeBoards();
       }
@@ -52,7 +52,8 @@ export default function SearchForm({
     {
       onSuccess: () => {
         if (searchText === '') return;
-
+        console.log(debouncedSearchText);
+        console.log(searchedData);
         const filteredData = searchedData?.data.result.articles.filter(
           (result: any) => !result.title.includes(debouncedSearchText)
         );

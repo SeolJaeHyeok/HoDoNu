@@ -9,6 +9,7 @@ import { useQuery } from 'react-query';
 
 import CustomSideBar from '@components/SideBar/CustomSideBar';
 import BoardHeader from '@components/Board/BoardHeader';
+import BoardSkeleton from '@components/Board/BoardSkeleton';
 
 /*
   TODO  
@@ -51,19 +52,27 @@ export default function FreeBoard() {
   return (
     <>
       <CustomSideBar />
-      <BoardContainer>
-        <BoardHeader
-          setSort={setSort}
-          setPage={setPage}
-          setPerPage={setPerPage}
-          sort={sort}
-          page={page}
-          perPage={perPage}
-          category="free"
-        />
-        <BoardList articles={res?.data.result.articles} />
-        <Pagination length={TOTAL_PAGE} handler={pageNumber => handlePageNavigate(pageNumber)} />
-      </BoardContainer>
+      {!res ? (
+        <BoardSkeleton />
+      ) : (
+        <BoardContainer>
+          <BoardHeader
+            setSort={setSort}
+            setPage={setPage}
+            setPerPage={setPerPage}
+            sort={sort}
+            page={page}
+            perPage={perPage}
+            category={res?.data.result.category.toLowerCase()}
+          />
+
+          <BoardList
+            category={res.data.result.category.toLowerCase()}
+            articles={res.data.result.articles}
+          />
+          <Pagination length={TOTAL_PAGE} handler={pageNumber => handlePageNavigate(pageNumber)} />
+        </BoardContainer>
+      )}
     </>
   );
 }

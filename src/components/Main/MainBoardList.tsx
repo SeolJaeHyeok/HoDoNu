@@ -13,11 +13,11 @@ const CATEGORY_TABLE: {
 };
 
 interface ListProps {
-  category?: string;
+  category: '자유 게시판' | '의사 게시판' | '간호사 게시판';
   articles: ArticleProps[];
 }
 
-export default function BoardList({ category, articles }: ListProps) {
+export default function MainBoardList({ category, articles }: ListProps) {
   return (
     <ListContainer>
       {category && (
@@ -25,10 +25,8 @@ export default function BoardList({ category, articles }: ListProps) {
           <BoardTitle>{category}</BoardTitle>
         </Link>
       )}
-
       <BoardNavBar />
-
-      {articles?.slice(0, 5).map(article => (
+      {articles.slice(0, 5).map(article => (
         <BoardListItem
           category={CATEGORY_TABLE[category as string]}
           articleId={article.articleId}

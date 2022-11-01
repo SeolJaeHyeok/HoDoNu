@@ -1,10 +1,17 @@
 import Link from 'next/link';
 import FilterButton from '@components/FilterButton';
-import { Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from '@mui/material';
 import { useRouter } from 'next/router';
 import Search from '@components/Search/Search';
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 interface BoardHeaderProps {
   setSort: Dispatch<SetStateAction<string>>;
@@ -13,7 +20,7 @@ interface BoardHeaderProps {
   sort: string | undefined;
   page: string | undefined;
   perPage: string | undefined;
-  category: string;
+  category: 'free' | 'doctor' | 'nurse';
 }
 
 export default function BoardHeader({
@@ -44,7 +51,7 @@ export default function BoardHeader({
   };
 
   // 모아보기 - perPage
-  const handlePerPage = (e: any) => {
+  const handlePerPage = (e: SelectChangeEvent<string>) => {
     // Per Page 정렬 기준 설정
     setPerPage(e.target.value);
     setPage('1');

@@ -4,11 +4,7 @@ import styled from '@emotion/styled';
 import { highlightIncludedText } from '@utils/highlightText';
 
 const SearchItem = ({ result, searchText, isFocus }: any) => {
-  return isFocus ? (
-    <Item isFocus={isFocus}>{highlightIncludedText(result.title, searchText)}</Item>
-  ) : (
-    <Item isFocus={isFocus}>{highlightIncludedText(result.title, searchText)}</Item>
-  );
+  return <Item isFocus={isFocus}>{highlightIncludedText(result.title, searchText)}</Item>;
 };
 
 const Item = styled.div<{ isFocus: boolean }>`
