@@ -1,17 +1,25 @@
 export interface ContentProps {
-  content: {
-    result: {
-      articleId: number;
-      comments: string[];
-      content: string;
-      createdAt: string;
-      hits: number;
-      images: string[];
-      isActive: boolean;
-      userId: string;
-      title: string;
-    };
+  articleId: number;
+  comments: string[];
+  content: string;
+  createdAt: string;
+  hits: number;
+  images: string[];
+  isActive: boolean;
+  userId: string;
+  title: string;
+}
+
+export interface ContentMapProps {
+  articleCreator: string;
+  commentId: number;
+  content: string;
+  user: {
+    imgUrl: string;
+    nickname: string;
+    userId: string;
   };
+  idx: number;
 }
 export interface ParamsProps {
   params: {
@@ -69,7 +77,7 @@ export interface CommentUpdateResponseAPI {
 export interface GetDetailDataResponseAPI {
   result: {
     createdAt: string;
-    articleId: number;
+    articleId: string;
     userId: string;
     title: string;
     content: string;

@@ -1,7 +1,7 @@
 import Comment from '@components/Comment';
 import CustomSideBar from '@components/SideBar/CustomSideBar';
 import styled from '@emotion/styled';
-import { CommentProps } from '@interfaces/board/detailUserInfoType';
+import { CommentProps, ContentProps } from '@interfaces/board/detailUserInfoType';
 import CommentIcon from '@mui/icons-material/Comment';
 import { Button } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
@@ -11,7 +11,7 @@ import ArticleUserInfo from './ArticleUserInfo';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
 
-export default function ArticleContent({ contents }: any) {
+export default function ArticleContent({ result }: { result: ContentProps }) {
   const queryClient = useQueryClient();
   const loginUserId = useRecoilValue(userInfoState);
 
@@ -19,7 +19,7 @@ export default function ArticleContent({ contents }: any) {
   const [commentRequestDataForm, setCommentRequestData] = useState({
     category: 'Free',
     content: '',
-    articleId: contents?.result?.articleId,
+    articleId: result?.articleId,
   });
 
   const requestCommentData = useMutation(
@@ -35,7 +35,7 @@ export default function ArticleContent({ contents }: any) {
     setCommentRequestData({
       category: 'Free',
       content: e.target.value,
-      articleId: contents.result.articleId,
+      articleId: result?.articleId,
     });
   };
 
@@ -57,9 +57,9 @@ export default function ArticleContent({ contents }: any) {
       <BoardContainer>
         <BlankContent></BlankContent>
         <BoardContent>
-          <ArticleUserInfo content={contents} />
-          <BoardTitle>{contents?.result?.title}</BoardTitle>
-          <BoardSubTitle>{contents?.result?.content}</BoardSubTitle>
+          <ArticleUserInfo content={result} />
+          <BoardTitle>{result?.title}</BoardTitle>
+          <BoardSubTitle>{result?.content}</BoardSubTitle>
           <CommentWrapper>
             <CommentIcon
               sx={{
@@ -86,7 +86,7 @@ export default function ArticleContent({ contents }: any) {
               댓글 등록
             </Button>
           </CommnetInputContainer>
-          {contents?.result?.comments?.map((content: any, i: number) => {
+          {result?.comments?.map((content: any, i: number) => {
             return (
               <Comment
                 key={i}

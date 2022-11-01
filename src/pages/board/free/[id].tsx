@@ -1,19 +1,17 @@
 import ArticleContent from '@components/article/ArticleContent';
 import { useQuery } from 'react-query';
 import detailApi from '@apis/board/detail';
-import { ContentProps, ParamsProps } from '@interfaces/board/detailUserInfoType';
+import { ParamsProps } from '@interfaces/board/detailUserInfoType';
 
-export default function Doctor({ content }: ContentProps) {
-  console.log('content', content);
-  const detailQuery = useQuery<any>(
+export default function Free({ content }: any) {
+  const detailQuery = useQuery(
     ['detailContent'],
-    () => detailApi.getDetailData(content.result.articleId),
+    () => detailApi.getDetailData(content.articleId),
     {
       initialData: content,
     }
   );
-  console.log(detailQuery);
-  return <ArticleContent contents={detailQuery.data?.data} />;
+  return <ArticleContent result={detailQuery.data?.data?.result} />;
 }
 
 // export const getServerSideProps = async () => {
@@ -50,10 +48,9 @@ export const getStaticProps = async ({ params }: ParamsProps) => {
   if (!data) {
     return { notFound: true };
   }
-
   return {
     props: {
-      content: data,
+      content: data.result,
     },
   };
 };
