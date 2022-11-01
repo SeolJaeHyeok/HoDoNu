@@ -31,7 +31,7 @@ export interface ContentMapProps {
 }
 export interface ParamsProps {
   params: {
-    id: number;
+    id: string;
   };
 }
 export interface CommentProps {
@@ -64,7 +64,6 @@ export interface CommentDeleteResponseAPI {
   result: {
     message: string;
   };
-  status: number;
 }
 
 export interface CommentUpdateResponseAPI {
@@ -79,10 +78,8 @@ export interface CommentUpdateResponseAPI {
       nickname: string;
     };
   };
-  status: number;
 }
 
 export interface GetDetailDataResponseAPI {
   result: BoardUserInfo;
-  status: number;
 }

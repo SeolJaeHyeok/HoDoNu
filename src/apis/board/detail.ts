@@ -14,7 +14,7 @@ const detailApi = {
   commentRegister: (
     commentRequestData: CommentProps
   ): Promise<AxiosResponse<CommentRegisterResponseAPI>> => {
-    return instance.post('/free/comments', commentRequestData, {
+    return instance.post(`/free/comments`, commentRequestData, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${sessionStorage.getItem('token')}`,
@@ -42,15 +42,19 @@ const detailApi = {
       },
     });
   },
-  getDetailData: (articleId?: number): Promise<AxiosResponse<GetDetailDataResponseAPI>> => {
-    return instance.get(`/free/articles/${articleId}`, {
+  getDetailData: (
+    category: string,
+    articleId?: string
+  ): Promise<AxiosResponse<GetDetailDataResponseAPI>> => {
+    return instance.get(`/${category}/articles/${articleId}`, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
   },
-  getDetailAllData: () => {
-    return instance.get(`/free/articles`, {
+  // 카테고리별 데이터 불러오기!
+  getDetailAllData: (category: string) => {
+    return instance.get(`/${category}/articles`, {
       headers: {
         'Content-Type': 'application/json',
       },

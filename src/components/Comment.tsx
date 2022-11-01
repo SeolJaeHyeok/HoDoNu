@@ -7,7 +7,7 @@ import { ChangeEvent, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import CustomAvatarImage from './CustomAvartar';
 
-export default function Comment({ content, userId, commentUserId, commentId }: any) {
+export default function Comment({ content, userId, commentUserId, commentId, categoryName }: any) {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [commentUpdateData, setCommentUpdateData] = useState({
     content: content.content,
@@ -18,14 +18,14 @@ export default function Comment({ content, userId, commentUserId, commentId }: a
     (commentDeleteId: CommentDeleteProps) => detailApi.commentDelete(commentDeleteId),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('detailContent');
+        queryClient.invalidateQueries(['detailContent', categoryName]);
       },
     }
   );
 
   const updateCommentData = useMutation(detailApi.commentUpdate, {
     onSuccess: () => {
-      queryClient.invalidateQueries('detailContent');
+      queryClient.invalidateQueries(['detailContent', categoryName]);
     },
     onError: data => {
       console.log(data);

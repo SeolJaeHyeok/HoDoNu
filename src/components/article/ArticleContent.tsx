@@ -18,7 +18,13 @@ interface CommentRequestDataState {
   content: string;
   articleId: string;
 }
-export default function ArticleContent({ result }: { result: ContentProps }) {
+export default function ArticleContent({
+  result,
+  categoryName,
+}: {
+  result: ContentProps;
+  categoryName: string;
+}) {
   const queryClient = useQueryClient();
   const loginUserId = useRecoilValue(userInfoState);
   const router = useRouter();
@@ -30,20 +36,18 @@ export default function ArticleContent({ result }: { result: ContentProps }) {
 
   // 게시글 삭제
   const requestDeleteBoard = useMutation(detailApi.deleteBoard, {
-    onSuccess: data => {
-      console.log(data);
-      queryClient.invalidateQueries('detailContent');
+    onSuccess: () => {
+      queryClient.invalidateQueries(['detailContent', categoryName]);
     },
   });
 
   const handleDeleteBoard = () => {
-    console.log('삭제');
     requestDeleteBoard.mutate(result.articleId);
   };
 
   // 댓글 등록 로직
   const [commentRequestDataForm, setCommentRequestData] = useState<CommentRequestDataState>({
-    category: 'Free',
+    category: categoryName,
     content: '',
     articleId: result?.articleId,
   });
@@ -52,14 +56,14 @@ export default function ArticleContent({ result }: { result: ContentProps }) {
     (commentRequestDataForm: CommentProps) => detailApi.commentRegister(commentRequestDataForm),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('detailContent');
+        queryClient.invalidateQueries(['detailContent', categoryName]);
       },
     }
   );
 
   const handleChangeCommentInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setCommentRequestData({
-      category: 'Free',
+      category: categoryName,
       content: e.target.value,
       articleId: result?.articleId,
     });
@@ -137,6 +141,7 @@ export default function ArticleContent({ result }: { result: ContentProps }) {
                 userId={loginUserId.userId}
                 commentId={content.commentId}
                 commentUserId={content.user.userId}
+                categoryName={categoryName}
               />
             );
           })}
