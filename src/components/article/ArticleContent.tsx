@@ -1,20 +1,109 @@
+/* eslint-disable react/no-danger-with-children */
 import Comment from '@components/Comment';
 import CustomSideBar from '@components/SideBar/CustomSideBar';
 import styled from '@emotion/styled';
+import { CommentProps, ContentProps } from '@interfaces/board/detailUserInfoType';
 import CommentIcon from '@mui/icons-material/Comment';
 import { Button } from '@mui/material';
+import { ChangeEvent, useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import detailApi from '@apis/board/detail';
+import ArticleUserInfo from './ArticleUserInfo';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '@atoms/userAtom';
+import { useRouter } from 'next/router';
 
-export default function ArticleContent() {
+interface CommentRequestDataState {
+  category: string;
+  content: string;
+  articleId: string;
+}
+export default function ArticleContent({ result }: { result: ContentProps }) {
+  const queryClient = useQueryClient();
+  const loginUserId = useRecoilValue(userInfoState);
+  const router = useRouter();
+
+  // 게시글 수정 클릭시 router에 값 넣어서 보내기!
+  const handleMoveToEdit = () => {
+    router.push(`/board/edit/id?=${result.articleId}&category=${commentRequestDataForm.category}`);
+  };
+
+  // 게시글 삭제
+  const requestDeleteBoard = useMutation(detailApi.deleteBoard, {
+    onSuccess: data => {
+      console.log(data);
+      queryClient.invalidateQueries('detailContent');
+    },
+  });
+
+  const handleDeleteBoard = () => {
+    console.log('삭제');
+    requestDeleteBoard.mutate(result.articleId);
+  };
+
+  // 댓글 등록 로직
+  const [commentRequestDataForm, setCommentRequestData] = useState<CommentRequestDataState>({
+    category: 'Free',
+    content: '',
+    articleId: result?.articleId,
+  });
+
+  const requestCommentData = useMutation(
+    (commentRequestDataForm: CommentProps) => detailApi.commentRegister(commentRequestDataForm),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('detailContent');
+      },
+    }
+  );
+
+  const handleChangeCommentInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setCommentRequestData({
+      category: 'Free',
+      content: e.target.value,
+      articleId: result?.articleId,
+    });
+  };
+
+  const handleRequestCommentData = () => {
+    requestCommentData.mutate(commentRequestDataForm);
+  };
+
+  const handleClickCommentRegister = () => {
+    handleRequestCommentData();
+    setCommentRequestData({
+      ...commentRequestDataForm,
+      content: '',
+    });
+  };
+
   return (
     <BoardWrapper>
       <CustomSideBar />
       <BoardContainer>
         <BlankContent></BlankContent>
         <BoardContent>
-          <Comment isContent={false} />
-          <BoardTitle>안녕하세요 나는 타이틀입니다.</BoardTitle>
-          <BoardSubTitle>정말요?? 반가워요 나는 컨텐츠들이에요</BoardSubTitle>
-          <CommentWrapper style={{}}>
+          <ArticleUserInfo content={result} />
+          <BoardTitle>{result?.title}</BoardTitle>
+          <BoardSubTitle>
+            {/* 호진 TODO: image를 받아올때 hydration error 발생 , 이미지 사이즈 조절 이슈*/}
+            <BoardSubTitleContainer
+              dangerouslySetInnerHTML={{ __html: result?.content }}
+            ></BoardSubTitleContainer>
+          </BoardSubTitle>
+          <BoardButtonContainer>
+            {loginUserId.userId === result?.userId && (
+              <>
+                <Button variant="outlined" onClick={handleMoveToEdit}>
+                  수정
+                </Button>
+                <Button variant="outlined" onClick={handleDeleteBoard}>
+                  삭제
+                </Button>
+              </>
+            )}
+          </BoardButtonContainer>
+          <CommentWrapper>
             <CommentIcon
               sx={{
                 fontSize: '28px',
@@ -23,18 +112,34 @@ export default function ArticleContent() {
             <CommentTitle>댓글</CommentTitle>
           </CommentWrapper>
           <CommnetInputContainer>
-            <CommentTextArea />
+            <CommentTextArea
+              value={commentRequestDataForm.content}
+              onChange={handleChangeCommentInput}
+            />
             <Button
               variant="outlined"
+              type="submit"
               sx={{
                 display: 'block',
                 float: 'right',
                 mt: '8px',
               }}
+              onClick={handleClickCommentRegister}
             >
               댓글 등록
             </Button>
           </CommnetInputContainer>
+          {result?.comments?.map((content: any, i: number) => {
+            return (
+              <Comment
+                key={i}
+                content={content}
+                userId={loginUserId.userId}
+                commentId={content.commentId}
+                commentUserId={content.user.userId}
+              />
+            );
+          })}
         </BoardContent>
       </BoardContainer>
     </BoardWrapper>
@@ -55,6 +160,7 @@ const BlankContent = styled.div`
 `;
 const BoardContent = styled.div`
   flex-grow: 3;
+  /* width: 750px; */
 `;
 const BoardTitle = styled.h1`
   font-size: 25px;
@@ -69,6 +175,12 @@ const BoardSubTitle = styled.p`
   border-top: 1px solid #f1f3f5;
   border-bottom: 1px solid #f1f3f5;
 `;
+
+const BoardButtonContainer = styled.div`
+  text-align: right;
+`;
+
+const BoardSubTitleContainer = styled.div``;
 
 const CommentWrapper = styled.div`
   display: flex;
@@ -92,5 +204,6 @@ const CommentTextArea = styled.textarea`
   resize: none;
   padding: 10px 15px;
   border-radius: 15px;
-  width: 600px;
+  width: 700px;
+  overflow: hidden;
 `;
