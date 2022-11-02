@@ -1,5 +1,4 @@
 import {
-  CommentDeleteProps,
   CommentDeleteResponseAPI,
   CommentProps,
   CommentRegisterResponseAPI,
@@ -21,10 +20,8 @@ const detailApi = {
       },
     });
   },
-  commentDelete: (
-    commentDeleteId: CommentDeleteProps
-  ): Promise<AxiosResponse<CommentDeleteResponseAPI>> => {
-    return instance.delete(`/free/comments/${commentDeleteId}`, {
+  commentDelete: (commentId: number): Promise<AxiosResponse<CommentDeleteResponseAPI>> => {
+    return instance.delete(`/free/comments/${commentId}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${sessionStorage.getItem('token')}`,

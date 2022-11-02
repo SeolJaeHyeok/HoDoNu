@@ -1,27 +1,29 @@
 import detailApi from '@apis/board/detail';
 import styled from '@emotion/styled';
-import { CommentDeleteProps } from '@interfaces/board/detailUserInfoType';
+import { CommentArticleProps } from '@interfaces/board/detailUserInfoType';
 import { Button } from '@mui/material';
 import { convertTime } from '@utils/func';
 import { ChangeEvent, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import CustomAvatarImage from './CustomAvartar';
 
-export default function Comment({ content, userId, commentUserId, commentId }: any) {
+export default function Comment({
+  content,
+  userId,
+  commentUserId,
+  commentId,
+}: CommentArticleProps) {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [commentUpdateData, setCommentUpdateData] = useState({
     content: content.content,
   });
 
   const queryClient = useQueryClient();
-  const deleteCommentData = useMutation(
-    (commentDeleteId: CommentDeleteProps) => detailApi.commentDelete(commentDeleteId),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('detailContent');
-      },
-    }
-  );
+  const deleteCommentData = useMutation(detailApi.commentDelete, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('detailContent');
+    },
+  });
 
   const updateCommentData = useMutation(detailApi.commentUpdate, {
     onSuccess: () => {
@@ -52,7 +54,6 @@ export default function Comment({ content, userId, commentUserId, commentId }: a
   };
   // 댓글 삭제 로직
   const handleDeleteCommentData = () => {
-    console.log('삭제!');
     deleteCommentData.mutate(commentId);
   };
 
@@ -62,7 +63,7 @@ export default function Comment({ content, userId, commentUserId, commentId }: a
         <CustomAvatarImage src={content?.user?.imgUrl} />
         <ContentContainer>
           <NameContent>{content?.user?.nickname}</NameContent>
-          <TimeContent>{convertTime(content?.createdAt)}</TimeContent>
+          <TimeContent>{convertTime(content?.createdAt!)}</TimeContent>
         </ContentContainer>
         {isEdit ? (
           <CommentTextArea
