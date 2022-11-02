@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
+import FileUploader, { FileProps } from '@components/Recruit/FileUploader';
 
 /**
 1. 회사 이름 - companyName
@@ -46,7 +47,6 @@ const recruitPostSchema = yup.object({
     .string()
     .max(1000, '최대 20글자까지 입력가능합니다!')
     .required('회사 소개를 입력해주세요!'),
-  // companyPictures: yup.array().required('회사 태그를 입력해주세요:('),
   companyRole: yup.string().required('주요 업무를 입력해주세요:('),
   companyRequirement: yup.string().required('자격 요건을 입력해주세요:('),
   companyPreference: yup.string().required('우대 사항을 입력해주세요:('),
@@ -60,7 +60,14 @@ export default function RecruitCreatePage() {
     companyMainAddress: '',
     companyDetailAddress: '',
   });
-  const { register, handleSubmit } = useForm<RecruitPostProps>({
+
+  const [companyPictures, setCompanyPictures] = useState<FileProps[]>([]);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RecruitPostProps>({
     resolver: yupResolver(recruitPostSchema),
   });
 
@@ -90,6 +97,7 @@ export default function RecruitCreatePage() {
   const onValid = (data: any) => {
     console.log(data);
     console.log(addressInfo);
+    console.log(companyPictures);
   };
 
   return (
@@ -106,6 +114,7 @@ export default function RecruitCreatePage() {
             width: '450px',
             mt: '8px',
           }}
+          helperText={<ErrorMsg>{errors.companyName?.message}</ErrorMsg>}
         />
 
         <Label htmlFor="companyTag">태그</Label>
@@ -117,6 +126,7 @@ export default function RecruitCreatePage() {
             width: '450px',
             mt: '8px',
           }}
+          helperText={<ErrorMsg>{errors.companyTags?.message}</ErrorMsg>}
         />
         <Label htmlFor="companyIntro">회사 소개</Label>
         <TextField
@@ -127,17 +137,14 @@ export default function RecruitCreatePage() {
             width: '450px',
             mt: '8px',
           }}
+          helperText={<ErrorMsg>{errors.companyIntro?.message}</ErrorMsg>}
         />
         <Label htmlFor="companyPictures">회사 사진</Label>
-        <TextField
-          {...register('companyPictures')}
-          id="companyPictures"
-          placeholder="회사를 소개할 수 있을만한 사진을 올려주세요!"
-          type="file"
-          sx={{
-            width: '450px',
-            mt: '8px',
-          }}
+        <FileUploader
+          name="Company Picture"
+          fileList={companyPictures}
+          setFileList={setCompanyPictures}
+          multiple
         />
         <Label htmlFor="companyRole">주요 업무</Label>
         <TextField
@@ -148,6 +155,7 @@ export default function RecruitCreatePage() {
             width: '450px',
             mt: '8px',
           }}
+          helperText={<ErrorMsg>{errors.companyRole?.message}</ErrorMsg>}
         />
         <Label htmlFor="companyRequirement">자격 요건</Label>
         <TextField
@@ -158,6 +166,7 @@ export default function RecruitCreatePage() {
             width: '450px',
             mt: '8px',
           }}
+          helperText={<ErrorMsg>{errors.companyRequirement?.message}</ErrorMsg>}
         />
         <Label htmlFor="companyPreference">우대 사항</Label>
         <TextField
@@ -168,6 +177,7 @@ export default function RecruitCreatePage() {
             width: '450px',
             mt: '8px',
           }}
+          helperText={<ErrorMsg>{errors.companyPreference?.message}</ErrorMsg>}
         />
         <Label htmlFor="organization">소속 기관 ( 병원 주소 )</Label>
         <PostalCodeContainer
@@ -254,3 +264,9 @@ const Label = styled.label`
 
 const PostalCodeContainer = styled.div``;
 const AddressContainer = styled.div``;
+
+const ErrorMsg = styled.span`
+  display: block;
+  margin-top: 8px;
+  color: red;
+`;
