@@ -1,13 +1,19 @@
 import detailApi from '@apis/board/detail';
 import styled from '@emotion/styled';
-// import { CommentDeleteProps } from '@interfaces/board/detailUserInfoType';
+import { CommentArticleProps } from '@interfaces/board/detailUserInfoType';
 import { Button } from '@mui/material';
 import { convertTime } from '@utils/func';
 import { ChangeEvent, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import CustomAvatarImage from './CustomAvartar';
 
-export default function Comment({ content, userId, commentUserId, commentId, categoryName }: any) {
+export default function Comment({
+  content,
+  userId,
+  commentUserId,
+  commentId,
+  categoryName,
+}: CommentArticleProps) {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [commentUpdateData, setCommentUpdateData] = useState({
     content: content.content,
@@ -60,7 +66,7 @@ export default function Comment({ content, userId, commentUserId, commentId, cat
         <CustomAvatarImage src={content?.user?.imgUrl} />
         <ContentContainer>
           <NameContent>{content?.user?.nickname}</NameContent>
-          <TimeContent>{convertTime(content?.createdAt)}</TimeContent>
+          <TimeContent>{convertTime(content?.createdAt!)}</TimeContent>
         </ContentContainer>
         {isEdit ? (
           <CommentTextArea

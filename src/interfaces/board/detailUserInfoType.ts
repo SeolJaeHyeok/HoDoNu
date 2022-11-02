@@ -27,7 +27,7 @@ export interface ContentMapProps {
     nickname: string;
     userId: string;
   };
-  idx: number;
+  createdAt?: string;
 }
 export interface ParamsProps {
   params: {
@@ -38,6 +38,14 @@ export interface CommentProps {
   category: string;
   content: string;
   articleId: string;
+}
+
+export interface CommentArticleProps {
+  content: ContentMapProps;
+  userId: string;
+  commentUserId: string;
+  commentId: number;
+  categoryName: string;
 }
 
 export interface CommentDeleteProps {
@@ -57,7 +65,7 @@ export interface CommentRegisterResponseAPI {
     articleId: number;
     userId: string;
     content: string;
-    commentId: number;
+    commentId: string;
   };
   status: number;
 }
