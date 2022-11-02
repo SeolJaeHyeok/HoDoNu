@@ -15,7 +15,7 @@ export default function NurseBoard() {
   const [sort, setSort] = useState('CreatedAt');
   const [page, setPage] = useState('1');
   const [perPage, setPerPage] = useState('10');
-  const { data: res } = useQuery(['board', 'free', sort, page, perPage], () =>
+  const { data: res } = useQuery(['board', 'nurse', sort, page, perPage], () =>
     boardApi.getAllNurseBoards({ page, perPage, sort })
   );
 
