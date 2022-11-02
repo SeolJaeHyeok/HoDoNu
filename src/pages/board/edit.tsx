@@ -32,8 +32,8 @@ export default function Edit({
 }
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const { category, articleId } = context.query;
-  const res = await axios.get(`http://13.124.110.176:5000/${category}/articles/${articleId}`);
+  const { category, id } = context.query;
+  const res = await axios.get(`http://13.124.110.176:5000/${category}/articles/${id}`);
   const data = res.data.result;
 
   return { props: { data, category } };

@@ -28,7 +28,7 @@ export default function ArticleCreateForm() {
   const mutation = useMutation(['createArticle'], boardApi.createFreeArticle, {
     onSuccess: res => {
       const { articleId } = res.data.result;
-      router.push(`free/articles/${articleId}`);
+      router.push(`free/${articleId}`);
     },
     onError: (e: Error) => {
       alert(e.message);

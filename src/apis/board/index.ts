@@ -1,3 +1,4 @@
+import { PatchArticleRes, PostArticleRes, PostImgRes } from '@interfaces/board/article';
 import { AxiosResponse } from 'axios';
 import { ArticleForm } from '@interfaces/article';
 import { instance } from '..';
@@ -10,12 +11,15 @@ interface ParamsProps {
 
 const boardApi = {
   //게시글 생성
-  createFreeArticle: (articleForm: ArticleForm) => instance.post('/free/articles', articleForm),
-  createNurseArticle: (articleForm: ArticleForm) => instance.post('/nurse/articles', articleForm),
-  createDoctorArticle: (articleForm: ArticleForm) => instance.post('/doctor/articles', articleForm),
+  createFreeArticle: (articleForm: ArticleForm): Promise<AxiosResponse<PostArticleRes>> =>
+    instance.post('/free/articles', articleForm),
+  createNurseArticle: (articleForm: ArticleForm): Promise<AxiosResponse<PostArticleRes>> =>
+    instance.post('/nurse/articles', articleForm),
+  createDoctorArticle: (articleForm: ArticleForm): Promise<AxiosResponse<PostArticleRes>> =>
+    instance.post('/doctor/articles', articleForm),
 
   //이미지 생성
-  createArticleImg: (file: FormData) =>
+  createArticleImg: (file: FormData): Promise<AxiosResponse<PostImgRes>> =>
     instance.post('/imgUpload/single', file, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -23,7 +27,7 @@ const boardApi = {
     }),
 
   //게시글 수정
-  updateArticle: (articleForm: ArticleForm): Promise<AxiosResponse<any, any>> =>
+  updateArticle: (articleForm: ArticleForm): Promise<AxiosResponse<PatchArticleRes>> =>
     instance.patch(`/${articleForm.category}/articles/${articleForm.articleId}`, articleForm),
 
   getAllFreeBoards: (params?: ParamsProps): Promise<AxiosResponse<any, any>> =>
