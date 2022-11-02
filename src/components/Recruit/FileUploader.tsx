@@ -20,25 +20,42 @@ export default function FileUploader({ multiple, fileList, setFileList, name }: 
   const dragRef = useRef<HTMLLabelElement | null>(null); // 드래그 dom
   const fileId = useRef<number>(0);
 
-  const onUploadFile = (e: React.ChangeEvent<HTMLInputElement> | any) => {
+  const handleUploadFile = (e: React.ChangeEvent<HTMLInputElement> | any) => {
     e.preventDefault();
     let selectFiles: FileList;
+
     if (e.type === 'drop') {
       // 드래그 앤 드롭 했을때
       selectFiles = e.dataTransfer.files;
     } else {
-      // "파일 첨부" 버튼을 눌러서 이미지를 선택했을 때
+      // 버튼을 눌러서 이미지를 선택했을 때
       selectFiles = e.target.files;
     }
-    console.log(selectFiles);
-    if (selectFiles.length) {
-      if (multiple) {
-        Object.keys(selectFiles).forEach(() => {
-          setFileList([...fileList, { id: fileId.current++, file: selectFiles.item(0) }]);
-        });
-      } else {
-        setFileList([{ id: 0, file: selectFiles.item(0) }]);
-      }
+
+    const imageType = selectFiles[0].type;
+    const imageSize = selectFiles[0].size;
+    const imageLength = selectFiles.length;
+
+    if (!imageLength) return;
+
+    // 파일 형식 jpg, jpeg, png 제한
+    if (imageType !== 'image/png' && imageType !== 'image/jpeg' && imageType !== 'image/jpg') {
+      alert('이미지 형식은 jpg, jpeg, png만 가능합니다:(');
+      return;
+    }
+
+    // 파일 크기 5mb 제한
+    if (imageSize >= 1024 * 1024 * 5) {
+      alert('파일 크기는 5mb를 넘어갈 수 없습니다:(');
+      return;
+    }
+
+    if (multiple) {
+      Object.keys(selectFiles).forEach(() => {
+        setFileList([...fileList, { id: fileId.current++, file: selectFiles.item(0) }]);
+      });
+    } else {
+      setFileList([{ id: 0, file: selectFiles.item(0) }]);
     }
   };
 
@@ -78,6 +95,7 @@ export default function FileUploader({ multiple, fileList, setFileList, name }: 
     e.stopPropagation();
     setFileList(fileList.filter(file => file.id !== id));
   };
+
   return (
     <Container>
       <DragLabel
@@ -89,7 +107,7 @@ export default function FileUploader({ multiple, fileList, setFileList, name }: 
         onDragOver={hadleDragOver}
         onDrop={hadleDragDrop}
       >
-        <FileInput onChange={onUploadFile} type="file" id={name} multiple={multiple} />
+        <FileInput onChange={handleUploadFile} type="file" id={name} multiple={multiple} />
         <FileListContainer>
           <FileInputTitle>클릭 또는 끌어오기</FileInputTitle>
           {Boolean(fileList.length) &&

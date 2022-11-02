@@ -95,9 +95,9 @@ export default function RecruitCreatePage() {
   };
 
   const onValid = (data: any) => {
-    console.log(data);
-    console.log(addressInfo);
-    console.log(companyPictures);
+    // console.log(data);
+    // console.log(addressInfo);
+    // console.log(companyPictures);
   };
 
   return (
@@ -140,6 +140,8 @@ export default function RecruitCreatePage() {
           helperText={<ErrorMsg>{errors.companyIntro?.message}</ErrorMsg>}
         />
         <Label htmlFor="companyPictures">회사 사진</Label>
+        <ErrorMsg>✅ 사진은 .jpg .png .jpeg 파일만 가능합니다.</ErrorMsg>
+        <ErrorMsg>✅ 사진 크기는 최대 5mb입니다.</ErrorMsg>
         <FileUploader
           name="Company Picture"
           fileList={companyPictures}
