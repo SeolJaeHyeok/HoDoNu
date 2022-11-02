@@ -24,6 +24,7 @@ const CardContainer = styled.div`
 const RecruitTitle = styled.h1`
   font-size: 16px;
   margin: 20px 8px 0 8px;
+  line-height: 130%;
 `;
 
 const RecruitCompanyName = styled.p`
