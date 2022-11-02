@@ -5,13 +5,19 @@ import { useMemo, useRef } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import LoadingSpinner from './LoadingSpinner';
 
+interface ArticleFormEditorProps {
+  content?: string;
+  onChange: any;
+  height: string;
+}
+
 const ReactQuill = dynamic(
   async () => {
     const { default: RQ } = await import('react-quill');
-    const aaa = ({ forwardedRef, ...props }: any) => {
+    const Quill = ({ forwardedRef, ...props }: any) => {
       return <RQ ref={forwardedRef} {...props} />;
     };
-    return aaa;
+    return Quill;
   },
   {
     ssr: false,
@@ -19,7 +25,7 @@ const ReactQuill = dynamic(
   }
 );
 
-export default function ArticleFormEditor({ onChange, content }: any, { ...props }) {
+export default function ArticleFormEditor({ onChange, content }: ArticleFormEditorProps) {
   const QuillRef = useRef<any>(null);
 
   const imageHandler = async () => {
@@ -77,7 +83,6 @@ export default function ArticleFormEditor({ onChange, content }: any, { ...props
         style={{ height: '200px' }}
         onChange={onChange}
         forwardedRef={QuillRef}
-        {...props}
         defaultValue={content}
       />
     </FormEditorContainer>
