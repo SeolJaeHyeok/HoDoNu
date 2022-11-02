@@ -46,6 +46,7 @@ export interface CommentDeleteProps {
 }
 export interface CommentUpdateProps {
   commentUpdateId: number;
+  categoryName: string;
   commentUpdateMsg: {
     content: string;
   };

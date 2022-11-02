@@ -44,6 +44,7 @@ export default function Comment({ content, userId, commentUserId, commentId, cat
     updateCommentData.mutate({
       commentUpdateId: commentId,
       commentUpdateMsg: commentUpdateData,
+      categoryName,
     });
     setIsEdit(!isEdit);
   };
