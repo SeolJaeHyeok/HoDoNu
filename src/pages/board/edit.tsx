@@ -1,35 +1,12 @@
-import EditForm from '@components/board/EditForm';
+import EditForm from '@components/Board/ArticleEditForm';
 import { Container, Box, Typography } from '@mui/material';
 import axios from 'axios';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-// eslint-disable-next-line no-unused-vars
-import { useQuery } from 'react-query';
-// eslint-disable-next-line no-unused-vars
-import { useRecoilState } from 'recoil';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
-export default function Edit() {
-  // eslint-disable-next-line no-unused-vars
-  const router = useRouter();
-  // const { category, articleId } = router.query;
-  const category = 'Free';
-  const articleId = 29;
-  // eslint-disable-next-line no-unused-vars
-  const [data, setData] = useState({
-    title: 'ssr',
-    content:
-      '<p>ㅁㄴㅇㄻㄴㅇㄻㄴㅇㄹ</p><p><img src="https://toy-project-…f7-4c85-a109-2820af7374a1.png"></p><p>테스트입니다.</p>',
-  });
-
-  const getOne = async () => {
-    const res = await axios.get(`http://13.124.110.176:5000/${category}/articles/${articleId}`);
-    setData(res.data.result);
-  };
-
-  useEffect(() => {
-    getOne();
-  }, []);
-
+export default function Edit({
+  data,
+  category,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <Container
       sx={{
@@ -48,8 +25,16 @@ export default function Edit() {
         }}
       >
         <Typography variant="h5">게시글 수정하기</Typography>
-        <EditForm category={category} />
+        <EditForm category={category} data={data} />
       </Box>
     </Container>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async context => {
+  const { category, articleId } = context.query;
+  const res = await axios.get(`http://13.124.110.176:5000/${category}/articles/${articleId}`);
+  const data = res.data.result;
+
+  return { props: { data, category } };
+};

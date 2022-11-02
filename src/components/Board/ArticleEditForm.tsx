@@ -10,8 +10,9 @@ import boardApi from '@apis/board';
 
 // eslint-disable-next-line no-unused-vars
 export default function EditForm({ data, category }: any) {
-  // const { title, content } = data;
   const router = useRouter();
+  const { title, content, articleId } = data;
+
   const {
     register,
     handleSubmit,
@@ -20,13 +21,12 @@ export default function EditForm({ data, category }: any) {
     formState: { errors },
   } = useForm<ArticleForm>({ resolver: yupResolver(boardValidationSchema) });
 
-  const mutation = useMutation(['createArticle'], boardApi.createFreeArticle, {
+  const mutation = useMutation(['createArticle'], boardApi.updateArticle, {
     onSuccess: res => {
       const { articleId } = res.data.result;
       router.push(`free/articles/${articleId}`);
     },
     onError: (e: Error) => {
-      console.log(e.message);
       alert(e.message);
     },
   });
@@ -36,14 +36,14 @@ export default function EditForm({ data, category }: any) {
     setValue('content', editorState);
   };
 
-  // register('title', { value: title });
-  // register('category', { value: category });
+  register('category', { value: category });
+  register('title', { value: title });
 
   const onSubmit: SubmitHandler<ArticleForm> = async data => {
     const { title, category, content } = data;
 
     // 게시글 생성
-    mutation.mutate({ title, category, content });
+    mutation.mutate({ title, category, content, articleId });
   };
 
   const handleCancle = () => {
@@ -76,7 +76,7 @@ export default function EditForm({ data, category }: any) {
           helperText={errors.title ? errors.title.message : null}
         />
 
-        <ArticleFormEditor onChange={onEditorStateChange} height="250px" />
+        <ArticleFormEditor onChange={onEditorStateChange} height="250px" content={content} />
       </Stack>
       <Box
         sx={{

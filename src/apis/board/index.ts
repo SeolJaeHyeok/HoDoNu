@@ -23,12 +23,8 @@ const boardApi = {
     }),
 
   //게시글 수정
-  updateFreeArticle: (articleForm: ArticleForm, articelId: string) =>
-    instance.patch(`/free/articles/${articelId}`, articleForm),
-  updateNurseArticle: (articleForm: ArticleForm, articleId: string) =>
-    instance.patch(`/nurse/articles/${articleId}`, articleForm),
-  updateDoctorArticle: (articleForm: ArticleForm, artidleId: string) =>
-    instance.patch(`/doctor/articles${artidleId}`, articleForm),
+  updateArticle: (articleForm: ArticleForm): Promise<AxiosResponse<any, any>> =>
+    instance.patch(`/${articleForm.category}/articles/${articleForm.articleId}`, articleForm),
 
   getAllFreeBoards: (params?: ParamsProps): Promise<AxiosResponse<any, any>> =>
     instance.get(`/free/articles`, { params }),

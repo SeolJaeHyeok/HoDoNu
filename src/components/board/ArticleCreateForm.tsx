@@ -31,7 +31,6 @@ export default function ArticleCreateForm() {
       router.push(`free/articles/${articleId}`);
     },
     onError: (e: Error) => {
-      console.log(e.message);
       alert(e.message);
     },
   });
