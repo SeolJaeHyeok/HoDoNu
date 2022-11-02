@@ -3,14 +3,17 @@ import { Button, TextField } from '@mui/material';
 import React, { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
-import FileUploader, { FileProps } from '@components/Recruit/FileUploader';
+import FileUploader from '@components/Recruit/FileUploader';
+import { FileProps } from '@interfaces/recruit';
+import recruitApi from '@apis/recruit';
+import { recruitPostSchema } from '@utils/validationSchema';
 
 /**
+0. 공고 제목 - companyRecruitmentTitle
 1. 회사 이름 - companyName
-2. 회사 관련 태그(우리가 제공? 아니면 입력 받게끔?) - companyTags
-3. 회사 소개 - 최대 100자 - companyIntro
+2. 회사 관련 태그(우리가 제공) - companyTags
+3. 회사 소개 - companyIntroduction
 4. 주요 업무(ex. 응급실 외과 전문의) - companyRole
 5. 자격 요건(ex. 대졸 이상, 경력 2년 이상 등) - companyRequirement
 6. 우대 사항(ex. 해외 경험) - companyPreference
@@ -19,14 +22,16 @@ import FileUploader, { FileProps } from '@components/Recruit/FileUploader';
  */
 
 interface RecruitPostProps {
+  companyRecruitmentTitle: string;
   companyName: string;
   companyTags: string[];
-  companyIntro: string;
-  companyPictures: File[];
+  companyIntroduction: string;
+  companyImages: File[];
   companyRole: string;
   companyRequirement: string;
   companyPreference: string;
   companyAddress: RecruitAddressProps;
+  companyRecruiterContact: string;
 }
 
 interface RecruitAddressProps {
@@ -40,29 +45,8 @@ interface DaumAddressAPIProps {
   address: string;
 }
 
-const recruitPostSchema = yup.object({
-  companyName: yup.string().required('회사 이름을 입력해주세요:('),
-  companyTags: yup.string().required('회사 태그를 입력해주세요:('),
-  companyIntro: yup
-    .string()
-    .max(1000, '최대 20글자까지 입력가능합니다!')
-    .required('회사 소개를 입력해주세요!'),
-  companyRole: yup.string().required('주요 업무를 입력해주세요:('),
-  companyRequirement: yup.string().required('자격 요건을 입력해주세요:('),
-  companyPreference: yup.string().required('우대 사항을 입력해주세요:('),
-});
-
 export default function RecruitCreatePage() {
   const open = useDaumPostcodePopup();
-
-  const [addressInfo, setAddressInfo] = useState<RecruitAddressProps>({
-    companyPostalCode: '',
-    companyMainAddress: '',
-    companyDetailAddress: '',
-  });
-
-  const [companyPictures, setCompanyPictures] = useState<FileProps[]>([]);
-
   const {
     register,
     handleSubmit,
@@ -71,10 +55,20 @@ export default function RecruitCreatePage() {
     resolver: yupResolver(recruitPostSchema),
   });
 
+  const [addressInfo, setAddressInfo] = useState<RecruitAddressProps>({
+    companyPostalCode: '',
+    companyMainAddress: '',
+    companyDetailAddress: '',
+  }); // 주소 정보 객체
+
+  const [companyPictures, setCompanyPictures] = useState<FileProps[]>([]); // 회사 사진 배열
+
+  // Daum 주소 API Trigger
   const handleClickOpen = () => {
     open({ onComplete: handleComplete });
   };
 
+  // 주소 입력 완료 후 정보 저장
   const handleComplete = (addressData: DaumAddressAPIProps) => {
     setAddressInfo((prev: RecruitAddressProps) => {
       return {
@@ -85,6 +79,7 @@ export default function RecruitCreatePage() {
     });
   };
 
+  // 상세 주소 정보 저장
   const handleDetailAddress = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setAddressInfo((prev: RecruitAddressProps) => {
       return {
@@ -94,17 +89,94 @@ export default function RecruitCreatePage() {
     });
   };
 
-  const onValid = (data: any) => {
-    console.log(data);
-    console.log(addressInfo);
-    console.log(companyPictures);
+  // Image File Parsing - [{id: 1, file: File}, {id: 2, file: File}] -> FormData [File, File, ...]
+  const parseImageFiles = (files: any) => {
+    return files.map(({ file }: { file: any }) => file);
+  };
+
+  // Image Data Array POST
+  const postImageArray = async (formData: FormData) => {
+    let responseImageArr;
+    try {
+      responseImageArr = await recruitApi.postImageArray(formData);
+    } catch (e: unknown) {
+      console.warn(e);
+    }
+
+    return responseImageArr;
+  };
+
+  // Mapping Recruit Post Body Data
+  const mappingRecruitPostData = (
+    data: RecruitPostProps,
+    addressInfo: RecruitAddressProps,
+    companyImages: string[]
+  ) => {
+    const {
+      companyRecruitmentTitle,
+      companyName,
+      companyIntroduction,
+      companyRole,
+      companyRequirement,
+      companyPreference,
+      companyTags,
+      companyRecruiterContact,
+    } = data;
+
+    return {
+      title: companyRecruitmentTitle,
+      company: companyName,
+      address: addressInfo,
+      introduction: companyIntroduction,
+      task: companyRole,
+      eligibility: companyRequirement,
+      favor: companyPreference,
+      tags: companyTags,
+      images: companyImages,
+      recruiterContact: companyRecruiterContact,
+    };
+  };
+
+  // TODO
+  // 1. 사진 파일 POST 요청 후 Image link로 이루어진 string[] 받아오기 - File 객체로 이루어진 배열을 Body에 담아서 요청 - O
+  // 2. hook-form으로 관리하고 있는 데이터와 주소 데이터, 사진 데이터를 POST 요청 body 데이터 형식에 맞게 가공 - O
+  // 3. 가공된 데이터를 가지고 POST 요청
+  // 4. 응답 결과에 따라 처리
+  const handleRecruitPost = async (formData: RecruitPostProps) => {
+    const imageFormData = new FormData();
+    let responseImages;
+
+    // Image POST 요청 선 처리
+    if (companyPictures.length > 0) {
+      const arr = parseImageFiles(companyPictures);
+      arr.forEach((_: never, i: number) => {
+        imageFormData.append('images', arr[i]);
+      });
+      const response = await postImageArray(imageFormData);
+      responseImages = response?.data.result;
+    }
+
+    // POST Data 추출 후 채용 등록 API 호출
+    const bodyData = mappingRecruitPostData(formData, addressInfo, responseImages);
+    console.log(bodyData);
   };
 
   return (
-    <form onSubmit={handleSubmit(onValid)}>
+    <form onSubmit={handleSubmit(handleRecruitPost)}>
       <RegisterWrapper>
         <RegisterTitle>공고 등록하기</RegisterTitle>
         <RegisterSubTitle>아래 모든 내용을 기입해주세요.</RegisterSubTitle>
+        <Label htmlFor="companyRecruitmentTitle">공고 제목</Label>
+        <TextField
+          {...register('companyRecruitmentTitle')}
+          id="recruitmentTitle"
+          placeholder="회사 이름을 입력해주세요:)"
+          sx={{
+            width: '450px',
+            mt: '8px',
+          }}
+          helperText={<ErrorMsg>{errors.companyRecruitmentTitle?.message}</ErrorMsg>}
+        />
         <Label htmlFor="companyName">회사 이름</Label>
         <TextField
           {...register('companyName')}
@@ -116,7 +188,6 @@ export default function RecruitCreatePage() {
           }}
           helperText={<ErrorMsg>{errors.companyName?.message}</ErrorMsg>}
         />
-
         <Label htmlFor="companyTag">태그</Label>
         <TextField
           {...register('companyTags')}
@@ -128,20 +199,21 @@ export default function RecruitCreatePage() {
           }}
           helperText={<ErrorMsg>{errors.companyTags?.message}</ErrorMsg>}
         />
-        <Label htmlFor="companyIntro">회사 소개</Label>
+        <Label htmlFor="companyIntroduction">회사 소개</Label>
         <TextField
-          {...register('companyIntro')}
+          {...register('companyIntroduction')}
           id="companyIntro"
           placeholder="회사를 소개해주세요:)"
           sx={{
             width: '450px',
             mt: '8px',
           }}
-          helperText={<ErrorMsg>{errors.companyIntro?.message}</ErrorMsg>}
+          helperText={<ErrorMsg>{errors.companyIntroduction?.message}</ErrorMsg>}
         />
         <Label htmlFor="companyPictures">회사 사진</Label>
-        <ErrorMsg>✅ 사진은 .jpg .png .jpeg 파일만 가능합니다.</ErrorMsg>
-        <ErrorMsg>✅ 사진 크기는 최대 5mb입니다.</ErrorMsg>
+        <ImageWarningMsg>✅ 사진은 .jpg .png .jpeg 파일만 가능합니다.</ImageWarningMsg>
+        <ImageWarningMsg>✅ 사진 크기는 최대 5mb입니다.</ImageWarningMsg>
+        <ImageWarningMsg>✅ 첨부된 사진이 없으면 기본 이미지가 보여집니다.</ImageWarningMsg>
         <FileUploader
           name="Company Picture"
           fileList={companyPictures}
@@ -175,6 +247,17 @@ export default function RecruitCreatePage() {
           {...register('companyPreference')}
           id="companyPreference"
           placeholder="우대 사항을 입력해주세요:)"
+          sx={{
+            width: '450px',
+            mt: '8px',
+          }}
+          helperText={<ErrorMsg>{errors.companyPreference?.message}</ErrorMsg>}
+        />
+        <Label htmlFor="companyRecruiterContact">연락처</Label>
+        <TextField
+          {...register('companyRecruiterContact')}
+          id="companyRecruiterContact"
+          placeholder="채용 담당자의 연락처 또는 이메일을 입력해주세요:)"
           sx={{
             width: '450px',
             mt: '8px',
@@ -271,4 +354,9 @@ const ErrorMsg = styled.span`
   display: block;
   margin-top: 8px;
   color: red;
+`;
+
+const ImageWarningMsg = styled.h3`
+  color: #8692a6;
+  margin-top: 5px;
 `;

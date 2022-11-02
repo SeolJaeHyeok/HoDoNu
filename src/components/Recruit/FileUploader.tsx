@@ -1,19 +1,8 @@
 import styled from '@emotion/styled';
-import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Button, css } from '@mui/material';
-
-interface FileUploaderProps {
-  multiple?: boolean;
-  fileList: FileProps[];
-  setFileList: Dispatch<SetStateAction<FileProps[]>>;
-  name: string;
-}
-
-export interface FileProps {
-  id: number;
-  file: File | null;
-}
+import { FileUploaderProps } from '@interfaces/recruit';
 
 export default function FileUploader({ multiple, fileList, setFileList, name }: FileUploaderProps) {
   const [isDragging, setIsDragging] = useState(false); // 드래그 중 상태
