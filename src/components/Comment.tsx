@@ -1,6 +1,6 @@
 import detailApi from '@apis/board/detail';
 import styled from '@emotion/styled';
-import { CommentDeleteProps } from '@interfaces/board/detailUserInfoType';
+// import { CommentDeleteProps } from '@interfaces/board/detailUserInfoType';
 import { Button } from '@mui/material';
 import { convertTime } from '@utils/func';
 import { ChangeEvent, useState } from 'react';
@@ -14,14 +14,11 @@ export default function Comment({ content, userId, commentUserId, commentId, cat
   });
 
   const queryClient = useQueryClient();
-  const deleteCommentData = useMutation(
-    (commentDeleteId: CommentDeleteProps) => detailApi.commentDelete(commentDeleteId),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['detailContent', categoryName]);
-      },
-    }
-  );
+  const deleteCommentData = useMutation(detailApi.commentDelete, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['detailContent', categoryName]);
+    },
+  });
 
   const updateCommentData = useMutation(detailApi.commentUpdate, {
     onSuccess: () => {
@@ -53,7 +50,7 @@ export default function Comment({ content, userId, commentUserId, commentId, cat
   // 댓글 삭제 로직
   const handleDeleteCommentData = () => {
     console.log('삭제!');
-    deleteCommentData.mutate(commentId);
+    deleteCommentData.mutate({ categoryName, commentId });
   };
 
   return (

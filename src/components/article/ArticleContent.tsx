@@ -1,4 +1,3 @@
-/* eslint-disable react/no-danger-with-children */
 import Comment from '@components/Comment';
 import CustomSideBar from '@components/SideBar/CustomSideBar';
 import styled from '@emotion/styled';
@@ -87,10 +86,11 @@ export default function ArticleContent({
           <ArticleUserInfo content={result} />
           <BoardTitle>{result?.title}</BoardTitle>
           <BoardSubTitle>
+            {result?.content}
             {/* 호진 TODO: image를 받아올때 hydration error 발생 , 이미지 사이즈 조절 이슈*/}
-            <BoardSubTitleContainer
+            {/* <BoardSubTitleContainer
               dangerouslySetInnerHTML={{ __html: result?.content }}
-            ></BoardSubTitleContainer>
+            ></BoardSubTitleContainer> */}
           </BoardSubTitle>
           <BoardButtonContainer>
             {loginUserId.userId === result?.userId && (
