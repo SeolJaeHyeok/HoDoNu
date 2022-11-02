@@ -1,0 +1,22 @@
+{
+  "result": {
+    "createdAt": "2022-10-25T08:14:17.095Z",
+    "articleId": 1,
+    "userId": "34344a35-f271-411b-b4ce-8ad86a329a8a",
+    "title": "안녕하세요",
+    "content": "안녕하세요! 반갑습니다 :)",
+    "hits": 0,
+    "isActive": true,
+    "user": {
+      "userId": "34344a35-f271-411b-b4ce-8ad86a329a8a",
+      "email": "dohee@test.com",
+      "imgUrl": "https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png",
+      "nickname": "stable_aquamarine_fox"
+    },
+    "images": [
+      "https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/article/raoul-droog-yMSecCHsIBc-unsplash-4913d8be-c43b-4b53-9282-88338e048d48.jpg",
+      "https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/article/amber-kipp-75715CVEJhI-unsplash-c8f529ff-0276-4921-8b33-b9ee25c09cc1.jpg"
+    ],
+    "comments": []
+  }
+}

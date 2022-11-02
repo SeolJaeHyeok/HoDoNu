@@ -1,5 +1,3 @@
-import ArticleContent from '@components/article/ArticleContent';
-
-export default function Doctor() {
-  return <ArticleContent />;
+export default function Free() {
+  return <div>자유입니다.</div>;
 }
