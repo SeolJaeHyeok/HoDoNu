@@ -182,7 +182,7 @@ const BoardButtonContainer = styled.div`
   text-align: right;
 `;
 
-const BoardSubTitleContainer = styled.div``;
+// const BoardSubTitleContainer = styled.div``;
 
 const CommentWrapper = styled.div`
   display: flex;
