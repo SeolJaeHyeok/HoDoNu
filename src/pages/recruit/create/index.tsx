@@ -95,9 +95,9 @@ export default function RecruitCreatePage() {
   };
 
   const onValid = (data: any) => {
-    // console.log(data);
-    // console.log(addressInfo);
-    // console.log(companyPictures);
+    console.log(data);
+    console.log(addressInfo);
+    console.log(companyPictures);
   };
 
   return (

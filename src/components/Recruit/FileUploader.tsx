@@ -86,7 +86,7 @@ export default function FileUploader({ multiple, fileList, setFileList, name }: 
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
-    onUploadFile(e); // 드롭 시 업로드
+    handleUploadFile(e); // 드롭 시 업로드
   };
 
   // 삭제 버튼 클릭 시 삭제
