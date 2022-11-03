@@ -9,7 +9,6 @@ import { useQuery } from 'react-query';
 
 import CustomSideBar from '@components/SideBar/CustomSideBar';
 import BoardHeader from '@components/Board/BoardHeader';
-// import BoardSkeleton from '@components/Board/BoardSkeleton';
 import { searchDataAtom } from '@atoms/searchAtom';
 import { useRecoilValue } from 'recoil';
 
@@ -27,15 +26,15 @@ export default function FreeBoard() {
   const searchText = useRecoilValue<string>(searchDataAtom);
   const [sort, setSort] = useState('createdAt');
   const [page, setPage] = useState('1');
-  const [perPage, setPerPage] = useState('10');
+  const [perPage, setPerPage] = useState('5');
 
   const { data: res } = useQuery(
     ['board', 'free', sort, page, perPage, searchText],
-    () => boardApi.getAllFreeBoards({ page, perPage, sort, search: searchText })
-    // {
-    //   staleTime: Infinity,
-    //   cacheTime: Infinity,
-    // }
+    () => boardApi.getAllFreeBoards({ page, perPage, sort, search: searchText }),
+    {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    }
   );
 
   // 총 페이지 수
@@ -71,19 +70,14 @@ export default function FreeBoard() {
             perPage={perPage}
             category="free"
           />
-          {res?.data.result.articles.length === 0 ? (
-            <div>검색 결과가 없습니다.</div>
-          ) : (
-            <BoardList
-              category={res?.data.result.category.toLowerCase()}
-              articles={res?.data.result.articles}
-            />
-          )}
+          {res?.data.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
+          <BoardList
+            category={res?.data.result.category.toLowerCase()}
+            articles={res?.data.result.articles}
+          />
         </>
 
-        {res?.data.result.articles.length > 0 && (
-          <Pagination length={TOTAL_PAGE} handler={pageNumber => handlePageNavigate(pageNumber)} />
-        )}
+        <Pagination length={TOTAL_PAGE} handler={pageNumber => handlePageNavigate(pageNumber)} />
       </BoardContainer>
     </>
   );

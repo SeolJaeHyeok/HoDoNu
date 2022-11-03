@@ -51,14 +51,12 @@ const Search = ({ category }: { category: 'free' | 'doctor' | 'nurse' }) => {
       {searchText && query && (
         <SearchResult>
           {searchResults?.data.result.articles.length === 0 && <NoResult>검색 결과 없음</NoResult>}
-          {query && (
-            <SearchList
-              ref={scrollRef}
-              index={index}
-              results={searchResults?.data.result.articles.slice(0, 10)}
-              query={query}
-            />
-          )}
+          <SearchList
+            ref={scrollRef}
+            index={index}
+            results={searchResults?.data.result.articles.slice(0, 10)}
+            query={query}
+          />
         </SearchResult>
       )}
     </Wrap>
