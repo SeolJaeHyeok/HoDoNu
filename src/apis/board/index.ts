@@ -43,7 +43,7 @@ const boardApi = {
   getAllFreeBoards: (params?: ParamsProps): Promise<AxiosResponse<any, any>> =>
     instance.get(`/free/articles`, { params }),
   getAllDoctorBoards: (params?: ParamsProps): Promise<AxiosResponse<any, any>> =>
-    instance.get('/free/articles', { params }),
+    instance.get('/doctor/articles', { params }),
   getAllNurseBoards: (params?: ParamsProps): Promise<AxiosResponse<any, any>> =>
     instance.get('/nurse/articles', { params }),
 
