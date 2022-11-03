@@ -1,9 +1,4 @@
-import {
-  GetOneArticleRes,
-  PatchArticleRes,
-  PostArticleRes,
-  PostImgRes,
-} from '@interfaces/board/article';
+import { GetOneArticleRes, PatchArticleRes, PostArticleRes } from '@interfaces/board/article';
 import { AxiosResponse } from 'axios';
 import { ArticleForm } from '@interfaces/article';
 import { instance } from '..';
