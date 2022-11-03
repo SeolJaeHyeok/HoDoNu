@@ -30,7 +30,7 @@ export default function ArticleContent({
 
   // 게시글 수정 클릭시 router에 값 넣어서 보내기!
   const handleMoveToEdit = () => {
-    router.push(`/board/edit/id?=${result.articleId}&category=${commentRequestDataForm.category}`);
+    router.push(`/board/edit?id=${result.articleId}&category=${commentRequestDataForm.category}`);
   };
 
   // 게시글 삭제
@@ -93,7 +93,7 @@ export default function ArticleContent({
             ></BoardSubTitleContainer> */}
           </BoardSubTitle>
           <BoardButtonContainer>
-            {loginUserId.userId === result?.userId && (
+            {loginUserId?.userId === result?.userId && (
               <>
                 <Button variant="outlined" onClick={handleMoveToEdit}>
                   수정
@@ -135,7 +135,7 @@ export default function ArticleContent({
               <ArticleComment
                 key={i}
                 content={content}
-                userId={loginUserId.userId}
+                userId={loginUserId?.userId!}
                 commentId={content.commentId}
                 commentUserId={content.user.userId}
                 categoryName={categoryName}

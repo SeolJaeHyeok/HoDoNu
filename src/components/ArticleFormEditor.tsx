@@ -1,16 +1,23 @@
 import boardApi from '@apis/board';
 import styled from '@emotion/styled';
 import dynamic from 'next/dynamic';
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import LoadingSpinner from './LoadingSpinner';
+
+interface ArticleFormEditorProps {
+  content?: string;
+  onChange: any;
+  height: string;
+}
 
 const ReactQuill = dynamic(
   async () => {
     const { default: RQ } = await import('react-quill');
-    return function comp({ forwardedRef, ...props }: any) {
+    const Quill = ({ forwardedRef, ...props }: any) => {
       return <RQ ref={forwardedRef} {...props} />;
     };
+    return Quill;
   },
   {
     ssr: false,
@@ -18,12 +25,12 @@ const ReactQuill = dynamic(
   }
 );
 
-export default function ArticleFormEditor({ onChange }: any, { ...props }) {
+export default function ArticleFormEditor({ onChange, content }: ArticleFormEditorProps) {
   const QuillRef = useRef<any>(null);
 
   const imageHandler = async () => {
-    console.log('imgHandler');
     const editor = await QuillRef.current?.getEditor();
+    editor.format('content', 123456);
 
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
@@ -34,15 +41,12 @@ export default function ArticleFormEditor({ onChange }: any, { ...props }) {
     const formData = new FormData();
 
     input.addEventListener('change', async () => {
-      console.log('change');
       const file = input.files;
       if (file !== null) {
         formData.append('images', file[0]);
       }
 
       try {
-        // useMutation을 사용하면 컴포넌트가 사라지는 이슈가 있어 useMutation을 사용하지 않았습니다.
-        // 추후 더 공부해보고 수정 예정입니다.
         const res = await boardApi.createArticleImg(formData);
         const IMG_URL = res.data.result;
 
@@ -54,21 +58,22 @@ export default function ArticleFormEditor({ onChange }: any, { ...props }) {
     });
   };
 
-  const modules = {
-    toolbar: {
-      container: [
-        ['image'],
-        [{ header: [1, 2, 3, false] }],
-        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      ],
-      handlers: {
-        image: imageHandler,
+  const modules = useMemo(() => {
+    return {
+      toolbar: {
+        container: [
+          ['image'],
+          [{ header: [1, 2, 3, false] }],
+          ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        ],
+        handlers: {
+          image: imageHandler,
+        },
       },
-    },
-  };
+    };
+  }, []);
 
   const formats = ['header', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'image'];
-
   return (
     <FormEditorContainer>
       <ReactQuill
@@ -78,7 +83,7 @@ export default function ArticleFormEditor({ onChange }: any, { ...props }) {
         style={{ height: '200px' }}
         onChange={onChange}
         forwardedRef={QuillRef}
-        {...props}
+        defaultValue={content}
       />
     </FormEditorContainer>
   );
