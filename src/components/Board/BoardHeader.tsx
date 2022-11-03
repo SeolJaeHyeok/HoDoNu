@@ -70,13 +70,13 @@ export default function BoardHeader({
       <div>
         <FilterButton
           value={'최신순'}
-          clicked={router.query.sort === 'CreatedAt'}
-          onClick={() => handleSortClick('CreatedAt')}
+          clicked={router.query.sort === 'createdAt'}
+          onClick={() => handleSortClick('createdAt')}
         />
         <FilterButton
           value={'조회순'}
-          clicked={router.query.sort === 'Hits'}
-          onClick={() => handleSortClick('Hits')}
+          clicked={router.query.sort === 'hits'}
+          onClick={() => handleSortClick('hits')}
         />
       </div>
       <FormControl>
