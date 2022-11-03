@@ -1,7 +1,8 @@
 import boardApi from '@apis/board';
 import styled from '@emotion/styled';
 import dynamic from 'next/dynamic';
-import { useMemo, useRef } from 'react';
+import { ComponentType, forwardRef, Ref, useMemo, useRef } from 'react';
+import ReactQuill, { ReactQuillProps } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import LoadingSpinner from './LoadingSpinner';
 
@@ -11,19 +12,28 @@ interface ArticleFormEditorProps {
   height: string;
 }
 
-const ReactQuill = dynamic(
-  async () => {
-    const { default: RQ } = await import('react-quill');
-    const Quill = ({ forwardedRef, ...props }: any) => {
-      return <RQ ref={forwardedRef} {...props} />;
-    };
-    return Quill;
-  },
-  {
-    ssr: false,
-    loading: () => <LoadingSpinner />,
-  }
-);
+const ReactQuillDynamic: ComponentType<ReactQuillProps & { forwardedRef?: Ref<ReactQuill> }> =
+  dynamic(
+    async () => {
+      const RQ: ComponentType<ReactQuillProps & { ref?: Ref<ReactQuill> }> = (
+        await import('react-quill')
+      ).default;
+
+      return function comp(props) {
+        const ReactQuillRef = forwardRef<ReactQuill, ReactQuillProps>(function ReactQuillRef(
+          { ...otherProps },
+          ref
+        ) {
+          return <RQ ref={ref} {...otherProps} />;
+        });
+        return <ReactQuillRef {...props} ref={props.forwardedRef} />;
+      };
+    },
+    {
+      ssr: false,
+      loading: () => <LoadingSpinner />,
+    }
+  );
 
 export default function ArticleFormEditor({ onChange, content }: ArticleFormEditorProps) {
   const QuillRef = useRef<any>(null);
@@ -76,7 +86,7 @@ export default function ArticleFormEditor({ onChange, content }: ArticleFormEdit
   const formats = ['header', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'image'];
   return (
     <FormEditorContainer>
-      <ReactQuill
+      <ReactQuillDynamic
         modules={modules}
         formats={formats}
         theme="snow"
