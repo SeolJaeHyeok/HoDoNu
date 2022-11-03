@@ -10,7 +10,7 @@ interface BoardProps {
 export default function BoardList({ category, articles }: BoardProps) {
   return (
     <BoardListContainer>
-      {articles.map((article: any) => (
+      {articles?.map((article: any) => (
         <BoardListItem key={article.articleId} category={category} {...article} />
       ))}
     </BoardListContainer>

@@ -2,39 +2,65 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { useRef } from 'react';
 import SearchForm from './SearchForm';
+import { useQuery } from 'react-query';
 import SearchList from './SearchList';
-import { searchDataAtom } from '@atoms/searchAtom';
 import { useRecoilValue } from 'recoil';
+import { searchDataAtom } from '@atoms/searchAtom';
+import boardApi from '@apis/board';
+import useDebounce from '@hooks/useDebounce';
 
-const Search = ({ category }: { category: string }) => {
-  const [searchText, setSearchText] = useState<string>(''); // 검색할 단어
+const Search = ({ category }: { category: 'free' | 'doctor' | 'nurse' }) => {
+  const searchText = useRecoilValue(searchDataAtom);
   const scrollRef = useRef(null);
   const [index, setIndex] = useState(-1);
-  const searchResults = useRecoilValue(searchDataAtom);
+  const [query, setQuery] = useState<string>('');
+
+  const debouncedQuery = useDebounce(query, 200);
+
+  const { data: searchResults } = useQuery(
+    ['search', 'preview', debouncedQuery],
+    () => {
+      if (category === 'free') {
+        return boardApi.getAllFreeBoards({ search: debouncedQuery });
+      }
+
+      if (category === 'doctor') {
+        return boardApi.getAllDoctorBoards({ search: debouncedQuery });
+      }
+
+      if (category === 'nurse') {
+        return boardApi.getAllNurseBoards({ search: debouncedQuery });
+      }
+    },
+    {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    }
+  );
+
   return (
     <Wrap>
       <SearchForm
-        category={category}
+        query={query}
+        setQuery={setQuery}
         index={index}
         setIndex={setIndex}
-        searchText={searchText}
-        setSearchText={setSearchText}
         scrollRef={scrollRef}
+        searchResults={searchResults}
       />
-      {searchText.length !== 0 ? (
+      {searchText && query && (
         <SearchResult>
-          {searchResults?.length === 0 || searchText === '' ? (
-            <NoResult>검색어 없음</NoResult>
-          ) : (
+          {searchResults?.data.result.articles.length === 0 && <NoResult>검색 결과 없음</NoResult>}
+          {query && (
             <SearchList
               ref={scrollRef}
-              results={searchResults}
               index={index}
-              searchText={searchText}
+              results={searchResults?.data.result.articles.slice(0, 10)}
+              query={query}
             />
           )}
         </SearchResult>
-      ) : null}
+      )}
     </Wrap>
   );
 };

@@ -92,7 +92,7 @@ export default function ArticleContent({ result }: { result: ContentProps }) {
             ></BoardSubTitleContainer>
           </BoardSubTitle>
           <BoardButtonContainer>
-            {loginUserId.userId === result?.userId && (
+            {loginUserId?.userId === result?.userId && (
               <>
                 <Button variant="outlined" onClick={handleMoveToEdit}>
                   수정
@@ -134,7 +134,7 @@ export default function ArticleContent({ result }: { result: ContentProps }) {
               <Comment
                 key={i}
                 content={content}
-                userId={loginUserId.userId}
+                userId={loginUserId?.userId!}
                 commentId={content.commentId}
                 commentUserId={content.user.userId}
               />

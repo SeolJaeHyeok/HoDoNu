@@ -59,11 +59,11 @@ export default function NavBar() {
               Home
             </MuiLink>
           </Link>
-          <Link href="/board/free?page=1&perPage=10&sort=createdAt">
+          <Link href="/board">
             <MuiLink
               underline="none"
               component="button"
-              color={curPath === '/board' ? '#fff' : '#424242'}
+              color={curPath.includes('/board') ? '#fff' : '#424242'}
               sx={linkStyle}
             >
               게시판
@@ -73,7 +73,7 @@ export default function NavBar() {
             <MuiLink
               underline="none"
               component="button"
-              color={curPath === '/recruit' ? '#fff' : '#424242'}
+              color={curPath.includes('/recruit') ? '#fff' : '#424242'}
               sx={linkStyle}
             >
               채용

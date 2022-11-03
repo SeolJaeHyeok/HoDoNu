@@ -37,7 +37,7 @@ export default function BoardHeader({
   // 최신 순, 조회순 정렬
   const handleSortClick = (sort: string) => {
     // Sort 정렬 기준 설정
-    setSort(sort);
+    setSort(() => sort);
     setPage('1');
 
     // 해당 값으로 URL 변경
@@ -53,7 +53,7 @@ export default function BoardHeader({
   // 모아보기 - perPage
   const handlePerPage = (e: SelectChangeEvent<string>) => {
     // Per Page 정렬 기준 설정
-    setPerPage(e.target.value);
+    setPerPage(() => e.target.value);
     setPage('1');
 
     // 해당 값으로 URL 변경
@@ -95,7 +95,7 @@ export default function BoardHeader({
           <MenuItem value={20}>20개씩 보기</MenuItem>
         </Select>
       </FormControl>
-      <Search category="free" />
+      <Search category={category} />
       <Link href={`/board/create?category=${category}`}>
         <Button variant="outlined">작성하기</Button>
       </Link>
