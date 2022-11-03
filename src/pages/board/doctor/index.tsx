@@ -19,7 +19,6 @@ export default function DoctorBoard() {
     boardApi.getAllDoctorBoards({ page, perPage, sort })
   );
 
-  console.log(res);
   // 총 페이지 수
   const TOTAL_PAGE = Math.ceil(res?.data.result.count / Number(perPage));
 

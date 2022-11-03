@@ -18,7 +18,6 @@ export default function NurseBoard() {
   const { data: res } = useQuery(['board', 'nurse', sort, page, perPage], () =>
     boardApi.getAllNurseBoards({ page, perPage, sort })
   );
-  console.log(res);
 
   // 총 페이지 수
   const TOTAL_PAGE = Math.ceil(res?.data.result.count / Number(perPage));

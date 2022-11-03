@@ -17,7 +17,6 @@ interface SearchProps {
 const ArrowDown = 'ArrowDown';
 const ArrowUp = 'ArrowUp';
 const Escape = 'Escape';
-const Enter = 'Enter';
 
 export default function SearchForm({
   query,
@@ -61,9 +60,6 @@ export default function SearchForm({
       case Escape:
         setSearchText('');
         setIndex(-1);
-        break;
-      case Enter:
-        console.log('Enter');
         break;
       default:
         break;
