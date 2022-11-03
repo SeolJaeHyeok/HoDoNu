@@ -25,4 +25,5 @@ export interface ArticleForm {
   category: 'Doctor' | 'Nurse' | 'Free';
   title: string;
   content: string;
+  articleId?: string;
 }

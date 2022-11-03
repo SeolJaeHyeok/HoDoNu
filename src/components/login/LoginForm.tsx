@@ -34,7 +34,6 @@ export default function LoginForm() {
       userAction.login(data);
     },
     onError: (e: Error) => {
-      console.log(e.message);
       alert(e.message);
     },
   });

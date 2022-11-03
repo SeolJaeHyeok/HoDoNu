@@ -1,21 +1,18 @@
-import { useRouter } from 'next/router';
-
-import { useMutation } from 'react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-
-import { TextField, Stack, Button, Box } from '@mui/material';
-
-import ArticleFormEditor from '@components/ArticleFormEditor';
-import boardApi from 'src/apis/board';
-import { boardValidationSchema } from '@utils/validationSchema';
 import { ArticleForm } from '@interfaces/article';
-import { categoryAssertion } from '@utils/const/category';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { boardValidationSchema } from '@utils/validationSchema';
+import { Box, Button, Stack, TextField } from '@mui/material';
+import ArticleFormEditor from '@components/ArticleFormEditor';
+import { useMutation } from 'react-query';
+import { useRouter } from 'next/router';
+import boardApi from '@apis/board';
+import React from 'react';
 
-export default function ArticleCreateForm() {
+// eslint-disable-next-line no-unused-vars
+export default function EditForm({ data, category }: any) {
   const router = useRouter();
-
-  const initBoard = router.query.category || categoryAssertion.FREE;
+  const { title, content, articleId } = data;
 
   const {
     register,
@@ -25,7 +22,7 @@ export default function ArticleCreateForm() {
     formState: { errors },
   } = useForm<ArticleForm>({ resolver: yupResolver(boardValidationSchema) });
 
-  const mutation = useMutation(['createArticle'], boardApi.createFreeArticle, {
+  const mutation = useMutation(['createArticle'], boardApi.updateArticle, {
     onSuccess: res => {
       const { articleId } = res.data.result;
       router.push(`free/${articleId}`);
@@ -35,20 +32,24 @@ export default function ArticleCreateForm() {
     },
   });
 
+  const onEditorStateChange = (editorState: any) => {
+    editorState = editorState !== '<p><br></p>' ? editorState : '';
+    setValue('content', editorState);
+  };
+
+  register('category', { value: category });
+  register('title', { value: title });
+
   const onSubmit: SubmitHandler<ArticleForm> = async data => {
     const { title, category, content } = data;
+
     // 게시글 생성
-    mutation.mutate({ title, category, content });
+    mutation.mutate({ title, category, content, articleId });
   };
 
   const handleCancle = () => {
     reset();
     router.back();
-  };
-
-  const onEditorStateChange = (editorState: any) => {
-    editorState = editorState !== '<p><br></p>' ? editorState : '';
-    setValue('content', editorState);
   };
 
   return (
@@ -64,30 +65,19 @@ export default function ArticleCreateForm() {
       >
         <TextField
           id="component-outlined"
-          label="게시판"
-          select
-          SelectProps={{
-            native: true,
-          }}
           {...register('category')}
-          defaultValue={initBoard}
           helperText={errors.category ? errors.category.message : null}
-        >
-          <option value={categoryAssertion.NURSE}>간호사 게시판</option>
-          <option value={categoryAssertion.DOCTOR}>의사 게시판</option>
-          <option value={categoryAssertion.FREE}>자유 게시판</option>
-        </TextField>
+          disabled
+        ></TextField>
 
         <TextField
           type="text"
           id="outlined"
-          label="제목"
-          placeholder="제목을 입력해주세요."
           {...register('title')}
           helperText={errors.title ? errors.title.message : null}
         />
 
-        <ArticleFormEditor onChange={onEditorStateChange} height="250px" />
+        <ArticleFormEditor onChange={onEditorStateChange} height="250px" content={content} />
       </Stack>
       <Box
         sx={{
@@ -97,7 +87,7 @@ export default function ArticleCreateForm() {
         }}
       >
         <Button type="submit" variant="contained" sx={buttonStyle}>
-          게시글 등록
+          게시글 수정
         </Button>
         <Button variant="contained" sx={buttonStyle} onClick={handleCancle}>
           취소
