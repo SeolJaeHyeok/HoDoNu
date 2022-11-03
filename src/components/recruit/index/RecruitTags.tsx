@@ -1,12 +1,24 @@
 import styled from '@emotion/styled';
 import { tags } from '@utils/const/recruitTags';
+import { useState } from 'react';
 
 export default function RecruitTags() {
+  const [isButtonColor, setIsButtonColor] = useState(Array(18).fill(false));
+
+  const handleChangeButtonColor = (idx: number) => {
+    isButtonColor[idx] = !isButtonColor[idx];
+    setIsButtonColor([...isButtonColor]);
+  };
+
   return (
     <RecruitTagWrapper>
       <Nav>
         {tags.map((tag, i) => {
-          return <TagButton key={i}>{tag}</TagButton>;
+          return (
+            <TagButton key={i} onClick={() => handleChangeButtonColor(i)} color={isButtonColor[i]}>
+              {tag}
+            </TagButton>
+          );
         })}
       </Nav>
     </RecruitTagWrapper>
@@ -40,8 +52,7 @@ const Nav = styled.nav`
   }
 `;
 
-const TagButton = styled.div`
-  box-sizing: border-box;
+const TagButton = styled.button`
   padding: 8px 16px;
   height: 38px;
   border: 1px solid rgb(228, 228, 228);
@@ -50,8 +61,8 @@ const TagButton = styled.div`
   line-height: 148%;
   text-align: center;
   letter-spacing: 0.02em;
-  color: black;
+  color: ${props => (props.color ? 'white' : 'black')};
+  background: ${props => (props.color ? '#00DD6D' : 'white')};
   flex: none;
-  order: 0;
-  flex-grow: 0;
+  cursor: pointer;
 `;
