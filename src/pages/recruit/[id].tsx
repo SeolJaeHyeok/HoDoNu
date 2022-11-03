@@ -14,8 +14,8 @@ export interface ParamProps {
 }
 
 export default function RecruitDetail(content: RecruitContent) {
-  const address = '서울특별시 강남구 봉은사로 644(삼성동)';
-  const companyName = '엠서클';
+  // const address = '서울특별시 강남구 봉은사로 644(삼성동)';
+  // const companyName = '엠서클';
   console.log(content);
 
   return (
