@@ -23,7 +23,7 @@ import BoardSkeleton from '@components/Board/BoardSkeleton';
 export default function FreeBoard() {
   const router = useRouter();
 
-  const [sort, setSort] = useState('CreatedAt');
+  const [sort, setSort] = useState('createdAt');
   const [page, setPage] = useState('1');
   const [perPage, setPerPage] = useState('10');
   const { data: res } = useQuery(['board', 'free', sort, page, perPage], () =>

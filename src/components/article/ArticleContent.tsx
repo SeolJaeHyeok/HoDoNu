@@ -1,8 +1,7 @@
-/* eslint-disable react/no-danger-with-children */
-import Comment from '@components/Comment';
+import ArticleComment from '@components/article/ArticleComment';
 import CustomSideBar from '@components/SideBar/CustomSideBar';
 import styled from '@emotion/styled';
-import { CommentProps, ContentProps } from '@interfaces/board/detailUserInfoType';
+import { ContentProps } from '@interfaces/board/detailUserInfoType';
 import CommentIcon from '@mui/icons-material/Comment';
 import { Button } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
@@ -18,7 +17,13 @@ interface CommentRequestDataState {
   content: string;
   articleId: string;
 }
-export default function ArticleContent({ result }: { result: ContentProps }) {
+export default function ArticleContent({
+  result,
+  categoryName,
+}: {
+  result: ContentProps;
+  categoryName: string;
+}) {
   const queryClient = useQueryClient();
   const loginUserId = useRecoilValue(userInfoState);
   const router = useRouter();
@@ -30,36 +35,31 @@ export default function ArticleContent({ result }: { result: ContentProps }) {
 
   // 게시글 삭제
   const requestDeleteBoard = useMutation(detailApi.deleteBoard, {
-    onSuccess: data => {
-      console.log(data);
-      queryClient.invalidateQueries('detailContent');
+    onSuccess: () => {
+      queryClient.invalidateQueries(['detailContent', categoryName]);
     },
   });
 
   const handleDeleteBoard = () => {
-    console.log('삭제');
     requestDeleteBoard.mutate(result.articleId);
   };
 
   // 댓글 등록 로직
   const [commentRequestDataForm, setCommentRequestData] = useState<CommentRequestDataState>({
-    category: 'Free',
+    category: categoryName,
     content: '',
     articleId: result?.articleId,
   });
 
-  const requestCommentData = useMutation(
-    (commentRequestDataForm: CommentProps) => detailApi.commentRegister(commentRequestDataForm),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('detailContent');
-      },
-    }
-  );
+  const requestCommentData = useMutation(detailApi.commentRegister, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['detailContent', categoryName]);
+    },
+  });
 
   const handleChangeCommentInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setCommentRequestData({
-      category: 'Free',
+      category: categoryName,
       content: e.target.value,
       articleId: result?.articleId,
     });
@@ -86,10 +86,11 @@ export default function ArticleContent({ result }: { result: ContentProps }) {
           <ArticleUserInfo content={result} />
           <BoardTitle>{result?.title}</BoardTitle>
           <BoardSubTitle>
+            {result?.content}
             {/* 호진 TODO: image를 받아올때 hydration error 발생 , 이미지 사이즈 조절 이슈*/}
-            <BoardSubTitleContainer
+            {/* <BoardSubTitleContainer
               dangerouslySetInnerHTML={{ __html: result?.content }}
-            ></BoardSubTitleContainer>
+            ></BoardSubTitleContainer> */}
           </BoardSubTitle>
           <BoardButtonContainer>
             {loginUserId?.userId === result?.userId && (
@@ -131,12 +132,13 @@ export default function ArticleContent({ result }: { result: ContentProps }) {
           </CommnetInputContainer>
           {result?.comments?.map((content: any, i: number) => {
             return (
-              <Comment
+              <ArticleComment
                 key={i}
                 content={content}
                 userId={loginUserId?.userId!}
                 commentId={content.commentId}
                 commentUserId={content.user.userId}
+                categoryName={categoryName}
               />
             );
           })}
@@ -180,7 +182,7 @@ const BoardButtonContainer = styled.div`
   text-align: right;
 `;
 
-const BoardSubTitleContainer = styled.div``;
+// const BoardSubTitleContainer = styled.div``;
 
 const CommentWrapper = styled.div`
   display: flex;
