@@ -1,5 +1,6 @@
 import RecruitCardView from '@components/recruit/index/RecruitCardView';
 import RecruitHeader from '@components/recruit/index/RecruitHearder';
+import RecruitTags from '@components/recruit/index/RecruitTags';
 import styled from '@emotion/styled';
 
 export default function Recruit() {
@@ -9,16 +10,22 @@ export default function Recruit() {
         <RecruitHeader />
       </RecruitContainer>
       <RecruitLine />
-      <RecruitContentContainer>
-        {/* 추후 기능 작업때 변경하겠습니다! */}
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
-      </RecruitContentContainer>
+      <RecruitContentWrapper>
+        <RecruitTags />
+        <RecruitContentContainer>
+          {/* 추후 기능 작업때 변경하겠습니다! */}
+          <RecruitCardView />
+          <RecruitCardView />
+          <RecruitCardView />
+          <RecruitCardView />
+          <RecruitCardView />
+          <RecruitCardView />
+          <RecruitCardView />
+          <RecruitCardView />
+          <RecruitCardView />
+          <RecruitCardView />
+        </RecruitContentContainer>
+      </RecruitContentWrapper>
     </RecruitWrapper>
   );
 }
@@ -40,6 +47,9 @@ const RecruitLine = styled.hr`
   margin-top: 14px;
 `;
 
+const RecruitContentWrapper = styled.div`
+  background-color: #f7f7f7;
+`;
 const RecruitContentContainer = styled.div`
   display: flex;
   width: 1350px;

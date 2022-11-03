@@ -4,7 +4,13 @@ import Image from 'next/image';
 export default function RecruitCardView() {
   return (
     <CardContainer>
-      <Image src="/assets/images/wellcheck.avif" width={308} height={160} alt="공고" />
+      <Image
+        src="/assets/images/wellcheck.avif"
+        width={308}
+        height={160}
+        style={{ borderRadius: '12px' }}
+        alt="공고"
+      />
       <RecruitTitle>차병원 차움 피부 성형 클리닉 경력직 간호사 채용 (정규직)</RecruitTitle>
       <RecruitCompanyName>차병원 ( 병원 이름 )</RecruitCompanyName>
       <RecruitAddress>서울시 강남구 삼성1동 163-3</RecruitAddress>
@@ -19,6 +25,7 @@ const CardContainer = styled.div`
   box-shadow: rgb(0 0 0 / 12%) 0px 6px 16px;
   margin-top: 20px;
   margin-right: 27px;
+  border-radius: 12px;
 `;
 
 const RecruitTitle = styled.h1`
