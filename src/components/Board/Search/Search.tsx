@@ -4,13 +4,11 @@ import { useRef } from 'react';
 import SearchForm from './SearchForm';
 import { useQuery } from 'react-query';
 import SearchList from './SearchList';
-import { useRecoilValue } from 'recoil';
-import { searchDataAtom } from '@atoms/searchAtom';
+
 import boardApi from '@apis/board';
 import useDebounce from '@hooks/useDebounce';
 
 const Search = ({ category }: { category: 'free' | 'doctor' | 'nurse' }) => {
-  const searchText = useRecoilValue(searchDataAtom);
   const scrollRef = useRef(null);
   const [index, setIndex] = useState(-1);
   const [query, setQuery] = useState<string>('');
@@ -48,11 +46,12 @@ const Search = ({ category }: { category: 'free' | 'doctor' | 'nurse' }) => {
         scrollRef={scrollRef}
         searchResults={searchResults}
       />
-      {searchText && query && (
+      {query && (
         <SearchResult>
           {searchResults?.data.result.articles.length === 0 && <NoResult>검색 결과 없음</NoResult>}
           <SearchList
             ref={scrollRef}
+            setIndex={setIndex}
             index={index}
             results={searchResults?.data.result.articles.slice(0, 10)}
             query={query}

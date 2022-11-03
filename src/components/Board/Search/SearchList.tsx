@@ -4,7 +4,7 @@ import SearchItem from './SearchItem';
 import { ArticleProps } from '@interfaces/article';
 
 // eslint-disable-next-line react/display-name
-const SearchList = React.forwardRef(({ results, index, query }: any, ref) => {
+const SearchList = React.forwardRef(({ results, index, setIndex, query }: any, ref) => {
   return (
     <Container>
       {results?.map((result: ArticleProps, idx: number) => (
@@ -12,6 +12,7 @@ const SearchList = React.forwardRef(({ results, index, query }: any, ref) => {
           ref={ref}
           articleId={result.articleId}
           isFocus={index === idx ? true : false}
+          setIndex={setIndex}
           key={result.id}
           result={result}
           query={query}
@@ -26,4 +27,5 @@ const Container = styled.div`
   overflow-y: auto;
   max-height: 280px;
 `;
+
 export default SearchList;
