@@ -9,5 +9,5 @@ export interface FileUploaderProps {
 
 export interface FileProps {
   id: number;
-  file: File | null;
+  file: File;
 }

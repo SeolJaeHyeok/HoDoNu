@@ -8,6 +8,7 @@ import FileUploader from '@components/Recruit/FileUploader';
 import { FileProps } from '@interfaces/recruit';
 import recruitApi from '@apis/recruit';
 import { recruitPostSchema } from '@utils/validationSchema';
+import TagsInput from '@components/Recruit/TagsInput';
 
 /**
 0. 공고 제목 - companyRecruitmentTitle
@@ -19,6 +20,13 @@ import { recruitPostSchema } from '@utils/validationSchema';
 6. 우대 사항(ex. 해외 경험) - companyPreference
 7. 병원 주소 - companyAddress({companyPostalCode, companyMainAddress, companyDetailAddress})
 8. 등록하기
+ */
+
+/**
+ * 설립 - 1~3년, 4~9년, 10년 이상
+ * 복지 - 복지 포인트 지급, 진료 할인, 건강검진 지원, 교통비 지원, 중식 지원, 석식 지원
+ * 연봉 - 상위 5%, 상위 10%, 상위 30%, 업계 평균
+ * 진료 과목 - 내과, 외과, 비뇨기과, 성형외과, 치과, 안과 ...
  */
 
 interface RecruitPostProps {
@@ -35,9 +43,9 @@ interface RecruitPostProps {
 }
 
 interface RecruitAddressProps {
-  companyPostalCode: string;
-  companyMainAddress: string;
-  companyDetailAddress: string;
+  postalCode: string;
+  mainAddress: string;
+  detailAddress: string;
 }
 
 interface DaumAddressAPIProps {
@@ -55,10 +63,11 @@ export default function RecruitCreatePage() {
     resolver: yupResolver(recruitPostSchema),
   });
 
+  const [tags, setTags] = useState<{ name: string }[]>([]);
   const [addressInfo, setAddressInfo] = useState<RecruitAddressProps>({
-    companyPostalCode: '',
-    companyMainAddress: '',
-    companyDetailAddress: '',
+    postalCode: '',
+    mainAddress: '',
+    detailAddress: '',
   }); // 주소 정보 객체
 
   const [companyPictures, setCompanyPictures] = useState<FileProps[]>([]); // 회사 사진 배열
@@ -73,8 +82,8 @@ export default function RecruitCreatePage() {
     setAddressInfo((prev: RecruitAddressProps) => {
       return {
         ...prev,
-        companyPostalCode: addressData.zonecode,
-        companyMainAddress: addressData.address,
+        postalCode: addressData.zonecode,
+        mainAddress: addressData.address,
       };
     });
   };
@@ -84,14 +93,14 @@ export default function RecruitCreatePage() {
     setAddressInfo((prev: RecruitAddressProps) => {
       return {
         ...prev,
-        companyDetailAddress: e.target.value,
+        detailAddress: e.target.value,
       };
     });
   };
 
   // Image File Parsing - [{id: 1, file: File}, {id: 2, file: File}] -> FormData [File, File, ...]
-  const parseImageFiles = (files: any) => {
-    return files.map(({ file }: { file: any }) => file);
+  const parseImageFiles = (files: FileProps[]) => {
+    return files.map(({ file }: { file: File }) => file);
   };
 
   // Image Data Array POST
@@ -112,28 +121,17 @@ export default function RecruitCreatePage() {
     addressInfo: RecruitAddressProps,
     companyImages: string[]
   ) => {
-    const {
-      companyRecruitmentTitle,
-      companyName,
-      companyIntroduction,
-      companyRole,
-      companyRequirement,
-      companyPreference,
-      companyTags,
-      companyRecruiterContact,
-    } = data;
-
     return {
-      title: companyRecruitmentTitle,
-      company: companyName,
+      title: data.companyRecruitmentTitle,
+      company: data.companyName,
       address: addressInfo,
-      introduction: companyIntroduction,
-      task: companyRole,
-      eligibility: companyRequirement,
-      favor: companyPreference,
-      tags: companyTags,
+      introduction: data.companyIntroduction,
+      task: data.companyRole,
+      eligibility: data.companyRequirement,
+      favor: data.companyPreference,
+      tags: data.companyTags,
       images: companyImages,
-      recruiterContact: companyRecruiterContact,
+      recruiterContact: data.companyRecruiterContact,
     };
   };
 
@@ -149,9 +147,11 @@ export default function RecruitCreatePage() {
     // Image POST 요청 선 처리
     if (companyPictures.length > 0) {
       const arr = parseImageFiles(companyPictures);
-      arr.forEach((_: never, i: number) => {
+
+      arr.forEach((_: any, i: number) => {
         imageFormData.append('images', arr[i]);
       });
+
       const response = await postImageArray(imageFormData);
       responseImages = response?.data.result;
     }
@@ -170,7 +170,7 @@ export default function RecruitCreatePage() {
         <TextField
           {...register('companyRecruitmentTitle')}
           id="recruitmentTitle"
-          placeholder="회사 이름을 입력해주세요:)"
+          placeholder="공고 제목을 입력해주세요:)"
           sx={{
             width: '450px',
             mt: '8px',
@@ -189,16 +189,7 @@ export default function RecruitCreatePage() {
           helperText={<ErrorMsg>{errors.companyName?.message}</ErrorMsg>}
         />
         <Label htmlFor="companyTag">태그</Label>
-        <TextField
-          {...register('companyTags')}
-          id="companyTag"
-          placeholder="회사 관련 태그를 넣어주세요:)"
-          sx={{
-            width: '450px',
-            mt: '8px',
-          }}
-          helperText={<ErrorMsg>{errors.companyTags?.message}</ErrorMsg>}
-        />
+        <TagsInput tags={tags} setTags={setTags} />
         <Label htmlFor="companyIntroduction">회사 소개</Label>
         <TextField
           {...register('companyIntroduction')}
@@ -265,15 +256,11 @@ export default function RecruitCreatePage() {
           helperText={<ErrorMsg>{errors.companyPreference?.message}</ErrorMsg>}
         />
         <Label htmlFor="organization">소속 기관 ( 병원 주소 )</Label>
-        <PostalCodeContainer
-          style={{
-            marginTop: '8px',
-          }}
-        >
+        <PostalCodeContainer>
           <TextField
             id="organization"
             placeholder="우편번호"
-            value={addressInfo.companyPostalCode}
+            value={addressInfo.postalCode}
             sx={{
               width: '225px',
             }}
@@ -292,7 +279,7 @@ export default function RecruitCreatePage() {
         <AddressContainer>
           <TextField
             placeholder="주소"
-            value={addressInfo.companyMainAddress}
+            value={addressInfo.mainAddress}
             sx={{
               width: '450px',
               mt: '8px',
@@ -300,7 +287,7 @@ export default function RecruitCreatePage() {
           />
           <TextField
             placeholder="상세 주소"
-            value={addressInfo.companyDetailAddress}
+            value={addressInfo.detailAddress}
             onChange={handleDetailAddress}
             sx={{
               width: '450px',
@@ -347,7 +334,10 @@ const Label = styled.label`
   font-size: 14px;
 `;
 
-const PostalCodeContainer = styled.div``;
+const PostalCodeContainer = styled.div`
+  margin-top: 8px;
+`;
+
 const AddressContainer = styled.div``;
 
 const ErrorMsg = styled.span`

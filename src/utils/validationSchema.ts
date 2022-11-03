@@ -6,7 +6,7 @@ export const loginValidationSchema = yup.object({
 });
 
 export const recruitPostSchema = yup.object({
-  companyRecruitmentTitle: yup.string().required('회사 이름을 입력해주세요:('),
+  companyRecruitmentTitle: yup.string().required('공고 제목을 입력해주세요:('),
   companyName: yup.string().required('회사 이름을 입력해주세요:('),
   companyTags: yup.string().required('회사 태그를 입력해주세요:('),
   companyIntroduction: yup

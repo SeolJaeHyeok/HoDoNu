@@ -39,7 +39,7 @@ export default function FileUploader({ multiple, fileList, setFileList, name }: 
       return;
     }
 
-    if (multiple) {
+    if (multiple && selectFiles) {
       Object.keys(selectFiles).forEach(() => {
         setFileList([...fileList, { id: fileId.current++, file: selectFiles.item(0) }]);
       });
