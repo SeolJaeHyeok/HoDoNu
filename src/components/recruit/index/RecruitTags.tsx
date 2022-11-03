@@ -13,13 +13,11 @@ export default function RecruitTags() {
   return (
     <RecruitTagWrapper>
       <Nav>
-        {tags.map((tag, i) => {
-          return (
-            <TagButton key={i} onClick={() => handleChangeButtonColor(i)} color={isButtonColor[i]}>
-              {tag}
-            </TagButton>
-          );
-        })}
+        {tags.map((tag, i) => (
+          <TagButton key={i} onClick={() => handleChangeButtonColor(i)} color={isButtonColor[i]}>
+            {tag}
+          </TagButton>
+        ))}
       </Nav>
     </RecruitTagWrapper>
   );
