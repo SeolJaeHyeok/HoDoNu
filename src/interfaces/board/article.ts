@@ -31,3 +31,24 @@ export interface PatchArticleRes {
   };
   status: number;
 }
+
+export interface GetOneArticleRes {
+  result: {
+    createdAt: string;
+    userId: string;
+    hits: number;
+    isActive: boolean;
+    articleId: number;
+    title: string;
+    content: string;
+    Image: string[];
+    user: {
+      userId: string;
+      email: string;
+      imgUrl: string;
+      nickname: string;
+    };
+    comments: string[];
+  };
+  status: number;
+}

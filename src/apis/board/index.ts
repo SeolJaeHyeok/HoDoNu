@@ -1,4 +1,9 @@
-import { PatchArticleRes, PostArticleRes, PostImgRes } from '@interfaces/board/article';
+import {
+  GetOneArticleRes,
+  PatchArticleRes,
+  PostArticleRes,
+  PostImgRes,
+} from '@interfaces/board/article';
 import { AxiosResponse } from 'axios';
 import { ArticleForm } from '@interfaces/article';
 import { instance } from '..';
@@ -7,6 +12,11 @@ interface ParamsProps {
   page?: string | string[] | undefined;
   perPage?: string | string[] | undefined;
   sort?: string | string[] | undefined;
+}
+
+interface articlaParamProps {
+  category: string | string[] | undefined;
+  id: string | string[] | undefined;
 }
 
 const boardApi = {
@@ -36,6 +46,9 @@ const boardApi = {
     instance.get('/free/articles', { params }),
   getAllNurseBoards: (params?: ParamsProps): Promise<AxiosResponse<any, any>> =>
     instance.get('/nurse/articles', { params }),
+
+  getOneArticle: (articleParams?: articlaParamProps): Promise<AxiosResponse<GetOneArticleRes>> =>
+    instance.get(`/${articleParams?.category}/articles/${articleParams?.id}`),
 };
 
 export default boardApi;
