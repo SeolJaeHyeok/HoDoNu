@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
 
@@ -9,11 +10,11 @@ declare global {
 }
 
 interface MapProps {
-  markerName: string;
+  companyName: string;
   address: string;
 }
 
-export default function Map({ markerName, address }: MapProps) {
+export default function Map({ companyName, address }: MapProps) {
   const apiKey =
     process.env.NODE_ENV === 'development'
       ? process.env.NEXT_PUBLIC_DEVELOPMENT_KAKAOMAP_APIKEY
@@ -42,7 +43,7 @@ export default function Map({ markerName, address }: MapProps) {
             position: coords,
           });
           const infowindow = new window.kakao.maps.InfoWindow({
-            content: `<div style="width:150px;text-align:center;padding:6px 0;">${markerName}</div>`,
+            content: `<div style="width:150px;text-align:center;padding:6px 0;">${companyName}</div>`,
           });
           infowindow.open(map, marker);
           map.setCenter(coords);
@@ -51,21 +52,22 @@ export default function Map({ markerName, address }: MapProps) {
         }
       });
     });
-  }, [mapLoaded, address, markerName]);
+  }, [mapLoaded, address, companyName]);
 
   return (
-    <>
-      <div id="map" style={{ width: '500px', height: '500px' }}></div>
+    <MapContainer>
+      <div id="map" style={{ width: '500px', height: '250px' }}></div>
       <Script
         type="text/javascript"
         strategy="lazyOnload"
         onLoad={() => setMapLoaded(true)}
         src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&libraries=services&autoload=false`}
       />
-    </>
+    </MapContainer>
   );
 }
 
-{
-  /* <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=Javascript Key&libraries=services&autoload=false"></script> */
-}
+const MapContainer = styled.div`
+  width: 500px;
+  margin: 40px auto;
+`;
