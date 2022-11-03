@@ -30,7 +30,7 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: ParamsProps) => {
-  const { data }: any = await detailApi.getDetailData('free', params.id);
+  const { data } = await detailApi.getDetailData('free', params.id);
 
   if (!params) {
     return {
