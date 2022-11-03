@@ -1,7 +1,11 @@
 import Carousel from '@components/MainCarousel';
 import styled from '@emotion/styled';
 
-export default function ImageCarousel() {
+interface ImageProps {
+  images: string[];
+}
+
+export default function ImageCarousel(props: ImageProps) {
   const settings = {
     autoplay: false,
     dots: true,
@@ -9,8 +13,9 @@ export default function ImageCarousel() {
   return (
     <MainCarouselContainer>
       <Carousel settings={settings}>
-        <CarouselImage src={'/assets/images/wellcheck.avif'} />
-        <CarouselImage src={'/assets/images/wellcheck.avif'} />
+        {props.images.map(img => {
+          return <CarouselImage src={img} />;
+        })}
       </Carousel>
     </MainCarouselContainer>
   );

@@ -2,9 +2,10 @@
 import { Container } from '@mui/material';
 import { recruitApi } from '@apis/recuit';
 import ImageCarousel from '@components/recruit/detail/ImageCarousel';
-import Map from '@components/recruit/detail/Map';
-// import CompanyInfo from '@components/recruit/detail/CompanyInfo';
+import CompanyInfo from '@components/recruit/detail/CompanyInfo';
 import { RecruitContent } from '@interfaces/recruit/detail';
+import Contact from '@components/recruit/detail/Contact';
+// import Content from '@components/recruit/detail/Content';
 
 export interface ParamProps {
   params: {
@@ -12,12 +13,6 @@ export interface ParamProps {
   };
 }
 
-// ImageCarousel에 address, company
-// content에  data
-// imageCarousel images
-
-// introduction이  quill
-// InferGetStaticPropsType<typeof getStaticProps>
 export default function RecruitDetail(content: RecruitContent) {
   const address = '서울특별시 강남구 봉은사로 644(삼성동)';
   const companyName = '엠서클';
@@ -32,9 +27,10 @@ export default function RecruitDetail(content: RecruitContent) {
         alignItems: 'center',
       }}
     >
-      <ImageCarousel />
-      {/* <CompanyInfo content={content} /> */}
-      <Map address={address} companyName={companyName} />
+      <ImageCarousel images={content.images} />
+      {/* <Content content={content} /> */}
+      <Contact user={content.user} />
+      <CompanyInfo address={content.address} title={content.title} />
     </Container>
   );
 }

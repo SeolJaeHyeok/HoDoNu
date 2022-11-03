@@ -1,11 +1,23 @@
 import { RecruitContent } from '@interfaces/recruit/detail';
+import { Box } from '@mui/material';
 import Map from './Map';
 
-export default function CompanyInfo(content: RecruitContent) {
-  console.log(content);
+interface CompanyInfoProps {
+  address: {
+    mainAddress: string;
+    detailAddress: string;
+    postalCode: string;
+  };
+  title: string;
+}
+
+export default function CompanyInfo(props: CompanyInfoProps) {
+  const { address, title } = props;
   return (
     <>
-      <Map companyName={content.title} address={content.address.mainAddress} />
+      <Box>{address.mainAddress}</Box>
+      <Box>{address.detailAddress}</Box>
+      <Map companyName={title} address={address.mainAddress} />
     </>
   );
 }
