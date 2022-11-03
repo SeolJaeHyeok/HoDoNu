@@ -1,4 +1,4 @@
-import Comment from '@components/Comment';
+import ArticleComment from '@components/article/ArticleComment';
 import CustomSideBar from '@components/SideBar/CustomSideBar';
 import styled from '@emotion/styled';
 import { ContentProps } from '@interfaces/board/detailUserInfoType';
@@ -132,7 +132,7 @@ export default function ArticleContent({
           </CommnetInputContainer>
           {result?.comments?.map((content: any, i: number) => {
             return (
-              <Comment
+              <ArticleComment
                 key={i}
                 content={content}
                 userId={loginUserId.userId}
