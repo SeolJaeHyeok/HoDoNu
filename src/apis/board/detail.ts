@@ -20,7 +20,6 @@ const detailApi = {
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
       }
     );
@@ -35,7 +34,6 @@ const detailApi = {
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
       }
     );
@@ -48,7 +46,6 @@ const detailApi = {
     return instance.patch(`/${categoryName}/comments/${commentUpdateId}`, commentUpdateMsg, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
       },
     });
   },
@@ -74,7 +71,6 @@ const detailApi = {
     return instance.delete(`/free/articles/${articleId}`, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
       },
     });
   },
