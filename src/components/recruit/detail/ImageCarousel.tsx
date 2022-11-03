@@ -14,7 +14,7 @@ export default function ImageCarousel(props: ImageProps) {
     <MainCarouselContainer>
       <Carousel settings={settings}>
         {props.images.map(img => {
-          return <CarouselImage src={img} />;
+          return <CarouselImage src={img} key={img} />;
         })}
       </Carousel>
     </MainCarouselContainer>

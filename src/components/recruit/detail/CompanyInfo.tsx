@@ -1,4 +1,4 @@
-import { RecruitContent } from '@interfaces/recruit/detail';
+// import { RecruitContent } from '@interfaces/recruit/detail';
 import { Box } from '@mui/material';
 import Map from './Map';
 

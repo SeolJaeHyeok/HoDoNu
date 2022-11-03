@@ -4,7 +4,7 @@ import { recruitApi } from '@apis/recuit';
 import ImageCarousel from '@components/recruit/detail/ImageCarousel';
 import CompanyInfo from '@components/recruit/detail/CompanyInfo';
 import { RecruitContent } from '@interfaces/recruit/detail';
-import Contact from '@components/recruit/detail/Contact';
+// import Contact from '@components/recruit/detail/Contact';
 // import Content from '@components/recruit/detail/Content';
 
 export interface ParamProps {
@@ -29,7 +29,7 @@ export default function RecruitDetail(content: RecruitContent) {
     >
       <ImageCarousel images={content.images} />
       {/* <Content content={content} /> */}
-      <Contact user={content.user} />
+      {/* <Contact user={content.user} /> */}
       <CompanyInfo address={content.address} title={content.title} />
     </Container>
   );

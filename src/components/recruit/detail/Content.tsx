@@ -10,7 +10,7 @@ export default function Content(props: RecruitContent) {
   return (
     <Container>
       {tags.map(tag => {
-        return <Chip label={`#${tag}`} variant="outlined" onClick={handleClick} />;
+        return <Chip key={tag} label={`#${tag}`} variant="outlined" onClick={handleClick} />;
       })}
       <Box>{introduction}</Box>
       <Box>{task}</Box>
