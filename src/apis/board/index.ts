@@ -1,3 +1,9 @@
+import {
+  GetOneArticleRes,
+  PatchArticleRes,
+  PostArticleRes,
+  PostImgRes,
+} from '@interfaces/board/article';
 import { AxiosResponse } from 'axios';
 import { ArticleForm } from '@interfaces/article';
 import { instance } from '..';
@@ -9,14 +15,22 @@ interface ParamsProps {
   search?: string;
 }
 
+interface articlaParamProps {
+  category: string | string[] | undefined;
+  id: string | string[] | undefined;
+}
+
 const boardApi = {
   //게시글 생성
-  createFreeArticle: (articleForm: ArticleForm) => instance.post('/free/articles', articleForm),
-  createNurseArticle: (articleForm: ArticleForm) => instance.post('/nurse/articles', articleForm),
-  createDoctorArticle: (articleForm: ArticleForm) => instance.post('/doctor/articles', articleForm),
+  createFreeArticle: (articleForm: ArticleForm): Promise<AxiosResponse<PostArticleRes>> =>
+    instance.post('/free/articles', articleForm),
+  createNurseArticle: (articleForm: ArticleForm): Promise<AxiosResponse<PostArticleRes>> =>
+    instance.post('/nurse/articles', articleForm),
+  createDoctorArticle: (articleForm: ArticleForm): Promise<AxiosResponse<PostArticleRes>> =>
+    instance.post('/doctor/articles', articleForm),
 
   //이미지 생성
-  createArticleImg: (file: FormData) =>
+  createArticleImg: (file: FormData): Promise<AxiosResponse<PostImgRes>> =>
     instance.post('/imgUpload/single', file, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -24,12 +38,8 @@ const boardApi = {
     }),
 
   //게시글 수정
-  updateFreeArticle: (articleForm: ArticleForm, articelId: string) =>
-    instance.patch(`/free/articles/${articelId}`, articleForm),
-  updateNurseArticle: (articleForm: ArticleForm, articleId: string) =>
-    instance.patch(`/nurse/articles/${articleId}`, articleForm),
-  updateDoctorArticle: (articleForm: ArticleForm, artidleId: string) =>
-    instance.patch(`/doctor/articles${artidleId}`, articleForm),
+  updateArticle: (articleForm: ArticleForm): Promise<AxiosResponse<PatchArticleRes>> =>
+    instance.patch(`/${articleForm.category}/articles/${articleForm.articleId}`, articleForm),
 
   getAllFreeBoards: (params?: ParamsProps): Promise<AxiosResponse<any, any>> =>
     instance.get(`/free/articles`, { params }),
@@ -37,6 +47,9 @@ const boardApi = {
     instance.get('/doctor/articles', { params }),
   getAllNurseBoards: (params?: ParamsProps): Promise<AxiosResponse<any, any>> =>
     instance.get('/nurse/articles', { params }),
+
+  getOneArticle: (articleParams?: articlaParamProps): Promise<AxiosResponse<GetOneArticleRes>> =>
+    instance.get(`/${articleParams?.category}/articles/${articleParams?.id}`),
 };
 
 export default boardApi;
