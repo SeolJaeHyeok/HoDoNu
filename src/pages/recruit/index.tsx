@@ -10,22 +10,20 @@ export default function Recruit() {
         <RecruitHeader />
       </RecruitContainer>
       <RecruitLine />
-      <RecruitContentWrapper>
-        <RecruitTags />
-        <RecruitContentContainer>
-          {/* 추후 기능 작업때 변경하겠습니다! */}
-          <RecruitCardView />
-          <RecruitCardView />
-          <RecruitCardView />
-          <RecruitCardView />
-          <RecruitCardView />
-          <RecruitCardView />
-          <RecruitCardView />
-          <RecruitCardView />
-          <RecruitCardView />
-          <RecruitCardView />
-        </RecruitContentContainer>
-      </RecruitContentWrapper>
+      <RecruitTags />
+      <RecruitContentContainer>
+        {/* 추후 기능 작업때 변경하겠습니다! */}
+        <RecruitCardView />
+        <RecruitCardView />
+        <RecruitCardView />
+        <RecruitCardView />
+        <RecruitCardView />
+        <RecruitCardView />
+        <RecruitCardView />
+        <RecruitCardView />
+        <RecruitCardView />
+        <RecruitCardView />
+      </RecruitContentContainer>
     </RecruitWrapper>
   );
 }
@@ -47,9 +45,6 @@ const RecruitLine = styled.hr`
   margin-top: 14px;
 `;
 
-const RecruitContentWrapper = styled.div`
-  background-color: #f7f7f7;
-`;
 const RecruitContentContainer = styled.div`
   display: flex;
   width: 1350px;
