@@ -31,7 +31,6 @@ const boardApi = {
   //이미지 생성
   createArticleImg: (file: FormData) => instance.post('/imgUpload/single', file),
 
-
   //게시글 수정
   updateArticle: (articleForm: ArticleForm): Promise<AxiosResponse<PatchArticleRes>> =>
     instance.patch(`/${articleForm.category}/articles/${articleForm.articleId}`, articleForm),
