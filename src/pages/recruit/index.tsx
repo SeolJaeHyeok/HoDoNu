@@ -1,4 +1,3 @@
-import recruitHomeApi from '@apis/recruit/home';
 import RecruitCardView from '@components/recruit/index/RecruitCardView';
 import RecruitHeader from '@components/recruit/index/RecruitHearder';
 import styled from '@emotion/styled';
@@ -22,17 +21,6 @@ export default function Recruit() {
       </RecruitContentContainer>
     </RecruitWrapper>
   );
-}
-
-export async function getServerSideProps() {
-  const { data }: any = await recruitHomeApi.getRecruitData();
-  console.log(data);
-
-  return {
-    props: {
-      data,
-    },
-  };
 }
 
 const RecruitWrapper = styled.div`
