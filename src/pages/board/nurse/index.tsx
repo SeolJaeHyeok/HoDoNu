@@ -12,7 +12,7 @@ import { useQuery } from 'react-query';
 export default function NurseBoard() {
   const router = useRouter();
 
-  const [sort, setSort] = useState('CreatedAt');
+  const [sort, setSort] = useState('createdAt');
   const [page, setPage] = useState('1');
   const [perPage, setPerPage] = useState('10');
   const { data: res } = useQuery(['board', 'nurse', sort, page, perPage], () =>

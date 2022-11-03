@@ -10,6 +10,9 @@ import { useQuery } from 'react-query';
 import CustomSideBar from '@components/SideBar/CustomSideBar';
 import BoardHeader from '@components/Board/BoardHeader';
 import BoardSkeleton from '@components/Board/BoardSkeleton';
+import { searchDataAtom } from '@atoms/searchAtom';
+import { ArticleProps } from '@interfaces/article';
+import { useRecoilValue } from 'recoil';
 
 /*
   TODO  
@@ -22,8 +25,9 @@ import BoardSkeleton from '@components/Board/BoardSkeleton';
 
 export default function FreeBoard() {
   const router = useRouter();
+  const searchResults = useRecoilValue<ArticleProps[]>(searchDataAtom);
 
-  const [sort, setSort] = useState('CreatedAt');
+  const [sort, setSort] = useState('createdAt');
   const [page, setPage] = useState('1');
   const [perPage, setPerPage] = useState('10');
   const { data: res } = useQuery(['board', 'free', sort, page, perPage], () =>
@@ -64,13 +68,17 @@ export default function FreeBoard() {
               sort={sort}
               page={page}
               perPage={perPage}
-              category={res?.data.result.category.toLowerCase()}
+              category={'free'}
             />
-
-            <BoardList
-              category={res.data.result.category.toLowerCase()}
-              articles={res.data.result.articles}
-            />
+            {res && searchResults.length === 0 && (
+              <BoardList
+                category={res.data.result.category.toLowerCase()}
+                articles={res.data.result.articles}
+              />
+            )}
+            {searchResults.length > 0 && !res && (
+              <BoardList category="free" articles={searchResults} />
+            )}
           </>
         )}
         <Pagination length={TOTAL_PAGE} handler={pageNumber => handlePageNavigate(pageNumber)} />

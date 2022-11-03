@@ -1,9 +1,11 @@
 import boardApi from '@apis/board';
+import { searchDataAtom } from '@atoms/searchAtom';
 import styled from '@emotion/styled';
 import useDebounce from '@hooks/useDebounce';
 import SearchIcon from '@mui/icons-material/Search';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useQuery } from 'react-query';
+import { useRecoilState } from 'recoil';
 
 const ArrowDown = 'ArrowDown';
 const ArrowUp = 'ArrowUp';
@@ -16,8 +18,6 @@ interface SearchProps {
   searchText?: string;
   setSearchText: Dispatch<SetStateAction<string>>;
   scrollRef: any;
-  results: string[];
-  setResults: Dispatch<SetStateAction<never[]>>;
 }
 
 export default function SearchForm({
@@ -27,26 +27,25 @@ export default function SearchForm({
   searchText,
   setSearchText,
   scrollRef,
-  results,
-  setResults,
 }: SearchProps) {
   const debouncedSearchText = useDebounce(searchText, 200);
   const [isComposing, setIsComposing] = useState<boolean>(false);
+  const [searchResults, setSearchResults] = useRecoilState(searchDataAtom);
 
   const { data: searchedData } = useQuery(
     ['search', category, searchText],
     () => {
       // TODO: 게시판 검색 API 완성 후 Hook으로 분리 후 교체
       if (category === 'free') {
-        return boardApi.getAllFreeBoards();
+        return boardApi.getAllFreeBoards({ search: debouncedSearchText });
       }
 
       if (category === 'doctor') {
-        return boardApi.getAllDoctorBoards();
+        // return boardApi.getAllDoctorBoards();
       }
 
       if (category === 'nurse') {
-        return boardApi.getAllNurseBoards();
+        // return boardApi.getAllNurseBoards();
       }
     },
     {
@@ -57,17 +56,22 @@ export default function SearchForm({
         const filteredData = searchedData?.data.result.articles.filter(
           (result: any) => !result.title.includes(debouncedSearchText)
         );
-        setResults(filteredData);
+        setSearchResults(filteredData);
       },
+      staleTime: Infinity,
+      cacheTime: Infinity,
     }
   );
 
+  // TODO: 제출 되면 검색어에 맞는 결과 불러오기, getRegexIgnoreWhitespaces 함수 사용
   const onSearchSubmit = (e: React.KeyboardEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(debouncedSearchText);
+    // setResults(searchedData?.data.result.articles);
     setSearchText('');
   };
 
-  const onSearchChange = (e: any) => {
+  const onSearchTextChange = (e: any) => {
     const text = e.target.value;
     setSearchText(text);
     setIndex(-1);
@@ -77,20 +81,20 @@ export default function SearchForm({
   const handleKeyArrow = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (isComposing) return;
 
-    if (results?.length <= 0) return;
+    if (searchResults?.length <= 0) return;
 
     switch (e.key) {
       case ArrowDown:
-        index === results.length - 1 ? setIndex(0) : setIndex(prev => prev + 1);
+        index === searchResults.length - 1 ? setIndex(0) : setIndex(prev => prev + 1);
         scrollRef.current?.scrollIntoView({ bebehavior: 'smooth', block: 'center' });
         break;
       case ArrowUp:
-        index === 0 ? setIndex(results.length - 1) : setIndex(prev => prev - 1);
+        index === 0 ? setIndex(searchResults.length - 1) : setIndex(prev => prev - 1);
         scrollRef.current?.scrollIntoView({ bebehavior: 'smooth', block: 'center' });
         break;
       case Escape:
         setSearchText('');
-        setResults([]);
+        setSearchResults([]);
         setIndex(-1);
         break;
       default:
@@ -101,7 +105,7 @@ export default function SearchForm({
   return (
     <SearchSection onSubmit={onSearchSubmit}>
       <SearchInput
-        onChange={onSearchChange}
+        onChange={onSearchTextChange}
         value={searchText}
         placeholder="검색어를 입력해주세요"
         onKeyDown={handleKeyArrow}

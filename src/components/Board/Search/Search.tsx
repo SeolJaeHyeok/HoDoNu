@@ -3,13 +3,14 @@ import styled from '@emotion/styled';
 import { useRef } from 'react';
 import SearchForm from './SearchForm';
 import SearchList from './SearchList';
+import { searchDataAtom } from '@atoms/searchAtom';
+import { useRecoilValue } from 'recoil';
 
 const Search = ({ category }: { category: string }) => {
-  const [results, setResults] = useState([]); // 검색 결과 배열
   const [searchText, setSearchText] = useState<string>(''); // 검색할 단어
   const scrollRef = useRef(null);
   const [index, setIndex] = useState(-1);
-
+  const searchResults = useRecoilValue(searchDataAtom);
   return (
     <Wrap>
       <SearchForm
@@ -19,20 +20,16 @@ const Search = ({ category }: { category: string }) => {
         searchText={searchText}
         setSearchText={setSearchText}
         scrollRef={scrollRef}
-        results={results}
-        setResults={setResults}
       />
       {searchText.length !== 0 ? (
         <SearchResult>
-          <SearchListTitle>추천 검색어</SearchListTitle>
-          {results?.length === 0 || searchText === '' ? (
+          {searchResults?.length === 0 || searchText === '' ? (
             <NoResult>검색어 없음</NoResult>
           ) : (
             <SearchList
               ref={scrollRef}
-              results={results}
+              results={searchResults}
               index={index}
-              setResults={setResults}
               searchText={searchText}
             />
           )}
@@ -62,10 +59,6 @@ const SearchResult = styled.div`
 const NoResult = styled.p`
   margin-top: 1.3em;
   font-size: 14px;
-`;
-const SearchListTitle = styled.h2`
-  color: grey;
-  font-size: 12px;
 `;
 
 export default Search;
