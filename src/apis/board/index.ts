@@ -15,12 +15,7 @@ const boardApi = {
   createDoctorArticle: (articleForm: ArticleForm) => instance.post('/doctor/articles', articleForm),
 
   //이미지 생성
-  createArticleImg: (file: FormData) =>
-    instance.post('/imgUpload/single', file, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    }),
+  createArticleImg: (file: FormData) => instance.post('/imgUpload/single', file),
 
   //게시글 수정
   updateFreeArticle: (articleForm: ArticleForm, articelId: string) =>
