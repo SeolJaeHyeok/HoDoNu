@@ -24,6 +24,7 @@ import { useRecoilValue } from 'recoil';
 export default function FreeBoard() {
   const router = useRouter();
   const searchText = useRecoilValue<string>(searchDataAtom);
+
   const [sort, setSort] = useState('createdAt');
   const [page, setPage] = useState('1');
   const [perPage, setPerPage] = useState('5');
