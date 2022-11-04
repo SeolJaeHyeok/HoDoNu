@@ -11,3 +11,22 @@ export interface FileProps {
   id: number;
   file: File;
 }
+
+export interface RecruitPostProps {
+  title: string;
+  company: string;
+  address: AddressProps;
+  content: string;
+  images?: string[];
+  phoneNumber: string;
+}
+
+export interface TagsProps {
+  tags: number[];
+}
+
+export interface AddressProps {
+  postalCode: string;
+  mainAddress: string;
+  detailAddress?: string;
+}

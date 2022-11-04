@@ -1,51 +1,22 @@
 import styled from '@emotion/styled';
 import { Button, TextField } from '@mui/material';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import FileUploader from '@components/Recruit/FileUploader';
-import { FileProps } from '@interfaces/recruit';
+import { AddressProps, FileProps } from '@interfaces/recruit';
 import recruitApi from '@apis/recruit';
 import { recruitPostSchema } from '@utils/validationSchema';
-import TagsInput from '@components/Recruit/TagsInput';
-
-/**
-0. 공고 제목 - companyRecruitmentTitle
-1. 회사 이름 - companyName
-2. 회사 관련 태그(우리가 제공) - companyTags
-3. 회사 소개 - companyIntroduction
-4. 주요 업무(ex. 응급실 외과 전문의) - companyRole
-5. 자격 요건(ex. 대졸 이상, 경력 2년 이상 등) - companyRequirement
-6. 우대 사항(ex. 해외 경험) - companyPreference
-7. 병원 주소 - companyAddress({companyPostalCode, companyMainAddress, companyDetailAddress})
-8. 등록하기
- */
-
-/**
- * 설립 - 1~3년, 4~9년, 10년 이상
- * 복지 - 복지 포인트 지급, 진료 할인, 건강검진 지원, 교통비 지원, 중식 지원, 석식 지원
- * 연봉 - 상위 5%, 상위 10%, 상위 30%, 업계 평균
- * 진료 과목 - 내과, 외과, 비뇨기과, 성형외과, 치과, 안과 ...
- */
+import { useQuill } from 'react-quilljs';
+import 'quill/dist/quill.snow.css';
+import { recruitEditorInitialValue } from '@utils/const/recruitEditorInitialValue';
+import { useRouter } from 'next/router';
 
 interface RecruitPostProps {
   companyRecruitmentTitle: string;
   companyName: string;
-  companyTags: string[];
-  companyIntroduction: string;
-  companyImages: File[];
-  companyRole: string;
-  companyRequirement: string;
-  companyPreference: string;
-  companyAddress: RecruitAddressProps;
   companyRecruiterContact: string;
-}
-
-interface RecruitAddressProps {
-  postalCode: string;
-  mainAddress: string;
-  detailAddress: string;
 }
 
 interface DaumAddressAPIProps {
@@ -54,7 +25,9 @@ interface DaumAddressAPIProps {
 }
 
 export default function RecruitCreatePage() {
+  const { quill, quillRef } = useQuill();
   const open = useDaumPostcodePopup();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -62,14 +35,11 @@ export default function RecruitCreatePage() {
   } = useForm<RecruitPostProps>({
     resolver: yupResolver(recruitPostSchema),
   });
-
-  const [tags, setTags] = useState<{ name: string }[]>([]);
-  const [addressInfo, setAddressInfo] = useState<RecruitAddressProps>({
+  const [addressInfo, setAddressInfo] = useState<AddressProps>({
     postalCode: '',
     mainAddress: '',
     detailAddress: '',
   }); // 주소 정보 객체
-
   const [companyPictures, setCompanyPictures] = useState<FileProps[]>([]); // 회사 사진 배열
 
   // Daum 주소 API Trigger
@@ -79,7 +49,7 @@ export default function RecruitCreatePage() {
 
   // 주소 입력 완료 후 정보 저장
   const handleComplete = (addressData: DaumAddressAPIProps) => {
-    setAddressInfo((prev: RecruitAddressProps) => {
+    setAddressInfo((prev: AddressProps) => {
       return {
         ...prev,
         postalCode: addressData.zonecode,
@@ -90,7 +60,7 @@ export default function RecruitCreatePage() {
 
   // 상세 주소 정보 저장
   const handleDetailAddress = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setAddressInfo((prev: RecruitAddressProps) => {
+    setAddressInfo((prev: AddressProps) => {
       return {
         ...prev,
         detailAddress: e.target.value,
@@ -116,33 +86,37 @@ export default function RecruitCreatePage() {
   };
 
   // Mapping Recruit Post Body Data
-  const mappingRecruitPostData = (
+  const postRecruitWithoutTags = async (
     data: RecruitPostProps,
-    addressInfo: RecruitAddressProps,
+    content: string,
+    addressInfo: AddressProps,
     companyImages: string[]
   ) => {
-    return {
-      title: data.companyRecruitmentTitle,
-      company: data.companyName,
-      address: addressInfo,
-      introduction: data.companyIntroduction,
-      task: data.companyRole,
-      eligibility: data.companyRequirement,
-      favor: data.companyPreference,
-      tags: data.companyTags,
-      images: companyImages,
-      recruiterContact: data.companyRecruiterContact,
-    };
+    try {
+      const bodyData = {
+        title: data.companyRecruitmentTitle,
+        company: data.companyName,
+        address: addressInfo,
+        content,
+        images: companyImages,
+        phoneNumber: data.companyRecruiterContact,
+      };
+
+      // Tag를 제외한 data POST 후 jobId로 라우팅
+      // const response = await recruitApi.postRecruit(bodyData);
+      // console.log(response);
+
+      router.push('/recruit/create/1');
+    } catch (e) {
+      console.warn(e);
+    }
   };
 
-  // TODO
-  // 1. 사진 파일 POST 요청 후 Image link로 이루어진 string[] 받아오기 - File 객체로 이루어진 배열을 Body에 담아서 요청 - O
-  // 2. hook-form으로 관리하고 있는 데이터와 주소 데이터, 사진 데이터를 POST 요청 body 데이터 형식에 맞게 가공 - O
-  // 3. 가공된 데이터를 가지고 POST 요청
-  // 4. 응답 결과에 따라 처리
   const handleRecruitPost = async (formData: RecruitPostProps) => {
     const imageFormData = new FormData();
     let responseImages;
+
+    const content = quillRef.current.firstChild.innerHTML;
 
     // Image POST 요청 선 처리
     if (companyPictures.length > 0) {
@@ -156,13 +130,16 @@ export default function RecruitCreatePage() {
       responseImages = response?.data.result;
     }
 
-    // POST Data 추출 후 채용 등록 API 호출
-    const bodyData = mappingRecruitPostData(formData, addressInfo, responseImages);
-    console.log(bodyData);
+    postRecruitWithoutTags(formData, content, addressInfo, responseImages);
   };
 
+  // React Quill Initial Value 설정
+  useEffect(() => {
+    if (quill) quill.clipboard.dangerouslyPasteHTML(recruitEditorInitialValue);
+  }, [quill]);
+
   return (
-    <form onSubmit={handleSubmit(handleRecruitPost)}>
+    <form>
       <RegisterWrapper>
         <RegisterTitle>공고 등록하기</RegisterTitle>
         <RegisterSubTitle>아래 모든 내용을 기입해주세요.</RegisterSubTitle>
@@ -188,20 +165,7 @@ export default function RecruitCreatePage() {
           }}
           helperText={<ErrorMsg>{errors.companyName?.message}</ErrorMsg>}
         />
-        <Label htmlFor="companyTag">태그</Label>
-        <TagsInput tags={tags} setTags={setTags} />
-        <Label htmlFor="companyIntroduction">회사 소개</Label>
-        <TextField
-          {...register('companyIntroduction')}
-          id="companyIntro"
-          placeholder="회사를 소개해주세요:)"
-          sx={{
-            width: '450px',
-            mt: '8px',
-          }}
-          helperText={<ErrorMsg>{errors.companyIntroduction?.message}</ErrorMsg>}
-        />
-        <Label htmlFor="companyPictures">회사 사진</Label>
+        <Label htmlFor="companyPictures">회사 소개 사진</Label>
         <ImageWarningMsg>✅ 사진은 .jpg .png .jpeg 파일만 가능합니다.</ImageWarningMsg>
         <ImageWarningMsg>✅ 사진 크기는 최대 5mb입니다.</ImageWarningMsg>
         <ImageWarningMsg>✅ 첨부된 사진이 없으면 기본 이미지가 보여집니다.</ImageWarningMsg>
@@ -211,39 +175,10 @@ export default function RecruitCreatePage() {
           setFileList={setCompanyPictures}
           multiple
         />
-        <Label htmlFor="companyRole">주요 업무</Label>
-        <TextField
-          {...register('companyRole')}
-          id="companyRole"
-          placeholder="지원자가 맡게 될 주요 업무를 입력해주세요:)"
-          sx={{
-            width: '450px',
-            mt: '8px',
-          }}
-          helperText={<ErrorMsg>{errors.companyRole?.message}</ErrorMsg>}
-        />
-        <Label htmlFor="companyRequirement">자격 요건</Label>
-        <TextField
-          {...register('companyRequirement')}
-          id="companyRequirement"
-          placeholder="지원 자격 요건을 입력해주세요:)"
-          sx={{
-            width: '450px',
-            mt: '8px',
-          }}
-          helperText={<ErrorMsg>{errors.companyRequirement?.message}</ErrorMsg>}
-        />
-        <Label htmlFor="companyPreference">우대 사항</Label>
-        <TextField
-          {...register('companyPreference')}
-          id="companyPreference"
-          placeholder="우대 사항을 입력해주세요:)"
-          sx={{
-            width: '450px',
-            mt: '8px',
-          }}
-          helperText={<ErrorMsg>{errors.companyPreference?.message}</ErrorMsg>}
-        />
+        <Label htmlFor="companyIntroduction">회사 소개</Label>
+        <div>
+          <div ref={quillRef} />
+        </div>
         <Label htmlFor="companyRecruiterContact">연락처</Label>
         <TextField
           {...register('companyRecruiterContact')}
@@ -253,7 +188,7 @@ export default function RecruitCreatePage() {
             width: '450px',
             mt: '8px',
           }}
-          helperText={<ErrorMsg>{errors.companyPreference?.message}</ErrorMsg>}
+          helperText={<ErrorMsg>{errors.companyRecruiterContact?.message}</ErrorMsg>}
         />
         <Label htmlFor="organization">소속 기관 ( 병원 주소 )</Label>
         <PostalCodeContainer>
@@ -297,6 +232,7 @@ export default function RecruitCreatePage() {
           />
         </AddressContainer>
         <Button
+          onClick={handleSubmit(handleRecruitPost)}
           variant="contained"
           sx={{
             width: 450,
@@ -305,7 +241,7 @@ export default function RecruitCreatePage() {
           }}
           type="submit"
         >
-          등록하기
+          다음
         </Button>
       </RegisterWrapper>
     </form>
