@@ -7,7 +7,7 @@ import CustomSideBar from '@components/SideBar/CustomSideBar';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 export default function NurseBoard() {
   const router = useRouter();

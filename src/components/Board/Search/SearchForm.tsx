@@ -1,96 +1,64 @@
-import boardApi from '@apis/board';
+import { searchDataAtom } from '@atoms/searchAtom';
 import styled from '@emotion/styled';
 import useDebounce from '@hooks/useDebounce';
 import SearchIcon from '@mui/icons-material/Search';
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useSetRecoilState } from 'recoil';
 
 const ArrowDown = 'ArrowDown';
 const ArrowUp = 'ArrowUp';
 const Escape = 'Escape';
 
 interface SearchProps {
-  category: string;
+  query: string;
+  setQuery: Dispatch<SetStateAction<string>>;
   index?: number;
   setIndex: Dispatch<SetStateAction<number>>;
-  searchText?: string;
-  setSearchText: Dispatch<SetStateAction<string>>;
-  scrollRef: any;
-  results: string[];
-  setResults: Dispatch<SetStateAction<never[]>>;
+  scrollRef?: any;
+  searchResults: any;
 }
 
 export default function SearchForm({
-  category,
+  query,
+  setQuery,
   index,
   setIndex,
-  searchText,
-  setSearchText,
   scrollRef,
-  results,
-  setResults,
+  searchResults,
 }: SearchProps) {
-  const debouncedSearchText = useDebounce(searchText, 200);
+  const setSearchText = useSetRecoilState(searchDataAtom);
   const [isComposing, setIsComposing] = useState<boolean>(false);
 
-  const { data: searchedData } = useQuery(
-    ['search', category, searchText],
-    () => {
-      // TODO: 게시판 검색 API 완성 후 Hook으로 분리 후 교체
-      if (category === 'free') {
-        return boardApi.getAllFreeBoards();
-      }
+  const debouncedSearchText = useDebounce(query, 200);
 
-      if (category === 'doctor') {
-        return boardApi.getAllDoctorBoards();
-      }
-
-      if (category === 'nurse') {
-        return boardApi.getAllNurseBoards();
-      }
-    },
-    {
-      onSuccess: () => {
-        if (searchText === '') return;
-        console.log(debouncedSearchText);
-        console.log(searchedData);
-        const filteredData = searchedData?.data.result.articles.filter(
-          (result: any) => !result.title.includes(debouncedSearchText)
-        );
-        setResults(filteredData);
-      },
-    }
-  );
-
-  const onSearchSubmit = (e: React.KeyboardEvent<HTMLFormElement>) => {
+  const onSearchSubmit = async (e: React.KeyboardEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSearchText('');
+    setSearchText(debouncedSearchText);
+    setQuery('');
   };
 
-  const onSearchChange = (e: any) => {
+  const onSearchTextChange = (e: any) => {
     const text = e.target.value;
-    setSearchText(text);
+    setQuery(text);
     setIndex(-1);
   };
 
   // 자동 완성 검색 결과 키보드 이동 handler
   const handleKeyArrow = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (isComposing) return;
-
-    if (results?.length <= 0) return;
+    if (searchResults?.length <= 0) return;
 
     switch (e.key) {
       case ArrowDown:
-        index === results.length - 1 ? setIndex(0) : setIndex(prev => prev + 1);
+        index === searchResults.length - 1 ? setIndex(0) : setIndex(prev => prev + 1);
         scrollRef.current?.scrollIntoView({ bebehavior: 'smooth', block: 'center' });
         break;
       case ArrowUp:
-        index === 0 ? setIndex(results.length - 1) : setIndex(prev => prev - 1);
+        index === 0 ? setIndex(searchResults.length - 1) : setIndex(prev => prev - 1);
         scrollRef.current?.scrollIntoView({ bebehavior: 'smooth', block: 'center' });
         break;
       case Escape:
         setSearchText('');
-        setResults([]);
         setIndex(-1);
         break;
       default:
@@ -101,8 +69,8 @@ export default function SearchForm({
   return (
     <SearchSection onSubmit={onSearchSubmit}>
       <SearchInput
-        onChange={onSearchChange}
-        value={searchText}
+        onChange={onSearchTextChange}
+        value={query || ''}
         placeholder="검색어를 입력해주세요"
         onKeyDown={handleKeyArrow}
         onCompositionStart={() => setIsComposing(true)}

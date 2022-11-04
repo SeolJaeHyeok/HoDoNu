@@ -5,11 +5,12 @@ import Pagination from '@components/Pagination';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import CustomSideBar from '@components/SideBar/CustomSideBar';
 import BoardHeader from '@components/Board/BoardHeader';
-import BoardSkeleton from '@components/Board/BoardSkeleton';
+import { searchDataAtom } from '@atoms/searchAtom';
+import { useRecoilValue } from 'recoil';
 
 /*
   TODO  
@@ -22,12 +23,19 @@ import BoardSkeleton from '@components/Board/BoardSkeleton';
 
 export default function FreeBoard() {
   const router = useRouter();
+  const searchText = useRecoilValue<string>(searchDataAtom);
 
   const [sort, setSort] = useState('createdAt');
   const [page, setPage] = useState('1');
-  const [perPage, setPerPage] = useState('10');
-  const { data: res } = useQuery(['board', 'free', sort, page, perPage], () =>
-    boardApi.getAllFreeBoards({ page, perPage, sort })
+  const [perPage, setPerPage] = useState('5');
+
+  const { data: res } = useQuery(
+    ['board', 'free', sort, page, perPage, searchText],
+    () => boardApi.getAllFreeBoards({ page, perPage, sort, search: searchText }),
+    {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    }
   );
 
   // 총 페이지 수
@@ -53,26 +61,22 @@ export default function FreeBoard() {
     <>
       <CustomSideBar />
       <BoardContainer>
-        {!res ? (
-          <BoardSkeleton />
-        ) : (
-          <>
-            <BoardHeader
-              setSort={setSort}
-              setPage={setPage}
-              setPerPage={setPerPage}
-              sort={sort}
-              page={page}
-              perPage={perPage}
-              category={res?.data.result.category.toLowerCase()}
-            />
+        <>
+          <BoardHeader
+            setSort={setSort}
+            setPage={setPage}
+            setPerPage={setPerPage}
+            sort={sort}
+            perPage={perPage}
+            category="free"
+          />
+          {res?.data.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
+          <BoardList
+            boardCategory={res?.data.result.category.toLowerCase()}
+            articles={res?.data.result.articles}
+          />
+        </>
 
-            <BoardList
-              category={res.data.result.category.toLowerCase()}
-              articles={res.data.result.articles}
-            />
-          </>
-        )}
         <Pagination length={TOTAL_PAGE} handler={pageNumber => handlePageNavigate(pageNumber)} />
       </BoardContainer>
     </>

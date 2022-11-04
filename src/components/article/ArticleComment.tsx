@@ -4,8 +4,8 @@ import { CommentArticleProps } from '@interfaces/board/detailUserInfoType';
 import { Button } from '@mui/material';
 import { convertTime } from '@utils/func';
 import { ChangeEvent, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
-import CustomAvatarImage from '../CustomAvartar';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import CustomAvatarImage from '@components/CustomAvartar';
 
 export default function Comment({
   content,
