@@ -8,7 +8,6 @@ interface LoginAPI {
 }
 
 const authApi = {
-
   register: (regisetUserData: RegisterUserInfo): Promise<AxiosResponse<any, any>> => {
     return instance.post('/users/signup', regisetUserData);
   },

@@ -1,3 +1,4 @@
+import { RecruitPostProps } from '@interfaces/recruit';
 import { instance } from '..';
 
 const recruitApi = {
@@ -8,7 +9,8 @@ const recruitApi = {
         'Content-Type': 'multipart/form-data',
       },
     }),
-  postRecruit: (bodyData: any) => instance.post(`/jobs`, bodyData),
+  postRecruit: (bodyData: RecruitPostProps) => instance.post(`/jobs`, bodyData),
+  getAllTags: () => instance.get('/tags'),
 };
 
 export default recruitApi;
