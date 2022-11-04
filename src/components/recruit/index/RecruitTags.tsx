@@ -1,13 +1,40 @@
+import recruitListApi from '@apis/recruit/list';
 import styled from '@emotion/styled';
 import { TagList } from '@interfaces/recruit/list/list';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
 export default function RecruitTags({ tags }: { tags: TagList[] }) {
+  const queryClient = useQueryClient();
+
   const [isButtonColor, setIsButtonColor] = useState(Array(tags.length).fill(false));
 
-  const handleChangeButtonColor = (idx: number) => {
+  const [tagsId, setTagsId] = useState<any>({
+    tagIds: [],
+  });
+
+  const requestTags = useMutation(recruitListApi.getRecruitData, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['jobList']);
+    },
+  });
+
+  const handleChangeButtonColor = async (idx: number) => {
+    console.log('들어옴');
     isButtonColor[idx] = !isButtonColor[idx];
     setIsButtonColor([...isButtonColor]);
+
+    await requestTags.mutate({
+      tagsId: [1],
+    });
+
+    if (isButtonColor[idx]) {
+      console.log('여기도 오나?');
+      console.log(idx);
+      setTagsId({
+        tagIds: [idx],
+      });
+    }
   };
 
   return (

@@ -1,7 +1,7 @@
 import { instance } from '..';
 
 const recruitListApi = {
-  getRecruitData: () => instance.get(`/jobs`),
+  getRecruitData: (params?: any) => instance.get(`/jobs`, params),
   getRecruitTagData: () => instance.get(`/tags`),
 };
 
