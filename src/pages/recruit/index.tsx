@@ -6,9 +6,7 @@ import styled from '@emotion/styled';
 import { RecruitProps } from '@interfaces/recruit/list/list';
 
 export default function Recruit({ jobList, tagList }: RecruitProps) {
-  // console.log(jobList);
-  console.log(tagList);
-
+  console.log(jobList);
   return (
     <RecruitWrapper>
       <RecruitContainer>
@@ -23,6 +21,7 @@ export default function Recruit({ jobList, tagList }: RecruitProps) {
             company={job.company}
             title={job.title}
             address={job.mainAddress}
+            jobId={job.jobId}
           />
         ))}
       </RecruitContentContainer>

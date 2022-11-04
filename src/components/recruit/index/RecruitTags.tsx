@@ -3,7 +3,7 @@ import { TagList } from '@interfaces/recruit/list/list';
 import { useState } from 'react';
 
 export default function RecruitTags({ tags }: { tags: TagList[] }) {
-  const [isButtonColor, setIsButtonColor] = useState(Array(18).fill(false));
+  const [isButtonColor, setIsButtonColor] = useState(Array(tags.length).fill(false));
 
   const handleChangeButtonColor = (idx: number) => {
     isButtonColor[idx] = !isButtonColor[idx];

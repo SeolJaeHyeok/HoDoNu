@@ -2,6 +2,7 @@ export interface RecruitCardViewProps {
   company: string;
   title: string;
   address: string;
+  jobId: number;
 }
 
 export interface JobList {
@@ -10,6 +11,7 @@ export interface JobList {
   mainAddress: string;
   isActive: boolean;
   title: string;
+  jobId: number;
 }
 
 export interface TagList {
