@@ -1,21 +1,24 @@
-import { Container, Box, Chip } from '@mui/material';
-import { RecruitContent } from '@interfaces/recruit/detail';
+import { Container, Box } from '@mui/material';
 
+interface ContentProps {
+  content: string;
+}
 // introduction이  quill
-export default function Content(props: RecruitContent) {
-  const { introduction, eligibility, task, favor, tags } = props;
-  const handleClick = () => {
-    console.log('hi');
-  };
+export default function Content({ content }: ContentProps) {
   return (
-    <Container>
-      {tags.map(tag => {
-        return <Chip key={tag} label={`#${tag}`} variant="outlined" onClick={handleClick} />;
-      })}
-      <Box>{introduction}</Box>
-      <Box>{task}</Box>
-      <Box>{eligibility}</Box>
-      <Box>{favor}</Box>
+    <Container
+      sx={{
+        width: '650px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        margin: 2,
+        padding: 2,
+      }}
+    >
+      <Box>{content}</Box>
     </Container>
   );
 }
+
+// dangerouslySetInnerHTML={{ __html: result?.content }}

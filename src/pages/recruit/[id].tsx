@@ -1,11 +1,15 @@
 // import { InferGetStaticPropsType } from 'next';
-import { Container } from '@mui/material';
+import { Container, Divider } from '@mui/material';
 import { recruitApi } from '@apis/recuit';
 import ImageCarousel from '@components/recruit/detail/ImageCarousel';
 import CompanyInfo from '@components/recruit/detail/CompanyInfo';
 import { RecruitContent } from '@interfaces/recruit/detail';
-// import Contact from '@components/recruit/detail/Contact';
-// import Content from '@components/recruit/detail/Content';
+import Contact from '@components/recruit/detail/Contact';
+import Content from '@components/recruit/detail/Content';
+import Tags from '@components/recruit/detail/Tags';
+import OwnerButton from '@components/recruit/detail/OwnerButton';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '@atoms/userAtom';
 
 export interface ParamProps {
   params: {
@@ -13,24 +17,40 @@ export interface ParamProps {
   };
 }
 
-export default function RecruitDetail(content: RecruitContent) {
-  // const address = '서울특별시 강남구 봉은사로 644(삼성동)';
-  // const companyName = '엠서클';
-  console.log(content);
+export interface RecruitDetailProps {
+  content: RecruitContent;
+  tags: [
+    {
+      content: string;
+      tagId: number;
+    }
+  ];
+  articleId: number;
+}
+
+export default function RecruitDetail(props: RecruitDetailProps) {
+  const { content, tags, articleId } = props;
+  const curUser = useRecoilValue(userInfoState);
+  const curUserId = curUser?.userId;
 
   return (
     <Container
       sx={{
+        width: '650px',
         display: 'flex',
         flexDirection: 'column',
-        // justifyContent: 'center',
         alignItems: 'center',
       }}
     >
       <ImageCarousel images={content.images} />
-      {/* <Content content={content} /> */}
-      {/* <Contact user={content.user} /> */}
-      <CompanyInfo address={content.address} title={content.title} />
+      <Tags tags={tags} />
+      <Divider textAlign="left" sx={{ width: '100%', fontWeight: '500' }}>
+        INFOMATION
+      </Divider>
+      <Content content={content.content} />
+      <CompanyInfo address={content.address} company={content.company} />
+      <Contact user={content.user} />
+      {curUserId === content.user.userId && <OwnerButton articleId={articleId} />}
     </Container>
   );
 }
@@ -47,8 +67,10 @@ export const getStaticPaths = async () => {
   };
 };
 
+//errorCode = ""
 export const getStaticProps = async ({ params }: ParamProps) => {
   const { data } = await recruitApi.getOne(params.id);
+  const tags = await (await recruitApi.getTags()).data.result;
 
   if (!params) {
     return {
@@ -62,6 +84,8 @@ export const getStaticProps = async ({ params }: ParamProps) => {
   return {
     props: {
       content: data.result,
+      tags,
+      articleId: params.id,
     },
   };
 };

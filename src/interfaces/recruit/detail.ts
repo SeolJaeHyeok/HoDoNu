@@ -29,15 +29,13 @@ export interface getDetailRes {
 }
 
 export interface RecruitContent {
+  // content: {
   createAt: string;
   jobId: number;
   userId: string;
   company: string;
   title: string;
-  introduction: string;
-  task: string;
-  eligibility: string;
-  favor: string;
+  content: string;
   hits: number;
   isActive: boolean;
   user: {
@@ -53,6 +51,7 @@ export interface RecruitContent {
   };
   images: string[];
   tags: string[];
+  // };
 }
 
 export interface RecruitList {
@@ -74,5 +73,10 @@ export interface RecruitList {
 
 export interface getAllRecruitRes {
   result: [RecruitList[], number];
+  status: number;
+}
+
+export interface getTagsRes {
+  result: [{ content: string; tagId: number }];
   status: number;
 }

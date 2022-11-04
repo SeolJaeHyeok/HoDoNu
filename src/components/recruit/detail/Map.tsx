@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import { Box } from '@mui/material';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
 
@@ -55,19 +55,14 @@ export default function Map({ companyName, address }: MapProps) {
   }, [mapLoaded, address, companyName]);
 
   return (
-    <MapContainer>
-      <div id="map" style={{ width: '500px', height: '250px' }}></div>
+    <Box sx={{ width: '650px' }}>
+      <Box id="map" sx={{ width: '650px', height: '250px' }}></Box>
       <Script
         type="text/javascript"
         strategy="lazyOnload"
         onLoad={() => setMapLoaded(true)}
         src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&libraries=services&autoload=false`}
       />
-    </MapContainer>
+    </Box>
   );
 }
-
-const MapContainer = styled.div`
-  width: 500px;
-  margin: 40px auto;
-`;
