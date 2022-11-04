@@ -7,6 +7,7 @@ interface ParamsProps {
   page?: string | string[] | undefined;
   perPage?: string | string[] | undefined;
   sort?: string | string[] | undefined;
+  search?: string;
 }
 
 interface articlaParamProps {
