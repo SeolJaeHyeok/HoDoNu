@@ -4,14 +4,15 @@ import { CommentArticleProps } from '@interfaces/board/detailUserInfoType';
 import { Button } from '@mui/material';
 import { convertTime } from '@utils/func';
 import { ChangeEvent, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
-import CustomAvatarImage from './CustomAvartar';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import CustomAvatarImage from '@components/CustomAvartar';
 
 export default function Comment({
   content,
   userId,
   commentUserId,
   commentId,
+  categoryName,
 }: CommentArticleProps) {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [commentUpdateData, setCommentUpdateData] = useState({
@@ -21,13 +22,13 @@ export default function Comment({
   const queryClient = useQueryClient();
   const deleteCommentData = useMutation(detailApi.commentDelete, {
     onSuccess: () => {
-      queryClient.invalidateQueries('detailContent');
+      queryClient.invalidateQueries(['detailContent', categoryName]);
     },
   });
 
   const updateCommentData = useMutation(detailApi.commentUpdate, {
     onSuccess: () => {
-      queryClient.invalidateQueries('detailContent');
+      queryClient.invalidateQueries(['detailContent', categoryName]);
     },
     onError: data => {
       console.log(data);
@@ -49,12 +50,14 @@ export default function Comment({
     updateCommentData.mutate({
       commentUpdateId: commentId,
       commentUpdateMsg: commentUpdateData,
+      categoryName,
     });
     setIsEdit(!isEdit);
   };
   // 댓글 삭제 로직
   const handleDeleteCommentData = () => {
-    deleteCommentData.mutate(commentId);
+    console.log('삭제!');
+    deleteCommentData.mutate({ categoryName, commentId });
   };
 
   return (

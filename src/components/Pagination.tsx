@@ -4,6 +4,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import { useRouter } from 'next/router';
 
 const defaultProps = {
   length: 10,
@@ -22,6 +23,7 @@ type PaginationProps = {
 export default function Pagination({ length, show, start, handler }: PaginationProps) {
   const initArray = Array.from({ length }, (_, i) => i);
   const [pageKey, setPageKey] = useState(start);
+  const router = useRouter();
 
   useEffect(() => {
     setPageKey(start);
@@ -74,7 +76,8 @@ export default function Pagination({ length, show, start, handler }: PaginationP
           .map(page => (
             <Card
               key={page}
-              selected={page === pageKey}
+              // selected={page === pageKey}
+              selected={Number(router.query.page) - 1 === page}
               onClick={() => {
                 numberingHandler(page);
               }}

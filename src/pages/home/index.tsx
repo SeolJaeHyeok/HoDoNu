@@ -3,7 +3,7 @@ import Carousel from '@components/MainCarousel';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import boardApi from 'src/apis/board';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import MainBoardSkeleton from '@components/Main/MainBoardSkeleton';
 
 export default function Home() {

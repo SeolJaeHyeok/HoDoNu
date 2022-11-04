@@ -26,3 +26,6 @@ export function convertTime(date: string) {
   // 모든 단위가 맞지 않을 시
   return '방금 전';
 }
+
+export const getRegexIgnoreWhitespaces = (keyword: string) =>
+  new RegExp(keyword.replaceAll(/\s*/g, '').split('').join('\\s*'), 'gi');

@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 
 import { loginValidationSchema } from '@utils/validationSchema';
 import authApi from 'src/apis/auth/auth';

@@ -7,8 +7,12 @@ import CustomAvatarImage from '@components/CustomAvartar';
 import { ArticleProps } from '@interfaces/article';
 import { convertTime } from '@utils/func';
 
-export default function BoardListItem(props: ArticleProps) {
-  const { createdAt, articleId, title, hits, user, comments, category } = props;
+interface BoardListItemProps extends ArticleProps {
+  boardCategory: string;
+}
+
+export default function BoardListItem(props: BoardListItemProps) {
+  const { createdAt, articleId, title, hits, user, comments, boardCategory } = props;
 
   const handleAuthorClick = () => {
     alert('TODO: 작성자 누르면 메세지 보내기 보여주기');
@@ -27,7 +31,7 @@ export default function BoardListItem(props: ArticleProps) {
         <BookmarkBorderIcon className="bookmark-btn" onClick={handleBookmarkClick} />
       </ItemHeader>
       <ItemContent>
-        <Link href={`/board/${category}/${articleId}`}>
+        <Link href={`/board/${boardCategory}/${articleId}`}>
           <ItemTitle>{title}</ItemTitle>
         </Link>
       </ItemContent>
