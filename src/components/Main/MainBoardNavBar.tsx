@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export default function BoardNavBar() {
+export default function MainBoardNavBar() {
   return (
     <BoardNav>
       <BoardNavItem className="number">번호</BoardNavItem>

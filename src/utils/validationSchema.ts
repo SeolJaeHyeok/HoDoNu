@@ -20,3 +20,9 @@ export const recruitPostSchema = yup.object({
     .string()
     .required('채용 담당자의 연락처 또는 이메일을 입력해주세요:('),
 });
+
+export const boardValidationSchema = yup.object({
+  category: yup.string().required(),
+  title: yup.string().required().max(50),
+  content: yup.string().required().min(10),
+});

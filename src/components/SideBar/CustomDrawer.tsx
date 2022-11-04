@@ -14,26 +14,40 @@ export default function CustomDrawer() {
   const router = useRouter();
 
   const handleMenuClick = (menu: string) => {
-    router.push(SideBarPath[menu]);
+    router.replace(SideBarPath[menu]);
+    router.reload();
   };
 
   // URL을 통해 현재 페이지에 맞는 사이드바 검증
   useEffect(() => {
-    if (router.pathname.includes('/board/')) {
+    if (
+      router.asPath.includes('/board') ||
+      router.asPath.includes('/board/free') ||
+      router.asPath.includes('/board/doctor') ||
+      router.asPath.includes('/board/nurse')
+    ) {
       return setTargetMenus(boardSideBarMenus);
     }
 
-    if (router.pathname.includes('/mypage/')) {
+    if (router.asPath.includes('/mypage/edit') || router.asPath.includes('/mypage/articles')) {
       return setTargetMenus(userSideBarMenus);
     }
 
-    if (router.pathname.includes('/admin/')) {
+    if (
+      router.asPath.includes('/admin/user') ||
+      router.asPath.includes('/admin/recruit') ||
+      router.asPath.includes('/admin/board')
+    ) {
       return setTargetMenus(adminSideBarMenus);
     }
   }, [router.pathname]);
 
   return (
-    <div>
+    <div
+      style={{
+        position: 'relative',
+      }}
+    >
       <Toolbar />
       <List>
         {targetMenus.map((menu: string) => (

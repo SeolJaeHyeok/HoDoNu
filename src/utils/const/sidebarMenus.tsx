@@ -9,9 +9,9 @@ export const SideBarPath: any = {
   '회원 관리': '/admin/user',
   '게시판 관리': '/admin/board',
   '채용 관리': '/admin/recruit',
-  '자유 게시판': '/board/free',
-  '의사 게시판': '/board/doctor',
-  '간호사 게시판': '/board/nurse',
+  '자유 게시판': '/board/free?page=1&perPage=10&sort=createdAt',
+  '의사 게시판': '/board/doctor?page=1&perPage=10&sort=createdAt',
+  '간호사 게시판': '/board/nurse?page=1&perPage=10&sort=createdAt',
   '개인정보 수정': '/mypage/edit',
   '내 게시글': '/mypage/articles',
 };

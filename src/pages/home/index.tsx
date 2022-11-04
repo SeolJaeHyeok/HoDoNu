@@ -1,211 +1,43 @@
-import BoardList from '@components/Main/MainBoardList';
+import MainBoardList from '@components/Main/MainBoardList';
 import Carousel from '@components/Main/MainCarousel';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import boardApi from 'src/apis/board';
-import { useQuery } from 'react-query';
-// import { ArticleProps } from 'src/interfaces/article';
-
-const freeArticles = [
-  {
-    createdAt: '2021-10-22T07:57:43.146Z',
-    articleId: 1,
-    title: '안녕하세요dasdasdasdasdasdasdsadasdsa',
-    hits: 0,
-    user: {
-      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-      email: 'dohee@test.com',
-      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-      nickname: 'frozen_apricot_gamefowl',
-    },
-  },
-  {
-    createdAt: '2022-06-21T07:57:43.146Z',
-    articleId: 2,
-    title: '안녕하세요',
-    hits: 0,
-    user: {
-      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-      email: 'dohee@test.com',
-      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-      nickname: 'frozen_apricot_gamefowl',
-    },
-  },
-  {
-    createdAt: '2012-10-21T07:57:43.146Z',
-    articleId: 545,
-    title: '안녕하세요',
-    hits: 0,
-    user: {
-      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-      email: 'dohee@test.com',
-      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-      nickname: 'frozen_apricot_gamefowl',
-    },
-  },
-  {
-    createdAt: '2022-10-23T07:57:43.146Z',
-    articleId: 32,
-    title: '안녕하세요',
-    hits: 0,
-    user: {
-      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-      email: 'dohee@test.com',
-      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-      nickname: 'frozen_apricot_gamefowl',
-    },
-  },
-  {
-    createdAt: '2022-10-05T07:57:43.146Z',
-    articleId: 132,
-    title: '안녕하세요',
-    hits: 0,
-    user: {
-      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-      email: 'dohee@test.com',
-      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-      nickname: 'frozen_apricot_gamefowl',
-    },
-  },
-];
-
-const doctorArticles = [
-  {
-    createdAt: '2022-10-21T07:57:43.146Z',
-    articleId: 986,
-    title: '안녕하세요',
-    hits: 0,
-    user: {
-      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-      email: 'dohee@test.com',
-      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-      nickname: 'frozen_apricot_gamefowl',
-    },
-  },
-  {
-    createdAt: '2022-10-21T07:57:43.146Z',
-    articleId: 1233,
-    title: '안녕하세요',
-    hits: 0,
-    user: {
-      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-      email: 'dohee@test.com',
-      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-      nickname: 'frozen_apricot_gamefowl',
-    },
-  },
-  {
-    createdAt: '2022-10-21T07:57:43.146Z',
-    articleId: 6,
-    title: '안녕하세요',
-    hits: 0,
-    user: {
-      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-      email: 'dohee@test.com',
-      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-      nickname: 'frozen_apricot_gamefowl',
-    },
-  },
-  {
-    createdAt: '2022-10-21T07:57:43.146Z',
-    articleId: 75,
-    title: '안녕하세요',
-    hits: 0,
-    user: {
-      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-      email: 'dohee@test.com',
-      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-      nickname: 'frozen_apricot_gamefowl',
-    },
-  },
-  {
-    createdAt: '2022-10-21T07:57:43.146Z',
-    articleId: 91,
-    title: '안녕하세요',
-    hits: 0,
-    user: {
-      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-      email: 'dohee@test.com',
-      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-      nickname: 'frozen_apricot_gamefowl',
-    },
-  },
-];
-
-const nurseArticles = [
-  {
-    createdAt: '2022-10-21T07:57:43.146Z',
-    articleId: 432,
-    title: '안녕하세요',
-    hits: 0,
-    user: {
-      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-      email: 'dohee@test.com',
-      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-      nickname: 'frozen_apricot_gamefowl',
-    },
-  },
-  {
-    createdAt: '2022-10-21T07:57:43.146Z',
-    articleId: 3211,
-    title: '안녕하세요',
-    hits: 0,
-    user: {
-      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-      email: 'dohee@test.com',
-      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-      nickname: 'frozen_apricot_gamefowl',
-    },
-  },
-  {
-    createdAt: '2022-10-21T07:57:43.146Z',
-    articleId: 109,
-    title: '안녕하세요',
-    hits: 0,
-    user: {
-      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-      email: 'dohee@test.com',
-      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-      nickname: 'frozen_apricot_gamefowl',
-    },
-  },
-  {
-    createdAt: '2022-10-21T07:57:43.146Z',
-    articleId: 192,
-    title: '안녕하세요',
-    hits: 0,
-    user: {
-      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-      email: 'dohee@test.com',
-      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-      nickname: 'frozen_apricot_gamefowl',
-    },
-  },
-  {
-    createdAt: '2022-10-21T07:57:43.146Z',
-    articleId: 183,
-    title: '안녕하세요',
-    hits: 0,
-    user: {
-      userId: '165f7945-b592-4271-b1e0-6df436ddc743',
-      email: 'dohee@test.com',
-      imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
-      nickname: 'frozen_apricot_gamefowl',
-    },
-  },
-];
+import { useQuery } from '@tanstack/react-query';
+import MainBoardSkeleton from '@components/Main/MainBoardSkeleton';
 
 export default function Home() {
-  const params = { page: 5, perPage: 5 };
+  const params = { page: '1', perPage: '5' };
 
-  // Test
-  const { data } = useQuery(['article', 'free'], () => boardApi.getAllFreeBoards(params), {
-    staleTime: Infinity,
-    cacheTime: Infinity,
-  });
-  console.log(data);
+  const { data: freeArticles } = useQuery(
+    ['main', 'board', 'free'],
+    () => boardApi.getAllFreeBoards(params),
+    {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    }
+  );
+
+  // TODO - Nurse, Doctor 게시판 API 완성 되면 데이터 변경
+  const { data: doctorArticles } = useQuery(
+    ['main', 'board', 'doctor'],
+    () => boardApi.getAllDoctorBoards(params),
+    {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    }
+  );
+  const { data: nurseArticles } = useQuery(
+    ['main', 'board', 'nurse'],
+    () => boardApi.getAllNurseBoards(params),
+    {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    }
+  );
+
   return (
-    <HomeContainer>
+    <>
       <MainCarouselContainer>
         <Carousel>
           <Link href={'#'}>
@@ -220,15 +52,25 @@ export default function Home() {
         </Carousel>
       </MainCarouselContainer>
       <BoardContainer>
-        <BoardList type="main" articles={freeArticles} />
-        <BoardList type="board" articles={doctorArticles} />
-        <BoardList type="board" articles={nurseArticles} />
+        {!freeArticles || !doctorArticles || !nurseArticles ? (
+          <MainBoardSkeleton />
+        ) : (
+          <>
+            <MainBoardList category={'자유 게시판'} articles={freeArticles.data.result.articles} />
+            <MainBoardList
+              category={'의사 게시판'}
+              articles={doctorArticles?.data.result.articles}
+            />
+            <MainBoardList
+              category={'간호사 게시판'}
+              articles={nurseArticles?.data.result.articles}
+            />
+          </>
+        )}
       </BoardContainer>
-    </HomeContainer>
+    </>
   );
 }
-
-const HomeContainer = styled.div``;
 
 const BoardContainer = styled.div`
   display: grid;
@@ -247,12 +89,3 @@ const CarouselImage = styled.img`
   width: 100%;
   cursor: pointer;
 `;
-
-// TODO - API 배포되면 요청을 통해 받아온 데이터로 변경
-// function getServerSideProps() {
-//   return {
-//     props: {
-
-//     }
-//   }
-// }

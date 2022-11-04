@@ -4,10 +4,14 @@ import { convertTime } from '@utils/func';
 import Link from 'next/link';
 import { ArticleProps } from 'src/interfaces/article';
 
-export default function BoardListItem(props: ArticleProps) {
-  const { articleId, title, user, createdAt } = props;
-  const boardName = 'free';
-
+export default function MainBoardListItem({
+  articleId,
+  title,
+  user,
+  createdAt,
+  id,
+  category,
+}: ArticleProps) {
   const handleAvartarClick = () => {
     alert('메인페이지에서 게시판 안에 있는 프로필 이미지 클릭 시 발생시킬 함수');
   };
@@ -18,15 +22,15 @@ export default function BoardListItem(props: ArticleProps) {
 
   return (
     <ItemContainer>
-      <ItemNumber>{articleId}</ItemNumber>
-      <Link href={`/${boardName}/${articleId}`}>
+      <ItemNumber>{id}</ItemNumber>
+      <Link href={`/board/${category}/${articleId}`}>
         <ItemTitle>{title}</ItemTitle>
       </Link>
       <AuthorContainer>
         <CustomAvatarImage handleClick={handleAvartarClick} width={20} height={20} />
-        <ItemAuthor onClick={handleAuthorClick}>{user.nickname}</ItemAuthor>
+        <ItemAuthor onClick={handleAuthorClick}>{user?.nickname}</ItemAuthor>
       </AuthorContainer>
-      <ItemCreatedTime>{convertTime(createdAt)}</ItemCreatedTime>
+      <ItemCreatedTime>{convertTime(createdAt!.toString())}</ItemCreatedTime>
     </ItemContainer>
   );
 }

@@ -7,6 +7,7 @@ export function convertTime(date: string) {
   const times = [
     { time: '년', milliSeconds: 1000 * 60 * 60 * 24 * 365 },
     { time: '개월', milliSeconds: 1000 * 60 * 60 * 24 * 30 },
+    { time: '주', milliSeconds: 1000 * 60 * 60 * 24 * 7 },
     { time: '일', milliSeconds: 1000 * 60 * 60 * 24 },
     { time: '시간', milliSeconds: 1000 * 60 * 60 },
     { time: '분', milliSeconds: 1000 * 60 },
@@ -25,3 +26,6 @@ export function convertTime(date: string) {
   // 모든 단위가 맞지 않을 시
   return '방금 전';
 }
+
+export const getRegexIgnoreWhitespaces = (keyword: string) =>
+  new RegExp(keyword.replaceAll(/\s*/g, '').split('').join('\\s*'), 'gi');
