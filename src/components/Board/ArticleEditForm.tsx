@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { boardValidationSchema } from '@utils/validationSchema';
 import { Box, Button, Stack, TextField } from '@mui/material';
 import ArticleFormEditor from '@components/ArticleFormEditor';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import boardApi from '@apis/board';
 import React from 'react';

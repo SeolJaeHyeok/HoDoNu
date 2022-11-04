@@ -5,7 +5,7 @@ import Pagination from '@components/Pagination';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import CustomSideBar from '@components/SideBar/CustomSideBar';
 import BoardHeader from '@components/Board/BoardHeader';

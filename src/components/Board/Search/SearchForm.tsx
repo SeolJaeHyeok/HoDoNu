@@ -4,6 +4,11 @@ import useDebounce from '@hooks/useDebounce';
 import SearchIcon from '@mui/icons-material/Search';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
+import { useQuery } from '@tanstack/react-query';
+
+const ArrowDown = 'ArrowDown';
+const ArrowUp = 'ArrowUp';
+const Escape = 'Escape';
 
 interface SearchProps {
   query: string;
