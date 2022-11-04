@@ -8,12 +8,9 @@ interface LoginAPI {
 }
 
 const authApi = {
+
   register: (regisetUserData: RegisterUserInfo): Promise<AxiosResponse<any, any>> => {
-    return instance.post('/users/signup', regisetUserData, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    return instance.post('/users/signup', regisetUserData);
   },
   login: ({ email, password }: LoginAPI): Promise<AxiosResponse<any, any>> =>
     instance.post(`/users/signin`, { email, password }).then(res => res.data),
