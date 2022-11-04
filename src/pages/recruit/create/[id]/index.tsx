@@ -1,19 +1,19 @@
 import recruitApi from '@apis/recruit';
 import styled from '@emotion/styled';
-import { TagsProps } from '@interfaces/recruit';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
+// import { TagsProps } from '@interfaces/recruit';
+// import { useRouter } from 'next/router';
+// import { useState } from 'react';
 
 interface TagsResponseProps {
   content: string;
   tagId: number;
 }
 
-export default function RecruitTagsPage({ tags }: TagsResponseProps[]) {
-  const router = useRouter();
+export default function RecruitTagsPage({ tags }: any) {
+  // const router = useRouter();
 
-  const recruitId = router.query.id;
-  const [selectedTags, setSelectedTags] = useState<TagsProps>();
+  // const recruitId = router.query.id;
+  // const [selectedTags, setSelectedTags] = useState<TagsProps>();
 
   return (
     <Container>

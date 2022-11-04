@@ -102,6 +102,8 @@ export default function RecruitCreatePage() {
         phoneNumber: data.companyRecruiterContact,
       };
 
+      console.log(bodyData);
+
       // Tag를 제외한 data POST 후 jobId로 라우팅
       // const response = await recruitApi.postRecruit(bodyData);
       // console.log(response);
