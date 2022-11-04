@@ -1,31 +1,45 @@
+import recruitListApi from '@apis/recruit/list';
 import RecruitCardView from '@components/recruit/index/RecruitCardView';
 import RecruitHeader from '@components/recruit/index/RecruitHearder';
 import RecruitTags from '@components/recruit/index/RecruitTags';
 import styled from '@emotion/styled';
+import { RecruitProps } from '@interfaces/recruit/list/list';
 
-export default function Recruit() {
+export default function Recruit({ jobList, tagList }: RecruitProps) {
+  // console.log(jobList);
+  console.log(tagList);
+
   return (
     <RecruitWrapper>
       <RecruitContainer>
         <RecruitHeader />
       </RecruitContainer>
       <RecruitLine />
-      <RecruitTags />
+      <RecruitTags tags={tagList} />
       <RecruitContentContainer>
-        {/* 추후 기능 작업때 변경하겠습니다! */}
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
+        {jobList.map((job, idx: number) => (
+          <RecruitCardView
+            key={idx}
+            company={job.company}
+            title={job.title}
+            address={job.mainAddress}
+          />
+        ))}
       </RecruitContentContainer>
     </RecruitWrapper>
   );
+}
+
+export async function getServerSideProps() {
+  const { data }: any = await recruitListApi.getRecruitData();
+  const res = await recruitListApi.getRecruitTagData();
+
+  return {
+    props: {
+      jobList: data.result[0],
+      tagList: res.data.result,
+    },
+  };
 }
 
 const RecruitWrapper = styled.div`

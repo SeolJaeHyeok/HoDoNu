@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import { tags } from '@utils/const/recruitTags';
+import { TagList } from '@interfaces/recruit/list/list';
 import { useState } from 'react';
 
-export default function RecruitTags() {
+export default function RecruitTags({ tags }: { tags: TagList[] }) {
   const [isButtonColor, setIsButtonColor] = useState(Array(18).fill(false));
 
   const handleChangeButtonColor = (idx: number) => {
@@ -13,9 +13,9 @@ export default function RecruitTags() {
   return (
     <RecruitTagWrapper>
       <Nav>
-        {tags.map((tag, i) => (
+        {tags?.map((tag, i: number) => (
           <TagButton key={i} onClick={() => handleChangeButtonColor(i)} color={isButtonColor[i]}>
-            {tag}
+            {tag.content}
           </TagButton>
         ))}
       </Nav>

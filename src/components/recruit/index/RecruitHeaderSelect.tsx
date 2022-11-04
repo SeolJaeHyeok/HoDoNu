@@ -40,7 +40,6 @@ export default function RecruitHeaderSelect() {
     } = event;
     setSearchFilterTagNames(typeof value === 'string' ? value.split(',') : value);
   };
-  console.log(searchFilterTagNames);
 
   return (
     <div>
