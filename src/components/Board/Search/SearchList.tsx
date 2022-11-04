@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import styled from '@emotion/styled';
 import SearchItem from './SearchItem';
 import { ArticleProps } from '@interfaces/article';
 
+interface SearchListProps {
+  results: ArticleProps[];
+  index: number;
+  setIndex: Dispatch<SetStateAction<number>>;
+  query: string;
+}
+
 // eslint-disable-next-line react/display-name
-const SearchList = React.forwardRef(({ results, index, setIndex, query }: any, ref) => {
+const SearchList = React.forwardRef(({ results, index, setIndex, query }: SearchListProps, ref) => {
   return (
     <Container>
       {results?.map((result: ArticleProps, idx: number) => (

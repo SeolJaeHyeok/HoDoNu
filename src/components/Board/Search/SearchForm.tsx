@@ -33,7 +33,7 @@ export default function SearchForm({
 
   const onSearchSubmit = async (e: React.KeyboardEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSearchText(debouncedSearchText as string);
+    setSearchText(debouncedSearchText);
     setQuery('');
   };
 

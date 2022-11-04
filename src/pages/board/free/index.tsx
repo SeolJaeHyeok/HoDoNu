@@ -67,13 +67,12 @@ export default function FreeBoard() {
             setPage={setPage}
             setPerPage={setPerPage}
             sort={sort}
-            page={page}
             perPage={perPage}
             category="free"
           />
           {res?.data.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
           <BoardList
-            category={res?.data.result.category.toLowerCase()}
+            boardCategory={res?.data.result.category.toLowerCase()}
             articles={res?.data.result.articles}
           />
         </>

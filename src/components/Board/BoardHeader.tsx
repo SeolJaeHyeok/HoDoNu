@@ -18,7 +18,6 @@ interface BoardHeaderProps {
   setPage: Dispatch<SetStateAction<string>>;
   setPerPage: Dispatch<SetStateAction<string>>;
   sort: string | undefined;
-  page: string | undefined;
   perPage: string | undefined;
   category: 'free' | 'doctor' | 'nurse';
 }
@@ -28,7 +27,6 @@ export default function BoardHeader({
   setPage,
   setPerPage,
   sort,
-  page,
   perPage,
   category,
 }: BoardHeaderProps) {
@@ -38,12 +36,13 @@ export default function BoardHeader({
   const handleSortClick = (sort: string) => {
     // Sort 정렬 기준 설정
     setSort(() => sort);
-    setPage('1');
+    setPage(() => '1');
+    setPerPage(() => '5');
 
     // 해당 값으로 URL 변경
     router.push({
       query: {
-        page,
+        page: '1',
         perPage,
         sort,
       },
@@ -54,12 +53,12 @@ export default function BoardHeader({
   const handlePerPage = (e: SelectChangeEvent<string>) => {
     // Per Page 정렬 기준 설정
     setPerPage(() => e.target.value);
-    setPage('1');
+    setPage(() => '1');
 
     // 해당 값으로 URL 변경
     router.push({
       query: {
-        page,
+        page: '1',
         perPage: e.target.value,
         sort,
       },

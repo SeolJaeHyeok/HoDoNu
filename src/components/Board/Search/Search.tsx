@@ -7,12 +7,14 @@ import SearchList from './SearchList';
 
 import boardApi from '@apis/board';
 import useDebounce from '@hooks/useDebounce';
+import { categoryAssertion } from '@utils/const/category';
+import { ArticleCategoryProps } from '@interfaces/article';
 
-const Search = ({ category }: { category: 'free' | 'doctor' | 'nurse' }) => {
+const Search = ({ category }: ArticleCategoryProps) => {
   const scrollRef = useRef(null);
   const [index, setIndex] = useState(-1);
   const [query, setQuery] = useState<string>('');
-
+  categoryAssertion.DOCTOR;
   const debouncedQuery = useDebounce(query, 200);
 
   const { data: searchResults } = useQuery(

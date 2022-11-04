@@ -18,7 +18,7 @@ export interface ArticleProps extends ArticleCategoryProps {
 }
 
 export interface ArticleCategoryProps {
-  category: string;
+  category: 'doctor' | 'nurse' | 'free';
 }
 
 export interface ArticleForm {
