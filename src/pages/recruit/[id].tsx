@@ -19,17 +19,12 @@ export interface ParamProps {
 
 export interface RecruitDetailProps {
   content: RecruitContent;
-  tags: [
-    {
-      content: string;
-      tagId: number;
-    }
-  ];
+
   articleId: number;
 }
 
 export default function RecruitDetail(props: RecruitDetailProps) {
-  const { content, tags, articleId } = props;
+  const { content, articleId } = props;
   const curUser = useRecoilValue(userInfoState);
   const curUserId = curUser?.userId;
 
@@ -43,7 +38,7 @@ export default function RecruitDetail(props: RecruitDetailProps) {
       }}
     >
       <ImageCarousel images={content.images} />
-      <Tags tags={tags} />
+      <Tags tags={content.tags} />
       <Divider textAlign="left" sx={{ width: '100%', fontWeight: '500' }}>
         INFOMATION
       </Divider>
@@ -70,7 +65,6 @@ export const getStaticPaths = async () => {
 //errorCode = ""
 export const getStaticProps = async ({ params }: ParamProps) => {
   const { data } = await recruitApi.getOne(params.id);
-  const tags = await (await recruitApi.getTags()).data.result;
 
   if (!params) {
     return {
@@ -84,7 +78,6 @@ export const getStaticProps = async ({ params }: ParamProps) => {
   return {
     props: {
       content: data.result,
-      tags,
       articleId: params.id,
     },
   };

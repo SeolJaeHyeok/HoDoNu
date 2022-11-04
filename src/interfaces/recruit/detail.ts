@@ -23,7 +23,12 @@ export interface getDetailRes {
       postalCode: string;
     };
     images: string[];
-    tags: string[];
+    tags: [
+      {
+        content: string;
+        tagId: number;
+      }
+    ];
   };
   status: number;
 }
@@ -50,7 +55,12 @@ export interface RecruitContent {
     postalCode: string;
   };
   images: string[];
-  tags: string[];
+  tags: [
+    {
+      content: string;
+      tagId: number;
+    }
+  ];
   // };
 }
 
