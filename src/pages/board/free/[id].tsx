@@ -1,5 +1,5 @@
 import ArticleContent from '@components/article/ArticleContent';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import detailApi from '@apis/board/detail';
 import { ParamsProps } from '@interfaces/board/detailUserInfoType';
 

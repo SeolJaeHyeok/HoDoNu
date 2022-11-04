@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import useDebounce from '@hooks/useDebounce';
 import SearchIcon from '@mui/icons-material/Search';
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 const ArrowDown = 'ArrowDown';
 const ArrowUp = 'ArrowUp';
@@ -13,7 +13,7 @@ interface SearchProps {
   category: string;
   index?: number;
   setIndex: Dispatch<SetStateAction<number>>;
-  searchText?: string;
+  searchText: string;
   setSearchText: Dispatch<SetStateAction<string>>;
   scrollRef: any;
   results: string[];

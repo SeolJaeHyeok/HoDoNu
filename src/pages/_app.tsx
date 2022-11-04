@@ -3,7 +3,7 @@ import Layout from '@components/layout/Layout';
 import '../styles/global.css';
 import { ThemeProvider } from '@mui/material';
 import { theme } from '../styles/theme';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RecoilRoot } from 'recoil';
 
 export default function MyApp({ Component, pageProps }: AppProps) {

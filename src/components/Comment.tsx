@@ -4,7 +4,7 @@ import { CommentArticleProps } from '@interfaces/board/detailUserInfoType';
 import { Button } from '@mui/material';
 import { convertTime } from '@utils/func';
 import { ChangeEvent, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import CustomAvatarImage from './CustomAvartar';
 
 export default function Comment({
@@ -21,13 +21,13 @@ export default function Comment({
   const queryClient = useQueryClient();
   const deleteCommentData = useMutation(detailApi.commentDelete, {
     onSuccess: () => {
-      queryClient.invalidateQueries('detailContent');
+      queryClient.invalidateQueries(['detailContent']);
     },
   });
 
   const updateCommentData = useMutation(detailApi.commentUpdate, {
     onSuccess: () => {
-      queryClient.invalidateQueries('detailContent');
+      queryClient.invalidateQueries(['detailContent']);
     },
     onError: data => {
       console.log(data);

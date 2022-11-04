@@ -6,7 +6,7 @@ import { CommentProps, ContentProps } from '@interfaces/board/detailUserInfoType
 import CommentIcon from '@mui/icons-material/Comment';
 import { Button } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import detailApi from '@apis/board/detail';
 import ArticleUserInfo from './ArticleUserInfo';
 import { useRecoilValue } from 'recoil';
@@ -32,7 +32,7 @@ export default function ArticleContent({ result }: { result: ContentProps }) {
   const requestDeleteBoard = useMutation(detailApi.deleteBoard, {
     onSuccess: data => {
       console.log(data);
-      queryClient.invalidateQueries('detailContent');
+      queryClient.invalidateQueries(['detailContent']);
     },
   });
 
@@ -52,7 +52,7 @@ export default function ArticleContent({ result }: { result: ContentProps }) {
     (commentRequestDataForm: CommentProps) => detailApi.commentRegister(commentRequestDataForm),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('detailContent');
+        queryClient.invalidateQueries(['detailContent']);
       },
     }
   );
