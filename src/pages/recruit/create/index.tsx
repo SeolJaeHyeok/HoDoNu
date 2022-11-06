@@ -85,7 +85,7 @@ export default function RecruitCreatePage() {
     return responseImageArr;
   };
 
-  // Mapping Recruit Post Body Data
+  // Tags를 제외하고 입력 받은 정보를 가지고 POST 요청 함수
   const postRecruitWithoutTags = async (
     data: RecruitPostProps,
     content: string,
@@ -105,16 +105,17 @@ export default function RecruitCreatePage() {
       console.log(bodyData);
 
       // Tag를 제외한 data POST 후 jobId로 라우팅
-      // const response = await recruitApi.postRecruit(bodyData);
-      // console.log(response);
+      const response = await recruitApi.postRecruit(bodyData);
+      console.log(response);
 
-      router.push('/recruit/create/1');
+      router.push('/recruit/create');
     } catch (e) {
       console.warn(e);
     }
   };
 
-  const handleRecruitPost = async (formData: RecruitPostProps) => {
+  // 이미지 전처리
+  const handleImagePrePost = async (formData: RecruitPostProps) => {
     const imageFormData = new FormData();
     let responseImages;
 
@@ -132,6 +133,7 @@ export default function RecruitCreatePage() {
       responseImages = response?.data.result;
     }
 
+    // POST 요청 함수 호출
     postRecruitWithoutTags(formData, content, addressInfo, responseImages);
   };
 
@@ -234,7 +236,7 @@ export default function RecruitCreatePage() {
           />
         </AddressContainer>
         <Button
-          onClick={handleSubmit(handleRecruitPost)}
+          onClick={handleSubmit(handleImagePrePost)}
           variant="contained"
           sx={{
             width: 450,
