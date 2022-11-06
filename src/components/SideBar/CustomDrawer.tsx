@@ -14,7 +14,8 @@ export default function CustomDrawer() {
   const router = useRouter();
 
   const handleMenuClick = (menu: string) => {
-    router.push(SideBarPath[menu]);
+    router.replace(SideBarPath[menu]);
+    router.reload();
   };
 
   // URL을 통해 현재 페이지에 맞는 사이드바 검증

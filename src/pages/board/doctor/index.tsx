@@ -7,12 +7,12 @@ import CustomSideBar from '@components/SideBar/CustomSideBar';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 export default function DoctorBoard() {
   const router = useRouter();
 
-  const [sort, setSort] = useState('CreatedAt');
+  const [sort, setSort] = useState('createdAt');
   const [page, setPage] = useState('1');
   const [perPage, setPerPage] = useState('10');
   const { data: res } = useQuery(['board', 'doctor', sort, page, perPage], () =>
