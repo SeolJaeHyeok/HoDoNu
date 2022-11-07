@@ -1,12 +1,16 @@
-import { Box } from '@mui/material';
+import { Box, Grid, Stack } from '@mui/material';
 import Job from '@components/mypage/Job';
-import Personal from '@components/mypage/Personal';
+import ProfileCard from '@components/mypage/ProfileCard';
+// import CustomSideBar from '@components/SideBar/CustomSideBar';
+import Account from '@components/mypage/Account';
+import Security from '@components/mypage/Security';
+import Activity from '@components/mypage/Acivity';
 // import authApi from '@apis/auth/auth';
 
 // export default function MypageIndex({user} : any) {
 export default function MypageIndex() {
   const user = {
-    userId: 'd5692339-6a16-4fb5-b215-d5c5f10e531e',
+    userId: '06761c4e-a974-4317-90c1-3f16a2a1290b',
     email: 'admin@admin.com',
     name: '김동현',
     phoneNumber: '01011111111',
@@ -15,31 +19,49 @@ export default function MypageIndex() {
     imgUrl: 'https://toy-project-s3.s3.ap-northeast-2.amazonaws.com/user/basic/basic-Image.png',
     role: 'Admin',
     introduce: '',
-    isRecruiter: false,
-    nickname: 'geographical_violet_mockingbird',
-    hospitalAddress: '서울특별시 관악구 신림동',
-    hospitalAddressDetail: '엠서클',
-    hospitalAddressNumber: 54545,
-    blockArticleCategoties: ['Doctor', 'Nurse'],
+    isRecruiter: true,
+    nickname: 'equal_scarlet_amphibian',
+    hospitalAddress: '',
+    hospitalAddressDetail: '',
+    hospitalAddressNumber: '',
+    blockArticleCategoties: [],
+    totalArticles: 27,
+    isAuth: true,
   };
 
   return (
-    <Box
+    <Grid
+      container
+      spacing={2}
+      direction="row"
+      justifyContent="center"
+      alignItems="center"
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
         m: 2,
+        p: 2,
       }}
     >
-      <Box>
-        <Personal user={user} />
-      </Box>
-      <Box>
-        <Job user={user} />
-      </Box>
-    </Box>
+      {/* <CustomSideBar /> */}
+      <Grid container spacing={2}>
+        <Grid item xs={10}>
+          <ProfileCard user={user} />
+        </Grid>
+      </Grid>
+      <Grid container spacing={2}>
+        <Grid item xs={5}>
+          <Account user={user} />
+        </Grid>
+        <Grid item xs={5}>
+          <Job user={user} />
+        </Grid>
+        <Grid item xs={5}>
+          <Activity user={user} />
+        </Grid>
+        <Grid item xs={5}>
+          <Security user={user} />
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }
 
