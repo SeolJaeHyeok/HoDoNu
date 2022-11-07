@@ -1,40 +1,44 @@
 import recruitListApi from '@apis/recruit/list';
 import styled from '@emotion/styled';
 import { TagList } from '@interfaces/recruit/list/list';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 
-export default function RecruitTags({ tags }: { tags: TagList[] }) {
-  const queryClient = useQueryClient();
-
+export default function RecruitTags({ tags, setJobList }: { tags: TagList[]; setJobList: any }) {
   const [isButtonColor, setIsButtonColor] = useState(Array(tags.length).fill(false));
 
   const [tagsId, setTagsId] = useState<any>({
     tagIds: [],
   });
 
+  useEffect(() => {
+    requestTags.mutate(tagsId);
+  }, [tagsId]);
+
   const requestTags = useMutation(recruitListApi.getRecruitData, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['jobList']);
+    onSuccess: data => {
+      setJobList(data.data.result[0]);
     },
   });
 
   const handleChangeButtonColor = async (idx: number) => {
-    console.log('들어옴');
     isButtonColor[idx] = !isButtonColor[idx];
     setIsButtonColor([...isButtonColor]);
 
-    await requestTags.mutate({
-      tagsId: [1],
-    });
+    // 호진TODO: 좋은 코드가 아닌거 같음 ,, 클릭시 현재 tagIds에다가 값을 넣고 다시 누르면 빼야된다.
 
     if (isButtonColor[idx]) {
-      console.log('여기도 오나?');
-      console.log(idx);
+      tagsId.tagIds.push(idx + 1);
       setTagsId({
-        tagIds: [idx],
+        ...tagsId,
       });
+      return;
     }
+
+    const filterTag = tagsId?.tagIds.filter((tagId: any) => tagId !== idx + 1);
+    setTagsId({
+      tagIds: filterTag,
+    });
   };
 
   return (

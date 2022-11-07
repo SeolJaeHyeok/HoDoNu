@@ -4,12 +4,10 @@ import RecruitHeader from '@components/recruit/index/RecruitHearder';
 import RecruitTags from '@components/recruit/index/RecruitTags';
 import styled from '@emotion/styled';
 import { RecruitProps } from '@interfaces/recruit/list/list';
-import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 
 export default function Recruit({ jobList, tagList }: RecruitProps) {
-  const jobLists = useQuery(['jobList'], recruitListApi.getRecruitData).data?.data.result[0];
-
-  console.log(jobLists);
+  const [jobLists, setJobLists] = useState(jobList);
 
   return (
     <RecruitWrapper>
@@ -17,7 +15,7 @@ export default function Recruit({ jobList, tagList }: RecruitProps) {
         <RecruitHeader />
       </RecruitContainer>
       <RecruitLine />
-      <RecruitTags tags={tagList} />
+      <RecruitTags tags={tagList} setJobList={setJobLists} />
       <RecruitContentContainer>
         {jobLists?.map((job: any, idx: number) => (
           <RecruitCardView
