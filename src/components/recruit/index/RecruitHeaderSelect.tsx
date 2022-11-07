@@ -9,6 +9,7 @@ import { useState } from 'react';
 import recruitListApi from '@apis/recruit/list';
 import styled from '@emotion/styled';
 import { useMutation } from '@tanstack/react-query';
+import { RecruitHeaderProps } from './RecruitHearder';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -31,7 +32,7 @@ const searchFilterTagsObj: SearchTagObject = {
   ['타이틀']: 'title',
 };
 
-export default function RecruitHeaderSelect({ tagsId, setJobLists }: any) {
+export default function RecruitHeaderSelect({ tagsId, setJobLists }: RecruitHeaderProps) {
   const [searchFilterTagNames, setSearchFilterTagNames] = useState<string[]>([]);
   const [searchBarFilterInput, setSearchBarFilterInput] = useState();
 

@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 import { RecruitProps } from '@interfaces/recruit/list/list';
 import { useState } from 'react';
 
-interface TagsIdState {
+export interface TagsIdState {
   tagIds: number[];
 }
 

@@ -1,8 +1,17 @@
 import styled from '@emotion/styled';
+import { JobList } from '@interfaces/recruit/list/list';
 import Button from '@mui/material/Button';
+import { Dispatch, SetStateAction } from 'react';
 import RecruitHeaderSelect from './RecruitHeaderSelect';
 
-export default function RecruitHeader({ tagsId, setJobLists }: any) {
+export interface RecruitHeaderProps {
+  tagsId: {
+    tagIds: number[];
+  };
+  setJobLists: Dispatch<SetStateAction<JobList[]>>;
+}
+
+export default function RecruitHeader({ tagsId, setJobLists }: RecruitHeaderProps) {
   return (
     <>
       <HeaderTitle>채용 목록</HeaderTitle>

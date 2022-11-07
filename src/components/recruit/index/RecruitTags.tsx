@@ -1,20 +1,18 @@
 import recruitListApi from '@apis/recruit/list';
 import styled from '@emotion/styled';
-import { TagList } from '@interfaces/recruit/list/list';
+import { JobList, TagList } from '@interfaces/recruit/list/list';
+import { TagsIdState } from '@pages/recruit';
 import { useMutation } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-export default function RecruitTags({
-  tags,
-  setJobList,
-  tagsId,
-  setTagsId,
-}: {
+interface RecruitTagsProps {
   tags: TagList[];
-  setJobList: any;
-  tagsId: any;
-  setTagsId: any;
-}) {
+  setJobList: Dispatch<SetStateAction<JobList[]>>;
+  tagsId: TagsIdState;
+  setTagsId: Dispatch<SetStateAction<TagsIdState>>;
+}
+
+export default function RecruitTags({ tags, setJobList, tagsId, setTagsId }: RecruitTagsProps) {
   const [isButtonColor, setIsButtonColor] = useState(Array(tags.length).fill(false));
 
   useEffect(() => {
