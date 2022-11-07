@@ -17,7 +17,7 @@ export default function Recruit({ jobList, tagList }: RecruitProps) {
       <RecruitLine />
       <RecruitTags tags={tagList} setJobList={setJobLists} />
       <RecruitContentContainer>
-        {jobLists?.map((job: any, idx: number) => (
+        {jobLists?.map((job, idx: number) => (
           <RecruitCardView
             key={idx}
             company={job.company}
@@ -32,7 +32,7 @@ export default function Recruit({ jobList, tagList }: RecruitProps) {
 }
 
 export async function getServerSideProps() {
-  const { data }: any = await recruitListApi.getRecruitData();
+  const { data } = await recruitListApi.getRecruitData();
   const res = await recruitListApi.getRecruitTagData();
 
   return {

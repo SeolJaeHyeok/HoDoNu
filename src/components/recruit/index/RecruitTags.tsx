@@ -35,7 +35,7 @@ export default function RecruitTags({ tags, setJobList }: { tags: TagList[]; set
       return;
     }
 
-    const filterTag = tagsId?.tagIds.filter((tagId: any) => tagId !== idx + 1);
+    const filterTag = tagsId?.tagIds.filter((tagId: number) => tagId !== idx + 1);
     setTagsId({
       tagIds: filterTag,
     });
