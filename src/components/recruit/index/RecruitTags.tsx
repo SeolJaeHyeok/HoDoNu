@@ -4,10 +4,14 @@ import { TagList } from '@interfaces/recruit/list/list';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
+interface TagsIdState {
+  tagIds: number[];
+}
+
 export default function RecruitTags({ tags, setJobList }: { tags: TagList[]; setJobList: any }) {
   const [isButtonColor, setIsButtonColor] = useState(Array(tags.length).fill(false));
 
-  const [tagsId, setTagsId] = useState<any>({
+  const [tagsId, setTagsId] = useState<TagsIdState>({
     tagIds: [],
   });
 
