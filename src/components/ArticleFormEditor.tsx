@@ -1,9 +1,9 @@
-import boardApi from '@apis/board';
-import styled from '@emotion/styled';
-import dynamic from 'next/dynamic';
 import { ComponentType, forwardRef, Ref, useMemo, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import ReactQuill, { ReactQuillProps } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import styled from '@emotion/styled';
+import boardApi from '@apis/board';
 import LoadingSpinner from './LoadingSpinner';
 
 interface ArticleFormEditorProps {
