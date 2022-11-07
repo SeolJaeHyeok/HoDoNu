@@ -29,8 +29,6 @@ export default function RecruitTags({ tags, setJobList }: { tags: TagList[]; set
     isButtonColor[idx] = !isButtonColor[idx];
     setIsButtonColor([...isButtonColor]);
 
-    // 호진TODO: 좋은 코드가 아닌거 같음 ,, 클릭시 현재 tagIds에다가 값을 넣고 다시 누르면 빼야된다.
-
     if (isButtonColor[idx]) {
       tagsId.tagIds.push(idx + 1);
       setTagsId({

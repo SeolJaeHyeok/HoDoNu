@@ -1,4 +1,3 @@
-import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -34,11 +33,8 @@ export default function RecruitHeaderSelect() {
     const {
       target: { value },
     } = event;
-    // console.log('target ', value.split(','));
     setSearchFilterTagNames(typeof value === 'string' ? value.split(',') : value);
   };
-
-  console.log(searchFilterTagNames);
 
   return (
     <div>

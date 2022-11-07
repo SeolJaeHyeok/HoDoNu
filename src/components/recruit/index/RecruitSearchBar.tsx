@@ -1,15 +1,21 @@
+import recruitListApi from '@apis/recruit/list';
 import styled from '@emotion/styled';
+import { ChangeEvent } from 'react';
 
-export default function RecruitSearchBar() {
-  const handleChange = (e: any) => {
-    console.log(e);
+export default function RecruitSearchBar({ setSearchBarFilterInput }: any) {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchBarFilterInput(e.target.value);
+  };
+
+  const handleClickSearchRequest = () => {
+    recruitListApi.getRecruitData();
   };
 
   return (
     <>
       <SearchBarWrapper>
         <SearchInput onChange={handleChange} placeholder="검색어를 입력해주세요" />
-        <SearchButton />
+        <SearchButton onClick={handleClickSearchRequest} />
       </SearchBarWrapper>
     </>
   );

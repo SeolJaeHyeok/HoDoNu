@@ -1,14 +1,18 @@
 import styled from '@emotion/styled';
 import Button from '@mui/material/Button';
+import { useState } from 'react';
 import RecruitHeaderSelect from './RecruitHeaderSelect';
 import RecruitSearchBar from './RecruitSearchBar';
 
 export default function RecruitHeader() {
+  const [searchBarFilterInput, setSearchBarFilterInput] = useState();
+
+  console.log(searchBarFilterInput);
   return (
     <>
       <HeaderTitle>채용 목록</HeaderTitle>
       <RecruitHeaderSelect />
-      <RecruitSearchBar />
+      <RecruitSearchBar setSearchBarFilterInput={setSearchBarFilterInput} />
       <RegisetButtonContainer>
         <Button variant="outlined" sx={{ lineHeight: '3.0', marginBottom: '8px' }}>
           공고 등록
