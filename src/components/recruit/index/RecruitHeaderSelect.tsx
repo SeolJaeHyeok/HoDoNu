@@ -8,6 +8,7 @@ import Chip from '@mui/material/Chip';
 import { useState } from 'react';
 import recruitListApi from '@apis/recruit/list';
 import styled from '@emotion/styled';
+import { useMutation } from '@tanstack/react-query';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -30,7 +31,7 @@ const searchFilterTagsObj: SearchTagObject = {
   ['타이틀']: 'title',
 };
 
-export default function RecruitHeaderSelect() {
+export default function RecruitHeaderSelect({ tagsId, setJobLists }: any) {
   const [searchFilterTagNames, setSearchFilterTagNames] = useState<string[]>([]);
   const [searchBarFilterInput, setSearchBarFilterInput] = useState();
 
@@ -45,15 +46,26 @@ export default function RecruitHeaderSelect() {
     setSearchBarFilterInput(e.target.value);
   };
 
+  const requestTagData = useMutation(recruitListApi.getRecruitAllData, {
+    onSuccess: data => {
+      setJobLists(data.data.result[0]);
+    },
+  });
+
   const handleClickSearchRequest = async () => {
-    const searchRequestURL = searchFilterTagNames
+    const searchRequestTagName = searchFilterTagNames
       .map(tag => {
         return searchFilterTagsObj[tag] + `=${searchBarFilterInput}`;
       })
       .join('&');
 
-    // await recruitListApi.getRecruitAllData(searchRequestURL);
-    await recruitListApi.getRecruitData({ params: searchRequestURL });
+    const searchRequestTagId = tagsId.tagIds
+      .map((tag: number) => {
+        return `tagIds=${tag}`;
+      })
+      .join('&');
+    const searchRequestURL = searchRequestTagName + `&${searchRequestTagId}`;
+    requestTagData.mutate(searchRequestURL);
   };
 
   return (

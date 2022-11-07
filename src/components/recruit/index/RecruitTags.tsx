@@ -4,16 +4,18 @@ import { TagList } from '@interfaces/recruit/list/list';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
-interface TagsIdState {
-  tagIds: number[];
-}
-
-export default function RecruitTags({ tags, setJobList }: { tags: TagList[]; setJobList: any }) {
+export default function RecruitTags({
+  tags,
+  setJobList,
+  tagsId,
+  setTagsId,
+}: {
+  tags: TagList[];
+  setJobList: any;
+  tagsId: any;
+  setTagsId: any;
+}) {
   const [isButtonColor, setIsButtonColor] = useState(Array(tags.length).fill(false));
-
-  const [tagsId, setTagsId] = useState<TagsIdState>({
-    tagIds: [],
-  });
 
   useEffect(() => {
     requestTags.mutate(tagsId);

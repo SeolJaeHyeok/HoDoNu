@@ -6,16 +6,24 @@ import styled from '@emotion/styled';
 import { RecruitProps } from '@interfaces/recruit/list/list';
 import { useState } from 'react';
 
+interface TagsIdState {
+  tagIds: number[];
+}
+
 export default function Recruit({ jobList, tagList }: RecruitProps) {
   const [jobLists, setJobLists] = useState(jobList);
+
+  const [tagsId, setTagsId] = useState<TagsIdState>({
+    tagIds: [],
+  });
 
   return (
     <RecruitWrapper>
       <RecruitContainer>
-        <RecruitHeader />
+        <RecruitHeader tagsId={tagsId} setJobLists={setJobLists} />
       </RecruitContainer>
       <RecruitLine />
-      <RecruitTags tags={tagList} setJobList={setJobLists} />
+      <RecruitTags tags={tagList} setJobList={setJobLists} tagsId={tagsId} setTagsId={setTagsId} />
       <RecruitContentContainer>
         {jobLists?.map((job, idx: number) => (
           <RecruitCardView

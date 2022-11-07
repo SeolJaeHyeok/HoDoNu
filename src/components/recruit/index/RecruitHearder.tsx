@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 import Button from '@mui/material/Button';
 import RecruitHeaderSelect from './RecruitHeaderSelect';
 
-export default function RecruitHeader() {
+export default function RecruitHeader({ tagsId, setJobLists }: any) {
   return (
     <>
       <HeaderTitle>채용 목록</HeaderTitle>
-      <RecruitHeaderSelect />
+      <RecruitHeaderSelect tagsId={tagsId} setJobLists={setJobLists} />
       <RegisetButtonContainer>
         <Button variant="outlined" sx={{ lineHeight: '3.0', marginBottom: '8px' }}>
           공고 등록
