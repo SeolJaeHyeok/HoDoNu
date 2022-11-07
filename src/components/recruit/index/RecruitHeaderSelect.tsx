@@ -5,7 +5,10 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import recruitListApi from '@apis/recruit/list';
+
+import styled from '@emotion/styled';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -28,6 +31,7 @@ const searchFilterTagsObj = {
 
 export default function RecruitHeaderSelect() {
   const [searchFilterTagNames, setSearchFilterTagNames] = useState<string[]>([]);
+  const [searchBarFilterInput, setSearchBarFilterInput] = useState();
 
   const handleChange = (event: SelectChangeEvent<typeof searchFilterTagNames>) => {
     const {
@@ -36,8 +40,16 @@ export default function RecruitHeaderSelect() {
     setSearchFilterTagNames(typeof value === 'string' ? value.split(',') : value);
   };
 
+  const handleChangeSearchInpu = (e: any) => {
+    setSearchBarFilterInput(e.target.value);
+  };
+
+  const handleClickSearchRequest = () => {
+    recruitListApi.getRecruitData();
+  };
+
   return (
-    <div>
+    <HeaderSearchBarWrapper>
       <FormControl sx={{ m: 1, width: 350 }}>
         <InputLabel id="demo-multiple-chip-label">Filter</InputLabel>
         <Select
@@ -63,6 +75,42 @@ export default function RecruitHeaderSelect() {
           ))}
         </Select>
       </FormControl>
-    </div>
+      <SearchBarWrapper>
+        <SearchInput onChange={handleChangeSearchInpu} placeholder="검색어를 입력해주세요" />
+        <SearchButton onClick={handleClickSearchRequest} />
+      </SearchBarWrapper>
+    </HeaderSearchBarWrapper>
   );
 }
+const HeaderSearchBarWrapper = styled.div`
+  display: flex;
+`;
+const SearchBarWrapper = styled.div`
+  position: relative;
+  display: flex;
+  width: 400px;
+  height: 56px;
+  border: 1px solid #a3a3a3;
+  border-radius: 6px;
+  margin-left: 20px;
+  margin: auto 0;
+`;
+const SearchInput = styled.input`
+  border: none;
+  width: 80%;
+  outline: none;
+  font-size: 16px;
+  padding-left: 10px;
+  border-radius: 6px;
+`;
+const SearchButton = styled.button`
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  // 호진TODO: 아이콘 색상을 바꾸던가 다른 아이콘을 써야할 것 같음!
+  background: url('/assets/images/searchIcon.svg');
+  top: 13px;
+  right: 15px;
+  border: none;
+  cursor: pointer;
+`;
