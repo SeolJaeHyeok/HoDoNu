@@ -43,6 +43,7 @@ export default function RecruitTagsPage({ tags }: any) {
   const handleTagPost = () => {
     const tags: number[] = [];
 
+    // 선택 된 tagId 추출
     selectedTags.forEach((selected, i) => {
       if (selected) {
         tags.push(i + 1);

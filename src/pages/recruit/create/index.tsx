@@ -4,7 +4,6 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
-import FileUploader from '@components/Recruit/FileUploader';
 import { AddressProps, FileProps } from '@interfaces/recruit';
 import recruitApi from '@apis/recruit';
 import { recruitPostSchema } from '@utils/validationSchema';
@@ -12,6 +11,8 @@ import { useQuill } from 'react-quilljs';
 import 'quill/dist/quill.snow.css';
 import { recruitEditorInitialValue } from '@utils/const/recruitEditorInitialValue';
 import { useRouter } from 'next/router';
+import FileUploader from '@components/recruit/FileUploader';
+import { useMutation } from '@tanstack/react-query';
 
 interface RecruitPostProps {
   companyRecruitmentTitle: string;
@@ -28,6 +29,7 @@ export default function RecruitCreatePage() {
   const { quill, quillRef } = useQuill();
   const open = useDaumPostcodePopup();
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -35,17 +37,31 @@ export default function RecruitCreatePage() {
   } = useForm<RecruitPostProps>({
     resolver: yupResolver(recruitPostSchema),
   });
+
   const [addressInfo, setAddressInfo] = useState<AddressProps>({
     postalCode: '',
     mainAddress: '',
     detailAddress: '',
   }); // 주소 정보 객체
+
   const [companyPictures, setCompanyPictures] = useState<FileProps[]>([]); // 회사 사진 배열
 
   // Daum 주소 API Trigger
   const handleClickOpen = () => {
     open({ onComplete: handleComplete });
   };
+
+  const { mutate: postMutate } = useMutation(recruitApi.postRecruit, {
+    onSuccess: (data: any) => {
+      console.log(data);
+      if (data) {
+        router.push(`/recruit/create/${data.result.jobId}`);
+      }
+    },
+    onError: (error: any) => {
+      alert(error.message);
+    },
+  });
 
   // 주소 입력 완료 후 정보 저장
   const handleComplete = (addressData: DaumAddressAPIProps) => {
@@ -73,7 +89,30 @@ export default function RecruitCreatePage() {
     return files.map(({ file }: { file: File }) => file);
   };
 
-  // Image Data Array POST
+  // 이미지 전처리
+  const handleImagePrePost = async (formData: RecruitPostProps) => {
+    const imageFormData = new FormData();
+    let responseImages; // 이미지 주소 URL이 담긴 문자열 배열
+
+    const content = quillRef.current.firstChild.innerHTML; // Editor 안에 들어가는 content
+
+    // Image POST 요청 선 처리 -> image URL로 이루어진 문자열 배열 받아오기
+    if (companyPictures.length > 0) {
+      const arr = parseImageFiles(companyPictures);
+
+      arr.forEach((_: any, i: number) => {
+        imageFormData.append('images', arr[i]);
+      });
+
+      const response = await postImageArray(imageFormData);
+      responseImages = response?.data.result;
+    }
+
+    // POST 요청 함수 호출
+    postRecruitWithoutTags(formData, content, addressInfo, responseImages);
+  };
+
+  // 이마자 POST 요청 함수
   const postImageArray = async (formData: FormData) => {
     let responseImageArr;
     try {
@@ -92,49 +131,17 @@ export default function RecruitCreatePage() {
     addressInfo: AddressProps,
     companyImages: string[]
   ) => {
-    try {
-      const bodyData = {
-        title: data.companyRecruitmentTitle,
-        company: data.companyName,
-        address: addressInfo,
-        content,
-        images: companyImages,
-        phoneNumber: data.companyRecruiterContact,
-      };
+    const bodyData = {
+      title: data.companyRecruitmentTitle,
+      company: data.companyName,
+      address: addressInfo,
+      content,
+      images: companyImages,
+      phoneNumber: data.companyRecruiterContact,
+    };
 
-      console.log(bodyData);
-
-      // Tag를 제외한 data POST 후 jobId로 라우팅
-      const response = await recruitApi.postRecruit(bodyData);
-      console.log(response);
-
-      router.push('/recruit/create');
-    } catch (e) {
-      console.warn(e);
-    }
-  };
-
-  // 이미지 전처리
-  const handleImagePrePost = async (formData: RecruitPostProps) => {
-    const imageFormData = new FormData();
-    let responseImages;
-
-    const content = quillRef.current.firstChild.innerHTML;
-
-    // Image POST 요청 선 처리
-    if (companyPictures.length > 0) {
-      const arr = parseImageFiles(companyPictures);
-
-      arr.forEach((_: any, i: number) => {
-        imageFormData.append('images', arr[i]);
-      });
-
-      const response = await postImageArray(imageFormData);
-      responseImages = response?.data.result;
-    }
-
-    // POST 요청 함수 호출
-    postRecruitWithoutTags(formData, content, addressInfo, responseImages);
+    // POST 요청
+    postMutate(bodyData);
   };
 
   // React Quill Initial Value 설정
