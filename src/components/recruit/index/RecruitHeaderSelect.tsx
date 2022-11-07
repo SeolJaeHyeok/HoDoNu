@@ -20,26 +20,25 @@ const MenuProps = {
 };
 
 const searchFilterTags = ['회사 이름', '자격 요건', '우대 사항', '타이틀'];
-
-function getStyles(name: string, personName: readonly string[], theme: Theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
+const searchFilterTagsObj = {
+  ['회사 이름']: 'company',
+  ['자격 요건']: 'eligibility',
+  ['우대 사항']: 'favor',
+  ['타이틀']: 'title',
+};
 
 export default function RecruitHeaderSelect() {
-  const theme = useTheme();
   const [searchFilterTagNames, setSearchFilterTagNames] = useState<string[]>([]);
 
   const handleChange = (event: SelectChangeEvent<typeof searchFilterTagNames>) => {
     const {
       target: { value },
     } = event;
+    // console.log('target ', value.split(','));
     setSearchFilterTagNames(typeof value === 'string' ? value.split(',') : value);
   };
+
+  console.log(searchFilterTagNames);
 
   return (
     <div>
@@ -62,7 +61,7 @@ export default function RecruitHeaderSelect() {
           MenuProps={MenuProps}
         >
           {searchFilterTags.map(tag => (
-            <MenuItem key={tag} value={tag} style={getStyles(tag, searchFilterTagNames, theme)}>
+            <MenuItem key={tag} value={tag}>
               {tag}
             </MenuItem>
           ))}
