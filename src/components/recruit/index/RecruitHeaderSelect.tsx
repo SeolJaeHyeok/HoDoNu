@@ -5,9 +5,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 import recruitListApi from '@apis/recruit/list';
-
 import styled from '@emotion/styled';
 
 const ITEM_HEIGHT = 48;
@@ -21,11 +20,13 @@ const MenuProps = {
   },
 };
 
-const searchFilterTags = ['회사 이름', '자격 요건', '우대 사항', '타이틀'];
-const searchFilterTagsObj = {
+interface SearchTagObject {
+  [key: string]: string;
+}
+const searchFilterTags = ['회사 이름', '컨텐츠', '타이틀'];
+const searchFilterTagsObj: SearchTagObject = {
   ['회사 이름']: 'company',
-  ['자격 요건']: 'eligibility',
-  ['우대 사항']: 'favor',
+  ['컨텐츠']: 'content',
   ['타이틀']: 'title',
 };
 
@@ -40,12 +41,19 @@ export default function RecruitHeaderSelect() {
     setSearchFilterTagNames(typeof value === 'string' ? value.split(',') : value);
   };
 
-  const handleChangeSearchInpu = (e: any) => {
+  const handleChangeSearchInput = (e: any) => {
     setSearchBarFilterInput(e.target.value);
   };
 
-  const handleClickSearchRequest = () => {
-    recruitListApi.getRecruitData();
+  const handleClickSearchRequest = async () => {
+    const searchRequestURL = searchFilterTagNames
+      .map(tag => {
+        return searchFilterTagsObj[tag] + `=${searchBarFilterInput}`;
+      })
+      .join('&');
+
+    // await recruitListApi.getRecruitAllData(searchRequestURL);
+    await recruitListApi.getRecruitData({ params: searchRequestURL });
   };
 
   return (
@@ -76,7 +84,7 @@ export default function RecruitHeaderSelect() {
         </Select>
       </FormControl>
       <SearchBarWrapper>
-        <SearchInput onChange={handleChangeSearchInpu} placeholder="검색어를 입력해주세요" />
+        <SearchInput onChange={handleChangeSearchInput} placeholder="검색어를 입력해주세요" />
         <SearchButton onClick={handleClickSearchRequest} />
       </SearchBarWrapper>
     </HeaderSearchBarWrapper>
