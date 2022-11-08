@@ -6,7 +6,7 @@ import { visuallyHidden } from '@mui/utils';
 type Order = 'asc' | 'desc';
 
 interface EnhancedTableProps {
-  numSelected: number;
+  selectedItems: number;
   onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
@@ -15,55 +15,43 @@ interface EnhancedTableProps {
 }
 
 interface HeadCell {
-  disablePadding: boolean;
   id: keyof Data;
   label: string;
   numeric: boolean;
 }
 
 interface Data {
-  calories: number;
-  carbs: number;
-  fat: number;
-  name: string;
-  protein: number;
+  title: number;
+  category: number;
+  hits: number;
+  createdAt: Date;
 }
 
 const headCells: readonly HeadCell[] = [
   {
-    id: 'name',
+    id: 'createdAt',
     numeric: false,
-    disablePadding: true,
-    label: 'Dessert (100g serving)',
+    label: '생성 날짜',
   },
   {
-    id: 'calories',
-    numeric: true,
-    disablePadding: false,
-    label: 'Calories',
+    id: 'title',
+    numeric: false,
+    label: '제목',
   },
   {
-    id: 'fat',
-    numeric: true,
-    disablePadding: false,
-    label: 'Fat (g)',
+    id: 'hits',
+    numeric: false,
+    label: '조회수',
   },
   {
-    id: 'carbs',
-    numeric: true,
-    disablePadding: false,
-    label: 'Carbs (g)',
-  },
-  {
-    id: 'protein',
-    numeric: true,
-    disablePadding: false,
-    label: 'Protein (g)',
+    id: 'category',
+    numeric: false,
+    label: '게시판',
   },
 ];
 
 export default function CustomTableHead(props: EnhancedTableProps) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+  const { onSelectAllClick, order, orderBy, selectedItems, rowCount, onRequestSort } = props;
   const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property);
   };
@@ -74,8 +62,8 @@ export default function CustomTableHead(props: EnhancedTableProps) {
         <TableCell padding="checkbox">
           <Checkbox
             color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
+            indeterminate={selectedItems > 0 && selectedItems < rowCount}
+            checked={rowCount > 0 && selectedItems === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
               'aria-label': 'select all desserts',
@@ -85,8 +73,7 @@ export default function CustomTableHead(props: EnhancedTableProps) {
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'normal'}
+            align={headCell.numeric ? 'left' : 'right'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
