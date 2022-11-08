@@ -1,40 +1,9 @@
 export interface getDetailRes {
-  result: {
-    createAt: string;
-    jobId: number;
-    userId: string;
-    company: string;
-    title: string;
-    introduction: string;
-    task: string;
-    eligibility: string;
-    favor: string;
-    hits: number;
-    isActive: boolean;
-    user: {
-      userId: string;
-      email: string;
-      imgUrl: string;
-      nickname: string;
-    };
-    address: {
-      mainAddress: string;
-      detailAddress: string;
-      postalCode: string;
-    };
-    images: string[];
-    tags: [
-      {
-        content: string;
-        tagId: number;
-      }
-    ];
-  };
+  result: RecruitContent;
   status: number;
 }
 
 export interface RecruitContent {
-  // content: {
   createAt: string;
   jobId: number;
   userId: string;
@@ -61,7 +30,6 @@ export interface RecruitContent {
       tagId: number;
     }
   ];
-  // };
 }
 
 export interface RecruitList {

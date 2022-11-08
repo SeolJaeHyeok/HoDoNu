@@ -13,7 +13,6 @@ import React from 'react';
 export default function EditForm({ data, category }: any) {
   const router = useRouter();
   const { title, content, articleId } = data;
-  useMutation;
 
   const {
     register,

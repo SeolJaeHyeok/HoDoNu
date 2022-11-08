@@ -31,7 +31,7 @@ export default function PasswordModal() {
     },
   });
 
-  const handleSubmitPassword: SubmitHandler<UpdatePassword> = async data => {
+  const handleSubmitPassword: SubmitHandler<UpdatePassword> = data => {
     const { presentPassword, updatePassword } = data;
     patchPassword.mutate({ presentPassword, updatePassword });
   };

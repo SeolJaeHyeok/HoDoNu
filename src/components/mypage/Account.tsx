@@ -25,7 +25,7 @@ export default function Account({ user }: { user: any }) {
     setIsNicknameEdit(true);
   };
 
-  const handleEditNickname = async (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleEditNickname = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setNickname(e.target.value);
   };
 
