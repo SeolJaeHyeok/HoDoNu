@@ -1,5 +1,4 @@
-// import { InferGetStaticPropsType } from 'next';
-import { Container, Divider } from '@mui/material';
+import { Container, Divider, Typography, Box } from '@mui/material';
 import { recruitApi } from '@apis/recuit';
 import ImageCarousel from '@components/recruit/detail/ImageCarousel';
 import CompanyInfo from '@components/recruit/detail/CompanyInfo';
@@ -34,18 +33,29 @@ export default function RecruitDetail(props: RecruitDetailProps) {
         width: '650px',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
       }}
     >
-      <ImageCarousel images={content.images} />
-      <Tags tags={content.tags} />
-      <Divider textAlign="left" sx={{ width: '100%', fontWeight: '500' }}>
-        INFOMATION
+      <Box sx={{ width: '100%', my: 2 }}>
+        <ImageCarousel images={content.images} />
+        <Box sx={{ py: 1 }}>
+          <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+            {content.title}
+          </Typography>
+          <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+            {content.company}
+          </Typography>
+        </Box>
+        <Tags tags={content.tags} />
+      </Box>
+      <Divider textAlign="left" sx={{ width: '650px', fontWeight: '500' }}>
+        채용 정보
       </Divider>
-      <Content content={content.content} />
-      <CompanyInfo address={content.address} company={content.company} />
-      <Contact user={content.user} />
-      {curUserId === content.user.userId && <OwnerButton articleId={articleId} />}
+      <Box>
+        <Content content={content.content} />
+        <CompanyInfo address={content.address} company={content.company} />
+        <Contact user={content.user} />
+        {curUserId === content.user.userId && <OwnerButton articleId={articleId} />}
+      </Box>
     </Container>
   );
 }

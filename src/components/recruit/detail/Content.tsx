@@ -16,9 +16,9 @@ export default function Content({ content }: ContentProps) {
         padding: 2,
       }}
     >
-      <Box>{content}</Box>
+      <Box>
+        <div dangerouslySetInnerHTML={{ __html: content }} />
+      </Box>
     </Container>
   );
 }
-
-// dangerouslySetInnerHTML={{ __html: result?.content }}
