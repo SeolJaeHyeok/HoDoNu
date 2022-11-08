@@ -11,8 +11,8 @@ interface RecruitTagsProps {
   setJobList: Dispatch<SetStateAction<JobList[]>>;
   tagsId: TagsIdState;
   setTagsId: Dispatch<SetStateAction<TagsIdState>>;
-  searchFilterTagNames: any;
-  searchBarFilterInput: any;
+  searchFilterTagNames: string[];
+  searchBarFilterInput: string;
 }
 
 export default function RecruitTags({
@@ -31,9 +31,7 @@ export default function RecruitTags({
   }, [tagsId]);
 
   const requestTags = useMutation(recruitListApi.getRecruitAllData, {
-    onSuccess: data => {
-      setJobList(data.data.result[0]);
-    },
+    onSuccess: data => setJobList(data.data.result[0]),
   });
 
   const handleChangeButtonColor = async (idx: number) => {

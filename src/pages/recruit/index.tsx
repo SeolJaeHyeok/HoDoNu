@@ -13,7 +13,7 @@ export interface TagsIdState {
 export default function Recruit({ jobList, tagList }: RecruitProps) {
   const [jobLists, setJobLists] = useState(jobList);
   const [searchFilterTagNames, setSearchFilterTagNames] = useState<string[]>([]);
-  const [searchBarFilterInput, setSearchBarFilterInput] = useState();
+  const [searchBarFilterInput, setSearchBarFilterInput] = useState<string>('');
   const [tagsId, setTagsId] = useState<TagsIdState>({
     tagIds: [],
   });

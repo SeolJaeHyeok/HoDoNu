@@ -9,10 +9,10 @@ export interface RecruitHeaderProps {
     tagIds: number[];
   };
   setJobLists: Dispatch<SetStateAction<JobList[]>>;
-  searchFilterTagNames: any;
-  setSearchFilterTagNames: any;
-  setSearchBarFilterInput: any;
-  searchBarFilterInput: any;
+  searchFilterTagNames: string[];
+  setSearchFilterTagNames: Dispatch<SetStateAction<string[]>>;
+  searchBarFilterInput: string;
+  setSearchBarFilterInput: Dispatch<SetStateAction<string>>;
 }
 
 export default function RecruitHeader({

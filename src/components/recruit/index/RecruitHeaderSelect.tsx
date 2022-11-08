@@ -11,6 +11,8 @@ import { useMutation } from '@tanstack/react-query';
 import { RecruitHeaderProps } from './RecruitHearder';
 import { debounce } from 'lodash';
 import useFilterTagJoinUrl from '@hooks/useFilterTagJoinUrl';
+import { searchFilterTags } from '@utils/const/searchFilterTags';
+import { ChangeEvent } from 'react';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -21,16 +23,6 @@ const MenuProps = {
       width: 250,
     },
   },
-};
-
-interface SearchTagObject {
-  [key: string]: string;
-}
-export const searchFilterTags = ['회사 이름', '컨텐츠', '타이틀'];
-export const searchFilterTagsObj: SearchTagObject = {
-  ['회사 이름']: 'company',
-  ['컨텐츠']: 'content',
-  ['타이틀']: 'title',
 };
 
 export default function RecruitHeaderSelect({
@@ -52,14 +44,12 @@ export default function RecruitHeaderSelect({
     setSearchBarFilterInput(value);
   }, 200);
 
-  const handleChangeSearchInput = (e: any) => {
+  const handleChangeSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
     debounceFunc(e.target.value);
   };
 
   const requestTagData = useMutation(recruitListApi.getRecruitAllData, {
-    onSuccess: data => {
-      setJobLists(data.data.result[0]);
-    },
+    onSuccess: data => setJobLists(data.data.result[0]),
   });
 
   const requestURL = useFilterTagJoinUrl(searchFilterTagNames, tagsId, searchBarFilterInput);
@@ -81,7 +71,7 @@ export default function RecruitHeaderSelect({
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={selected => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-              {selected.map((value: any) => (
+              {selected.map(value => (
                 <Chip key={value} label={value} />
               ))}
             </Box>

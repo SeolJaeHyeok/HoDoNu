@@ -1,4 +1,4 @@
-import { searchFilterTagsObj } from '@components/recruit/index/RecruitHeaderSelect';
+import { searchFilterTagsObj } from '@utils/const/searchFilterTags';
 
 const useFilterTagJoinUrl = (searchTagNames: any, searchTagIds: any, searchInput: any) => {
   const searchRequestTagName = searchTagNames
