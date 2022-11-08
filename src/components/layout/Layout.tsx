@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import Head from 'next/head';
 import NavBar from './NavBar';
-import CustomSideBar from '@components/SideBar/CustomSideBar';
+// import CustomSideBar from '@components/SideBar/CustomSideBar';
 
 interface LayoutProps {
   children: ReactNode;
