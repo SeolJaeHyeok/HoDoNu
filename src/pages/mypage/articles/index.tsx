@@ -15,11 +15,12 @@ import CustomTableHead from '@components/mypage/TableHead';
 import TableToolbar from '@components/mypage/TableToolbar';
 
 import { dateFormatter, getComparator } from '@utils/func';
-import { Container } from '@mui/material';
+import { Button, Container } from '@mui/material';
 // import CustomSideBar from '@components/SideBar/CustomSideBar';
 import { useQuery } from '@tanstack/react-query';
 import userApi from '@apis/user';
 import { UserArticlesProps } from '@interfaces/user/userInfo';
+import { useRouter } from 'next/router';
 
 const CATEGORY_TABLE: {
   [index: string]: string;
@@ -39,6 +40,8 @@ interface Data {
 type Order = 'asc' | 'desc';
 
 export default function MyPageArticles() {
+  const router = useRouter();
+
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<keyof Data>('createdAt');
   const [selected, setSelected] = React.useState<readonly string[]>([]);
@@ -108,6 +111,14 @@ export default function MyPageArticles() {
       ? Math.max(0, (1 + page) * rowsPerPage - userArticles?.data.result.response.length)
       : 0;
 
+  const handleMoveToArticle = (category: string, articleId: number) => {
+    router.push(`/board/${category.toLowerCase()}/${articleId}`);
+  };
+
+  const handleArticleEdit = (articleId: number, category: string) => {
+    router.push(`/board/edit?id=${articleId}&category=${category.toLowerCase()}`);
+  };
+
   return (
     <Container>
       {/* <CustomSideBar /> */}
@@ -138,29 +149,45 @@ export default function MyPageArticles() {
                       const labelId = `enhanced-table-checkbox-${index}`;
 
                       return (
-                        <TableRow
-                          hover
-                          onClick={event => handleClick(event, row.title)}
-                          role="checkbox"
-                          aria-checked={isItemSelected}
-                          tabIndex={-1}
-                          key={row.category + row.articleId.toString()}
-                          selected={isItemSelected}
-                        >
-                          <TableCell padding="checkbox">
-                            <Checkbox
-                              color="primary"
-                              checked={isItemSelected}
-                              inputProps={{
-                                'aria-labelledby': labelId,
-                              }}
-                            />
-                          </TableCell>
-                          <TableCell align="right">{dateFormatter(row.createdAt)}</TableCell>
-                          <TableCell align="right">{row.title}</TableCell>
-                          <TableCell align="right">{row.hits}</TableCell>
-                          <TableCell align="right">{CATEGORY_TABLE[row.category]}</TableCell>
-                        </TableRow>
+                        <>
+                          <Container sx={{ display: 'flex' }}>
+                            <Button
+                              onClick={() => handleMoveToArticle(row.category, row.articleId)}
+                              sx={{ width: '100px' }}
+                            >
+                              게시글로 이동
+                            </Button>
+                            <Button
+                              onClick={() => handleArticleEdit(row.articleId, row.category)}
+                              sx={{ width: '100px' }}
+                            >
+                              게시글 수정
+                            </Button>
+                          </Container>
+                          <TableRow
+                            hover
+                            onClick={event => handleClick(event, row.title)}
+                            role="checkbox"
+                            aria-checked={isItemSelected}
+                            tabIndex={-1}
+                            key={row.category + row.articleId.toString()}
+                            selected={isItemSelected}
+                          >
+                            <TableCell padding="checkbox">
+                              <Checkbox
+                                color="primary"
+                                checked={isItemSelected}
+                                inputProps={{
+                                  'aria-labelledby': labelId,
+                                }}
+                              />
+                            </TableCell>
+                            <TableCell align="right">{dateFormatter(row.createdAt)}</TableCell>
+                            <TableCell align="right">{row.title}</TableCell>
+                            <TableCell align="right">{row.hits}</TableCell>
+                            <TableCell align="right">{CATEGORY_TABLE[row.category]}</TableCell>
+                          </TableRow>
+                        </>
                       );
                     })}
                 {emptyRows > 0 && (
