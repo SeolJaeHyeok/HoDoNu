@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { Button } from '@mui/material';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import { useMutation } from '@tanstack/react-query';
 
 interface TagsResponseProps {
   content: string;
@@ -20,7 +21,7 @@ export const getServerSideProps = async () => {
 
 export default function RecruitTagsPage({ tags }: any) {
   const router = useRouter();
-  const recruitId = router.query.id;
+  const recruitId = router.query.id as string;
   const [selectedTags, setSelectedTags] = useState<boolean[]>(
     Array.from(
       {
@@ -29,6 +30,16 @@ export default function RecruitTagsPage({ tags }: any) {
       () => false
     )
   );
+
+  const { mutate: tagsMutate } = useMutation(recruitApi.postRecruitTags, {
+    onSuccess: () => {
+      alert('정상적으로 등록됐습니다:)');
+      router.push(`/recruit`);
+    },
+    onError: (error: any) => {
+      alert(error.message);
+    },
+  });
 
   // Tag 선택
   const handleTagClick = (tagId: number) => {
@@ -40,7 +51,7 @@ export default function RecruitTagsPage({ tags }: any) {
   };
 
   // 선택한 tag 목록 POST
-  const handleTagPost = () => {
+  const handleTagPost = async () => {
     const tags: number[] = [];
 
     // 선택 된 tagId 추출
@@ -50,7 +61,7 @@ export default function RecruitTagsPage({ tags }: any) {
       } else return;
     });
 
-    console.log(recruitId, tags);
+    tagsMutate({ jobId: recruitId, tagIds: tags });
   };
 
   return (

@@ -53,10 +53,12 @@ export default function RecruitCreatePage() {
 
   const { mutate: postMutate } = useMutation(recruitApi.postRecruit, {
     onSuccess: (data: any) => {
-      console.log(data);
-      if (data) {
-        router.push(`/recruit/create/${data.result.jobId}`);
-      }
+      const {
+        data: {
+          result: { jobId },
+        },
+      } = data;
+      router.push(`/recruit/create/${jobId}`);
     },
     onError: (error: any) => {
       alert(error.message);
