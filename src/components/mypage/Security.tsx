@@ -3,7 +3,6 @@ import LockIcon from '@mui/icons-material/Lock';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 export default function Security({ user }: { user: any }) {
-  console.log(user);
   const handleEditPassword = () => {};
   return (
     <Box

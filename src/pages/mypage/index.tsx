@@ -5,13 +5,15 @@ import ProfileCard from '@components/mypage/ProfileCard';
 import Account from '@components/mypage/Account';
 import Security from '@components/mypage/Security';
 import Activity from '@components/mypage/Acivity';
-import { useEffect } from 'react';
 import authApi from '@apis/auth/auth';
+import { useQuery } from '@tanstack/react-query';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '@atoms/userAtom';
 
 // export default function MypageIndex({user} : any) {
 export default function MypageIndex() {
-  // console.log(user)
-  const user = {
+  const user = useRecoilValue(userInfoState);
+  const tempuser = {
     userId: '06761c4e-a974-4317-90c1-3f16a2a1290b',
     email: 'admin@admin.com',
     name: '김동현',
@@ -31,7 +33,8 @@ export default function MypageIndex() {
     isAuth: false,
   };
 
-  useEffect(() => {}, []);
+  const { data } = useQuery(['detailUser'], () => authApi.getOne(user?.userId!));
+  console.log(data?.result);
 
   return (
     <Grid
@@ -48,36 +51,25 @@ export default function MypageIndex() {
       {/* <CustomSideBar /> */}
       <Grid item xs={10}>
         <Grid item xs={12}>
-          <ProfileCard user={user} />
+          {data?.result && <ProfileCard user={data.result} />}
         </Grid>
       </Grid>
       <Grid item xs={10}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <Account user={user} />
+            {data?.result && <Account user={data.result} />}
           </Grid>
           <Grid item xs={6}>
-            <Job user={user} />
+            {data?.result && <Job user={data.result} />}
           </Grid>
           <Grid item xs={6}>
-            <Activity user={user} />
+            {data?.result && <Activity user={data.result} />}
           </Grid>
           <Grid item xs={6}>
-            <Security user={user} />
+            {data?.result && <Security user={data.result} />}
           </Grid>
         </Grid>
       </Grid>
     </Grid>
   );
 }
-
-export const getServerSideProps = async () => {
-  const userId = 'temp';
-  const { data } = await authApi.getOne(userId);
-
-  return {
-    props: {
-      user: data.result,
-    },
-  };
-};

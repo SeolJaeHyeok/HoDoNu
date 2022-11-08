@@ -12,7 +12,7 @@ interface ModalProps {
 }
 
 export default function CustomModal({ children }: ModalProps) {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(true);
   // eslint-disable-next-line no-unused-vars
   const handleOpen = () => {
     setOpen(true);

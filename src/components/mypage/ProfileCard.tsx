@@ -1,30 +1,49 @@
 import { Avatar, Badge, Box, Button, Typography, alpha, TextField } from '@mui/material';
 import CustomAvatarImage from '@components/CustomAvartar';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import authApi from '@apis/auth/auth';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-// import authApi from '@apis/auth/auth';
 
 export default function ProfileCard({ user }: { user: any }) {
   const queryClient = useQueryClient();
+  const fileInput = useRef(null);
+
   const [introduce, setIntroduce] = useState(user.introduce);
   const [isIntroduceEdit, setIsIntroduceEdit] = useState<boolean>(false);
 
+  const updateProfile = useMutation(authApi.patchProfile, {
+    onSuccess: data => {
+      queryClient.invalidateQueries(['detailUser']);
+      console.log('success');
+      console.log(data);
+    },
+    onError: data => {
+      console.log('error');
+      console.log(data);
+    },
+  });
+
   const updateIntoduce = useMutation(authApi.patchIntroduce, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['']);
+      queryClient.invalidateQueries(['detailUser']);
     },
     onError: data => {
       console.log(data);
     },
   });
 
-  const handleUploadProfile = () => {
-    try {
-      console.log('hi');
-    } catch (err) {
-      console.log(err);
+  const onAvatarClick = (e: any) => {
+    e.preventDefault();
+    fileInput.current.click();
+  };
+
+  const handleUploadProfile = async (e: ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData();
+    const temp = e.target.files;
+    if (temp !== null) {
+      formData.append('profileImage', temp[0]);
+      updateProfile.mutate(formData);
     }
   };
 
@@ -65,7 +84,15 @@ export default function ProfileCard({ user }: { user: any }) {
             src={user.imgUrl}
             width={180}
             height={180}
-            handleClick={handleUploadProfile}
+            handleClick={onAvatarClick}
+          />
+          <input
+            type="file"
+            style={{ display: 'none' }}
+            accept="image/jpg,image/png,image/jpeg"
+            name="profileImage"
+            onChange={handleUploadProfile}
+            ref={fileInput}
           />
         </Badge>
       </Box>

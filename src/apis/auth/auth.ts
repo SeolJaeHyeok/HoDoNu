@@ -14,23 +14,23 @@ const authApi = {
   login: ({ email, password }: LoginAPI): Promise<AxiosResponse<any, any>> =>
     instance.post(`/users/signin`, { email, password }).then(res => res.data),
 
-  getOne: (userId: string): Promise<AxiosResponse<any>> =>
+  getOne: (userId: string): Promise<AxiosResponse<any, any>> =>
     instance.get(`/users/${userId}`).then(res => res.data),
 
   patchProfile: (file: FormData): Promise<AxiosResponse<any>> =>
-    instance.patch('users/profile-image', file).then(res => res.data),
+    instance.patch('/users/profile-image', file).then(res => res.data),
 
   patchNickname: (nickname: string): Promise<AxiosResponse<any>> =>
-    instance.patch('users/nickname', nickname).then(res => res.data),
+    instance.patch('/users/nickname', nickname).then(res => res.data),
 
   patchIntroduce: (introduce: string): Promise<AxiosResponse<any>> =>
-    instance.patch('users/introduce', introduce).then(res => res.data),
+    instance.patch('/users/introduce', introduce).then(res => res.data),
 
   patchPassword: (passwordProps: any): Promise<AxiosResponse<any>> =>
-    instance.patch('users/password', passwordProps).then(res => res.data),
+    instance.patch('/users/password', passwordProps).then(res => res.data),
 
   postCertification: (file: FormData): Promise<AxiosResponse<any>> =>
-    instance.patch('users/certification', file).then(res => res.data),
+    instance.post('/users/certification', file).then(res => res.data),
 };
 
 export default authApi;

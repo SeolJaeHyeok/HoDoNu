@@ -6,6 +6,7 @@ import EastIcon from '@mui/icons-material/East';
 import { ChangeEvent, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import authApi from '@apis/auth/auth';
+import CertificationModal from './CertificationModal';
 
 export default function Account({ user }: { user: any }) {
   const queryClient = useQueryClient();
@@ -14,7 +15,7 @@ export default function Account({ user }: { user: any }) {
 
   const updateNickname = useMutation(authApi.patchNickname, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['']);
+      queryClient.invalidateQueries(['detailUser']);
     },
     onError: data => console.log(data),
   });
@@ -113,6 +114,7 @@ export default function Account({ user }: { user: any }) {
           )}
         </Box>
       </Box>
+      <CertificationModal />
     </Box>
   );
 }
