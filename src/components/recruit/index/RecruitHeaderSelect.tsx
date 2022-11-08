@@ -10,6 +10,7 @@ import recruitListApi from '@apis/recruit/list';
 import styled from '@emotion/styled';
 import { useMutation } from '@tanstack/react-query';
 import { RecruitHeaderProps } from './RecruitHearder';
+import { debounce } from 'lodash';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -32,8 +33,13 @@ const searchFilterTagsObj: SearchTagObject = {
   ['타이틀']: 'title',
 };
 
-export default function RecruitHeaderSelect({ tagsId, setJobLists }: RecruitHeaderProps) {
-  const [searchFilterTagNames, setSearchFilterTagNames] = useState<string[]>([]);
+export default function RecruitHeaderSelect({
+  tagsId,
+  setJobLists,
+  searchFilterTagNames,
+  setSearchFilterTagNames,
+}: RecruitHeaderProps) {
+  // const [searchFilterTagNames, setSearchFilterTagNames] = useState<string[]>([]);
   const [searchBarFilterInput, setSearchBarFilterInput] = useState();
 
   const handleChange = (event: SelectChangeEvent<typeof searchFilterTagNames>) => {
@@ -43,8 +49,13 @@ export default function RecruitHeaderSelect({ tagsId, setJobLists }: RecruitHead
     setSearchFilterTagNames(typeof value === 'string' ? value.split(',') : value);
   };
 
+  const debounceFunc = debounce(value => {
+    setSearchBarFilterInput(value);
+  }, 200);
+
   const handleChangeSearchInput = (e: any) => {
-    setSearchBarFilterInput(e.target.value);
+    // setSearchBarFilterInput(e.target.value);
+    debounceFunc(e.target.value);
   };
 
   const requestTagData = useMutation(recruitListApi.getRecruitAllData, {
@@ -55,7 +66,7 @@ export default function RecruitHeaderSelect({ tagsId, setJobLists }: RecruitHead
 
   const handleClickSearchRequest = async () => {
     const searchRequestTagName = searchFilterTagNames
-      .map(tag => {
+      .map((tag: any) => {
         return searchFilterTagsObj[tag] + `=${searchBarFilterInput}`;
       })
       .join('&');
@@ -82,7 +93,7 @@ export default function RecruitHeaderSelect({ tagsId, setJobLists }: RecruitHead
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={selected => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-              {selected.map(value => (
+              {selected.map((value: any) => (
                 <Chip key={value} label={value} />
               ))}
             </Box>

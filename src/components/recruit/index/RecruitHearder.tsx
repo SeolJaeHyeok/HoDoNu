@@ -9,13 +9,25 @@ export interface RecruitHeaderProps {
     tagIds: number[];
   };
   setJobLists: Dispatch<SetStateAction<JobList[]>>;
+  searchFilterTagNames: any;
+  setSearchFilterTagNames: any;
 }
 
-export default function RecruitHeader({ tagsId, setJobLists }: RecruitHeaderProps) {
+export default function RecruitHeader({
+  tagsId,
+  setJobLists,
+  searchFilterTagNames,
+  setSearchFilterTagNames,
+}: RecruitHeaderProps) {
   return (
     <>
       <HeaderTitle>채용 목록</HeaderTitle>
-      <RecruitHeaderSelect tagsId={tagsId} setJobLists={setJobLists} />
+      <RecruitHeaderSelect
+        tagsId={tagsId}
+        setJobLists={setJobLists}
+        searchFilterTagNames={searchFilterTagNames}
+        setSearchFilterTagNames={setSearchFilterTagNames}
+      />
       <RegisetButtonContainer>
         <Button variant="outlined" sx={{ lineHeight: '3.0', marginBottom: '8px' }}>
           공고 등록

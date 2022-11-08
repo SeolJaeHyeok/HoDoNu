@@ -10,9 +10,16 @@ interface RecruitTagsProps {
   setJobList: Dispatch<SetStateAction<JobList[]>>;
   tagsId: TagsIdState;
   setTagsId: Dispatch<SetStateAction<TagsIdState>>;
+  searchFilterTagNames: any;
 }
 
-export default function RecruitTags({ tags, setJobList, tagsId, setTagsId }: RecruitTagsProps) {
+export default function RecruitTags({
+  tags,
+  setJobList,
+  tagsId,
+  setTagsId,
+  searchFilterTagNames,
+}: RecruitTagsProps) {
   const [isButtonColor, setIsButtonColor] = useState(Array(tags.length).fill(false));
 
   useEffect(() => {
@@ -43,6 +50,7 @@ export default function RecruitTags({ tags, setJobList, tagsId, setTagsId }: Rec
     });
   };
 
+  console.log(searchFilterTagNames);
   return (
     <RecruitTagWrapper>
       <Nav>

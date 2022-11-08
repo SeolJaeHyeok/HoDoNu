@@ -12,7 +12,7 @@ export interface TagsIdState {
 
 export default function Recruit({ jobList, tagList }: RecruitProps) {
   const [jobLists, setJobLists] = useState(jobList);
-
+  const [searchFilterTagNames, setSearchFilterTagNames] = useState<string[]>([]);
   const [tagsId, setTagsId] = useState<TagsIdState>({
     tagIds: [],
   });
@@ -20,10 +20,21 @@ export default function Recruit({ jobList, tagList }: RecruitProps) {
   return (
     <RecruitWrapper>
       <RecruitContainer>
-        <RecruitHeader tagsId={tagsId} setJobLists={setJobLists} />
+        <RecruitHeader
+          tagsId={tagsId}
+          setJobLists={setJobLists}
+          searchFilterTagNames={searchFilterTagNames}
+          setSearchFilterTagNames={setSearchFilterTagNames}
+        />
       </RecruitContainer>
       <RecruitLine />
-      <RecruitTags tags={tagList} setJobList={setJobLists} tagsId={tagsId} setTagsId={setTagsId} />
+      <RecruitTags
+        tags={tagList}
+        setJobList={setJobLists}
+        tagsId={tagsId}
+        setTagsId={setTagsId}
+        searchFilterTagNames={searchFilterTagNames}
+      />
       <RecruitContentContainer>
         {jobLists?.map((job, idx: number) => (
           <RecruitCardView
