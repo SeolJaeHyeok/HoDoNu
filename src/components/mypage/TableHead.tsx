@@ -6,7 +6,7 @@ import { visuallyHidden } from '@mui/utils';
 type Order = 'asc' | 'desc';
 
 interface EnhancedTableProps {
-  selectedItems: number;
+  selectedItems: any;
   onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
@@ -62,8 +62,8 @@ export default function CustomTableHead(props: EnhancedTableProps) {
         <TableCell padding="checkbox">
           <Checkbox
             color="primary"
-            indeterminate={selectedItems > 0 && selectedItems < rowCount}
-            checked={rowCount > 0 && selectedItems === rowCount}
+            indeterminate={selectedItems.length > 0 && selectedItems.length < rowCount}
+            checked={rowCount > 0 && selectedItems.length === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
               'aria-label': 'select all desserts',
