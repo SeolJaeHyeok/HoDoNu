@@ -32,7 +32,7 @@ export default function Activity({ user }: { user: any }) {
         <Typography fontSize="large" sx={{ m: 1, p: 1 }}>
           내 게시글
         </Typography>
-        <Link href="/">
+        <Link href="/mypage/articles">
           <MuiLink component="button" sx={{ fontSize: '30px' }}>
             {user.totalArticles}
           </MuiLink>

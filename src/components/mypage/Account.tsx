@@ -1,10 +1,9 @@
+import { ChangeEvent, useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Box, Typography, Button, Divider, IconButton, TextField } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
-import EastIcon from '@mui/icons-material/East';
-import { ChangeEvent, useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import authApi from '@apis/auth/auth';
 import CertificationModal from './CertificationModal';
 
@@ -17,7 +16,9 @@ export default function Account({ user }: { user: any }) {
     onSuccess: () => {
       queryClient.invalidateQueries(['detailUser']);
     },
-    onError: data => console.log(data),
+    onError: (e: Error) => {
+      alert(e.message);
+    },
   });
 
   const handleOpenEditNickname = () => {
@@ -33,7 +34,6 @@ export default function Account({ user }: { user: any }) {
     setIsNicknameEdit(false);
   };
 
-  const handleCertification = () => {};
   return (
     <Box
       sx={{
@@ -106,15 +106,11 @@ export default function Account({ user }: { user: any }) {
             </Box>
           ) : (
             <Box sx={buttonStyle}>
-              <EastIcon />
-              <Button sx={{ boxShadow: 0, color: 'primary' }} onClick={handleCertification}>
-                회원 인증하기
-              </Button>
+              <CertificationModal />
             </Box>
           )}
         </Box>
       </Box>
-      <CertificationModal />
     </Box>
   );
 }

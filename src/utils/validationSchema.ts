@@ -10,3 +10,20 @@ export const boardValidationSchema = yup.object({
   title: yup.string().required().max(50),
   content: yup.string().required().min(10),
 });
+
+export const updatePasswordSchema = yup.object({
+  presentPassword: yup
+    .string()
+    .min(8, '최소 8글자 이상 입력해주세요!')
+    .max(20, '최대 20글자까지 입력가능합니다!')
+    .required('비밀번호를 입력해주세요!'),
+  updatePassword: yup
+    .string()
+    .min(8, '최소 8글자 이상 입력해주세요!')
+    .max(20, '최대 20글자까지 입력가능합니다!')
+    .required('비밀번호를 입력해주세요!'),
+  checkPassword: yup
+    .string()
+    .oneOf([yup.ref('updatePassword'), null], '비밀번호가 일치하지 않습니다!')
+    .required('비밀번호를 다시 입력해주세요!'),
+});

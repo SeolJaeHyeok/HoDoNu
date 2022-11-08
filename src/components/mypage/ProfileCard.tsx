@@ -6,21 +6,18 @@ import authApi from '@apis/auth/auth';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export default function ProfileCard({ user }: { user: any }) {
-  const queryClient = useQueryClient();
-  const fileInput = useRef(null);
-
   const [introduce, setIntroduce] = useState(user.introduce);
   const [isIntroduceEdit, setIsIntroduceEdit] = useState<boolean>(false);
 
+  const queryClient = useQueryClient();
+  const fileInput = useRef<HTMLInputElement>(null);
+
   const updateProfile = useMutation(authApi.patchProfile, {
-    onSuccess: data => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['detailUser']);
-      console.log('success');
-      console.log(data);
     },
-    onError: data => {
-      console.log('error');
-      console.log(data);
+    onError: (e: Error) => {
+      alert(e.message);
     },
   });
 
@@ -28,21 +25,23 @@ export default function ProfileCard({ user }: { user: any }) {
     onSuccess: () => {
       queryClient.invalidateQueries(['detailUser']);
     },
-    onError: data => {
-      console.log(data);
+    onError: (e: Error) => {
+      alert(e.message);
     },
   });
 
   const onAvatarClick = (e: any) => {
     e.preventDefault();
-    fileInput.current.click();
+    if (fileInput.current) {
+      fileInput.current.click();
+    }
   };
 
   const handleUploadProfile = async (e: ChangeEvent<HTMLInputElement>) => {
     const formData = new FormData();
-    const temp = e.target.files;
-    if (temp !== null) {
-      formData.append('profileImage', temp[0]);
+    const file = e.target.files;
+    if (file !== null) {
+      formData.append('profileImage', file[0]);
       updateProfile.mutate(formData);
     }
   };

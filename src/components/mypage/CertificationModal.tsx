@@ -1,33 +1,37 @@
-import authApi from '@apis/auth/auth';
-import CustomModal from '@components/modal/CustomModal';
-import { Box, Divider, Typography } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
 import { ChangeEvent, useRef } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { Box, Divider, Typography } from '@mui/material';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import authApi from '@apis/auth/auth';
+import CustomModal from '@components/modal/CustomModal';
 
 export default function CertificationModal() {
   const fileInput = useRef(null);
+
   const updateProfile = useMutation(authApi.postCertification, {
-    onSuccess: data => {
-      console.log('success');
-      console.log(data);
+    onSuccess: () => {
+      alert('성공적으로 등록되었습니다. ');
     },
-    onError: data => {
-      console.log('error');
-      console.log(data);
+    onError: (e: Error) => {
+      alert(e.message);
     },
   });
+
   const handleUploadProfile = async (e: ChangeEvent<HTMLInputElement>) => {
     const formData = new FormData();
-    const temp = e.target.files;
-    if (temp !== null) {
-      formData.append('certification', temp[0]);
+    const file = e.target.files;
+    if (file !== null) {
+      formData.append('certification', file[0]);
       updateProfile.mutate(formData);
     }
   };
+
+  const btnStyle = { boxShadow: 0, color: 'primary' };
+  const btnContent = '회원인증하기';
+
   return (
-    <CustomModal>
+    <CustomModal btnContent={btnContent} btnStyle={btnStyle}>
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <AdminPanelSettingsIcon sx={{ mr: 1 }} color="primary" />

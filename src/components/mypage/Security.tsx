@@ -1,9 +1,8 @@
-import { Box, Button, Divider, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import LockIcon from '@mui/icons-material/Lock';
-import BorderColorIcon from '@mui/icons-material/BorderColor';
+import PasswordModal from './PasswordModal';
 
-export default function Security({ user }: { user: any }) {
-  const handleEditPassword = () => {};
+export default function Security() {
   return (
     <Box
       sx={{
@@ -20,11 +19,8 @@ export default function Security({ user }: { user: any }) {
         <Typography sx={{ fontWeight: 600 }}>Security</Typography>
       </Box>
       <Divider textAlign="left" sx={{ width: '100%', fontWeight: '500' }}></Divider>
-      <Box>
-        <Button sx={{ boxShadow: 0, m: 1, p: 1, color: 'primary' }} onClick={handleEditPassword}>
-          <BorderColorIcon fontSize="small" sx={{ mr: 1 }} />
-          비밀번호 변경하기
-        </Button>
+      <Box sx={{ mt: 2 }}>
+        <PasswordModal />
       </Box>
     </Box>
   );

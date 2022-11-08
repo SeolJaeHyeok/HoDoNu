@@ -4,6 +4,7 @@ import EastIcon from '@mui/icons-material/East';
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
 
 export default function Job({ user }: { user: any }) {
+  //쪽지 기능 완성 후 수정 예정
   const handleRecruiterReq = () => {};
   return (
     <Box
