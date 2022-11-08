@@ -5,12 +5,12 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
-import { useState } from 'react';
 import recruitListApi from '@apis/recruit/list';
 import styled from '@emotion/styled';
 import { useMutation } from '@tanstack/react-query';
 import { RecruitHeaderProps } from './RecruitHearder';
 import { debounce } from 'lodash';
+import useFilterTagJoinUrl from '@hooks/useFilterTagJoinUrl';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -26,8 +26,8 @@ const MenuProps = {
 interface SearchTagObject {
   [key: string]: string;
 }
-const searchFilterTags = ['회사 이름', '컨텐츠', '타이틀'];
-const searchFilterTagsObj: SearchTagObject = {
+export const searchFilterTags = ['회사 이름', '컨텐츠', '타이틀'];
+export const searchFilterTagsObj: SearchTagObject = {
   ['회사 이름']: 'company',
   ['컨텐츠']: 'content',
   ['타이틀']: 'title',
@@ -38,10 +38,9 @@ export default function RecruitHeaderSelect({
   setJobLists,
   searchFilterTagNames,
   setSearchFilterTagNames,
+  setSearchBarFilterInput,
+  searchBarFilterInput,
 }: RecruitHeaderProps) {
-  // const [searchFilterTagNames, setSearchFilterTagNames] = useState<string[]>([]);
-  const [searchBarFilterInput, setSearchBarFilterInput] = useState();
-
   const handleChange = (event: SelectChangeEvent<typeof searchFilterTagNames>) => {
     const {
       target: { value },
@@ -54,7 +53,6 @@ export default function RecruitHeaderSelect({
   }, 200);
 
   const handleChangeSearchInput = (e: any) => {
-    // setSearchBarFilterInput(e.target.value);
     debounceFunc(e.target.value);
   };
 
@@ -64,20 +62,10 @@ export default function RecruitHeaderSelect({
     },
   });
 
-  const handleClickSearchRequest = async () => {
-    const searchRequestTagName = searchFilterTagNames
-      .map((tag: any) => {
-        return searchFilterTagsObj[tag] + `=${searchBarFilterInput}`;
-      })
-      .join('&');
+  const requestURL = useFilterTagJoinUrl(searchFilterTagNames, tagsId, searchBarFilterInput);
 
-    const searchRequestTagId = tagsId.tagIds
-      .map((tag: number) => {
-        return `tagIds=${tag}`;
-      })
-      .join('&');
-    const searchRequestURL = searchRequestTagName + `&${searchRequestTagId}`;
-    requestTagData.mutate(searchRequestURL);
+  const handleClickSearchRequest = () => {
+    requestTagData.mutate(requestURL);
   };
 
   return (

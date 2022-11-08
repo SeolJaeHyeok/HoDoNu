@@ -1,5 +1,6 @@
 import recruitListApi from '@apis/recruit/list';
 import styled from '@emotion/styled';
+import useFilterTagJoinUrl from '@hooks/useFilterTagJoinUrl';
 import { JobList, TagList } from '@interfaces/recruit/list/list';
 import { TagsIdState } from '@pages/recruit';
 import { useMutation } from '@tanstack/react-query';
@@ -11,6 +12,7 @@ interface RecruitTagsProps {
   tagsId: TagsIdState;
   setTagsId: Dispatch<SetStateAction<TagsIdState>>;
   searchFilterTagNames: any;
+  searchBarFilterInput: any;
 }
 
 export default function RecruitTags({
@@ -19,14 +21,16 @@ export default function RecruitTags({
   tagsId,
   setTagsId,
   searchFilterTagNames,
+  searchBarFilterInput,
 }: RecruitTagsProps) {
   const [isButtonColor, setIsButtonColor] = useState(Array(tags.length).fill(false));
+  const requestURL = useFilterTagJoinUrl(searchFilterTagNames, tagsId, searchBarFilterInput);
 
   useEffect(() => {
-    requestTags.mutate(tagsId);
+    requestTags.mutate(requestURL);
   }, [tagsId]);
 
-  const requestTags = useMutation(recruitListApi.getRecruitData, {
+  const requestTags = useMutation(recruitListApi.getRecruitAllData, {
     onSuccess: data => {
       setJobList(data.data.result[0]);
     },
@@ -50,7 +54,6 @@ export default function RecruitTags({
     });
   };
 
-  console.log(searchFilterTagNames);
   return (
     <RecruitTagWrapper>
       <Nav>

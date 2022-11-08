@@ -11,6 +11,8 @@ export interface RecruitHeaderProps {
   setJobLists: Dispatch<SetStateAction<JobList[]>>;
   searchFilterTagNames: any;
   setSearchFilterTagNames: any;
+  setSearchBarFilterInput: any;
+  searchBarFilterInput: any;
 }
 
 export default function RecruitHeader({
@@ -18,6 +20,8 @@ export default function RecruitHeader({
   setJobLists,
   searchFilterTagNames,
   setSearchFilterTagNames,
+  setSearchBarFilterInput,
+  searchBarFilterInput,
 }: RecruitHeaderProps) {
   return (
     <>
@@ -27,6 +31,8 @@ export default function RecruitHeader({
         setJobLists={setJobLists}
         searchFilterTagNames={searchFilterTagNames}
         setSearchFilterTagNames={setSearchFilterTagNames}
+        setSearchBarFilterInput={setSearchBarFilterInput}
+        searchBarFilterInput={searchBarFilterInput}
       />
       <RegisetButtonContainer>
         <Button variant="outlined" sx={{ lineHeight: '3.0', marginBottom: '8px' }}>
