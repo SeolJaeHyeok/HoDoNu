@@ -65,6 +65,7 @@ export default function FileUploader({ multiple, fileList, setFileList, name }: 
   const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
     e.stopPropagation();
+
     if (e.dataTransfer.files) {
       setIsDragging(true);
     }
