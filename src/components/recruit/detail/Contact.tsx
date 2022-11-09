@@ -25,7 +25,7 @@ export default function Contact({ user }: { user: UserProps }) {
         border: 1,
         borderColor: 'grey.400',
 
-        mb: 2,
+        mb: 10,
       }}
     >
       <Box sx={{ ml: 2 }}>
