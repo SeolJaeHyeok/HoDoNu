@@ -5,7 +5,7 @@ import { SelectedItemsProps } from '@pages/mypage/articles';
 import { useRouter } from 'next/router';
 
 interface TableToolbarProps {
-  selectedItems: any;
+  selectedItems: SelectedItemsProps[];
 }
 
 export default function TableToolbar(props: TableToolbarProps) {
