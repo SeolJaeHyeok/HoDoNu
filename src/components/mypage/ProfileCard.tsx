@@ -13,7 +13,7 @@ export default function ProfileCard({ user }: { user: UserDetail }) {
   const queryClient = useQueryClient();
   const fileInput = useRef<HTMLInputElement>(null);
 
-  const updateProfile = useMutation(authApi.patchProfile, {
+  const updateProfileImg = useMutation(authApi.patchProfile, {
     onSuccess: () => {
       queryClient.invalidateQueries(['detailUser', user.userId]);
     },
@@ -38,12 +38,17 @@ export default function ProfileCard({ user }: { user: UserDetail }) {
     }
   };
 
-  const handleUploadProfile = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleUploadProfileImg = async (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     const formData = new FormData();
     const file = e.target.files;
+    if (!file) return;
+    if (file[0].size >= 1024 * 1024 * 5) {
+      alert('파일 크기는 5mb를 넘어갈 수 없습니다.');
+    }
     if (file !== null) {
       formData.append('profileImage', file[0]);
-      updateProfile.mutate(formData);
+      updateProfileImg.mutate(formData);
     }
   };
 
@@ -91,7 +96,7 @@ export default function ProfileCard({ user }: { user: UserDetail }) {
             style={{ display: 'none' }}
             accept="image/jpg,image/png,image/jpeg"
             name="profileImage"
-            onChange={handleUploadProfile}
+            onChange={handleUploadProfileImg}
             ref={fileInput}
           />
         </Badge>
