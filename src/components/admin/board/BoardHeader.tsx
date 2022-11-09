@@ -2,8 +2,6 @@ import styled from '@emotion/styled';
 import Checkbox from '@mui/material/Checkbox';
 
 export default function BoardHeader({ articles, setCheckItems, checkItems }: any) {
-  console.log(articles);
-
   const handleClickCheckMultiple = (e: any) => {
     if (e.target.checked) {
       const idArray: any = [];

@@ -69,6 +69,7 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
             key={idx}
             articles={article}
             checked={checkItems.includes(article.id) ? true : false}
+            currentBoard={currentBoard}
           />
         );
       })}
