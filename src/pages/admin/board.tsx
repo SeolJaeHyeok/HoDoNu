@@ -6,13 +6,14 @@ import { useState } from 'react';
 
 export default function AdminBoard() {
   const [boardData, setBoardData] = useState();
-  useQuery(['board'], () => boardManageApi.getBoardAllData('doctors'), {
+  const [selectedCategory, setSelectedCategory] = useState('frees');
+  useQuery(['board', selectedCategory], () => boardManageApi.getBoardAllData(selectedCategory), {
     onSuccess: data => setBoardData(data.data.result.articles),
   });
 
   return (
     <AdminBoardWrapper>
-      <BoardTable articles={boardData} />
+      <BoardTable articles={boardData} setSelectedCategory={setSelectedCategory} />
     </AdminBoardWrapper>
   );
 }

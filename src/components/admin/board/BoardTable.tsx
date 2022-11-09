@@ -7,26 +7,27 @@ import BoardTableRow from './BoardTableRow';
 import React, { useState } from 'react';
 import { TextField } from '@mui/material';
 
-export default function BoardTable({ articles }: any) {
+export default function BoardTable({ articles, setSelectedCategory }: any) {
   const board = [
     {
-      value: 'free',
+      value: 'frees',
       label: '자유 게시판',
     },
     {
-      value: 'doctor',
+      value: 'doctors',
       label: '의사 게시판',
     },
     {
-      value: 'nurse',
+      value: 'nurses',
       label: '간호사 게시판',
     },
   ];
 
-  const [currentBoard, setCurrentBoard] = useState('free');
+  const [currentBoard, setCurrentBoard] = useState('frees');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setCurrentBoard(e.target.value);
+    setSelectedCategory(e.target.value);
   };
 
   const handleClickMultipleDeleteArticle = () => {
