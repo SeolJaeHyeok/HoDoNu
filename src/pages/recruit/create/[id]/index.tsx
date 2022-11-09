@@ -12,6 +12,13 @@ interface TagsResponseProps {
 
 export const getServerSideProps = async () => {
   const response = await recruitApi.getAllTags();
+
+  if (!response) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: {
       tags: response.data.result,

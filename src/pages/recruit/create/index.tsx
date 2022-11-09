@@ -114,13 +114,13 @@ export default function RecruitCreatePage() {
     postRecruitWithoutTags(formData, content, addressInfo, responseImages);
   };
 
-  // 이마자 POST 요청 함수
+  // 이미지 POST 요청 함수
   const postImageArray = async (formData: FormData) => {
     let responseImageArr;
     try {
       responseImageArr = await recruitApi.postImageArray(formData);
     } catch (e: unknown) {
-      console.warn(e);
+      alert(e);
     }
 
     return responseImageArr;

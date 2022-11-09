@@ -9,7 +9,7 @@ export interface FileUploaderProps {
 
 export interface FileProps {
   id: number;
-  file: File;
+  file: File | null;
 }
 
 export interface RecruitPostProps {
