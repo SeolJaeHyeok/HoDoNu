@@ -1,14 +1,39 @@
 import styled from '@emotion/styled';
+import { JobList } from '@interfaces/recruit/list/list';
 import Button from '@mui/material/Button';
+import { Dispatch, SetStateAction } from 'react';
 import RecruitHeaderSelect from './RecruitHeaderSelect';
-import RecruitSearchBar from './RecruitSearchBar';
 
-export default function RecruitHeader() {
+export interface RecruitHeaderProps {
+  tagsId: {
+    tagIds: number[];
+  };
+  setJobLists: Dispatch<SetStateAction<JobList[]>>;
+  searchFilterTagNames: string[];
+  setSearchFilterTagNames: Dispatch<SetStateAction<string[]>>;
+  searchBarFilterInput: string;
+  setSearchBarFilterInput: Dispatch<SetStateAction<string>>;
+}
+
+export default function RecruitHeader({
+  tagsId,
+  setJobLists,
+  searchFilterTagNames,
+  setSearchFilterTagNames,
+  setSearchBarFilterInput,
+  searchBarFilterInput,
+}: RecruitHeaderProps) {
   return (
     <>
       <HeaderTitle>채용 목록</HeaderTitle>
-      <RecruitHeaderSelect />
-      <RecruitSearchBar />
+      <RecruitHeaderSelect
+        tagsId={tagsId}
+        setJobLists={setJobLists}
+        searchFilterTagNames={searchFilterTagNames}
+        setSearchFilterTagNames={setSearchFilterTagNames}
+        setSearchBarFilterInput={setSearchBarFilterInput}
+        searchBarFilterInput={searchBarFilterInput}
+      />
       <RegisetButtonContainer>
         <Button variant="outlined" sx={{ lineHeight: '3.0', marginBottom: '8px' }}>
           공고 등록
