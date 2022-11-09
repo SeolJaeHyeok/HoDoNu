@@ -149,7 +149,7 @@ export default function MyPageArticles() {
     return flag;
   };
 
-  // Avoid a layout jump when reaching the last page with empty userArticles.
+  // 마지막 페이지에서 비어있는 Row로 인한 Layout 깨짐 현상 방지
   const emptyRows =
     page > 0
       ? Math.max(0, (1 + page) * rowsPerPage - userArticles?.data.result.response.length)

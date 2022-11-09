@@ -5,9 +5,9 @@ import { visuallyHidden } from '@mui/utils';
 
 type Order = 'asc' | 'desc';
 
-interface EnhancedTableProps {
+interface TableHeadProps {
   selectedItems: any;
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
+  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof TableHeadData) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
   orderBy: string;
@@ -15,12 +15,12 @@ interface EnhancedTableProps {
 }
 
 interface HeadCell {
-  id: keyof Data;
+  id: keyof TableHeadData;
   label: string;
   numeric: boolean;
 }
 
-interface Data {
+interface TableHeadData {
   title: number;
   category: number;
   hits: number;
@@ -50,11 +50,12 @@ const headCells: readonly HeadCell[] = [
   },
 ];
 
-export default function CustomTableHead(props: EnhancedTableProps) {
+export default function CustomTableHead(props: TableHeadProps) {
   const { onSelectAllClick, order, orderBy, selectedItems, rowCount, onRequestSort } = props;
-  const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
-    onRequestSort(event, property);
-  };
+  const createSortHandler =
+    (property: keyof TableHeadData) => (event: React.MouseEvent<unknown>) => {
+      onRequestSort(event, property);
+    };
 
   return (
     <TableHead>
