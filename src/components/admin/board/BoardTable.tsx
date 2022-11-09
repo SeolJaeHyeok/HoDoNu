@@ -31,6 +31,14 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
     setSelectedCategory(e.target.value);
   };
 
+  const handleSingleCheck = (checked: boolean, id: number) => {
+    if (checked) {
+      setCheckItems([...checkItems, id]);
+      return;
+    }
+    setCheckItems(checkItems.filter((el: any) => el !== id));
+  };
+
   const handleClickMultipleDeleteArticle = () => {
     alert('여러개를 삭제하자!');
   };
@@ -70,6 +78,7 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
             articles={article}
             checked={checkItems.includes(article.id) ? true : false}
             currentBoard={currentBoard}
+            onClick={(e: any) => handleSingleCheck(e.target.checked, article.id)}
           />
         );
       })}

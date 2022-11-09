@@ -5,14 +5,14 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Link from 'next/link';
 
-export default function BoardTableRow({ articles, checked, currentBoard }: any) {
+export default function BoardTableRow({ articles, checked, currentBoard, onClick }: any) {
   const handleClickDeleteArticle = () => {
     alert('지우자');
   };
 
   return (
     <TableRowWrapper>
-      <Checkbox checked={checked} />
+      <Checkbox checked={checked} onClick={onClick} />
       <ColumnId>{articles.id}</ColumnId>
       <Link href={`/board/${currentBoard.slice(0, -1)}/${articles.articleId}`}>
         <ColumnTitle>{articles.title}</ColumnTitle>
