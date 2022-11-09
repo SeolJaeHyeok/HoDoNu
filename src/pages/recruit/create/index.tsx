@@ -87,7 +87,7 @@ export default function RecruitCreatePage() {
   };
 
   // Image File Parsing - [{id: 1, file: File}, {id: 2, file: File}] -> FormData [File, File, ...]
-  const parseImageFiles = (files: FileProps[]) => {
+  const parseImageFiles = (files: any) => {
     return files.map(({ file }: { file: File }) => file);
   };
 
@@ -120,7 +120,7 @@ export default function RecruitCreatePage() {
     try {
       responseImageArr = await recruitApi.postImageArray(formData);
     } catch (e: unknown) {
-      console.warn(e);
+      alert(e);
     }
 
     return responseImageArr;

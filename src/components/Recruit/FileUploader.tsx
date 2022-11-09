@@ -49,20 +49,20 @@ export default function FileUploader({ multiple, fileList, setFileList, name }: 
   };
 
   // 드래그 시작
-  const hadleDragEnter = (e: React.DragEvent<HTMLLabelElement>) => {
+  const handleDragEnter = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
     e.stopPropagation();
   };
 
   // 드래그 커서 사라짐
-  const hadleDragLeave = (e: React.DragEvent<HTMLLabelElement>) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
   };
 
   // 드래그 중
-  const hadleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
+  const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
     e.stopPropagation();
     if (e.dataTransfer.files) {
@@ -71,7 +71,7 @@ export default function FileUploader({ multiple, fileList, setFileList, name }: 
   };
 
   // 드롭
-  const hadleDragDrop = (e: React.DragEvent<HTMLLabelElement>) => {
+  const handleDragDrop = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
@@ -91,10 +91,10 @@ export default function FileUploader({ multiple, fileList, setFileList, name }: 
         htmlFor={name}
         isDrag={isDragging}
         ref={dragRef}
-        onDragEnter={hadleDragEnter}
-        onDragLeave={hadleDragLeave}
-        onDragOver={hadleDragOver}
-        onDrop={hadleDragDrop}
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+        onDragOver={handleDragOver}
+        onDrop={handleDragDrop}
       >
         <FileInput onChange={handleUploadFile} type="file" id={name} multiple={multiple} />
         <FileListContainer>
