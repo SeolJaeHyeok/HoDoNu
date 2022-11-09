@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-export default function BoardTableRow() {
+export default function BoardTableRow({ articles }: any) {
   const handleClickDeleteArticle = () => {
     alert('지우자');
   };
@@ -12,11 +12,11 @@ export default function BoardTableRow() {
   return (
     <TableRowWrapper>
       <Checkbox />
-      <ColumnId>ID</ColumnId>
-      <ColumnTitle>제목</ColumnTitle>
-      <ColumnCreate>작성일</ColumnCreate>
-      <ColumnUser>작성자</ColumnUser>
-      <ColumnHit>30</ColumnHit>
+      <ColumnId>{articles.id}</ColumnId>
+      <ColumnTitle>{articles.title}</ColumnTitle>
+      <ColumnCreate>{articles.createdAt}</ColumnCreate>
+      <ColumnUser>{articles.user.email}</ColumnUser>
+      <ColumnHit>{articles.hits}</ColumnHit>
       <Tooltip title="Delete" sx={{ width: 140 }}>
         <IconButton onClick={handleClickDeleteArticle}>
           <DeleteIcon />

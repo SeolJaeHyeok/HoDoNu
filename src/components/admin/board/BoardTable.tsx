@@ -7,7 +7,7 @@ import BoardTableRow from './BoardTableRow';
 import React, { useState } from 'react';
 import { TextField } from '@mui/material';
 
-export default function BoardTable() {
+export default function BoardTable({ articles }: any) {
   const board = [
     {
       value: 'free',
@@ -61,13 +61,9 @@ export default function BoardTable() {
       </Box>
       {/* 기능을 넣을때 뿌리는 데이터 */}
       <BoardHeader />
-      <BoardTableRow />
-      <BoardTableRow />
-      <BoardTableRow />
-      <BoardTableRow />
-      <BoardTableRow />
-      <BoardTableRow />
-      <BoardTableRow />
+      {articles?.map((article: any, idx: number) => {
+        return <BoardTableRow key={idx} articles={article} />;
+      })}
     </div>
   );
 }

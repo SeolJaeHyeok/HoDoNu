@@ -1,9 +1,7 @@
 import { instance } from '@apis/index';
 
 const boardManageApi = {
-  getFreeBoardAllData: () => instance.get(`/admin/articles/frees`),
-  getNurseBoardAllData: () => instance.get(`/admin/articles/nurses`),
-  getDoctorBoardAllData: () => instance.get(`/admin/articles/doctors`),
+  getBoardAllData: (category = 'frees') => instance.get(`/admin/articles/${category}`),
 };
 
 export default boardManageApi;
