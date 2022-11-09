@@ -1,15 +1,34 @@
-// import BoardTableRow from './BoardTableRow';
-import * as React from 'react';
 import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
-import Select from '@mui/material/Select';
 import BoardHeader from './BoardHeader';
 import BoardTableRow from './BoardTableRow';
+import React, { useState } from 'react';
+import { TextField } from '@mui/material';
 
 export default function BoardTable() {
+  const board = [
+    {
+      value: 'free',
+      label: '자유 게시판',
+    },
+    {
+      value: 'doctor',
+      label: '의사 게시판',
+    },
+    {
+      value: 'nurse',
+      label: '간호사 게시판',
+    },
+  ];
+
+  const [currentBoard, setCurrentBoard] = useState('free');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setCurrentBoard(e.target.value);
+  };
+
   const handleClickMultipleDeleteArticle = () => {
     alert('여러개를 삭제하자!');
   };
@@ -18,12 +37,19 @@ export default function BoardTable() {
     <div>
       <Box sx={{ minWidth: 120 }}>
         <FormControl sx={{ width: 200 }}>
-          <InputLabel id="demo-simple-select-label">게시판</InputLabel>
-          <Select labelId="demo-simple-select-label" id="demo-simple-select" label="Age">
-            <MenuItem value={10}>자유 게시판</MenuItem>
-            <MenuItem value={20}>의사 게시판</MenuItem>
-            <MenuItem value={30}>간호사 게시판</MenuItem>
-          </Select>
+          <TextField
+            id="outlined-select-currency"
+            select
+            label="게시판"
+            value={currentBoard}
+            onChange={handleChange}
+          >
+            {board.map(option => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
         </FormControl>
         <Button
           variant="outlined"
