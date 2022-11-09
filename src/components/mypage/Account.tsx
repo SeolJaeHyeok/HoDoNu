@@ -6,15 +6,16 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
 import authApi from '@apis/auth/auth';
 import CertificationModal from './CertificationModal';
+import { UserDetail } from '@interfaces/user/userInfo';
 
-export default function Account({ user }: { user: any }) {
+export default function Account({ user }: { user: UserDetail }) {
   const queryClient = useQueryClient();
   const [nickname, setNickname] = useState(user.nickname);
   const [isNicknameEdit, setIsNicknameEdit] = useState<boolean>(false);
 
   const updateNickname = useMutation(authApi.patchNickname, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['detailUser']);
+      queryClient.invalidateQueries(['detailUser', user.userId]);
     },
     onError: (e: Error) => {
       alert(e.message);

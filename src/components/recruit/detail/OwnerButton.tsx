@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { Box, Button } from '@mui/material';
 import { recruitApi } from '@apis/recuit';
+import { useMutation } from '@tanstack/react-query';
 
 interface Props {
   articleId: number;
@@ -8,16 +9,20 @@ interface Props {
 
 export default function OwnerButton({ articleId }: Props) {
   const router = useRouter();
+  const deleteRecruit = useMutation(['deleteRecruit'], recruitApi.deleteOne, {
+    onSuccess: () => {
+      router.push('/recruit');
+    },
+    onError: (e: Error) => {
+      alert(e.message);
+    },
+  });
   const handleMoveToEdit = () => {
     router.push('/');
   };
 
   const handleDeleteBoard = async () => {
-    try {
-      await recruitApi.deleteOne(articleId);
-    } catch (err) {
-      console.log(err);
-    }
+    deleteRecruit.mutate(articleId);
   };
 
   return (

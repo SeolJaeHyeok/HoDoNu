@@ -13,7 +13,7 @@ import { userInfoState } from '@atoms/userAtom';
 export default function MypageIndex() {
   const user = useRecoilValue(userInfoState);
 
-  const { data } = useQuery(['detailUser'], () => authApi.getOne(user?.userId!));
+  const { data } = useQuery(['detailUser', user?.userId], () => authApi.getOne(user?.userId!));
   const userInfo = data?.data.result;
 
   return (
@@ -29,27 +29,31 @@ export default function MypageIndex() {
       }}
     >
       {/* <CustomSideBar /> */}
-      <Grid item xs={10}>
-        <Grid item xs={12}>
-          {userInfo && <ProfileCard user={userInfo} />}
-        </Grid>
-      </Grid>
-      <Grid item xs={10}>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            {userInfo && <Account user={userInfo} />}
+      {userInfo && (
+        <>
+          <Grid item xs={10}>
+            <Grid item xs={12}>
+              <ProfileCard user={userInfo} />
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            {userInfo && <Job user={userInfo} />}
+          <Grid item xs={10}>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <Account user={userInfo} />
+              </Grid>
+              <Grid item xs={6}>
+                <Job user={userInfo} />
+              </Grid>
+              <Grid item xs={6}>
+                <Activity user={userInfo} />
+              </Grid>
+              <Grid item xs={6}>
+                <Security />
+              </Grid>
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            {userInfo && <Activity user={userInfo} />}
-          </Grid>
-          <Grid item xs={6}>
-            {userInfo && <Security />}
-          </Grid>
-        </Grid>
-      </Grid>
+        </>
+      )}
     </Grid>
   );
 }

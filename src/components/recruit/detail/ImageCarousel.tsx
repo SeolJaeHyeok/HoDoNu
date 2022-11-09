@@ -15,7 +15,7 @@ export default function ImageCarousel({ images }: ImageProps) {
   return (
     <Box sx={{ width: '650px', mt: 5, mb: 2 }}>
       <Carousel settings={settings}>
-        {images.length ? (
+        {images?.length ? (
           images.map(img => {
             return <CarouselImage src={img} key={img} />;
           })

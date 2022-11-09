@@ -37,10 +37,9 @@ export default function PasswordModal() {
   };
 
   const btnStyle = { boxShadow: 0, color: 'primary' };
-  const btnContent = '비밀번호 변경하기';
 
   return (
-    <CustomModal btnContent={btnContent} btnStyle={btnStyle}>
+    <CustomModal btnContent="비밀번호 변경하기" btnStyle={btnStyle}>
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <AdminPanelSettingsIcon sx={{ mr: 1 }} color="primary" />

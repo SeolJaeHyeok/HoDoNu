@@ -2,8 +2,9 @@ import { Box, Button, Divider, Typography } from '@mui/material';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import EastIcon from '@mui/icons-material/East';
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
+import { UserDetail } from '@interfaces/user/userInfo';
 
-export default function Job({ user }: { user: any }) {
+export default function Job({ user }: { user: UserDetail }) {
   //쪽지 기능 완성 후 수정 예정
   const handleRecruiterReq = () => {};
   return (

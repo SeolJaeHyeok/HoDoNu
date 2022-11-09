@@ -1,4 +1,4 @@
-import { getUserRes } from '@interfaces/user/userInfo';
+import { GetUserRes, LoginRes } from '@interfaces/user/userInfo';
 import { AxiosResponse } from 'axios';
 import { RegisterUserInfo } from 'src/interfaces/user/registerUserInfo';
 import { instance } from '../index';
@@ -17,20 +17,19 @@ const authApi = {
   register: (regisetUserData: RegisterUserInfo): Promise<AxiosResponse<any, any>> => {
     return instance.post('/users/signup', regisetUserData);
   },
-  login: ({ email, password }: LoginAPI): Promise<AxiosResponse<any, any>> =>
+  login: ({ email, password }: LoginAPI): Promise<AxiosResponse<LoginRes>> =>
     instance.post(`/users/signin`, { email, password }).then(res => res.data),
 
-  getOne: (userId: string): Promise<AxiosResponse<any, getUserRes>> =>
-    instance.get(`/users/${userId}`),
+  getOne: (userId: string): Promise<AxiosResponse<GetUserRes>> => instance.get(`/users/${userId}`),
 
   patchProfile: (file: FormData): Promise<AxiosResponse<any>> =>
     instance.patch('/users/profile-image', file).then(res => res.data),
 
   patchNickname: (nickname: string): Promise<AxiosResponse<any>> =>
-    instance.patch('/users/nickname', nickname).then(res => res.data),
+    instance.patch('/users/nickname', { nickname }).then(res => res.data),
 
   patchIntroduce: (introduce: string): Promise<AxiosResponse<any>> =>
-    instance.patch('/users/introduce', introduce).then(res => res.data),
+    instance.patch('/users/introduce', { introduce }).then(res => res.data),
 
   patchPassword: ({
     presentPassword,

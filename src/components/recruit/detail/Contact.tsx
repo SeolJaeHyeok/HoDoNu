@@ -3,11 +3,14 @@ import { Box, Typography } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
 import BadgeIcon from '@mui/icons-material/Badge';
 
-interface ContactProps {
-  user: { userId: string; email: string; imgUrl: string; nickname: string };
+interface UserProps {
+  userId: string;
+  email: string;
+  imgUrl: string;
+  nickname: string;
 }
 
-export default function Contact({ user }: ContactProps) {
+export default function Contact({ user }: { user: UserProps }) {
   const { email, imgUrl, nickname } = user;
   return (
     <Box

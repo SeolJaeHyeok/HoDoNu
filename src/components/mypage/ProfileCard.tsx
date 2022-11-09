@@ -1,12 +1,13 @@
 import { Avatar, Badge, Box, Button, Typography, alpha, TextField } from '@mui/material';
 import CustomAvatarImage from '@components/CustomAvartar';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-import { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 import authApi from '@apis/auth/auth';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { UserDetail } from '@interfaces/user/userInfo';
 
-export default function ProfileCard({ user }: { user: any }) {
-  const [introduce, setIntroduce] = useState(user.introduce);
+export default function ProfileCard({ user }: { user: UserDetail }) {
+  const [introduce, setIntroduce] = useState<string>(user.introduce);
   const [isIntroduceEdit, setIsIntroduceEdit] = useState<boolean>(false);
 
   const queryClient = useQueryClient();
@@ -14,7 +15,7 @@ export default function ProfileCard({ user }: { user: any }) {
 
   const updateProfile = useMutation(authApi.patchProfile, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['detailUser']);
+      queryClient.invalidateQueries(['detailUser', user.userId]);
     },
     onError: (e: Error) => {
       alert(e.message);
@@ -23,14 +24,14 @@ export default function ProfileCard({ user }: { user: any }) {
 
   const updateIntoduce = useMutation(authApi.patchIntroduce, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['detailUser']);
+      queryClient.invalidateQueries(['detailUser', user.userId]);
     },
     onError: (e: Error) => {
       alert(e.message);
     },
   });
 
-  const onAvatarClick = (e: any) => {
+  const onAvatarClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     if (fileInput.current) {
       fileInput.current.click();

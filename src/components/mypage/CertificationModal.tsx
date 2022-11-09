@@ -28,10 +28,9 @@ export default function CertificationModal() {
   };
 
   const btnStyle = { boxShadow: 0, color: 'primary' };
-  const btnContent = '회원인증하기';
 
   return (
-    <CustomModal btnContent={btnContent} btnStyle={btnStyle}>
+    <CustomModal btnContent="회원인증하기" btnStyle={btnStyle}>
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <AdminPanelSettingsIcon sx={{ mr: 1 }} color="primary" />

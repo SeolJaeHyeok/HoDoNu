@@ -19,7 +19,6 @@ export interface ParamProps {
 
 export interface RecruitDetailProps {
   content: RecruitContent;
-
   articleId: number;
 }
 
