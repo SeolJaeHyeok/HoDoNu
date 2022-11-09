@@ -58,6 +58,14 @@ export async function getServerSideProps() {
   const { data } = await recruitListApi.getRecruitData();
   const res = await recruitListApi.getRecruitTagData();
 
+  if (!data) {
+    return { notFound: true };
+  }
+
+  if (!res) {
+    return { notFound: true };
+  }
+
   return {
     props: {
       jobList: data.result[0],
