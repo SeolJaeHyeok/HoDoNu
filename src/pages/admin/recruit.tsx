@@ -1,3 +1,10 @@
+import EnhancedTable from '@components/admin/recruit/RecruitTable';
+import { Box } from '@mui/material';
+
 export default function AdminRecruit() {
-  return <div>Admin Recruit</div>;
+  return (
+    <Box sx={{ m: 5 }}>
+      <EnhancedTable />
+    </Box>
+  );
 }
