@@ -24,6 +24,8 @@ export default function CertificationModal() {
     if (file !== null) {
       formData.append('certification', file[0]);
       updateProfile.mutate(formData);
+    } else {
+      console.log('파일을 선택해주세요.');
     }
   };
 
