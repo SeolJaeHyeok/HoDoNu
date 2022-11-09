@@ -2146,6 +2146,11 @@ react-quill@^2.0.0:
     lodash "^4.17.4"
     quill "^1.3.7"
 
+react-quilljs@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/react-quilljs/-/react-quilljs-1.3.3.tgz#ca6e6e38c723f2bd50023e2da65977306cc17f1f"
+  integrity sha512-fC1IrlenC2rkI6LaFSQL+OnVAWJPJO1BU5bMKekHQkR/2O1lJ/DlZo46ofA/nG+YX/GZKEeqT4XS/ny/JWwwhA==
+
 react-slick@^0.29.0:
   version "0.29.0"
   resolved "https://registry.yarnpkg.com/react-slick/-/react-slick-0.29.0.tgz#0bed5ea42bf75a23d40c0259b828ed27627b51bb"
