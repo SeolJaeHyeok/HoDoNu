@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'qs';
 
 const sessionStorage = typeof window !== 'undefined' ? window.sessionStorage : undefined;
 
@@ -8,8 +9,8 @@ export const instance = axios.create({
       ? process.env.NEXT_PUBLIC_DEVELOPMENT_API_BASE_URL
       : process.env.NEXT_PUBLIC_PRODUCTION_API_BASE_URL,
   paramsSerializer: {
-    encode: function (params: any) {
-      return params.toString();
+    serialize: params => {
+      return qs.stringify(params, { arrayFormat: 'repeat' });
     },
   },
   headers: {

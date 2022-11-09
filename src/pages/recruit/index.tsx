@@ -1,31 +1,77 @@
+import recruitListApi from '@apis/recruit/list';
 import RecruitCardView from '@components/recruit/index/RecruitCardView';
 import RecruitHeader from '@components/recruit/index/RecruitHearder';
 import RecruitTags from '@components/recruit/index/RecruitTags';
 import styled from '@emotion/styled';
+import { RecruitProps } from '@interfaces/recruit/list/list';
+import { useState } from 'react';
 
-export default function Recruit() {
+export interface TagsIdState {
+  tagIds: number[];
+}
+
+export default function Recruit({ jobList, tagList }: RecruitProps) {
+  const [jobLists, setJobLists] = useState(jobList);
+  const [searchFilterTagNames, setSearchFilterTagNames] = useState<string[]>([]);
+  const [searchBarFilterInput, setSearchBarFilterInput] = useState<string>('');
+  const [tagsId, setTagsId] = useState<TagsIdState>({
+    tagIds: [],
+  });
+
   return (
     <RecruitWrapper>
       <RecruitContainer>
-        <RecruitHeader />
+        <RecruitHeader
+          tagsId={tagsId}
+          setJobLists={setJobLists}
+          searchFilterTagNames={searchFilterTagNames}
+          setSearchFilterTagNames={setSearchFilterTagNames}
+          setSearchBarFilterInput={setSearchBarFilterInput}
+          searchBarFilterInput={searchBarFilterInput}
+        />
       </RecruitContainer>
       <RecruitLine />
-      <RecruitTags />
+      <RecruitTags
+        tags={tagList}
+        setJobList={setJobLists}
+        tagsId={tagsId}
+        setTagsId={setTagsId}
+        searchFilterTagNames={searchFilterTagNames}
+        searchBarFilterInput={searchBarFilterInput}
+      />
       <RecruitContentContainer>
-        {/* 추후 기능 작업때 변경하겠습니다! */}
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
-        <RecruitCardView />
+        {jobLists?.map((job, idx: number) => (
+          <RecruitCardView
+            key={idx}
+            company={job.company}
+            title={job.title}
+            address={job.mainAddress}
+            jobId={job.jobId}
+          />
+        ))}
       </RecruitContentContainer>
     </RecruitWrapper>
   );
+}
+
+export async function getServerSideProps() {
+  const { data } = await recruitListApi.getRecruitData();
+  const res = await recruitListApi.getRecruitTagData();
+
+  if (!data) {
+    return { notFound: true };
+  }
+
+  if (!res) {
+    return { notFound: true };
+  }
+
+  return {
+    props: {
+      jobList: data.result[0],
+      tagList: res.data.result,
+    },
+  };
 }
 
 const RecruitWrapper = styled.div`

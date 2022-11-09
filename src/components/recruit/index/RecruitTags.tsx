@@ -1,21 +1,63 @@
+import recruitListApi from '@apis/recruit/list';
 import styled from '@emotion/styled';
-import { tags } from '@utils/const/recruitTags';
-import { useState } from 'react';
+import filterTagJoinUrl from '@utils/filterTagJoinUrl';
+import { JobList, TagList } from '@interfaces/recruit/list/list';
+import { TagsIdState } from '@pages/recruit';
+import { useMutation } from '@tanstack/react-query';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-export default function RecruitTags() {
-  const [isButtonColor, setIsButtonColor] = useState(Array(18).fill(false));
+interface RecruitTagsProps {
+  tags: TagList[];
+  setJobList: Dispatch<SetStateAction<JobList[]>>;
+  tagsId: TagsIdState;
+  setTagsId: Dispatch<SetStateAction<TagsIdState>>;
+  searchFilterTagNames: string[];
+  searchBarFilterInput: string;
+}
 
-  const handleChangeButtonColor = (idx: number) => {
+export default function RecruitTags({
+  tags,
+  setJobList,
+  tagsId,
+  setTagsId,
+  searchFilterTagNames,
+  searchBarFilterInput,
+}: RecruitTagsProps) {
+  const [isButtonColor, setIsButtonColor] = useState(Array(tags.length).fill(false));
+  const requestURL = filterTagJoinUrl(searchFilterTagNames, tagsId, searchBarFilterInput);
+
+  useEffect(() => {
+    requestTags.mutate(requestURL);
+  }, [tagsId]);
+
+  const requestTags = useMutation(recruitListApi.getRecruitAllData, {
+    onSuccess: data => setJobList(data.data.result[0]),
+  });
+
+  const handleChangeButtonColor = async (idx: number) => {
     isButtonColor[idx] = !isButtonColor[idx];
     setIsButtonColor([...isButtonColor]);
+
+    if (isButtonColor[idx]) {
+      tagsId.tagIds.push(idx + 1);
+      setTagsId({
+        ...tagsId,
+      });
+      return;
+    }
+
+    const filterTag = tagsId?.tagIds.filter((tagId: number) => tagId !== idx + 1);
+    setTagsId({
+      tagIds: filterTag,
+    });
   };
 
   return (
     <RecruitTagWrapper>
       <Nav>
-        {tags.map((tag, i) => (
+        {tags?.map((tag, i: number) => (
           <TagButton key={i} onClick={() => handleChangeButtonColor(i)} color={isButtonColor[i]}>
-            {tag}
+            {tag.content}
           </TagButton>
         ))}
       </Nav>
