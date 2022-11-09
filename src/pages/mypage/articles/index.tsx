@@ -37,20 +37,21 @@ export interface SelectedItemsProps {
   articleId: string;
 }
 
-interface Data {
+export interface TableHeadData {
   title: number;
   category: number;
   hits: number;
   createdAt: string;
+  management: string;
 }
 
-type Order = 'asc' | 'desc';
+export type Order = 'asc' | 'desc';
 
 export default function MyPageArticles() {
   const router = useRouter();
 
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof Data>('createdAt');
+  const [orderBy, setOrderBy] = useState<keyof TableHeadData>('createdAt');
   const [selected, setSelected] = useState<SelectedItemsProps[]>([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
@@ -62,7 +63,7 @@ export default function MyPageArticles() {
   });
 
   // 정렬 기준 함수
-  const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
+  const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof TableHeadData) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
@@ -98,7 +99,7 @@ export default function MyPageArticles() {
     const selectedIndex = selected.findIndex(
       (el: SelectedItemsProps) => el.articleId === articleId && el.category === category
     );
-    let newSelected: SelectedItemsProps[] = [];
+    let newSelected: any[] = [];
 
     if (selectedIndex === -1) {
       // 처음 추가되는 경우
@@ -220,7 +221,7 @@ export default function MyPageArticles() {
                             <TableCell align="right">{row.title}</TableCell>
                             <TableCell align="right">{row.hits}</TableCell>
                             <TableCell align="right">{CATEGORY_TABLE[row.category]}</TableCell>
-                            <Container sx={{ display: 'flex' }}>
+                            <TableCell align="center">
                               <Button
                                 onClick={() => handleMoveToArticle(row.category, row.articleId)}
                               >
@@ -231,7 +232,7 @@ export default function MyPageArticles() {
                               >
                                 <EditIcon />
                               </Button>
-                            </Container>
+                            </TableCell>
                           </TableRow>
                         </>
                       );

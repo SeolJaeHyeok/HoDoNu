@@ -2,8 +2,7 @@
 import React from 'react';
 import { Box, Checkbox, TableCell, TableHead, TableRow, TableSortLabel } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-
-type Order = 'asc' | 'desc';
+import { Order, TableHeadData } from '@pages/mypage/articles';
 
 interface TableHeadProps {
   selectedItems: any;
@@ -17,36 +16,34 @@ interface TableHeadProps {
 interface HeadCell {
   id: keyof TableHeadData;
   label: string;
-  numeric: boolean;
-}
-
-interface TableHeadData {
-  title: number;
-  category: number;
-  hits: number;
-  createdAt: Date;
+  isButton: boolean;
 }
 
 const headCells: readonly HeadCell[] = [
   {
     id: 'createdAt',
-    numeric: false,
+    isButton: false,
     label: '생성 날짜',
   },
   {
     id: 'title',
-    numeric: false,
+    isButton: false,
     label: '제목',
   },
   {
     id: 'hits',
-    numeric: false,
+    isButton: false,
     label: '조회수',
   },
   {
     id: 'category',
-    numeric: false,
+    isButton: false,
     label: '게시판',
+  },
+  {
+    id: 'management',
+    isButton: true,
+    label: '관리',
   },
 ];
 
@@ -74,7 +71,7 @@ export default function CustomTableHead(props: TableHeadProps) {
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'left' : 'right'}
+            align={headCell.isButton ? 'center' : 'right'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
