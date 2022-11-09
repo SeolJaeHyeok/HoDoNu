@@ -1,6 +1,6 @@
 import { searchFilterTagsObj } from '@utils/const/searchFilterTags';
 
-const useFilterTagJoinUrl = (searchTagNames: any, searchTagIds: any, searchInput: any) => {
+const filterTagJoinUrl = (searchTagNames: any, searchTagIds: any, searchInput: any) => {
   const searchRequestTagName = searchTagNames
     .map((tag: any) => searchFilterTagsObj[tag] + `=${searchInput}`)
     .join('&');
@@ -11,4 +11,4 @@ const useFilterTagJoinUrl = (searchTagNames: any, searchTagIds: any, searchInput
   return searchRequestURL;
 };
 
-export default useFilterTagJoinUrl;
+export default filterTagJoinUrl;

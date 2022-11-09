@@ -1,6 +1,6 @@
 import recruitListApi from '@apis/recruit/list';
 import styled from '@emotion/styled';
-import useFilterTagJoinUrl from '@hooks/useFilterTagJoinUrl';
+import filterTagJoinUrl from '@utils/filterTagJoinUrl';
 import { JobList, TagList } from '@interfaces/recruit/list/list';
 import { TagsIdState } from '@pages/recruit';
 import { useMutation } from '@tanstack/react-query';
@@ -24,7 +24,7 @@ export default function RecruitTags({
   searchBarFilterInput,
 }: RecruitTagsProps) {
   const [isButtonColor, setIsButtonColor] = useState(Array(tags.length).fill(false));
-  const requestURL = useFilterTagJoinUrl(searchFilterTagNames, tagsId, searchBarFilterInput);
+  const requestURL = filterTagJoinUrl(searchFilterTagNames, tagsId, searchBarFilterInput);
 
   useEffect(() => {
     requestTags.mutate(requestURL);

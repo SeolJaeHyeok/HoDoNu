@@ -10,7 +10,7 @@ import styled from '@emotion/styled';
 import { useMutation } from '@tanstack/react-query';
 import { RecruitHeaderProps } from './RecruitHearder';
 import { debounce } from 'lodash';
-import useFilterTagJoinUrl from '@hooks/useFilterTagJoinUrl';
+import filterTagJoinUrl from '@utils/filterTagJoinUrl';
 import { searchFilterTags } from '@utils/const/searchFilterTags';
 import { ChangeEvent } from 'react';
 
@@ -52,7 +52,7 @@ export default function RecruitHeaderSelect({
     onSuccess: data => setJobLists(data.data.result[0]),
   });
 
-  const requestURL = useFilterTagJoinUrl(searchFilterTagNames, tagsId, searchBarFilterInput);
+  const requestURL = filterTagJoinUrl(searchFilterTagNames, tagsId, searchBarFilterInput);
 
   const handleClickSearchRequest = () => {
     requestTagData.mutate(requestURL);
