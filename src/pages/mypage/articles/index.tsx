@@ -32,7 +32,7 @@ const CATEGORY_TABLE: {
   Doctor: '의사',
 };
 
-interface SelectedItemsProps {
+export interface SelectedItemsProps {
   category: string;
   articleId: string;
 }
@@ -59,7 +59,6 @@ export default function MyPageArticles() {
   const { data: userArticles } = useQuery(['mypage', 'articles'], () => userApi.getUserArticles(), {
     cacheTime: Infinity,
     staleTime: Infinity,
-    retryDelay: 3000,
   });
 
   // 정렬 기준 함수
@@ -93,7 +92,7 @@ export default function MyPageArticles() {
     const target = event.target as HTMLTableElement;
 
     // 아이콘을 눌렀을 경우 함수 종료
-    if (target.nodeName !== 'TD') return;
+    if (target.nodeName !== 'TD' && target.nodeName !== 'INPUT') return;
 
     // 현재 선택한 아이템의 index
     const selectedIndex = selected.findIndex(

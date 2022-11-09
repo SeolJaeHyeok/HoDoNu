@@ -1,5 +1,8 @@
 import { alpha, IconButton, Toolbar, Tooltip, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import userApi from '@apis/user';
+import { SelectedItemsProps } from '@pages/mypage/articles';
+import { useRouter } from 'next/router';
 
 interface TableToolbarProps {
   selectedItems: any;
@@ -7,9 +10,26 @@ interface TableToolbarProps {
 
 export default function TableToolbar(props: TableToolbarProps) {
   const { selectedItems } = props;
+  const router = useRouter();
 
   const handleItemDelete = () => {
-    console.log(selectedItems);
+    if (confirm('정말 삭제하시겠습니까?')) {
+      Promise.all(
+        selectedItems.map((v: SelectedItemsProps) =>
+          userApi.deleteUserArticle(v.category, v.articleId)
+        )
+      )
+        .then(result => {
+          alert('게시글이 성공적으로 삭제되었습니다.');
+          console.log(result);
+        })
+        .catch((e: Error) => {
+          alert(e.message);
+        })
+        .finally(() => {
+          router.reload();
+        });
+    }
   };
 
   return (
