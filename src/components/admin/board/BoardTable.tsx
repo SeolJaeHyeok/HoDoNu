@@ -24,6 +24,7 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
   ];
 
   const [currentBoard, setCurrentBoard] = useState('frees');
+  const [checkItems, setCheckItems] = useState<any>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setCurrentBoard(e.target.value);
@@ -60,10 +61,16 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
           선택 삭제
         </Button>
       </Box>
-      {/* 기능을 넣을때 뿌리는 데이터 */}
-      <BoardHeader />
+
+      <BoardHeader articles={articles} setCheckItems={setCheckItems} checkItems={checkItems} />
       {articles?.map((article: any, idx: number) => {
-        return <BoardTableRow key={idx} articles={article} />;
+        return (
+          <BoardTableRow
+            key={idx}
+            articles={article}
+            checked={checkItems.includes(article.id) ? true : false}
+          />
+        );
       })}
     </div>
   );

@@ -1,14 +1,25 @@
 import styled from '@emotion/styled';
 import Checkbox from '@mui/material/Checkbox';
 
-export default function BoardHeader() {
-  const handleClickCheckMultiple = () => {
-    alert('전부 선택하자');
+export default function BoardHeader({ articles, setCheckItems, checkItems }: any) {
+  console.log(articles);
+
+  const handleClickCheckMultiple = (e: any) => {
+    if (e.target.checked) {
+      const idArray: any = [];
+      articles.map((el: any) => idArray.push(el.id));
+      setCheckItems(idArray);
+      return;
+    }
+    setCheckItems([]);
   };
 
   return (
     <HeaderWrapper>
-      <Checkbox onClick={handleClickCheckMultiple} />
+      <Checkbox
+        onClick={handleClickCheckMultiple}
+        checked={checkItems.length === articles?.length ? true : false}
+      />
       <HeaderId>ID</HeaderId>
       <HeaderTitle>제목</HeaderTitle>
       <HeaderCreate>작성일</HeaderCreate>
