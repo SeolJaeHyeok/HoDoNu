@@ -8,29 +8,21 @@ import React, { useState } from 'react';
 import { TextField } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import boardManageApi from '@apis/admin/board/boardManage';
+import { board, filter } from '@utils/const/adminBoardSelectFilter';
+import styled from '@emotion/styled';
 
 export default function BoardTable({ articles, setSelectedCategory }: any) {
-  const board = [
-    {
-      value: 'frees',
-      label: '자유 게시판',
-    },
-    {
-      value: 'doctors',
-      label: '의사 게시판',
-    },
-    {
-      value: 'nurses',
-      label: '간호사 게시판',
-    },
-  ];
-
   const [currentBoard, setCurrentBoard] = useState('frees');
+  const [currentFilter, setCurrentFilter] = useState('title');
   const [checkItems, setCheckItems] = useState<number[]>([]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleBoardChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setCurrentBoard(e.target.value);
     setSelectedCategory(e.target.value);
+  };
+
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setCurrentFilter(e.target.value);
   };
 
   const handleSingleCheck = (checked: boolean, id: number) => {
@@ -50,14 +42,14 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
 
   return (
     <div>
-      <Box sx={{ minWidth: 120 }}>
+      <Box sx={{ minWidth: 120, display: 'flex' }}>
         <FormControl sx={{ width: 200 }}>
           <TextField
-            id="outlined-select-currency"
+            id="outlined-select-currencys"
             select
             label="게시판"
             value={currentBoard}
-            onChange={handleChange}
+            onChange={handleBoardChange}
           >
             {board.map(option => (
               <MenuItem key={option.value} value={option.value}>
@@ -66,10 +58,31 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
             ))}
           </TextField>
         </FormControl>
-        {/* 여기에 필터랑 셀릭트 박스 넣으면 될듯 */}
+
+        <FormControl sx={{ width: 200 }}>
+          <TextField
+            id="outlined-select-currency"
+            select
+            label="필터"
+            value={currentFilter}
+            onChange={handleFilterChange}
+          >
+            {filter.map(option => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+        </FormControl>
+
+        <SearchBarWrapper>
+          <SearchInput placeholder="검색어를 입력해주세요" />
+          <SearchButton />
+        </SearchBarWrapper>
+
         <Button
           variant="outlined"
-          sx={{ float: 'right', height: '56px' }}
+          sx={{ marginLeft: 'auto', height: '56px' }}
           onClick={handleClickMultipleDeleteArticle}
         >
           선택 삭제
@@ -89,3 +102,33 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
     </div>
   );
 }
+
+const SearchBarWrapper = styled.div`
+  position: relative;
+  display: flex;
+  width: 400px;
+  height: 56px;
+  border: 1px solid #a3a3a3;
+  border-radius: 6px;
+  margin-left: 20px;
+  margin: auto 0;
+`;
+const SearchInput = styled.input`
+  border: none;
+  width: 80%;
+  outline: none;
+  font-size: 16px;
+  padding-left: 10px;
+  border-radius: 6px;
+`;
+const SearchButton = styled.button`
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  // 호진TODO: 아이콘 색상을 바꾸던가 다른 아이콘을 써야할 것 같음!
+  background: url('/assets/images/searchIcon.svg');
+  top: 13px;
+  right: 15px;
+  border: none;
+  cursor: pointer;
+`;
