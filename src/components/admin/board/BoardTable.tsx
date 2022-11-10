@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
-import BoardHeader from './BoardHeader';
+import BoardTableHeader from './BoardTableHeader';
 import BoardTableRow from './BoardTableRow';
 import React, { useState } from 'react';
 import { TextField } from '@mui/material';
@@ -66,6 +66,7 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
             ))}
           </TextField>
         </FormControl>
+        {/* 여기에 필터랑 셀릭트 박스 넣으면 될듯 */}
         <Button
           variant="outlined"
           sx={{ float: 'right', height: '56px' }}
@@ -75,7 +76,7 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
         </Button>
       </Box>
 
-      <BoardHeader articles={articles} setCheckItems={setCheckItems} checkItems={checkItems} />
+      <BoardTableHeader articles={articles} setCheckItems={setCheckItems} checkItems={checkItems} />
       {articles?.map((article: any, idx: number) => (
         <BoardTableRow
           key={idx}
