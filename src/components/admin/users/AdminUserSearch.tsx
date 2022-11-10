@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Container } from '@mui/system';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 interface AdminUserSearchProps {
   searchQuery: string;
@@ -11,7 +11,7 @@ interface AdminUserSearchProps {
   setSearchQueryKey: (value: string) => void;
 }
 
-export default function UserSearch({
+export default function AdminUserSearch({
   searchQuery,
   searchQueryKey,
   setSearchQuery,
@@ -22,9 +22,12 @@ export default function UserSearch({
   };
 
   // TODO: Debounce 적용
-  const handleChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  };
+  const handleChangeSearchInput = useMemo(
+    () => (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchQuery(e.target.value);
+    },
+    [searchQuery]
+  );
 
   // TODO: 검색 결과 보여주기
   const handleSubmitSearchInput = (e: any) => {

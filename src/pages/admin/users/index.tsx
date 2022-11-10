@@ -1,13 +1,14 @@
-// import MultipleSelectCheckmarks from '@components/admin/users/MultipleSelectCheckmarks';
-import UserHeader from '@components/admin/users/UserHeader';
-import UserSearch from '@components/admin/users/UserSearch';
-import UserTable from '@components/admin/users/UserTable';
-
 import React, { useState } from 'react';
+
+import UserSearch from '@components/admin/users/AdminUserSearch';
+import UserTable from '@components/admin/users/AdminUserTable';
+import { useQuery } from '@tanstack/react-query';
+import adminApi from '@apis/admin';
 
 export default function AdminUser() {
   const [searchQueryKey, setSearchQueryKey] = useState('name');
   const [searchQuery, setSearchQuery] = useState('');
+  const { data: usersData } = useQuery(['admin', 'users'], () => adminApi.getAllUsers());
 
   return (
     <div>
@@ -17,9 +18,7 @@ export default function AdminUser() {
         setSearchQuery={setSearchQuery}
         setSearchQueryKey={setSearchQueryKey}
       />
-      <UserHeader />
-      {/* <MultipleSelectCheckmarks /> */}
-      <UserTable />
+      <UserTable users={usersData?.data.result.response} />
     </div>
   );
 }

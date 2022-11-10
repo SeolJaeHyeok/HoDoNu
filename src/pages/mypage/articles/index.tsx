@@ -23,14 +23,7 @@ import { useQuery } from '@tanstack/react-query';
 import userApi from '@apis/user';
 import { UserArticlesProps } from '@interfaces/user/userInfo';
 import { useRouter } from 'next/router';
-
-const CATEGORY_TABLE: {
-  [index: string]: string;
-} = {
-  Free: '자유',
-  Nurse: '간호사',
-  Doctor: '의사',
-};
+import { CATEGORY_TABLE } from '@utils/const/category';
 
 export interface SelectedItemsProps {
   category: string;

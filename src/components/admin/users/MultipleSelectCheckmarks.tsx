@@ -34,8 +34,8 @@ export default function MultipleSelectCheckmarks() {
   };
 
   return (
-    <span>
-      <FormControl sx={{ m: 1, width: 200 }}>
+    <span style={{ height: '30px' }}>
+      <FormControl sx={{ m: 1, width: 150 }}>
         <InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
