@@ -2,7 +2,8 @@ import styled from '@emotion/styled';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Container } from '@mui/system';
-import React, { useMemo } from 'react';
+import React from 'react';
+import { debounce } from 'lodash';
 
 interface AdminUserSearchProps {
   searchQuery: string;
@@ -21,18 +22,17 @@ export default function AdminUserSearch({
     setSearchQueryKey(event.target.value as string);
   };
 
-  // TODO: Debounce 적용
-  const handleChangeSearchInput = useMemo(
-    () => (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchQuery(e.target.value);
-    },
-    [searchQuery]
-  );
+  const debounceSearchQuery = debounce(value => {
+    setSearchQuery(value);
+  }, 200);
+
+  const handleChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    debounceSearchQuery(e.target.value);
+  };
 
   // TODO: 검색 결과 보여주기
   const handleSubmitSearchInput = (e: any) => {
     e.preventDefault();
-    console.log(searchQueryKey, searchQuery);
     setSearchQuery('');
   };
   return (
@@ -56,16 +56,12 @@ export default function AdminUserSearch({
           }}
         >
           <MenuItem value={'name'}>이름</MenuItem>
-          <MenuItem value={'job'}>직업</MenuItem>
-          <MenuItem value={'createdAt'}>시간</MenuItem>
+          <MenuItem value={'jobCategory'}>직업</MenuItem>
+          <MenuItem value={'startDate'}>시간</MenuItem>
         </Select>
       </FormControl>
       <SearchBarForm onSubmit={handleSubmitSearchInput}>
-        <SearchInput
-          value={searchQuery || ''}
-          onChange={handleChangeSearchInput}
-          placeholder="검색어를 입력해주세요"
-        />
+        <SearchInput onChange={handleChangeSearchInput} placeholder="검색어를 입력해주세요" />
         <SearchIcon
           onClick={handleSubmitSearchInput}
           sx={{ position: 'absolute', right: '0', top: '20%', cursor: 'pointer' }}

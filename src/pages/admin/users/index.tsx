@@ -8,8 +8,25 @@ import adminApi from '@apis/admin';
 export default function AdminUser() {
   const [searchQueryKey, setSearchQueryKey] = useState('name');
   const [searchQuery, setSearchQuery] = useState('');
-  const { data: usersData } = useQuery(['admin', 'users'], () => adminApi.getAllUsers());
+  const { data: usersData } = useQuery(['admin', 'users', searchQueryKey, searchQuery], () => {
+    if (searchQueryKey === 'name') {
+      return adminApi.getAllUsers({ name: searchQuery });
+    }
 
+    if (searchQueryKey === 'jobCategory') {
+      return adminApi.getAllUsers({ jobCategory: searchQuery });
+    }
+
+    if (searchQueryKey === 'startDate') {
+      return adminApi.getAllUsers({ startDate: searchQuery });
+    }
+
+    if (searchQueryKey === '') {
+      return adminApi.getAllUsers();
+    }
+  });
+
+  console.log(usersData);
   return (
     <div>
       <UserSearch
