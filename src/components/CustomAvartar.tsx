@@ -6,7 +6,6 @@ interface AvatarProps {
   src?: string;
   width?: number;
   height?: number;
-  // eslint-disable-next-line no-unused-vars
   handleClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
