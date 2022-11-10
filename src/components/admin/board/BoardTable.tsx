@@ -71,17 +71,15 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
       </Box>
 
       <BoardHeader articles={articles} setCheckItems={setCheckItems} checkItems={checkItems} />
-      {articles?.map((article: any, idx: number) => {
-        return (
-          <BoardTableRow
-            key={idx}
-            articles={article}
-            checked={checkItems.includes(article.id) ? true : false}
-            currentBoard={currentBoard}
-            onClick={(e: any) => handleSingleCheck(e.target.checked, article.id)}
-          />
-        );
-      })}
+      {articles?.map((article: any, idx: number) => (
+        <BoardTableRow
+          key={idx}
+          articles={article}
+          checked={checkItems.includes(article.id) ? true : false}
+          currentBoard={currentBoard}
+          onClick={(e: any) => handleSingleCheck(e.target.checked, article.id)}
+        />
+      ))}
     </div>
   );
 }

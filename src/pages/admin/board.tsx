@@ -7,6 +7,7 @@ import { useState } from 'react';
 export default function AdminBoard() {
   const [boardData, setBoardData] = useState();
   const [selectedCategory, setSelectedCategory] = useState('frees');
+
   useQuery(['board', selectedCategory], () => boardManageApi.getBoardAllData(selectedCategory), {
     onSuccess: data => setBoardData(data.data.result.articles),
   });

@@ -4,10 +4,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Link from 'next/link';
+import { useMutation } from '@tanstack/react-query';
+import boardManageApi from '@apis/admin/board/boardManage';
 
 export default function BoardTableRow({ articles, checked, currentBoard, onClick }: any) {
+  const deleteArticleAdmin = useMutation(boardManageApi.deleteBoardData);
+
   const handleClickDeleteArticle = () => {
-    alert('지우자');
+    deleteArticleAdmin.mutate({ category: currentBoard, articleId: articles.articleId });
   };
 
   return (
