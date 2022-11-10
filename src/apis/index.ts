@@ -20,7 +20,6 @@ export const instance = axios.create({
 
 instance.interceptors.request.use((config: any) => {
   config.headers.Authorization = `Bearer ${sessionStorage?.getItem('token')}`;
-  console.log(config);
 
   if (config.url === '/imgUpload/array' || config.url === '/imgUpload/single') {
     config.headers['Content-Type'] = 'multipart/form-data';

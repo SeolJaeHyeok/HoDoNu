@@ -19,6 +19,8 @@ const boardManageApi = {
         articleIds,
       },
     }),
+  getBoardFilterData: ({ category, currentFilter, adminFilterInput }: any) =>
+    instance.get(`/admin/articles/${category}?${currentFilter}=${adminFilterInput}`),
 };
 
 export default boardManageApi;

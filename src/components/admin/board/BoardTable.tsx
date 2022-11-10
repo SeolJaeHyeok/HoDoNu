@@ -6,15 +6,22 @@ import BoardTableHeader from './BoardTableHeader';
 import BoardTableRow from './BoardTableRow';
 import React, { useState } from 'react';
 import { TextField } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import boardManageApi from '@apis/admin/board/boardManage';
 import { board, filter } from '@utils/const/adminBoardSelectFilter';
-import styled from '@emotion/styled';
+import {
+  SearchBarWrapper,
+  SearchButton,
+  SearchInput,
+} from '@components/recruit/index/RecruitHeaderSelect';
 
 export default function BoardTable({ articles, setSelectedCategory }: any) {
   const [currentBoard, setCurrentBoard] = useState('frees');
   const [currentFilter, setCurrentFilter] = useState('title');
+  const [adminFilterInput, setAdminFilterInput] = useState('');
+
   const [checkItems, setCheckItems] = useState<number[]>([]);
+  const queryClient = useQueryClient();
 
   const handleBoardChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setCurrentBoard(e.target.value);
@@ -25,6 +32,14 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
     setCurrentFilter(e.target.value);
   };
 
+  const handleChangeFilterInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAdminFilterInput(e.target.value);
+  };
+
+  const handleClickFilterInput = () => {
+    getBoardFilter.mutate({ category: currentBoard, currentFilter, adminFilterInput });
+  };
+
   const handleSingleCheck = (checked: boolean, id: number) => {
     if (checked) {
       setCheckItems([...checkItems, id]);
@@ -32,6 +47,14 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
     }
     setCheckItems(checkItems.filter((el: any) => el !== id));
   };
+
+  const getBoardFilter = useMutation(boardManageApi.getBoardFilterData, {
+    onSuccess: data => {
+      console.log(data);
+
+      return queryClient.invalidateQueries(['board', currentBoard]);
+    },
+  });
 
   const deleteMultipleArticleAdmin = useMutation(boardManageApi.deleteMutipleBoardData);
 
@@ -76,8 +99,12 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
         </FormControl>
 
         <SearchBarWrapper>
-          <SearchInput placeholder="검색어를 입력해주세요" />
-          <SearchButton />
+          <SearchInput
+            value={adminFilterInput}
+            onChange={handleChangeFilterInput}
+            placeholder="검색어를 입력해주세요"
+          />
+          <SearchButton onClick={handleClickFilterInput} />
         </SearchBarWrapper>
 
         <Button
@@ -102,33 +129,3 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
     </div>
   );
 }
-
-const SearchBarWrapper = styled.div`
-  position: relative;
-  display: flex;
-  width: 400px;
-  height: 56px;
-  border: 1px solid #a3a3a3;
-  border-radius: 6px;
-  margin-left: 20px;
-  margin: auto 0;
-`;
-const SearchInput = styled.input`
-  border: none;
-  width: 80%;
-  outline: none;
-  font-size: 16px;
-  padding-left: 10px;
-  border-radius: 6px;
-`;
-const SearchButton = styled.button`
-  position: absolute;
-  width: 25px;
-  height: 25px;
-  // 호진TODO: 아이콘 색상을 바꾸던가 다른 아이콘을 써야할 것 같음!
-  background: url('/assets/images/searchIcon.svg');
-  top: 13px;
-  right: 15px;
-  border: none;
-  cursor: pointer;
-`;

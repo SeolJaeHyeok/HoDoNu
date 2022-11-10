@@ -95,7 +95,7 @@ export default function RecruitHeaderSelect({
 const HeaderSearchBarWrapper = styled.div`
   display: flex;
 `;
-const SearchBarWrapper = styled.div`
+export const SearchBarWrapper = styled.div`
   position: relative;
   display: flex;
   width: 400px;
@@ -105,7 +105,7 @@ const SearchBarWrapper = styled.div`
   margin-left: 20px;
   margin: auto 0;
 `;
-const SearchInput = styled.input`
+export const SearchInput = styled.input`
   border: none;
   width: 80%;
   outline: none;
@@ -113,7 +113,7 @@ const SearchInput = styled.input`
   padding-left: 10px;
   border-radius: 6px;
 `;
-const SearchButton = styled.button`
+export const SearchButton = styled.button`
   position: absolute;
   width: 25px;
   height: 25px;
