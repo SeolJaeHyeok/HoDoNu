@@ -1,10 +1,10 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ArticleForm } from '@interfaces/article';
+import { useMutation } from '@tanstack/react-query';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { boardValidationSchema } from '@utils/validationSchema';
 import { Box, Button, Stack, TextField } from '@mui/material';
 import ArticleFormEditor from '@components/ArticleFormEditor';
-import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import boardApi from '@apis/board';
 import React from 'react';

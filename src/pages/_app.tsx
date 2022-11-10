@@ -9,7 +9,7 @@ import { RecoilRoot } from 'recoil';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
-
+  QueryClientProvider;
   return (
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
