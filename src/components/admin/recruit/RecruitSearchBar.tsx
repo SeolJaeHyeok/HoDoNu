@@ -1,4 +1,4 @@
-import { IconButton, Paper, TextField, MenuItem } from '@mui/material';
+import { IconButton, TextField, MenuItem, Box, InputAdornment, OutlinedInput } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import React, { useState } from 'react';
 
@@ -25,7 +25,7 @@ export default function RecruitSearchBar(props: RecruitSearchBarProps) {
     e.preventDefault();
   };
   return (
-    <Paper component="form" sx={{ my: 2, p: 1, display: 'flex', alignItems: 'center', width: 400 }}>
+    <Box component="form" sx={{ my: 2, display: 'flex', alignItems: 'center', width: 400 }}>
       <form onSubmit={handleSearchSubmit}>
         <TextField select size="small" value={filter} onChange={handleFilterChange}>
           {filters.map(filter => (
@@ -34,16 +34,27 @@ export default function RecruitSearchBar(props: RecruitSearchBarProps) {
             </MenuItem>
           ))}
         </TextField>
-        <TextField
+        <OutlinedInput
           sx={{ ml: 1, flex: 1 }}
           placeholder="검색어를 입력하세요"
           size="small"
           onChange={handleSearchChange}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                // onClick={}
+                // onMouseDown={}
+                edge="end"
+              >
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
+          }
         />
-        <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-          <SearchIcon />
-        </IconButton>
+
+        <IconButton type="button" sx={{ p: '10px' }} aria-label="search"></IconButton>
       </form>
-    </Paper>
+    </Box>
   );
 }
