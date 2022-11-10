@@ -40,7 +40,7 @@ export default function CustomDrawer() {
     ) {
       return setTargetMenus(adminSideBarMenus);
     }
-  }, [router.pathname]);
+  }, [router.asPath]);
 
   return (
     <div
