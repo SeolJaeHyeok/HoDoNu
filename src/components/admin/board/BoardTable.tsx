@@ -75,9 +75,9 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
         <BoardTableRow
           key={idx}
           articles={article}
-          checked={checkItems.includes(article.id) ? true : false}
+          checked={checkItems.includes(article.articleId) ? true : false}
           currentBoard={currentBoard}
-          onClick={(e: any) => handleSingleCheck(e.target.checked, article.id)}
+          onClick={(e: any) => handleSingleCheck(e.target.checked, article.articleId)}
         />
       ))}
     </div>

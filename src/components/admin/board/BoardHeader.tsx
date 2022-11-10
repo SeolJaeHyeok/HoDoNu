@@ -5,7 +5,7 @@ export default function BoardHeader({ articles, setCheckItems, checkItems }: any
   const handleClickMultipleCheck = (e: any) => {
     if (e.target.checked) {
       const idArray: any = [];
-      articles.map((el: any) => idArray.push(el.id));
+      articles.map((el: any) => idArray.push(el.articleId));
       setCheckItems(idArray);
       return;
     }
