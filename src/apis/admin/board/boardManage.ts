@@ -1,5 +1,4 @@
 import { instance } from '@apis/index';
-
 interface DeleteSingleBoard {
   category: string;
   articleId: string;
@@ -7,7 +6,7 @@ interface DeleteSingleBoard {
 
 interface DeleteMultipleBoard {
   category: string;
-  articleIds: any;
+  articleIds: number[];
 }
 
 const boardManageApi = {
@@ -15,7 +14,11 @@ const boardManageApi = {
   deleteBoardData: ({ category, articleId }: DeleteSingleBoard) =>
     instance.delete(`admin/articles/${category}/${articleId}`),
   deleteMutipleBoardData: ({ category, articleIds }: DeleteMultipleBoard) =>
-    instance.delete(`/admin/articles/${category}`, articleIds),
+    instance.delete(`/admin/articles/${category}`, {
+      data: {
+        articleIds,
+      },
+    }),
 };
 
 export default boardManageApi;

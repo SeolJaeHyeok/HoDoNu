@@ -26,7 +26,7 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
   ];
 
   const [currentBoard, setCurrentBoard] = useState('frees');
-  const [checkItems, setCheckItems] = useState<any>([]);
+  const [checkItems, setCheckItems] = useState<number[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setCurrentBoard(e.target.value);
@@ -45,7 +45,6 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
 
   const handleClickMultipleDeleteArticle = () => {
     alert('여러개를 삭제하자!');
-    console.log(checkItems);
     deleteMultipleArticleAdmin.mutate({ category: currentBoard, articleIds: checkItems });
   };
 
