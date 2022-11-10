@@ -1,3 +1,4 @@
+import { TableData } from '@interfaces/admin/recruit';
 import { TableHead, TableCell, Checkbox, TableRow, Box } from '@mui/material';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
@@ -5,18 +6,10 @@ import React from 'react';
 
 type Order = 'asc' | 'desc';
 
-interface Data {
-  calories: number;
-  carbs: number;
-  fat: number;
-  name: string;
-  protein: number;
-}
-
 interface EnhancedTableProps {
   numSelected: number;
   // eslint-disable-next-line no-unused-vars
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
+  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof TableData) => void;
   // eslint-disable-next-line no-unused-vars
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
@@ -26,47 +19,59 @@ interface EnhancedTableProps {
 
 interface HeadCell {
   disablePadding: boolean;
-  id: keyof Data;
+  id: keyof TableData;
   label: string;
   numeric: boolean;
 }
 
 const headCells: readonly HeadCell[] = [
   {
-    id: 'name',
+    id: 'jobId',
     numeric: false,
     disablePadding: true,
-    label: 'Dessert (100g serving)',
+    label: '게시글 ID',
   },
   {
-    id: 'calories',
+    id: 'email',
     numeric: true,
     disablePadding: false,
-    label: 'Calories',
+    label: '작성자',
   },
   {
-    id: 'fat',
+    id: 'createdAt',
     numeric: true,
     disablePadding: false,
-    label: 'Fat (g)',
+    label: '작성일',
   },
   {
-    id: 'carbs',
+    id: 'title',
     numeric: true,
     disablePadding: false,
-    label: 'Carbs (g)',
+    label: '게시글 제목',
   },
   {
-    id: 'protein',
+    id: 'hits',
     numeric: true,
     disablePadding: false,
-    label: 'Protein (g)',
+    label: '조회수',
+  },
+  {
+    id: 'company',
+    numeric: true,
+    disablePadding: false,
+    label: '회사명',
+  },
+  {
+    id: 'isActive',
+    numeric: true,
+    disablePadding: false,
+    label: '게시글 상태',
   },
 ];
 
 export default function RecruitTableHead(props: EnhancedTableProps) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
-  const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
+  const createSortHandler = (property: keyof TableData) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property);
   };
 
@@ -87,9 +92,10 @@ export default function RecruitTableHead(props: EnhancedTableProps) {
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
+            align="center"
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
+            sx={{ pl: 4 }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
