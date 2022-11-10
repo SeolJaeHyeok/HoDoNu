@@ -4,7 +4,7 @@ import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import BoardTableHeader from './BoardTableHeader';
 import BoardTableRow from './BoardTableRow';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { TextField } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import boardManageApi from '@apis/admin/board/boardManage';
@@ -14,6 +14,7 @@ import {
   SearchButton,
   SearchInput,
 } from '@components/recruit/index/RecruitHeaderSelect';
+import { debounce } from 'lodash';
 
 export default function BoardTable({ articles, setSelectedCategory, setBoardData }: any) {
   const [currentBoard, setCurrentBoard] = useState('frees');
@@ -32,8 +33,15 @@ export default function BoardTable({ articles, setSelectedCategory, setBoardData
     setCurrentFilter(e.target.value);
   };
 
+  const debounceFunc = useCallback(
+    debounce(value => {
+      setAdminFilterInput(value);
+    }, 200),
+    []
+  );
+
   const handleChangeFilterInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAdminFilterInput(e.target.value);
+    debounceFunc(e.target.value);
   };
 
   const handleClickFilterInput = () => {
@@ -95,11 +103,7 @@ export default function BoardTable({ articles, setSelectedCategory, setBoardData
         </FormControl>
 
         <SearchBarWrapper>
-          <SearchInput
-            value={adminFilterInput}
-            onChange={handleChangeFilterInput}
-            placeholder="검색어를 입력해주세요"
-          />
+          <SearchInput onChange={handleChangeFilterInput} placeholder="검색어를 입력해주세요" />
           <SearchButton onClick={handleClickFilterInput} />
         </SearchBarWrapper>
 
