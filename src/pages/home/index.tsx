@@ -1,5 +1,5 @@
 import MainBoardList from '@components/Main/MainBoardList';
-import Carousel from '@components/Main/MainCarousel';
+import Carousel from '@components/MainCarousel';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import boardApi from 'src/apis/board';
