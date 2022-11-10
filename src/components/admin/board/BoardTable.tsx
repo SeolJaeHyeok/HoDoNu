@@ -6,6 +6,8 @@ import BoardHeader from './BoardHeader';
 import BoardTableRow from './BoardTableRow';
 import React, { useState } from 'react';
 import { TextField } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import boardManageApi from '@apis/admin/board/boardManage';
 
 export default function BoardTable({ articles, setSelectedCategory }: any) {
   const board = [
@@ -39,8 +41,12 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
     setCheckItems(checkItems.filter((el: any) => el !== id));
   };
 
+  const deleteMultipleArticleAdmin = useMutation(boardManageApi.deleteMutipleBoardData);
+
   const handleClickMultipleDeleteArticle = () => {
     alert('여러개를 삭제하자!');
+    console.log(checkItems);
+    deleteMultipleArticleAdmin.mutate({ category: currentBoard, articleIds: checkItems });
   };
 
   return (
