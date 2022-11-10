@@ -8,7 +8,7 @@ interface TableToolbarProps {
   selectedItems: SelectedItemsProps[];
 }
 
-export default function TableToolbar(props: TableToolbarProps) {
+export default function MyPageTableToolbar(props: TableToolbarProps) {
   const { selectedItems } = props;
   const router = useRouter();
 

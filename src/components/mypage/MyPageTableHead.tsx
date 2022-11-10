@@ -47,7 +47,7 @@ const headCells: readonly HeadCell[] = [
   },
 ];
 
-export default function CustomTableHead(props: TableHeadProps) {
+export default function MyPageTableHead(props: TableHeadProps) {
   const { onSelectAllClick, order, orderBy, selectedItems, rowCount, onRequestSort } = props;
   const createSortHandler =
     (property: keyof TableHeadData) => (event: React.MouseEvent<unknown>) => {

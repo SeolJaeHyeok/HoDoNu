@@ -11,8 +11,8 @@ import Checkbox from '@mui/material/Checkbox';
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import CustomTableHead from '@components/mypage/TableHead';
-import TableToolbar from '@components/mypage/TableToolbar';
+import MyPageTableHead from '@components/mypage/MyPageTableHead';
+import MyPageTableToolbar from '@components/mypage/MyPageTableToolbar';
 
 import { dateFormatter, getComparator } from '@utils/func';
 import { Button, Container } from '@mui/material';
@@ -171,14 +171,14 @@ export default function MyPageArticles() {
       {/* <CustomSideBar /> */}
       <Box sx={{ width: '1000px', margin: '50px auto' }}>
         <Paper sx={{ width: '100%', mb: 2 }}>
-          <TableToolbar selectedItems={selected} />
+          <MyPageTableToolbar selectedItems={selected} />
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
               aria-labelledby="tableTitle"
               size={dense ? 'small' : 'medium'}
             >
-              <CustomTableHead
+              <MyPageTableHead
                 selectedItems={selected}
                 order={order}
                 orderBy={orderBy}
