@@ -6,7 +6,7 @@ import BoardTableHeader from './BoardTableHeader';
 import BoardTableRow from './BoardTableRow';
 import React, { useState } from 'react';
 import { TextField } from '@mui/material';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import boardManageApi from '@apis/admin/board/boardManage';
 import { board, filter } from '@utils/const/adminBoardSelectFilter';
 import {
@@ -15,20 +15,20 @@ import {
   SearchInput,
 } from '@components/recruit/index/RecruitHeaderSelect';
 
-export default function BoardTable({ articles, setSelectedCategory }: any) {
+export default function BoardTable({ articles, setSelectedCategory, setBoardData }: any) {
   const [currentBoard, setCurrentBoard] = useState('frees');
   const [currentFilter, setCurrentFilter] = useState('title');
-  const [adminFilterInput, setAdminFilterInput] = useState('');
-
+  const [adminFilterInput, setAdminFilterInput] = useState<string>('');
   const [checkItems, setCheckItems] = useState<number[]>([]);
-  const queryClient = useQueryClient();
 
   const handleBoardChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setCurrentBoard(e.target.value);
     setSelectedCategory(e.target.value);
   };
 
-  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleClickFilterChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setCurrentFilter(e.target.value);
   };
 
@@ -49,11 +49,7 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
   };
 
   const getBoardFilter = useMutation(boardManageApi.getBoardFilterData, {
-    onSuccess: data => {
-      console.log(data);
-
-      return queryClient.invalidateQueries(['board', currentBoard]);
-    },
+    onSuccess: data => setBoardData(data.data.result.articles),
   });
 
   const deleteMultipleArticleAdmin = useMutation(boardManageApi.deleteMutipleBoardData);
@@ -88,7 +84,7 @@ export default function BoardTable({ articles, setSelectedCategory }: any) {
             select
             label="필터"
             value={currentFilter}
-            onChange={handleFilterChange}
+            onChange={handleClickFilterChange}
           >
             {filter.map(option => (
               <MenuItem key={option.value} value={option.value}>

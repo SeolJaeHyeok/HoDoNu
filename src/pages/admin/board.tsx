@@ -8,13 +8,21 @@ export default function AdminBoard() {
   const [boardData, setBoardData] = useState();
   const [selectedCategory, setSelectedCategory] = useState('frees');
 
-  useQuery(['board', selectedCategory], () => boardManageApi.getBoardAllData(selectedCategory), {
-    onSuccess: data => setBoardData(data.data.result.articles),
-  });
+  useQuery(
+    ['admin', 'board', selectedCategory],
+    () => boardManageApi.getBoardAllData(selectedCategory),
+    {
+      onSuccess: data => setBoardData(data.data.result.articles),
+    }
+  );
 
   return (
     <AdminBoardWrapper>
-      <BoardTable articles={boardData} setSelectedCategory={setSelectedCategory} />
+      <BoardTable
+        articles={boardData}
+        setSelectedCategory={setSelectedCategory}
+        setBoardData={setBoardData}
+      />
     </AdminBoardWrapper>
   );
 }
