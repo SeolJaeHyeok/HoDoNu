@@ -15,7 +15,8 @@ import { categoryAssertion } from '@utils/const/category';
 export default function ArticleCreateForm() {
   const router = useRouter();
 
-  const initBoard = router.query.category || categoryAssertion.FREE;
+  const initBoard = router.query ? router.query.category : categoryAssertion.FREE;
+  console.log(initBoard);
 
   const {
     register,
@@ -25,7 +26,7 @@ export default function ArticleCreateForm() {
     formState: { errors },
   } = useForm<ArticleForm>({ resolver: yupResolver(boardValidationSchema) });
 
-  const mutation = useMutation(['createArticle'], boardApi.createFreeArticle, {
+  const postArticle = useMutation(['createArticle'], boardApi.createArticle, {
     onSuccess: res => {
       const { articleId } = res.data.result;
       router.push(`free/${articleId}`);
@@ -38,7 +39,7 @@ export default function ArticleCreateForm() {
   const onSubmit: SubmitHandler<ArticleForm> = async data => {
     const { title, category, content } = data;
     // 게시글 생성
-    mutation.mutate({ title, category, content });
+    postArticle.mutate({ title, category, content });
   };
 
   const handleCancle = () => {
