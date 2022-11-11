@@ -6,7 +6,7 @@ import BoardTableHeader from './BoardTableHeader';
 import BoardTableRow from './BoardTableRow';
 import React, { useCallback, useState } from 'react';
 import { TextField } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import boardManageApi from '@apis/admin/board/boardManage';
 import { board, filter } from '@utils/const/adminBoardSelectFilter';
 import {
@@ -15,12 +15,30 @@ import {
   SearchInput,
 } from '@components/recruit/index/RecruitHeaderSelect';
 import { debounce } from 'lodash';
+import { Pagination, PaginationItem } from '@mui/material';
 
 export default function BoardTable({ articles, setSelectedCategory, setBoardData }: any) {
   const [currentBoard, setCurrentBoard] = useState('frees');
   const [currentFilter, setCurrentFilter] = useState('title');
   const [adminFilterInput, setAdminFilterInput] = useState<string>('');
   const [checkItems, setCheckItems] = useState<number[]>([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  // const queryClient = useQueryClient();
+
+  useQuery(
+    ['admin', 'board', currentBoard],
+    () => boardManageApi.getBoardAllData(currentBoard, currentPage),
+    {
+      onSuccess: data => {
+        setBoardData(data.data.result.articles);
+      },
+    }
+  );
+
+  const onPageChange = (e: React.ChangeEvent<unknown>, page: number) => {
+    setCurrentPage(page);
+  };
 
   const handleBoardChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setCurrentBoard(e.target.value);
@@ -126,6 +144,18 @@ export default function BoardTable({ articles, setSelectedCategory, setBoardData
           onClick={(e: any) => handleSingleCheck(e.target.checked, article.articleId)}
         />
       ))}
+      <Pagination
+        count={Math.ceil(42 / 10)}
+        page={currentPage}
+        onChange={onPageChange}
+        size="medium"
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          padding: '15px 0',
+        }}
+        renderItem={item => <PaginationItem {...item} sx={{ fontSize: 12 }} />}
+      />
     </div>
   );
 }

@@ -11,11 +11,11 @@ export default function BoardTableRow({ articles, checked, currentBoard, onClick
   const deleteArticleAdmin = useMutation(boardManageApi.deleteBoardData);
   const queryClient = useQueryClient();
 
-  const handleClickDeleteArticle = async () => {
+  const handleClickDeleteArticle = () => {
     deleteArticleAdmin.mutate(
       { category: currentBoard, articleId: articles.articleId },
       {
-        onSuccess: () => queryClient.invalidateQueries(['board', currentBoard]),
+        onSuccess: () => queryClient.invalidateQueries(['admin', 'board', currentBoard]),
       }
     );
   };
