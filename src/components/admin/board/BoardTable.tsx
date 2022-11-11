@@ -89,7 +89,7 @@ export default function BoardTable({
   const deleteMultipleArticleAdmin = useMutation(boardManageApi.deleteMutipleBoardData);
 
   const handleClickMultipleDeleteArticle = () => {
-    alert('여러개를 삭제하자!');
+    if (!confirm('삭제하시겠습니까?')) return;
     deleteMultipleArticleAdmin.mutate({ category: currentBoard, articleIds: checkItems });
   };
 

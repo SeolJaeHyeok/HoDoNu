@@ -25,6 +25,7 @@ export default function BoardTableRow({
   const deleteArticleAdmin = useMutation(boardManageApi.deleteBoardData);
 
   const handleClickDeleteArticle = () => {
+    if (!confirm('삭제하시겠습니까?')) return;
     deleteArticleAdmin.mutate(
       { category: currentBoard, articleId: articles.articleId },
       {
