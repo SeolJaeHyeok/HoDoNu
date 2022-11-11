@@ -4,7 +4,7 @@ import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import BoardTableHeader from './BoardTableHeader';
 import BoardTableRow from './BoardTableRow';
-import React, { useCallback, useState } from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { TextField } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import boardManageApi from '@apis/admin/board/boardManage';
@@ -16,14 +16,25 @@ import {
 } from '@components/recruit/index/RecruitHeaderSelect';
 import { debounce } from 'lodash';
 import { Pagination, PaginationItem } from '@mui/material';
+import { BoardDataState } from '@pages/admin/board';
 
-export default function BoardTable({ articles, setSelectedCategory, setBoardData, total }: any) {
-  const [currentBoard, setCurrentBoard] = useState('frees');
-  const [currentFilter, setCurrentFilter] = useState('title');
+interface BoardTableProps {
+  articles: BoardDataState[];
+  total: number;
+  setSelectedCategory: Dispatch<SetStateAction<string>>;
+  setBoardData: Dispatch<SetStateAction<BoardDataState[] | undefined>>;
+}
+export default function BoardTable({
+  articles,
+  setSelectedCategory,
+  setBoardData,
+  total,
+}: BoardTableProps) {
+  const [currentBoard, setCurrentBoard] = useState<string>('frees');
+  const [currentFilter, setCurrentFilter] = useState<string>('title');
   const [adminFilterInput, setAdminFilterInput] = useState<string>('');
   const [checkItems, setCheckItems] = useState<number[]>([]);
-
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   useQuery(
     ['admin', 'board', currentBoard, currentPage],
@@ -132,7 +143,7 @@ export default function BoardTable({ articles, setSelectedCategory, setBoardData
       </Box>
 
       <BoardTableHeader articles={articles} setCheckItems={setCheckItems} checkItems={checkItems} />
-      {articles?.map((article: any, idx: number) => (
+      {articles?.map((article, idx: number) => (
         <BoardTableRow
           key={idx}
           articles={article}
