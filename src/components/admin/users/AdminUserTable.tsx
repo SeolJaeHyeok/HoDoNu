@@ -9,17 +9,31 @@ import Paper from '@mui/material/Paper';
 import { AdminUserProps } from '@interfaces/admin';
 import MultipleSelectCheckmarks from './MultipleSelectCheckmarks';
 import CustomAvatarImage from '@components/CustomAvartar';
-import { Box, Container, Switch } from '@mui/material';
+import { Box, Container, IconButton, Switch } from '@mui/material';
 import { CATEGORY_TABLE } from '@utils/const/category';
+import PersonOffIcon from '@mui/icons-material/PersonOff';
 
 interface AdminUserTableProps {
   users: AdminUserProps[];
 }
 
+/**
+ TODO
+ -[]: 게시글 작성 권한 default value 설정 -> 아이템 클릭 시 권한 변경 요청
+ -[]: 채용 권한 및 활동 권한 Toggle 기능 -> 변경 시 변경 요청
+ -[]: 회원 추방 기능
+ -[]: 필터를 가진 검색 기능 - index에서 
+ */
+
 export default function AdminUserTable({ users }: AdminUserTableProps) {
   const handleToggleRecruiter = (userId: string) => {
-    console.log(userId);
+    console.log('채용 권한 변경', userId);
   };
+
+  const handleUserDelete = (userId: string) => {
+    console.log('유저 삭제', userId);
+  };
+
   return (
     <TableContainer sx={{ width: '80%', minWidth: '650px' }} component={Paper}>
       <Table aria-label="simple table">
@@ -33,6 +47,7 @@ export default function AdminUserTable({ users }: AdminUserTableProps) {
             <TableCell align="center">게시글 작성 권한</TableCell>
             <TableCell align="center">채용 권한</TableCell>
             <TableCell align="center">활동 권한</TableCell>
+            <TableCell align="center">회원 삭제</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -59,7 +74,8 @@ export default function AdminUserTable({ users }: AdminUserTableProps) {
                 {/* {user.address.mainAddress}, {user.address.detailAddress} */}
               </TableCell>
               <TableCell align="center">
-                <MultipleSelectCheckmarks />
+                {/*user.blockTable의 값을 통해 default checked item  */}
+                <MultipleSelectCheckmarks authList={user.blockTable} />
               </TableCell>
               <TableCell align="center">
                 <Switch
@@ -74,6 +90,11 @@ export default function AdminUserTable({ users }: AdminUserTableProps) {
                   onChange={() => handleToggleRecruiter(user.userId)}
                   inputProps={{ 'aria-label': 'controlled' }}
                 />
+              </TableCell>
+              <TableCell align="center">
+                <IconButton>
+                  <PersonOffIcon onClick={() => handleUserDelete(user.userId)} />
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}

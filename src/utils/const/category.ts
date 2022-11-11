@@ -11,3 +11,5 @@ export const CATEGORY_TABLE: {
   Nurse: '간호사',
   Doctor: '의사',
 } as const;
+
+export const articleAuthList: readonly string[] = ['Free', 'Doctor', 'Nurse'];

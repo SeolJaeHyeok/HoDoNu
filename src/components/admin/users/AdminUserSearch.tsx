@@ -6,14 +6,12 @@ import React from 'react';
 import { debounce } from 'lodash';
 
 interface AdminUserSearchProps {
-  searchQuery: string;
   searchQueryKey: string;
   setSearchQuery: (value: string) => void;
   setSearchQueryKey: (value: string) => void;
 }
 
 export default function AdminUserSearch({
-  searchQuery,
   searchQueryKey,
   setSearchQuery,
   setSearchQueryKey,
@@ -30,16 +28,16 @@ export default function AdminUserSearch({
     debounceSearchQuery(e.target.value);
   };
 
-  // TODO: 검색 결과 보여주기
   const handleSubmitSearchInput = (e: any) => {
     e.preventDefault();
     setSearchQuery('');
   };
+
   return (
     <Container
       sx={{
         display: 'flex',
-        m: 5,
+        mb: 2,
         alignItems: 'center',
       }}
     >
