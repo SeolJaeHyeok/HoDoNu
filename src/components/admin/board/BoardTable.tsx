@@ -46,6 +46,7 @@ export default function BoardTable({
       onSuccess: data => {
         setTotalData(data.data.result.count);
         setBoardData(data.data.result.articles);
+        if (adminFilterInput) setCurrentPage(1);
       },
     }
   );
