@@ -1,5 +1,4 @@
 import adminRecruitApi from '@apis/admin/recruit';
-// import RecruitSearchBar from '@components/admin/recruit/RecruitSearchBar';
 import RecruitTable from '@components/admin/recruit/RecruitTable';
 import { IconButton, TextField, MenuItem, Box, InputAdornment, OutlinedInput } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
@@ -11,9 +10,7 @@ import { TableData } from '@interfaces/admin/recruit';
 type Filter = 'email' | 'title';
 
 export default function AdminRecruit() {
-  // eslint-disable-next-line no-unused-vars
   const [filter, setFilter] = useState<Filter>('title');
-  // eslint-disable-next-line no-unused-vars
   const [query, setQuery] = useState<string>('');
   const [jobs, setJobs] = useState<TableData[] | null>(null);
   const debouncedQuery = useDebounce(query, 200);
