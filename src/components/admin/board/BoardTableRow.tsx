@@ -6,8 +6,21 @@ import Tooltip from '@mui/material/Tooltip';
 import Link from 'next/link';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import boardManageApi from '@apis/admin/board/boardManage';
+import { BoardDataState } from '@pages/admin/board';
 
-export default function BoardTableRow({ articles, checked, currentBoard, onClick }: any) {
+interface BoardTableRowProps {
+  articles: BoardDataState;
+  checked: boolean;
+  currentBoard: string;
+  onClick: any;
+}
+
+export default function BoardTableRow({
+  articles,
+  checked,
+  currentBoard,
+  onClick,
+}: BoardTableRowProps) {
   const queryClient = useQueryClient();
   const deleteArticleAdmin = useMutation(boardManageApi.deleteBoardData);
 

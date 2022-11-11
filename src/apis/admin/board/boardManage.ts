@@ -1,7 +1,7 @@
 import { instance } from '@apis/index';
 interface DeleteSingleBoard {
   category: string;
-  articleId: string;
+  articleId: number;
 }
 
 interface DeleteMultipleBoard {

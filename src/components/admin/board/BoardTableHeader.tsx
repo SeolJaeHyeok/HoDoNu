@@ -1,11 +1,23 @@
 import styled from '@emotion/styled';
 import Checkbox from '@mui/material/Checkbox';
+import { BoardDataState } from '@pages/admin/board';
+import { Dispatch, SetStateAction } from 'react';
 
-export default function BoardTableHeader({ articles, setCheckItems, checkItems }: any) {
+interface BoardTableHeaderProps {
+  articles: BoardDataState[];
+  setCheckItems: Dispatch<SetStateAction<number[]>>;
+  checkItems: number[];
+}
+
+export default function BoardTableHeader({
+  articles,
+  setCheckItems,
+  checkItems,
+}: BoardTableHeaderProps) {
   const handleClickMultipleCheck = (e: any) => {
     if (e.target.checked) {
-      const idArray: any = [];
-      articles.map((el: any) => idArray.push(el.articleId));
+      const idArray: number[] = [];
+      articles.map(el => idArray.push(el.articleId));
       setCheckItems(idArray);
       return;
     }
