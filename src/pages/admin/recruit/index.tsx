@@ -40,7 +40,7 @@ export default function AdminRecruit() {
     console.log('search change', e.target.value);
   };
 
-  const handleSearchSubmit = (e: any) => {
+  const handleSearchSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log('searchSubmit');
     console.log(filter, query);
