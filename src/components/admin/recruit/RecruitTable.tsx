@@ -99,13 +99,12 @@ export default function RecruitTable({ jobs }: { jobs: TableData[] }) {
 
   const isSelected = (jobId: number) => selected.indexOf(jobId) !== -1;
 
-  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - jobs.length) : 0;
 
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <RecruitTableToolbar numSelected={selected} />
+        <RecruitTableToolbar numSelected={selected} setNumSelected={setSelected} />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -159,13 +158,14 @@ export default function RecruitTable({ jobs }: { jobs: TableData[] }) {
                         >
                           {row.jobId}
                         </TableCell>
-
                         <TableCell align="center">{row.email}</TableCell>
                         <TableCell align="center">{dateFormatter(row.createdAt)}</TableCell>
                         <TableCell align="center">{row.title}</TableCell>
                         <TableCell align="center">{row.hits}</TableCell>
                         <TableCell align="center">{row.company}</TableCell>
-                        <TableCell align="center">{row.isActive ? 'active' : 'block'}</TableCell>
+                        <TableCell align="center">
+                          {row.isActive ? 'activate' : 'deactivate'}
+                        </TableCell>
                       </TableRow>
                     );
                   })}

@@ -1,19 +1,39 @@
-import { IconButton, Typography, Tooltip, Toolbar } from '@mui/material';
+import { Typography, Tooltip, Toolbar, Button } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 
-import FilterListIcon from '@mui/icons-material/FilterList';
-import BlockIcon from '@mui/icons-material/Block';
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import adminRecruitApi from '@apis/admin/recruit';
 
 interface EnhancedTableToolbarProps {
   numSelected: number[];
+  setNumSelected: Dispatch<SetStateAction<number[]>>;
 }
 
 export default function RecruitTableToolbar(props: EnhancedTableToolbarProps) {
-  const { numSelected } = props;
-  const handleDelete = (e: React.ChangeEvent<any>) => {
+  const queryClient = useQueryClient();
+  const { numSelected, setNumSelected } = props;
+
+  const updateIsActive = useMutation(['admin', 'recruit'], adminRecruitApi.patchOneActive, {
+    onSuccess: data => {
+      queryClient.invalidateQueries(['admin', 'recruit']);
+      alert(data.data.result);
+      setNumSelected([]);
+    },
+    onError: (e: Error) => {
+      alert(e.message);
+    },
+  });
+
+  const handleActive = (e: React.ChangeEvent<any>) => {
+    e.preventDefault();
+    updateIsActive.mutate({ jobIds: numSelected, isActive: true });
+  };
+
+  const handleDeactive = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
     console.log(numSelected);
+    updateIsActive.mutate({ jobIds: numSelected, isActive: false });
   };
 
   return (
@@ -37,17 +57,18 @@ export default function RecruitTableToolbar(props: EnhancedTableToolbarProps) {
         </Typography>
       )}
       {numSelected.length > 0 ? (
-        <Tooltip title="Block">
-          <IconButton onClick={handleDelete}>
-            <BlockIcon />
-          </IconButton>
-        </Tooltip>
+        <>
+          <Tooltip title="activate">
+            <Button onClick={handleActive}>activate</Button>
+          </Tooltip>
+          <Tooltip title="deactivate">
+            <Button onClick={handleDeactive} sx={{ color: 'red', ml: 1 }}>
+              deactivate
+            </Button>
+          </Tooltip>
+        </>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
+        <></>
       )}
     </Toolbar>
   );
