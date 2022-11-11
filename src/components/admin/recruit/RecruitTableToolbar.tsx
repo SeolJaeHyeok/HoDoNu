@@ -32,7 +32,6 @@ export default function RecruitTableToolbar(props: EnhancedTableToolbarProps) {
 
   const handleDeactive = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
-    console.log(numSelected);
     updateIsActive.mutate({ jobIds: numSelected, isActive: false });
   };
 
