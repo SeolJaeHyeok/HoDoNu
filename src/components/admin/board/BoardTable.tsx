@@ -76,10 +76,6 @@ export default function BoardTable({
     debounceFunc(e.target.value);
   };
 
-  const handleClickFilterInput = () => {
-    getBoardFilter.mutate({ category: currentBoard, currentFilter, adminFilterInput });
-  };
-
   const handleSingleCheck = (checked: boolean, id: number) => {
     if (checked) {
       setCheckItems([...checkItems, id]);
@@ -87,10 +83,6 @@ export default function BoardTable({
     }
     setCheckItems(checkItems.filter((el: any) => el !== id));
   };
-
-  const getBoardFilter = useMutation(boardManageApi.getBoardFilterData, {
-    onSuccess: data => setBoardData(data.data.result.articles),
-  });
 
   const deleteMultipleArticleAdmin = useMutation(boardManageApi.deleteMutipleBoardData);
 
@@ -136,7 +128,7 @@ export default function BoardTable({
 
         <SearchBarWrapper>
           <SearchInput onChange={handleChangeFilterInput} placeholder="검색어를 입력해주세요" />
-          <SearchButton onClick={handleClickFilterInput} />
+          <SearchButton />
         </SearchBarWrapper>
 
         <Button

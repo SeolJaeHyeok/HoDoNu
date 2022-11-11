@@ -9,13 +9,6 @@ interface DeleteMultipleBoardAPI {
   articleIds: number[];
 }
 
-interface GetBoardFilterAPI {
-  category: string;
-  currentFilter: string;
-  adminFilterInput: string;
-  page?: number;
-}
-
 const boardManageApi = {
   getBoardAllData: (
     category: string,
@@ -34,8 +27,6 @@ const boardManageApi = {
         articleIds,
       },
     }),
-  getBoardFilterData: ({ category, currentFilter, adminFilterInput }: GetBoardFilterAPI) =>
-    instance.get(`/admin/articles/${category}?${currentFilter}=${adminFilterInput}`),
 };
 
 export default boardManageApi;
