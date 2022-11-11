@@ -38,6 +38,7 @@ export default function AdminBoard() {
       <BoardTable
         articles={boardData!}
         total={totalData!}
+        setTotalData={setTotalData}
         setSelectedCategory={setSelectedCategory}
         setBoardData={setBoardData}
       />

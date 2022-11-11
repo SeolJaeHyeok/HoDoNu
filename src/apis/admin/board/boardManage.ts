@@ -13,11 +13,19 @@ interface GetBoardFilterAPI {
   category: string;
   currentFilter: string;
   adminFilterInput: string;
+  page?: number;
 }
 
 const boardManageApi = {
-  getBoardAllData: (category: string, page?: number) =>
-    instance.get(`/admin/articles/${category}?page=${page ?? 1}`),
+  getBoardAllData: (
+    category: string,
+    page?: number,
+    currentFilter?: string,
+    adminFilterInput?: string
+  ) =>
+    instance.get(
+      `/admin/articles/${category}?${currentFilter}=${adminFilterInput}&page=${page ?? 1}`
+    ),
   deleteBoardData: ({ category, articleId }: DeleteSingleBoardAPI) =>
     instance.delete(`admin/articles/${category}/${articleId}`),
   deleteMutipleBoardData: ({ category, articleIds }: DeleteMultipleBoardAPI) =>

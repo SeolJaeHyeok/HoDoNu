@@ -21,6 +21,7 @@ import { BoardDataState } from '@pages/admin/board';
 interface BoardTableProps {
   articles: BoardDataState[];
   total: number;
+  setTotalData: Dispatch<SetStateAction<number | undefined>>;
   setSelectedCategory: Dispatch<SetStateAction<string>>;
   setBoardData: Dispatch<SetStateAction<BoardDataState[] | undefined>>;
 }
@@ -29,6 +30,7 @@ export default function BoardTable({
   setSelectedCategory,
   setBoardData,
   total,
+  setTotalData,
 }: BoardTableProps) {
   const [currentBoard, setCurrentBoard] = useState<string>('frees');
   const [currentFilter, setCurrentFilter] = useState<string>('title');
@@ -38,13 +40,17 @@ export default function BoardTable({
 
   useQuery(
     ['admin', 'board', currentBoard, currentPage],
-    () => boardManageApi.getBoardAllData(currentBoard, currentPage),
+    () =>
+      boardManageApi.getBoardAllData(currentBoard, currentPage, currentFilter, adminFilterInput),
     {
-      onSuccess: data => setBoardData(data.data.result.articles),
+      onSuccess: data => {
+        setTotalData(data.data.result.count);
+        setBoardData(data.data.result.articles);
+      },
     }
   );
 
-  const onPageChange = (e: React.ChangeEvent<unknown>, page: number) => {
+  const handlePageChange = (e: React.ChangeEvent<unknown>, page: number) => {
     setCurrentPage(page);
   };
 
@@ -155,7 +161,7 @@ export default function BoardTable({
       <Pagination
         count={Math.ceil(total / 10)}
         page={currentPage}
-        onChange={onPageChange}
+        onChange={handlePageChange}
         size="medium"
         sx={{
           display: 'flex',
