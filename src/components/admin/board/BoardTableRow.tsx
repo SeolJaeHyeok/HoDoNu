@@ -8,8 +8,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import boardManageApi from '@apis/admin/board/boardManage';
 
 export default function BoardTableRow({ articles, checked, currentBoard, onClick }: any) {
-  const deleteArticleAdmin = useMutation(boardManageApi.deleteBoardData);
   const queryClient = useQueryClient();
+  const deleteArticleAdmin = useMutation(boardManageApi.deleteBoardData);
 
   const handleClickDeleteArticle = () => {
     deleteArticleAdmin.mutate(

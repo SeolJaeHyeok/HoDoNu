@@ -6,7 +6,7 @@ import BoardTableHeader from './BoardTableHeader';
 import BoardTableRow from './BoardTableRow';
 import React, { useCallback, useState } from 'react';
 import { TextField } from '@mui/material';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import boardManageApi from '@apis/admin/board/boardManage';
 import { board, filter } from '@utils/const/adminBoardSelectFilter';
 import {
@@ -17,22 +17,19 @@ import {
 import { debounce } from 'lodash';
 import { Pagination, PaginationItem } from '@mui/material';
 
-export default function BoardTable({ articles, setSelectedCategory, setBoardData }: any) {
+export default function BoardTable({ articles, setSelectedCategory, setBoardData, total }: any) {
   const [currentBoard, setCurrentBoard] = useState('frees');
   const [currentFilter, setCurrentFilter] = useState('title');
   const [adminFilterInput, setAdminFilterInput] = useState<string>('');
   const [checkItems, setCheckItems] = useState<number[]>([]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  // const queryClient = useQueryClient();
 
   useQuery(
-    ['admin', 'board', currentBoard],
+    ['admin', 'board', currentBoard, currentPage],
     () => boardManageApi.getBoardAllData(currentBoard, currentPage),
     {
-      onSuccess: data => {
-        setBoardData(data.data.result.articles);
-      },
+      onSuccess: data => setBoardData(data.data.result.articles),
     }
   );
 
@@ -145,7 +142,7 @@ export default function BoardTable({ articles, setSelectedCategory, setBoardData
         />
       ))}
       <Pagination
-        count={Math.ceil(42 / 10)}
+        count={Math.ceil(total / 10)}
         page={currentPage}
         onChange={onPageChange}
         size="medium"
