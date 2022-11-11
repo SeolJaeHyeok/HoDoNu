@@ -48,7 +48,7 @@ export default function AdminUser() {
 
   // 회원 삭제 API
   const { mutateAsync: deleteUserMutate } = useMutation(adminApi.deleteUser, {
-    onSuccess: data => {
+    onSuccess: () => {
       alert('성공적으로 삭제되었습니다.');
       queryClient.invalidateQueries(['admin', 'users', searchQueryKey, searchQuery]);
     },
@@ -57,9 +57,42 @@ export default function AdminUser() {
     },
   });
 
-  // 관리자 회원 삭제 함수
+  // 채용 권한 변경 API
+  const { mutateAsync: editUserRecruitAuthMutate } = useMutation(adminApi.editUserRecruitAuth, {
+    onSuccess: data => {
+      console.log(data);
+      queryClient.invalidateQueries(['admin', 'users', searchQueryKey, searchQuery]);
+    },
+    onError: (e: unknown) => {
+      alert(e);
+    },
+  });
+
+  // 활동 권한 변경 API
+  const { mutateAsync: editUserActiveAuthMutate } = useMutation(adminApi.editUserActiveAuth, {
+    onSuccess: data => {
+      queryClient.invalidateQueries(['admin', 'users', searchQueryKey, searchQuery]);
+    },
+    onError: (e: unknown) => {
+      alert(e);
+    },
+  });
+
+  // 관리자 - 회원 삭제 함수
   const handleDeleteUser = async (userId: string) => {
     await deleteUserMutate(userId);
+  };
+
+  // 관리자 - 채용 권한 변경 함수
+  const handleEditUserRecruitAuth = async (userId: string, isRecruiter: boolean) => {
+    const bodyData = { isRecruiter };
+    await editUserRecruitAuthMutate({ userId, bodyData });
+  };
+
+  // 관리자 - 회원 활동 권한 함수
+  const handleEditUserActiveAuth = async (userId: string, isAuth: boolean) => {
+    const bodyData = { isAuth };
+    await editUserActiveAuthMutate({ userId, bodyData });
   };
 
   return (
@@ -76,7 +109,12 @@ export default function AdminUser() {
         setSearchQuery={setSearchQuery}
         setSearchQueryKey={setSearchQueryKey}
       />
-      <AdminUserTable handleDeleteUser={handleDeleteUser} users={usersData?.data.result.response} />
+      <AdminUserTable
+        handleEditUserActiveAuth={handleEditUserActiveAuth}
+        handleEditUserRecruitAuth={handleEditUserRecruitAuth}
+        handleDeleteUser={handleDeleteUser}
+        users={usersData?.data.result.response}
+      />
     </div>
   );
 }
