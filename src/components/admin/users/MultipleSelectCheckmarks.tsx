@@ -32,8 +32,6 @@ export default function MultipleSelectCheckmarks({ authList }: { authList: strin
     );
   };
 
-  console.log(selectedAuth);
-
   return (
     <span>
       <FormControl sx={{ m: 1, width: 175 }}>

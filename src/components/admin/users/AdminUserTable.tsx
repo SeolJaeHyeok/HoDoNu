@@ -15,6 +15,7 @@ import PersonOffIcon from '@mui/icons-material/PersonOff';
 
 interface AdminUserTableProps {
   users: AdminUserProps[];
+  handleDeleteUser: (userId: string) => void;
 }
 
 /**
@@ -25,13 +26,15 @@ interface AdminUserTableProps {
  -[]: 필터를 가진 검색 기능 - index에서 
  */
 
-export default function AdminUserTable({ users }: AdminUserTableProps) {
+export default function AdminUserTable({ users, handleDeleteUser }: AdminUserTableProps) {
   const handleToggleRecruiter = (userId: string) => {
     console.log('채용 권한 변경', userId);
   };
 
   const handleUserDelete = (userId: string) => {
-    console.log('유저 삭제', userId);
+    if (confirm('정말 삭제하시겠습니까?')) {
+      handleDeleteUser(userId);
+    }
   };
 
   return (

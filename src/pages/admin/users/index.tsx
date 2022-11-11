@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import AdminUserSearch from '@components/admin/users/AdminUserSearch';
 import AdminUserTable from '@components/admin/users/AdminUserTable';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import adminApi from '@apis/admin';
 
 const CATEGORY_TABLE: {
@@ -13,8 +13,10 @@ const CATEGORY_TABLE: {
 };
 
 export default function AdminUser() {
+  const queryClient = useQueryClient();
   const [searchQueryKey, setSearchQueryKey] = useState('name');
   const [searchQuery, setSearchQuery] = useState('');
+
   const { data: usersData } = useQuery(
     ['admin', 'users', searchQueryKey, searchQuery],
     () => {
@@ -39,10 +41,26 @@ export default function AdminUser() {
       }
     },
     {
-      staleTime: Infinity,
-      cacheTime: Infinity,
+      staleTime: 30000,
+      cacheTime: 30000,
     }
   );
+
+  // 회원 삭제 API
+  const { mutateAsync: deleteUserMutate } = useMutation(adminApi.deleteUser, {
+    onSuccess: data => {
+      alert('성공적으로 삭제되었습니다.');
+      queryClient.invalidateQueries(['admin', 'users', searchQueryKey, searchQuery]);
+    },
+    onError: (e: unknown) => {
+      alert(e);
+    },
+  });
+
+  // 관리자 회원 삭제 함수
+  const handleDeleteUser = async (userId: string) => {
+    await deleteUserMutate(userId);
+  };
 
   return (
     <div
@@ -51,7 +69,6 @@ export default function AdminUser() {
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
-        // height: '100vh',
       }}
     >
       <AdminUserSearch
@@ -59,7 +76,7 @@ export default function AdminUser() {
         setSearchQuery={setSearchQuery}
         setSearchQueryKey={setSearchQueryKey}
       />
-      <AdminUserTable users={usersData?.data.result.response} />
+      <AdminUserTable handleDeleteUser={handleDeleteUser} users={usersData?.data.result.response} />
     </div>
   );
 }
