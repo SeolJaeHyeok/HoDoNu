@@ -29,7 +29,7 @@ export default function CustomDrawer() {
       return setTargetMenus(boardSideBarMenus);
     }
 
-    if (router.asPath.includes('/mypage/edit') || router.asPath.includes('/mypage/articles')) {
+    if (router.asPath.includes('/mypage') || router.asPath.includes('/mypage/articles')) {
       return setTargetMenus(userSideBarMenus);
     }
 
@@ -40,7 +40,7 @@ export default function CustomDrawer() {
     ) {
       return setTargetMenus(adminSideBarMenus);
     }
-  }, [router.pathname]);
+  }, [router.asPath]);
 
   return (
     <div
