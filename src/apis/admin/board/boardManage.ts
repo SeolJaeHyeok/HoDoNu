@@ -1,26 +1,32 @@
 import { instance } from '@apis/index';
-interface DeleteSingleBoard {
+interface DeleteSingleBoardAPI {
   category: string;
   articleId: number;
 }
 
-interface DeleteMultipleBoard {
+interface DeleteMultipleBoardAPI {
   category: string;
   articleIds: number[];
+}
+
+interface GetBoardFilterAPI {
+  category: string;
+  currentFilter: string;
+  adminFilterInput: string;
 }
 
 const boardManageApi = {
   getBoardAllData: (category: string, page?: number) =>
     instance.get(`/admin/articles/${category}?page=${page ?? 1}`),
-  deleteBoardData: ({ category, articleId }: DeleteSingleBoard) =>
+  deleteBoardData: ({ category, articleId }: DeleteSingleBoardAPI) =>
     instance.delete(`admin/articles/${category}/${articleId}`),
-  deleteMutipleBoardData: ({ category, articleIds }: DeleteMultipleBoard) =>
+  deleteMutipleBoardData: ({ category, articleIds }: DeleteMultipleBoardAPI) =>
     instance.delete(`/admin/articles/${category}`, {
       data: {
         articleIds,
       },
     }),
-  getBoardFilterData: ({ category, currentFilter, adminFilterInput }: any) =>
+  getBoardFilterData: ({ category, currentFilter, adminFilterInput }: GetBoardFilterAPI) =>
     instance.get(`/admin/articles/${category}?${currentFilter}=${adminFilterInput}`),
 };
 
