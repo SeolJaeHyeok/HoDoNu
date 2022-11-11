@@ -39,7 +39,7 @@ export default function BoardTable({
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   useQuery(
-    ['admin', 'board', currentBoard, currentPage],
+    ['admin', 'board', currentBoard, currentPage, adminFilterInput],
     () =>
       boardManageApi.getBoardAllData(currentBoard, currentPage, currentFilter, adminFilterInput),
     {
