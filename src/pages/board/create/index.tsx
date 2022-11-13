@@ -2,13 +2,6 @@ import ArticleCreateForm from '@components/Board/ArticleCreateForm';
 import { Container, Box, Typography } from '@mui/material';
 
 export default function createBoard() {
-  /**
-   * 게시판 선택
-   * 게시글 제목
-   * 게시글 내용
-   * 생성, 취소 버튼
-   */
-
   return (
     <Container
       sx={{
