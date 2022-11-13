@@ -1,15 +1,17 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
+import React, { Dispatch, SetStateAction, useState } from 'react';
+import {
+  Box,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TablePagination,
+  TableRow,
+  Paper,
+  Checkbox,
+  FormControlLabel,
+  Switch,
+} from '@mui/material';
 import RecruitTableToolbar from './RecruitTableToolbar';
 import RecruitTableHead from './RecruitTableHead';
 import { TableData } from '@interfaces/admin/recruit';
@@ -41,13 +43,21 @@ function getComparator<Key extends keyof any>(
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-export default function RecruitTable({ jobs }: { jobs: TableData[] }) {
-  const [order, setOrder] = React.useState<Order>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof TableData>('jobId');
-  const [selected, setSelected] = React.useState<number[]>([]);
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+export default function RecruitTable({
+  jobs,
+  page,
+  setPage,
+}: {
+  jobs: TableData[];
+  page: number;
+  setPage: Dispatch<SetStateAction<number>>;
+}) {
+  const [order, setOrder] = useState<Order>('asc');
+  const [orderBy, setOrderBy] = useState<keyof TableData>('jobId');
+  const [selected, setSelected] = useState<number[]>([]);
+  // const [page, setPage] = useState(0);
+  const [dense, setDense] = useState(false);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof TableData) => {
     const isAsc = orderBy === property && order === 'asc';

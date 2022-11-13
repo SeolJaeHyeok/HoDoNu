@@ -13,13 +13,17 @@ export default function AdminRecruit() {
   const [filter, setFilter] = useState<Filter>('title');
   const [query, setQuery] = useState<string>('');
   const [jobs, setJobs] = useState<TableData[] | null>(null);
+  const [page, setPage] = useState<number>(0);
   const debouncedQuery = useDebounce(query, 200);
 
   useQuery(
     ['admin', 'recruit', debouncedQuery],
     () => adminRecruitApi.getAll({ filter: filter, query: debouncedQuery }),
     {
-      onSuccess: data => setJobs(data.data[0]),
+      onSuccess: data => {
+        setJobs(data.data[0]);
+        setPage(0);
+      },
       onError: (e: Error) => {
         alert(e.message);
       },
@@ -34,7 +38,6 @@ export default function AdminRecruit() {
   const handleSearchChange = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
     setQuery(e.target.value);
-    console.log('search change', e.target.value);
   };
 
   const handleSearchSubmit = (e: React.SyntheticEvent) => {
@@ -70,7 +73,7 @@ export default function AdminRecruit() {
           <IconButton type="button" sx={{ p: '10px' }} aria-label="search"></IconButton>
         </form>
       </Box>
-      {jobs && <RecruitTable jobs={jobs} />}
+      {jobs && <RecruitTable jobs={jobs} page={page} setPage={setPage} />}
     </Box>
   );
 }
