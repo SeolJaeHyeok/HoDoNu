@@ -55,7 +55,6 @@ export default function RecruitTable({
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof TableData>('jobId');
   const [selected, setSelected] = useState<number[]>([]);
-  // const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
