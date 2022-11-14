@@ -13,5 +13,4 @@ export interface HeadCell {
   disablePadding: boolean;
   id: keyof TableData;
   label: string;
-  numeric: boolean;
 }
