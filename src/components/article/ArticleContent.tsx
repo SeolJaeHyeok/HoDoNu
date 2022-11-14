@@ -86,11 +86,9 @@ export default function ArticleContent({
           <ArticleUserInfo content={result} />
           <BoardTitle>{result?.title}</BoardTitle>
           <BoardSubTitle>
-            {result?.content}
-            {/* 호진 TODO: image를 받아올때 hydration error 발생 , 이미지 사이즈 조절 이슈*/}
-            {/* <BoardSubTitleContainer
+            <BoardSubTitleContainer
               dangerouslySetInnerHTML={{ __html: result?.content }}
-            ></BoardSubTitleContainer> */}
+            ></BoardSubTitleContainer>
           </BoardSubTitle>
           <BoardButtonContainer>
             {loginUserId?.userId === result?.userId && (
@@ -182,7 +180,11 @@ const BoardButtonContainer = styled.div`
   text-align: right;
 `;
 
-// const BoardSubTitleContainer = styled.div``;
+const BoardSubTitleContainer = styled.div`
+  img {
+    width: 100%;
+  }
+`;
 
 const CommentWrapper = styled.div`
   display: flex;
