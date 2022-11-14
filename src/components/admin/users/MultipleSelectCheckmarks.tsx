@@ -31,6 +31,11 @@ interface MultipleSelectProps {
   searchQueryKey: string;
 }
 
+interface ItemProps {
+  isSelected: boolean;
+  value: string;
+}
+
 export default function MultipleSelectCheckmarks({
   userId,
   authList,
@@ -56,21 +61,21 @@ export default function MultipleSelectCheckmarks({
 
   const queryClient = useQueryClient();
 
-  const [initialItems, setInitialItems] = useState<any[]>([]);
-  const [totalItems, setTotalItems] = useState<any[]>([]);
+  const [initialItems, setInitialItems] = useState<ItemProps[]>([]);
+  const [totalItems, setTotalItems] = useState<ItemProps[]>([]);
   const a = new Set(totalArticleAuthList);
   const b = new Set(authList);
   const selectedItems = [...new Set([...a].filter(x => !b.has(x)))];
   const unselectedItems = [...new Set([...a].filter(x => b.has(x)))];
 
-  const parsingSelectedItems = (selectedItems: any) => {
+  const parsingSelectedItems = (selectedItems: string[]) => {
     return selectedItems.reduce(
       (acc: any, cur: any) => acc.concat({ isSelected: true, value: cur }),
       []
     );
   };
 
-  const parsingUnselectedItems = (unselectedItems: any) => {
+  const parsingUnselectedItems = (unselectedItems: string[]) => {
     return unselectedItems.reduce(
       (acc: any, cur: any) => acc.concat({ isSelected: false, value: cur }),
       []
@@ -131,7 +136,7 @@ export default function MultipleSelectCheckmarks({
           labelId="demo-multiple-checkbox-label"
           id="demo-multiple-checkbox"
           multiple
-          value={totalItems.map((v: any) => v.value)}
+          value={totalItems.map((v: ItemProps) => v.value)}
           input={<OutlinedInput label="Tag" />}
           renderValue={() => '권한 변경'}
           MenuProps={MenuProps}
