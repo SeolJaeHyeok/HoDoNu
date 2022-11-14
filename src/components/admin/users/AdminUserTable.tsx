@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import { AdminUserProps } from '@interfaces/admin';
 import MultipleSelectCheckmarks from './MultipleSelectCheckmarks';
 import CustomAvatarImage from '@components/CustomAvartar';
-import { Box, Container, IconButton, Switch } from '@mui/material';
+import { Box, Button, Container, IconButton, Switch } from '@mui/material';
 import { CATEGORY_TABLE } from '@utils/const/category';
 import PersonOffIcon from '@mui/icons-material/PersonOff';
 
@@ -22,10 +22,11 @@ interface AdminUserTableProps {
 
 /**
  TODO
- -[]: 게시글 작성 권한 default value 설정 -> 아이템 클릭 시 권한 변경 요청
+ -[O]: 게시글 작성 권한 default value 설정 -> 아이템 클릭 시 권한 변경 요청
  -[O]: 채용 권한 및 활동 권한 Toggle 기능 -> 변경 시 변경 요청
  -[O]: 회원 추방 기능
  -[O]: 필터를 가진 검색 기능 - index에서 
+ -[]: 페이지네이션
  */
 
 export default function AdminUserTable({
@@ -49,6 +50,14 @@ export default function AdminUserTable({
     if (confirm('정말 삭제하시겠습니까?')) {
       handleDeleteUser(userId);
     }
+  };
+
+  const handleActiveAuthCheck = () => {
+    alert('활동 권한 인증 Modal 열기');
+  };
+
+  const handleRecruitAuthCheck = () => {
+    alert('채용 권한 인증 Modal 열기');
   };
 
   return (
@@ -87,12 +96,11 @@ export default function AdminUserTable({
               <TableCell align="center">{CATEGORY_TABLE[user.jobCategory]}</TableCell>
               <TableCell align="center">{user.birth}</TableCell>
               <TableCell sx={{ width: '15%' }} align="center">
-                서울 송파구 올림픽로43길 88, 서울아산병원
-                {/* {user.address.mainAddress}, {user.address.detailAddress} */}
+                {user.address.mainAddress}, {user.address.detailAddress}
               </TableCell>
               <TableCell align="center">
                 {/*user.blockTable의 값을 통해 default checked item  */}
-                <MultipleSelectCheckmarks authList={user.blockTable} />
+                <MultipleSelectCheckmarks userId={user.userId} authList={user.blockTable} />
               </TableCell>
               <TableCell align="center">
                 <Switch
@@ -100,6 +108,7 @@ export default function AdminUserTable({
                   onChange={() => handleToggleRecruiter(user.userId, !user.isRecruiter)}
                   inputProps={{ 'aria-label': 'controlled' }}
                 />
+                <Button onClick={handleRecruitAuthCheck}>인증</Button>
               </TableCell>
               <TableCell align="center">
                 <Switch
@@ -107,6 +116,7 @@ export default function AdminUserTable({
                   onChange={() => handleToggleAuth(user.userId, !user.isAuth)}
                   inputProps={{ 'aria-label': 'controlled' }}
                 />
+                <Button onClick={handleActiveAuthCheck}>인증</Button>
               </TableCell>
               <TableCell align="center">
                 <IconButton>

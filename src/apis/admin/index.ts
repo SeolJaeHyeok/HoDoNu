@@ -16,6 +16,10 @@ const adminApi = {
     instance.patch(`/admin/users/${userId}/recruiter`, bodyData),
   editUserActiveAuth: ({ userId, bodyData }: any) =>
     instance.patch(`/admin/users/${userId}/auth`, bodyData),
+  addBoardBlock: ({ userId, boardCategory }: any) =>
+    instance.post(`/admin/article/block/${userId}`, { boardCategory }),
+  deleteBoardBlock: ({ userId, boardCategory }: any) =>
+    instance.delete(`/admin/article/block/${userId}`, { data: { boardCategory } }),
 };
 
 export default adminApi;
