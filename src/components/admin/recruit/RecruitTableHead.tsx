@@ -2,6 +2,7 @@ import { TableData } from '@interfaces/admin/recruit';
 import { TableHead, TableCell, Checkbox, TableRow, Box } from '@mui/material';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
+import { HEADCELLS } from '@utils/const/adminTableHead';
 import React from 'react';
 
 type Order = 'asc' | 'desc';
@@ -16,58 +17,6 @@ interface EnhancedTableProps {
   orderBy: string;
   rowCount: number;
 }
-
-interface HeadCell {
-  disablePadding: boolean;
-  id: keyof TableData;
-  label: string;
-  numeric: boolean;
-}
-
-const headCells: readonly HeadCell[] = [
-  {
-    id: 'jobId',
-    numeric: false,
-    disablePadding: true,
-    label: '게시글 ID',
-  },
-  {
-    id: 'email',
-    numeric: true,
-    disablePadding: false,
-    label: '작성자',
-  },
-  {
-    id: 'createdAt',
-    numeric: true,
-    disablePadding: false,
-    label: '작성일',
-  },
-  {
-    id: 'title',
-    numeric: true,
-    disablePadding: false,
-    label: '게시글 제목',
-  },
-  {
-    id: 'hits',
-    numeric: true,
-    disablePadding: false,
-    label: '조회수',
-  },
-  {
-    id: 'company',
-    numeric: true,
-    disablePadding: false,
-    label: '회사명',
-  },
-  {
-    id: 'isActive',
-    numeric: true,
-    disablePadding: false,
-    label: '게시글 상태',
-  },
-];
 
 export default function RecruitTableHead(props: EnhancedTableProps) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
@@ -89,7 +38,7 @@ export default function RecruitTableHead(props: EnhancedTableProps) {
             }}
           />
         </TableCell>
-        {headCells.map(headCell => (
+        {HEADCELLS.map(headCell => (
           <TableCell
             key={headCell.id}
             align="center"

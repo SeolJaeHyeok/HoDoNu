@@ -9,4 +9,9 @@ export interface TableData {
   isActive: boolean;
 }
 
-export type GetAllData = { data: TableData[] };
+export interface HeadCell {
+  disablePadding: boolean;
+  id: keyof TableData;
+  label: string;
+  numeric: boolean;
+}
