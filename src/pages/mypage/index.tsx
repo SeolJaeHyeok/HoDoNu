@@ -1,17 +1,19 @@
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useQuery } from '@tanstack/react-query';
 import { Grid } from '@mui/material';
 import Job from '@components/mypage/Job';
 import ProfileCard from '@components/mypage/ProfileCard';
-// import CustomSideBar from '@components/SideBar/CustomSideBar';
+import CustomSideBar from '@components/SideBar/CustomSideBar';
 import Account from '@components/mypage/Account';
 import Security from '@components/mypage/Security';
 import Activity from '@components/mypage/Acivity';
 import authApi from '@apis/auth/auth';
 import { userInfoState } from '@atoms/userAtom';
+import { sidebarAtom } from '@atoms/sidebarAtom';
 
 export default function MypageIndex() {
   const user = useRecoilValue(userInfoState);
+  const [isSidebarOpen, setIsSideBarOpen] = useRecoilState(sidebarAtom);
 
   const { data } = useQuery(['detailUser', user?.userId], () => authApi.getOne(user?.userId!));
   const userInfo = data?.data.result;
@@ -28,7 +30,7 @@ export default function MypageIndex() {
         p: 2,
       }}
     >
-      {/* <CustomSideBar /> */}
+      <CustomSideBar isOpen={isSidebarOpen} setIsOpen={setIsSideBarOpen} />
       {userInfo && (
         <>
           <Grid item xs={10}>
