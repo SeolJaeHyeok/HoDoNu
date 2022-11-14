@@ -24,13 +24,19 @@ const MenuProps = {
   },
 };
 
+interface MultipleSelectProps {
+  userId: string;
+  authList: string[];
+  searchQuery: string;
+  searchQueryKey: string;
+}
+
 export default function MultipleSelectCheckmarks({
   userId,
   authList,
-}: {
-  userId: string;
-  authList: string[];
-}) {
+  searchQuery,
+  searchQueryKey,
+}: MultipleSelectProps) {
   const { mutate: postBlockMutate } = useMutation(adminApi.addBoardBlock, {
     onSuccess: () => {
       alert('성공적으로 변경되었습니다.');
@@ -99,7 +105,7 @@ export default function MultipleSelectCheckmarks({
             // Delete
             deleteBlockMutate({ userId, boardCategory: item.value });
           }
-          queryClient.invalidateQueries(['admin', 'users', 'name', '']);
+          queryClient.invalidateQueries(['admin', 'users', searchQueryKey, searchQuery]);
         }
       }
     }

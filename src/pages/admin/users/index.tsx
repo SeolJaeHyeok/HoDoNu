@@ -114,6 +114,8 @@ export default function AdminUser() {
         handleEditUserRecruitAuth={handleEditUserRecruitAuth}
         handleDeleteUser={handleDeleteUser}
         users={usersData?.data.result.response}
+        searchQuery={searchQuery}
+        searchQueryKey={searchQueryKey}
       />
     </div>
   );

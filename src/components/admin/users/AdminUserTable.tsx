@@ -18,6 +18,8 @@ interface AdminUserTableProps {
   handleDeleteUser: (userId: string) => void;
   handleEditUserRecruitAuth: (userId: string, isRecruiter: boolean) => void;
   handleEditUserActiveAuth: (userId: string, isAuth: boolean) => void;
+  searchQuery: string;
+  searchQueryKey: string;
 }
 
 /**
@@ -34,6 +36,8 @@ export default function AdminUserTable({
   handleDeleteUser,
   handleEditUserRecruitAuth,
   handleEditUserActiveAuth,
+  searchQuery,
+  searchQueryKey,
 }: AdminUserTableProps) {
   // 채용 권한 변경
   const handleToggleRecruiter = (userId: string, isRecruiter: boolean) => {
@@ -100,7 +104,12 @@ export default function AdminUserTable({
               </TableCell>
               <TableCell align="center">
                 {/*user.blockTable의 값을 통해 default checked item  */}
-                <MultipleSelectCheckmarks userId={user.userId} authList={user.blockTable} />
+                <MultipleSelectCheckmarks
+                  searchQuery={searchQuery}
+                  searchQueryKey={searchQueryKey}
+                  userId={user.userId}
+                  authList={user.blockTable}
+                />
               </TableCell>
               <TableCell align="center">
                 <Switch
