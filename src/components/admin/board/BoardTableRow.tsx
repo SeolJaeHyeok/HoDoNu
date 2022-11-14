@@ -3,20 +3,47 @@ import Checkbox from '@mui/material/Checkbox';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
+import Link from 'next/link';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import boardManageApi from '@apis/admin/board/boardManage';
+import { BoardDataState } from '@pages/admin/board';
 
-export default function BoardTableRow() {
+interface BoardTableRowProps {
+  articles: BoardDataState;
+  checked: boolean;
+  currentBoard: string;
+  onClick: any;
+}
+
+export default function BoardTableRow({
+  articles,
+  checked,
+  currentBoard,
+  onClick,
+}: BoardTableRowProps) {
+  const queryClient = useQueryClient();
+  const deleteArticleAdmin = useMutation(boardManageApi.deleteBoardData);
+
   const handleClickDeleteArticle = () => {
-    alert('지우자');
+    if (!confirm('삭제하시겠습니까?')) return;
+    deleteArticleAdmin.mutate(
+      { category: currentBoard, articleId: articles.articleId },
+      {
+        onSuccess: () => queryClient.invalidateQueries(['admin', 'board', currentBoard]),
+      }
+    );
   };
 
   return (
     <TableRowWrapper>
-      <Checkbox />
-      <ColumnId>ID</ColumnId>
-      <ColumnTitle>제목</ColumnTitle>
-      <ColumnCreate>작성일</ColumnCreate>
-      <ColumnUser>작성자</ColumnUser>
-      <ColumnHit>30</ColumnHit>
+      <Checkbox checked={checked} onClick={onClick} />
+      <ColumnId>{articles.id}</ColumnId>
+      <Link href={`/board/${currentBoard.slice(0, -1)}/${articles.articleId}`}>
+        <ColumnTitle>{articles.title}</ColumnTitle>
+      </Link>
+      <ColumnCreate>{articles.createdAt}</ColumnCreate>
+      <ColumnUser>{articles.user.email}</ColumnUser>
+      <ColumnHit>{articles.hits}</ColumnHit>
       <Tooltip title="Delete" sx={{ width: 140 }}>
         <IconButton onClick={handleClickDeleteArticle}>
           <DeleteIcon />
@@ -37,6 +64,7 @@ const ColumnId = styled.p`
 `;
 const ColumnTitle = styled(ColumnId)`
   width: 215px;
+  cursor: pointer;
 `;
 const ColumnCreate = styled(ColumnId)`
   width: 165px;
