@@ -10,7 +10,8 @@ import { useQuery } from '@tanstack/react-query';
 import CustomSideBar from '@components/SideBar/CustomSideBar';
 import BoardHeader from '@components/Board/BoardHeader';
 import { searchDataAtom } from '@atoms/searchAtom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { sidebarAtom } from '@atoms/sidebarAtom';
 
 /*
   TODO  
@@ -28,6 +29,7 @@ export default function FreeBoard() {
   const [sort, setSort] = useState('createdAt');
   const [page, setPage] = useState('1');
   const [perPage, setPerPage] = useState('5');
+  const [isSidebarOpen, setIsSideBarOpen] = useRecoilState(sidebarAtom);
 
   const { data: res } = useQuery(
     ['board', 'free', sort, page, perPage, searchText],
@@ -56,16 +58,16 @@ export default function FreeBoard() {
     });
   };
 
-  // TODO: SideBar 공통 Layout으로 분리, Navbar 위에 덮는 문제 해결
   return (
     <>
-      <CustomSideBar />
+      <CustomSideBar isOpen={isSidebarOpen} setIsOpen={setIsSideBarOpen} />
       <BoardContainer>
         <>
           <BoardHeader
             setSort={setSort}
             setPage={setPage}
             setPerPage={setPerPage}
+            page={page}
             sort={sort}
             perPage={perPage}
             category="free"

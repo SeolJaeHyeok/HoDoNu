@@ -6,7 +6,7 @@ import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import AccessibilityNewOutlinedIcon from '@mui/icons-material/AccessibilityNewOutlined';
 
 export const SideBarPath: any = {
-  '회원 관리': '/admin/user',
+  '회원 관리': '/admin/users',
   '게시판 관리': '/admin/board',
   '채용 관리': '/admin/recruit',
   '자유 게시판': '/board/free?page=1&perPage=10&sort=createdAt',

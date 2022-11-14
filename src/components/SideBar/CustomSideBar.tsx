@@ -3,9 +3,11 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CustomDrawer from './CustomDrawer';
-
+import { Button } from '@mui/material';
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import { SetterOrUpdater } from 'recoil';
 // 사이드바의 가로 길이
-const SIDE_BAR_WIDTH = 240;
+const SIDE_BAR_WIDTH = 200;
 
 /*
     TODO
@@ -14,17 +16,36 @@ const SIDE_BAR_WIDTH = 240;
     -[O]: 정확한 페이지 url 정해지면 라우팅 -> useRouter 사용
 */
 
-export default function CustomSideBar() {
+interface SideBarProps {
+  isOpen: boolean;
+  setIsOpen: SetterOrUpdater<boolean>;
+}
+
+export default function CustomSideBar({ isOpen, setIsOpen }: SideBarProps) {
+  const handleSideBarOpen = () => {
+    setIsOpen(true);
+  };
+
+  const handleSideBarClose = () => {
+    setIsOpen(false);
+  };
   return (
     <Box sx={{ display: 'flex' }}>
-      <Box component="nav" sx={{ width: { sm: SIDE_BAR_WIDTH }, flexShrink: { sm: 0 } }}>
+      <Button sx={{ position: 'absolute', left: '0', top: '50%' }} onClick={handleSideBarOpen}>
+        <MenuOpenIcon fontSize="large" />
+      </Button>
+      <Box
+        onClick={handleSideBarClose}
+        component="nav"
+        sx={{ width: { sm: SIDE_BAR_WIDTH }, flexShrink: { sm: 0 } }}
+      >
         <Drawer
-          variant="permanent"
+          variant="temporary"
           sx={{
             display: { xs: 'none', sm: 'block' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: SIDE_BAR_WIDTH },
           }}
-          open
+          open={isOpen}
         >
           <CustomDrawer />
         </Drawer>
