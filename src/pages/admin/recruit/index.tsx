@@ -6,6 +6,9 @@ import React, { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import useDebounce from '@hooks/useDebounce';
 import { TableData } from '@interfaces/admin/recruit';
+import { useRecoilState } from 'recoil';
+import { sidebarAtom } from '@atoms/sidebarAtom';
+import CustomSideBar from '@components/SideBar/CustomSideBar';
 
 type Filter = 'email' | 'title';
 
@@ -15,6 +18,7 @@ export default function AdminRecruit() {
   const [jobs, setJobs] = useState<TableData[] | null>(null);
   const [page, setPage] = useState<number>(0);
   const debouncedQuery = useDebounce(query, 200);
+  const [isSidebarOpen, setIsSideBarOpen] = useRecoilState(sidebarAtom);
 
   useQuery(
     ['admin', 'recruit', debouncedQuery],
@@ -45,7 +49,8 @@ export default function AdminRecruit() {
   };
 
   return (
-    <Box sx={{ m: 5 }}>
+    <Box sx={{ ml: 10, mr: 5, mt: 5 }}>
+      <CustomSideBar isOpen={isSidebarOpen} setIsOpen={setIsSideBarOpen} />
       <Box component="form" sx={{ my: 2, display: 'flex', alignItems: 'center', width: 400 }}>
         <form onSubmit={handleSearchSubmit}>
           <TextField select size="small" value={filter} onChange={handleFilterChange}>
