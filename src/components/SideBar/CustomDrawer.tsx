@@ -15,13 +15,11 @@ export default function CustomDrawer() {
 
   const handleMenuClick = (menu: string) => {
     router.replace(SideBarPath[menu]);
-    router.reload();
   };
 
   // URL을 통해 현재 페이지에 맞는 사이드바 검증
   useEffect(() => {
     if (
-      router.asPath.includes('/board') ||
       router.asPath.includes('/board/free') ||
       router.asPath.includes('/board/doctor') ||
       router.asPath.includes('/board/nurse')
