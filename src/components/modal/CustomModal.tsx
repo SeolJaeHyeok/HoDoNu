@@ -9,8 +9,8 @@ import CloseIcon from '@mui/icons-material/Close';
 interface ModalProps {
   children: React.ReactNode;
   value?: string;
-  btnStyle: any;
-  btnContent: any;
+  btnStyle?: any;
+  btnContent?: any;
 }
 
 export default function CustomModal({ children, btnStyle, btnContent }: ModalProps) {

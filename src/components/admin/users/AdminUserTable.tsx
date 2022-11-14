@@ -12,6 +12,8 @@ import CustomAvatarImage from '@components/CustomAvartar';
 import { Box, Button, Container, IconButton, Switch } from '@mui/material';
 import { CATEGORY_TABLE } from '@utils/const/category';
 import PersonOffIcon from '@mui/icons-material/PersonOff';
+import CustomModal from '@components/modal/CustomModal';
+import Image from 'next/image';
 
 interface AdminUserTableProps {
   users: AdminUserProps[];
@@ -56,14 +58,6 @@ export default function AdminUserTable({
     }
   };
 
-  const handleActiveAuthCheck = () => {
-    alert('활동 권한 인증 Modal 열기');
-  };
-
-  const handleRecruitAuthCheck = () => {
-    alert('채용 권한 인증 Modal 열기');
-  };
-
   return (
     <TableContainer sx={{ width: '80%', minWidth: '650px' }} component={Paper}>
       <Table aria-label="simple table">
@@ -103,7 +97,6 @@ export default function AdminUserTable({
                 {user.address.mainAddress}, {user.address.detailAddress}
               </TableCell>
               <TableCell align="center">
-                {/*user.blockTable의 값을 통해 default checked item  */}
                 <MultipleSelectCheckmarks
                   searchQuery={searchQuery}
                   searchQueryKey={searchQueryKey}
@@ -117,7 +110,11 @@ export default function AdminUserTable({
                   onChange={() => handleToggleRecruiter(user.userId, !user.isRecruiter)}
                   inputProps={{ 'aria-label': 'controlled' }}
                 />
-                <Button onClick={handleRecruitAuthCheck}>인증</Button>
+                <CustomModal btnContent={'인증'}>
+                  <Image width={300} height={300} src={'/assets/images/wellcheck.png'} />
+                  <Button onClick={() => alert('수락')}>수락</Button>
+                  <Button onClick={() => alert('거절')}>거절</Button>
+                </CustomModal>
               </TableCell>
               <TableCell align="center">
                 <Switch
@@ -125,7 +122,11 @@ export default function AdminUserTable({
                   onChange={() => handleToggleAuth(user.userId, !user.isAuth)}
                   inputProps={{ 'aria-label': 'controlled' }}
                 />
-                <Button onClick={handleActiveAuthCheck}>인증</Button>
+                <CustomModal btnContent={'인증'}>
+                  <Image width={300} height={300} src={'/assets/images/wellcheck.png'} />
+                  <Button onClick={() => alert('수락')}>수락</Button>
+                  <Button onClick={() => alert('거절')}>거절</Button>
+                </CustomModal>
               </TableCell>
               <TableCell align="center">
                 <IconButton>

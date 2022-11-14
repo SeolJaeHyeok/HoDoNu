@@ -102,6 +102,7 @@ export default function AdminUser() {
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
+        marginTop: '50px',
       }}
     >
       <AdminUserSearch
