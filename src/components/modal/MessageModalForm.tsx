@@ -1,30 +1,43 @@
 import CustomModal from './CustomModal';
 import styled from '@emotion/styled';
-import ReplyModalForm from './ReplyModalForm';
+import ArticleIcon from '@mui/icons-material/Article';
+import TitleIcon from '@mui/icons-material/Title';
 
 interface MessageUserProps {
-  name: string;
-  email: string;
+  senderEmail: string;
+  title: string;
+  content: string;
 }
 
-export default function MessageModalForm({ name, email }: MessageUserProps) {
+export default function MessageModalForm({ senderEmail, title, content }: MessageUserProps) {
   return (
-    <CustomModal>
-      <ModalTitle>
-        <UserName>보낸 사람: {name}</UserName>({email})
-      </ModalTitle>
-      <ModalCotent>메시지 내용이 들어갑니다.</ModalCotent>
-      <ReplyModalForm receiverEmail={'receiver@receiver.com'} receiverName={'김길동'} />
-    </CustomModal>
+    <>
+      <CustomModal btnContent={'확인'}>
+        <Sender>보낸 사람: {senderEmail}</Sender>
+        <ModalTitle>
+          <TitleIcon sx={{ fontSize: '14px', marginRight: '10px' }} />
+          제목 : {title}
+        </ModalTitle>
+        <ModalContent>
+          <ArticleIcon sx={{ fontSize: '14px', marginRight: '10px' }} />
+          내용
+          <p>{content}</p>
+        </ModalContent>
+      </CustomModal>
+    </>
   );
 }
 
+const Sender = styled.h2`
+  font-size: 20px;
+  text-align: 'center';
+`;
+
 const ModalTitle = styled.h2`
-  font-size: 22px;
+  margin-top: 20px;
 `;
-const ModalCotent = styled.p`
-  width: 433px;
-  height: 330px;
-  margin-top: 10px;
+const ModalContent = styled.p`
+  width: 100%;
+  margin-top: 15px;
+  line-height: 150%;
 `;
-const UserName = styled.span``;
