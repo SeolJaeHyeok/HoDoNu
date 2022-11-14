@@ -5,7 +5,7 @@ const filterTagJoinUrl = (searchTagNames: any, searchTagIds: any, searchInput: a
     .map((tag: any) => searchFilterTagsObj[tag] + `=${searchInput}`)
     .join('&');
 
-  const searchRequestTagId = searchTagIds.tagIds.map((tag: number) => `tagIds=${tag}`).join('&');
+  const searchRequestTagId = searchTagIds.tagIds.map((tag: number) => `tagIds[]=${tag}`).join('&');
   const searchRequestURL = searchRequestTagName + `&${searchRequestTagId}`;
 
   return searchRequestURL;

@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function RecruitCardView({ company, title, address, jobId }: RecruitCardViewProps) {
   return (
-    <Link href={`/jobs/${jobId}`}>
+    <Link href={`/recruit/${jobId}`}>
       <CardContainer>
         <Image
           src="/assets/images/wellcheck.avif"
