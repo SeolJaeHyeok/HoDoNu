@@ -19,8 +19,8 @@ export default function MessageModalForm({
   return (
     <>
       <CustomModal btnContent={'확인'}>
-        {senderEmail && <Mail>보낸 사람: {senderEmail}</Mail>}
-        {receiverEmail && <Mail>받은 사람: {receiverEmail}</Mail>}
+        {senderEmail && <Mail>받은 사람: {senderEmail}</Mail>}
+        {receiverEmail && <Mail>보낸 사람: {receiverEmail}</Mail>}
         <ModalTitle>
           <TitleIcon sx={{ fontSize: '14px', marginRight: '10px' }} />
           제목 : {title}
