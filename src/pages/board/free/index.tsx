@@ -7,11 +7,10 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import CustomSideBar from '@components/SideBar/CustomSideBar';
 import BoardHeader from '@components/Board/BoardHeader';
 import { searchDataAtom } from '@atoms/searchAtom';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { sidebarAtom } from '@atoms/sidebarAtom';
+import { useRecoilValue } from 'recoil';
+import BoardSkeleton from '@components/Board/BoardSkeleton';
 
 /*
   TODO  
@@ -29,7 +28,6 @@ export default function FreeBoard() {
   const [sort, setSort] = useState('createdAt');
   const [page, setPage] = useState('1');
   const [perPage, setPerPage] = useState('5');
-  const [isSidebarOpen, setIsSideBarOpen] = useRecoilState(sidebarAtom);
 
   const { data: res } = useQuery(
     ['board', 'free', sort, page, perPage, searchText],
@@ -60,27 +58,30 @@ export default function FreeBoard() {
 
   return (
     <>
-      <CustomSideBar isOpen={isSidebarOpen} setIsOpen={setIsSideBarOpen} />
-      <BoardContainer>
-        <>
-          <BoardHeader
-            setSort={setSort}
-            setPage={setPage}
-            setPerPage={setPerPage}
-            page={page}
-            sort={sort}
-            perPage={perPage}
-            category="free"
-          />
-          {res?.data.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
-          <BoardList
-            boardCategory={res?.data.result.category.toLowerCase()}
-            articles={res?.data.result.articles}
-          />
-        </>
+      {!res ? (
+        <BoardSkeleton />
+      ) : (
+        <BoardContainer>
+          <>
+            <BoardHeader
+              setSort={setSort}
+              setPage={setPage}
+              setPerPage={setPerPage}
+              page={page}
+              sort={sort}
+              perPage={perPage}
+              category="free"
+            />
+            {res?.data.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
+            <BoardList
+              boardCategory={res?.data.result.category.toLowerCase()}
+              articles={res?.data.result.articles}
+            />
+          </>
 
-        <Pagination length={TOTAL_PAGE} handler={pageNumber => handlePageNavigate(pageNumber)} />
-      </BoardContainer>
+          <Pagination length={TOTAL_PAGE} handler={pageNumber => handlePageNavigate(pageNumber)} />
+        </BoardContainer>
+      )}
     </>
   );
 }
