@@ -38,7 +38,7 @@ const authApi = {
     instance.patch('/users/password', { presentPassword, updatePassword }).then(res => res.data),
 
   postCertification: (file: FormData): Promise<AxiosResponse<any>> =>
-    instance.post('/users/certification', file).then(res => res.data),
+    instance.post('/users/certification/document', file).then(res => res.data),
   postRecruiterCertification: (file: FormData): Promise<AxiosResponse<any>> =>
     instance.post('users/recruiter/document', file).then(res => res.data),
 };

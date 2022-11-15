@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -10,13 +10,19 @@ import FileUploader from '@components/Recruit/FileUploader';
 import { FileProps } from '@interfaces/recruit';
 
 //authStatus : inActive, pending, active, reject
-// export default function UserActiveCertificationModal({ status }: { status: Status }) {
-export default function UserActiveCertificationModal() {
-  const status = 'reject';
+export default function UserActiveCertificationModal({
+  status,
+  userId,
+}: {
+  status: Status;
+  userId: string;
+}) {
   const [fileList, setFileList] = useState<FileProps[]>([]);
+  const queryClient = useQueryClient();
 
   const updateFile = useMutation(authApi.postCertification, {
     onSuccess: () => {
+      queryClient.invalidateQueries(['detailUser', userId]);
       alert('성공적으로 등록되었습니다. ');
     },
     onError: (e: Error) => {
@@ -24,7 +30,7 @@ export default function UserActiveCertificationModal() {
     },
   });
 
-  const handleUploadAuthFile = async (e: React.SyntheticEvent) => {
+  const handleUploadAuthFile = async (e: React.SyntheticEvent<HTMLElement>) => {
     e.preventDefault();
     const formData = new FormData();
     if (fileList.length === 0) {
@@ -34,7 +40,6 @@ export default function UserActiveCertificationModal() {
       formData.append('certification', fileList[0].file!);
       updateFile.mutate(formData);
     }
-    console.log(fileList);
   };
 
   const btnStyle = { boxShadow: 0, color: 'primary' };
@@ -70,7 +75,7 @@ export default function UserActiveCertificationModal() {
           </Box>
         </Box>
         <Box sx={{ my: 1, py: 1 }}>
-          {status === 'pending' && (
+          {status === 'Pending' && (
             <Box>
               <Typography fontSize={15} color="#FF5353">
                 관리자가 인증서류를 확인중입니다.
@@ -78,24 +83,18 @@ export default function UserActiveCertificationModal() {
             </Box>
           )}
 
-          {status === 'reject' && (
+          {status === 'Reject' && (
             <Box>
               <Typography fontSize={15} color="#FF5353" sx={{ mb: 1 }}>
                 인증 서류가 거절되었습니다. 인증서류를 다시 제출해주세요.
               </Typography>
             </Box>
           )}
-          {/* 파일이 있을 경우 파일 보여주기 */}
         </Box>
         <Box>
-          <form>
+          <form onSubmit={handleUploadAuthFile}>
             <FileUploader fileList={fileList} setFileList={setFileList} name="userAuth" />
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{ color: '#fff', width: '100%', mt: 1 }}
-              onSubmit={handleUploadAuthFile}
-            >
+            <Button type="submit" variant="contained" sx={{ color: '#fff', width: '100%', mt: 1 }}>
               인증서류 업로드하기
             </Button>
           </form>

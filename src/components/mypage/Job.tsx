@@ -40,7 +40,7 @@ export default function Job({ user }: { user: UserDetail }) {
         </Box>
 
         <Box sx={{ mt: 2 }}>
-          {/* {user.isRecruiter ? (
+          {user.recruiterStatus === 'Active' ? (
             <Box sx={{ display: 'flex', alignItems: 'center', color: 'primary.main' }}>
               <FileDownloadDoneIcon sx={{ mr: 1 }} />
               <Typography>승인된 채용담당자입니다.</Typography>
@@ -48,18 +48,7 @@ export default function Job({ user }: { user: UserDetail }) {
           ) : (
             <Box sx={{ display: 'flex', alignItems: 'center', color: 'primary.main' }}>
               <EastIcon />
-              <RecruiterCertificationModal status={user.recruitStatus} />
-            </Box>
-          )} */}
-          {user.recruitStatus === 'active' ? (
-            <Box sx={{ display: 'flex', alignItems: 'center', color: 'primary.main' }}>
-              <FileDownloadDoneIcon sx={{ mr: 1 }} />
-              <Typography>승인된 채용담당자입니다.</Typography>
-            </Box>
-          ) : (
-            <Box sx={{ display: 'flex', alignItems: 'center', color: 'primary.main' }}>
-              <EastIcon />
-              <RecruiterCertificationModal status={user.recruitStatus} />
+              <RecruiterCertificationModal status={user.recruiterStatus} userId={user.userId} />
             </Box>
           )}
         </Box>

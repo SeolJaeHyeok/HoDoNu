@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import BadgeIcon from '@mui/icons-material/Badge';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -16,13 +16,20 @@ import { FileProps } from '@interfaces/recruit';
  * active : 승인된 사용자입니다.
  * reject : 서류가 거절되었습니다. 인증 서류를 보완해서 다시 올려주세요. + 파일 업로드
  */
-// export default function RecruiterCertificationModal({ status }: { status: Status }) {
-export default function RecruiterCertificationModal() {
-  const status = 'reject';
+export default function RecruiterCertificationModal({
+  status,
+  userId,
+}: {
+  status: Status;
+  userId: string;
+}) {
   const [fileList, setFileList] = useState<FileProps[]>([]);
+  const queryClient = useQueryClient();
 
   const updateFile = useMutation(authApi.postRecruiterCertification, {
     onSuccess: () => {
+      queryClient.invalidateQueries(['detailUser', userId]);
+
       alert('성공적으로 등록되었습니다. ');
     },
     onError: (e: Error) => {
@@ -40,7 +47,6 @@ export default function RecruiterCertificationModal() {
       formData.append('recruiterDocument', fileList[0].file!);
       updateFile.mutate(formData);
     }
-    console.log(fileList);
   };
 
   const btnStyle = { boxShadow: 0, color: 'primary' };
@@ -76,15 +82,14 @@ export default function RecruiterCertificationModal() {
           </Box>
         </Box>
         <Box sx={{ my: 1, py: 1 }}>
-          {status === 'pending' && (
+          {status === 'Pending' && (
             <Box>
               <Typography fontSize={15} color="#FF5353">
                 관리자가 인증서류를 확인중입니다.
               </Typography>
             </Box>
           )}
-
-          {status === 'reject' && (
+          {status === 'Reject' && (
             <Box>
               <Typography fontSize={15} color="#FF5353" sx={{ mb: 1 }}>
                 인증 서류가 거절되었습니다. 인증서류를 다시 제출해주세요.
@@ -92,15 +97,13 @@ export default function RecruiterCertificationModal() {
             </Box>
           )}
 
-          {/* 파일이 있을 경우 파일 보여주기 */}
           <Box>
-            <form>
+            <form onSubmit={handleUploadFile}>
               <FileUploader fileList={fileList} setFileList={setFileList} name="userAuth" />
               <Button
                 type="submit"
                 variant="contained"
                 sx={{ color: '#fff', width: '100%', mt: 1 }}
-                onSubmit={handleUploadFile}
               >
                 인증서류 업로드하기
               </Button>
