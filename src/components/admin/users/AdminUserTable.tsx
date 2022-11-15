@@ -110,27 +110,33 @@ export default function AdminUserTable({
                   inputProps={{ 'aria-label': 'controlled' }}
                 />
                 <CustomModal btnContent={'인증'}>
-                  <Image
-                    alt="채용 인증 이미지"
-                    width={300}
-                    height={300}
-                    src={`${user.recruiterDocument}`}
-                  />
-                  <Box component="div" sx={{ textAlign: 'center' }}>
-                    <Button
-                      variant="outlined"
-                      sx={{ mr: 3 }}
-                      onClick={() => handleToggleRecruiter(user.userId, 'Active')}
-                    >
-                      활성화
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      onClick={() => handleToggleRecruiter(user.userId, 'Reject')}
-                    >
-                      비활성화
-                    </Button>
-                  </Box>
+                  {user.recruiterStatus === 'Pending' ? (
+                    <>
+                      <Image
+                        alt="채용 인증 이미지"
+                        width={300}
+                        height={300}
+                        src={`${user.recruiterDocument}`}
+                      />
+                      <Box component="div" sx={{ textAlign: 'center' }}>
+                        <Button
+                          variant="outlined"
+                          sx={{ mr: 3 }}
+                          onClick={() => handleToggleRecruiter(user.userId, 'Active')}
+                        >
+                          활성화
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          onClick={() => handleToggleRecruiter(user.userId, 'Reject')}
+                        >
+                          비활성화
+                        </Button>
+                      </Box>
+                    </>
+                  ) : (
+                    <div>해당 회원의 인증 요청이 존재하지 않았습니다.</div>
+                  )}
                 </CustomModal>
               </TableCell>
               <TableCell align="center">
@@ -139,27 +145,33 @@ export default function AdminUserTable({
                   inputProps={{ 'aria-label': 'controlled' }}
                 />
                 <CustomModal btnContent={'인증'}>
-                  <Image
-                    alt="회원 인증 이미지"
-                    width={300}
-                    height={300}
-                    src={`${user.authDocument}`}
-                  />
-                  <Box component="div" sx={{ textAlign: 'center' }}>
-                    <Button
-                      variant="outlined"
-                      sx={{ mr: 3 }}
-                      onClick={() => handleToggleAuth(user.userId, 'Active')}
-                    >
-                      활성화
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      onClick={() => handleToggleAuth(user.userId, 'Reject')}
-                    >
-                      비활성화
-                    </Button>
-                  </Box>
+                  {user.authStatus === 'Pending' ? (
+                    <>
+                      <Image
+                        alt="회원 인증 이미지"
+                        width={300}
+                        height={300}
+                        src={`${user.authDocument}`}
+                      />
+                      <Box component="div" sx={{ textAlign: 'center' }}>
+                        <Button
+                          variant="outlined"
+                          sx={{ mr: 3 }}
+                          onClick={() => handleToggleAuth(user.userId, 'Active')}
+                        >
+                          활성화
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          onClick={() => handleToggleAuth(user.userId, 'Reject')}
+                        >
+                          비활성화
+                        </Button>
+                      </Box>
+                    </>
+                  ) : (
+                    <div>해당 회원의 인증 요청이 존재하지 않습니다.</div>
+                  )}
                 </CustomModal>
               </TableCell>
               <TableCell align="center">
