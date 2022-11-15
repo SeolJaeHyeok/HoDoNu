@@ -36,10 +36,8 @@ export default function UserActiveCertificationModal({
     if (fileList.length === 0) {
       alert('파일을 선택해주세요.');
     }
-    if (fileList.length > 0) {
-      formData.append('certification', fileList[0].file!);
-      updateFile.mutate(formData);
-    }
+    formData.append('certification', fileList[0].file!);
+    updateFile.mutate(formData);
   };
 
   const btnStyle = { boxShadow: 0, color: 'primary' };

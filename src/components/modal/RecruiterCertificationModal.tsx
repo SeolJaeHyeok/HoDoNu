@@ -43,10 +43,8 @@ export default function RecruiterCertificationModal({
     if (fileList.length === 0) {
       alert('파일을 선택해주세요.');
     }
-    if (fileList.length > 0) {
-      formData.append('recruiterDocument', fileList[0].file!);
-      updateFile.mutate(formData);
-    }
+    formData.append('recruiterDocument', fileList[0].file!);
+    updateFile.mutate(formData);
   };
 
   const btnStyle = { boxShadow: 0, color: 'primary' };
