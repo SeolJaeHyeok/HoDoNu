@@ -45,7 +45,7 @@ export default function AdminRecruit() {
   };
 
   return (
-    <Box sx={{ m: 5 }}>
+    <Box sx={{ ml: 10, mr: 5, mt: 5 }}>
       <Box component="form" sx={{ my: 2, display: 'flex', alignItems: 'center', width: 400 }}>
         <form onSubmit={handleSearchSubmit}>
           <TextField select size="small" value={filter} onChange={handleFilterChange}>
