@@ -43,7 +43,9 @@ export default function MessageSendModal({
             <CloseIcon />
           </IconButton>
           {children}
-          <Button onClick={handleSendMessage}>전송</Button>
+          <Button variant="contained" onClick={handleSendMessage}>
+            전송
+          </Button>
         </Box>
       </Modal>
     </>
