@@ -18,8 +18,8 @@ import Image from 'next/image';
 interface AdminUserTableProps {
   users: AdminUserProps[];
   handleDeleteUser: (userId: string) => void;
-  handleEditUserRecruitAuth: (userId: string, isRecruiter: boolean) => void;
-  handleEditUserActiveAuth: (userId: string, isAuth: boolean) => void;
+  handleEditUserRecruitAuth: (userId: string, recruiterStatus: string) => void;
+  handleEditUserActiveAuth: (userId: string, authStatus: string) => void;
   searchQuery: string;
   searchQueryKey: string;
 }
@@ -42,13 +42,13 @@ export default function AdminUserTable({
   searchQueryKey,
 }: AdminUserTableProps) {
   // 채용 권한 변경
-  const handleToggleRecruiter = (userId: string, isRecruiter: boolean) => {
-    handleEditUserRecruitAuth(userId, isRecruiter);
+  const handleToggleRecruiter = (userId: string, recruiterStatus: string) => {
+    handleEditUserRecruitAuth(userId, recruiterStatus);
   };
 
   // 활동 권한 변경
-  const handleToggleAuth = (userId: string, isAuth: boolean) => {
-    handleEditUserActiveAuth(userId, isAuth);
+  const handleToggleAuth = (userId: string, authStatus: string) => {
+    handleEditUserActiveAuth(userId, authStatus);
   };
 
   // 회원 삭제
@@ -106,26 +106,44 @@ export default function AdminUserTable({
               </TableCell>
               <TableCell align="center">
                 <Switch
-                  checked={user.isRecruiter}
-                  onChange={() => handleToggleRecruiter(user.userId, !user.isRecruiter)}
+                  checked={user.recruiterStatus === 'Active'}
                   inputProps={{ 'aria-label': 'controlled' }}
                 />
                 <CustomModal btnContent={'인증'}>
-                  <Image width={300} height={300} src={'/assets/images/wellcheck.png'} />
-                  <Button onClick={() => alert('수락')}>수락</Button>
-                  <Button onClick={() => alert('거절')}>거절</Button>
+                  <Image
+                    alt="채용 인증 이미지"
+                    width={300}
+                    height={300}
+                    src={`${user.recruiterDocument}`}
+                  />
+                  <Box component="div" sx={{ textAlign: 'center' }}>
+                    <Button onClick={() => handleToggleRecruiter(user.userId, 'Active')}>
+                      활성화
+                    </Button>
+                    <Button onClick={() => handleToggleRecruiter(user.userId, 'Reject')}>
+                      비활성화
+                    </Button>
+                  </Box>
                 </CustomModal>
               </TableCell>
               <TableCell align="center">
                 <Switch
-                  checked={user.isAuth}
-                  onChange={() => handleToggleAuth(user.userId, !user.isAuth)}
+                  checked={user.authStatus === 'Active'}
                   inputProps={{ 'aria-label': 'controlled' }}
                 />
                 <CustomModal btnContent={'인증'}>
-                  <Image width={300} height={300} src={'/assets/images/wellcheck.png'} />
-                  <Button onClick={() => alert('수락')}>수락</Button>
-                  <Button onClick={() => alert('거절')}>거절</Button>
+                  <Image
+                    alt="회원 인증 이미지"
+                    width={300}
+                    height={300}
+                    src={`${user.authDocument}`}
+                  />
+                  <Box component="div" sx={{ textAlign: 'center' }}>
+                    <Button onClick={() => handleToggleAuth(user.userId, 'Active')}>활성화</Button>
+                    <Button onClick={() => handleToggleAuth(user.userId, 'Reject')}>
+                      비활성화
+                    </Button>
+                  </Box>
                 </CustomModal>
               </TableCell>
               <TableCell align="center">

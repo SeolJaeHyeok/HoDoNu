@@ -60,7 +60,7 @@ export default function AdminUser() {
   // 채용 권한 변경 API
   const { mutateAsync: editUserRecruitAuthMutate } = useMutation(adminApi.editUserRecruitAuth, {
     onSuccess: data => {
-      console.log(data);
+      alert(data.data.result);
       queryClient.invalidateQueries(['admin', 'users', searchQueryKey, searchQuery]);
     },
     onError: (e: unknown) => {
@@ -71,6 +71,7 @@ export default function AdminUser() {
   // 활동 권한 변경 API
   const { mutateAsync: editUserActiveAuthMutate } = useMutation(adminApi.editUserActiveAuth, {
     onSuccess: data => {
+      alert(data.data.result);
       queryClient.invalidateQueries(['admin', 'users', searchQueryKey, searchQuery]);
     },
     onError: (e: unknown) => {
@@ -84,14 +85,14 @@ export default function AdminUser() {
   };
 
   // 관리자 - 채용 권한 변경 함수
-  const handleEditUserRecruitAuth = async (userId: string, isRecruiter: boolean) => {
-    const bodyData = { isRecruiter };
+  const handleEditUserRecruitAuth = async (userId: string, recruiterStatus: string) => {
+    const bodyData = { recruiterStatus };
     await editUserRecruitAuthMutate({ userId, bodyData });
   };
 
   // 관리자 - 회원 활동 권한 함수
-  const handleEditUserActiveAuth = async (userId: string, isAuth: boolean) => {
-    const bodyData = { isAuth };
+  const handleEditUserActiveAuth = async (userId: string, authStatus: string) => {
+    const bodyData = { authStatus };
     await editUserActiveAuthMutate({ userId, bodyData });
   };
 

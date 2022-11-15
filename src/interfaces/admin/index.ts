@@ -8,8 +8,10 @@ export interface AdminUserProps {
   jobCategory: string;
   imgUrl: string;
   email: string;
-  isRecruiter: boolean;
+  recruiterStatus: string;
+  recruiterDocument: string;
+  authStatus: string;
+  authDocument: string;
   totalArticles: number;
-  blockTable: any[];
-  isAuth: boolean;
+  blockTable: string[];
 }
