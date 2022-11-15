@@ -8,6 +8,7 @@ interface MessageUserProps {
   receiverEmail?: string;
   title: string;
   content: string;
+  messageId: string;
 }
 
 export default function MessageModalForm({
@@ -15,7 +16,10 @@ export default function MessageModalForm({
   title,
   content,
   receiverEmail,
+  messageId,
 }: MessageUserProps) {
+  console.log(messageId);
+
   return (
     <>
       <CustomModal btnContent={'확인'}>

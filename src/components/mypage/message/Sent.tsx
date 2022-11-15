@@ -6,6 +6,7 @@ import MessageItem from './MessageItem';
 
 export default function Sent() {
   const { data } = useQuery(['message', 'sent'], () => messageApi.getSentMessage());
+  const dataBeforeCheck = data?.result.filter(item => item.check === false);
   return (
     <Box
       sx={{
@@ -24,10 +25,10 @@ export default function Sent() {
         </Box>
       </Box>
       <Divider sx={{ width: '100%' }}></Divider>
-      {data && (
+      {dataBeforeCheck && (
         <Box sx={{ m: 1, p: 1 }}>
-          {data.result.length > 0 ? (
-            data.result.map(message => {
+          {dataBeforeCheck.length > 0 ? (
+            dataBeforeCheck.slice(0, 5).map(message => {
               return <MessageItem key={message.messageId} message={message} status={'sent'} />;
             })
           ) : (

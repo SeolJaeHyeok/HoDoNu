@@ -7,6 +7,7 @@ import MessageItem from './MessageItem';
 
 export default function Received() {
   const { data } = useQuery(['message', 'received'], () => messageApi.getReceivedMessage());
+  const dataBeforeCheck = data?.result.filter(item => item.check === false);
 
   return (
     <Box
@@ -26,10 +27,10 @@ export default function Received() {
         </Box>
       </Box>
       <Divider sx={{ width: '100%' }}></Divider>
-      {data && (
+      {dataBeforeCheck && (
         <Box sx={{ m: 1, p: 1 }}>
-          {data?.result.length > 0 ? (
-            data.result.map(message => {
+          {dataBeforeCheck.length > 0 ? (
+            dataBeforeCheck.slice(0, 5).map(message => {
               return <MessageItem key={message.messageId} message={message} status={'received'} />;
             })
           ) : (

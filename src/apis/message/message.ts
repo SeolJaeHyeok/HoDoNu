@@ -11,6 +11,7 @@ interface Message {
   takerEmail?: string;
   title: string;
   content: string;
+  check: boolean;
 }
 
 interface MessageRes {
@@ -29,7 +30,7 @@ const messageApi = {
   deleteRecievedMessage: (messageId: string): Promise<MessageRes> =>
     instance.delete(`/messages/taker/${messageId}`).then(res => res.data),
 
-  patchMessageStatus: (messageId: string): Promise<MessageRes> =>
+  patchMessageCheck: (messageId: string): Promise<MessageRes> =>
     instance.delete(`/messages/${messageId}`).then(res => res.data),
 };
 

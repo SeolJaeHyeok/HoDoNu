@@ -22,7 +22,6 @@ export default function MessageItem({
   message: MessageProps;
   status: 'sent' | 'received';
 }) {
-  console.log(status);
   const queryClient = useQueryClient();
 
   const deleteRecievedMessage = useMutation(
@@ -63,7 +62,6 @@ export default function MessageItem({
       <Box key={message.messageId} sx={itemStyle}>
         <Typography sx={itemTypoStyle}> {message.senderEmail}</Typography>
         <Typography>
-          {' '}
           {message.title.length < 6 ? message.title : `${message.title.slice(0, 6)}...`}
         </Typography>
         <Box>
@@ -71,6 +69,7 @@ export default function MessageItem({
             receiverEmail={message.senderEmail}
             title={message.title}
             content={message.content}
+            messageId={message.messageId}
           />
           <IconButton onClick={handleDeleteMessage}>
             <CloseIcon color="primary" />
@@ -84,7 +83,7 @@ export default function MessageItem({
 
 const itemStyle = {
   display: 'flex',
-  mt: 1,
+  pt: 1,
   justifyContent: 'space-between',
   alignItems: 'center',
   '&:hover': {
