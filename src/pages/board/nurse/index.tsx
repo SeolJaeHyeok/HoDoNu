@@ -3,7 +3,6 @@ import BoardHeader from '@components/Board/BoardHeader';
 import BoardList from '@components/Board/BoardList';
 import BoardSkeleton from '@components/Board/BoardSkeleton';
 import Pagination from '@components/Pagination';
-import CustomSideBar from '@components/SideBar/CustomSideBar';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -14,7 +13,8 @@ export default function NurseBoard() {
 
   const [sort, setSort] = useState('createdAt');
   const [page, setPage] = useState('1');
-  const [perPage, setPerPage] = useState('10');
+  const [perPage, setPerPage] = useState('5');
+
   const { data: res } = useQuery(['board', 'nurse', sort, page, perPage], () =>
     boardApi.getAllNurseBoards({ page, perPage, sort })
   );
@@ -38,7 +38,6 @@ export default function NurseBoard() {
   };
   return (
     <>
-      <CustomSideBar />
       <BoardContainer>
         {!res ? (
           <BoardSkeleton />
@@ -55,7 +54,7 @@ export default function NurseBoard() {
             />
 
             <BoardList
-              category={res.data.result.category.toLowerCase()}
+              boardCategory={res.data.result.category.toLowerCase()}
               articles={res.data.result.articles}
             />
           </>
