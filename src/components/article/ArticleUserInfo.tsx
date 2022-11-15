@@ -33,11 +33,11 @@ export default function ArticleUserInfo({ content }: ArticleUserInfoProps) {
     content: '',
   });
   const loginUserId = useRecoilValue(userInfoState);
-
   const open = Boolean(anchorEl);
 
   const handleMenuClick = (e: MouseEvent<HTMLButtonElement>) => {
-    loginUserId?.userId !== content?.user.userId && setAnchorEl(e.currentTarget);
+    if (loginUserId?.userId !== content?.user.userId && loginUserId?.userId !== undefined)
+      setAnchorEl(e.currentTarget);
   };
 
   const handleMenuClose = () => {
