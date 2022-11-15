@@ -1,10 +1,47 @@
+import boardManageApi from '@apis/admin/board/boardManage';
 import BoardTable from '@components/admin/board/BoardTable';
 import styled from '@emotion/styled';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+
+export interface BoardDataState {
+  articleId: number;
+  comments: number;
+  createdAt: string;
+  hits: number;
+  id: number;
+  title: string;
+  user: {
+    email: string;
+  };
+  userId: string;
+}
 
 export default function AdminBoard() {
+  const [boardData, setBoardData] = useState<BoardDataState[]>();
+  const [selectedCategory, setSelectedCategory] = useState<string>('frees');
+  const [totalData, setTotalData] = useState<number>();
+
+  useQuery(
+    ['admin', 'board', selectedCategory],
+    () => boardManageApi.getBoardAllData(selectedCategory),
+    {
+      onSuccess: data => {
+        setTotalData(data.data.result.count);
+        setBoardData(data.data.result.articles);
+      },
+    }
+  );
+
   return (
     <AdminBoardWrapper>
-      <BoardTable />
+      <BoardTable
+        articles={boardData!}
+        total={totalData!}
+        setTotalData={setTotalData}
+        setSelectedCategory={setSelectedCategory}
+        setBoardData={setBoardData}
+      />
     </AdminBoardWrapper>
   );
 }

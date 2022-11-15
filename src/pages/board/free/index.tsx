@@ -7,10 +7,10 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import CustomSideBar from '@components/SideBar/CustomSideBar';
 import BoardHeader from '@components/Board/BoardHeader';
 import { searchDataAtom } from '@atoms/searchAtom';
 import { useRecoilValue } from 'recoil';
+import BoardSkeleton from '@components/Board/BoardSkeleton';
 
 /*
   TODO  
@@ -56,29 +56,32 @@ export default function FreeBoard() {
     });
   };
 
-  // TODO: SideBar 공통 Layout으로 분리, Navbar 위에 덮는 문제 해결
   return (
     <>
-      <CustomSideBar />
-      <BoardContainer>
-        <>
-          <BoardHeader
-            setSort={setSort}
-            setPage={setPage}
-            setPerPage={setPerPage}
-            sort={sort}
-            perPage={perPage}
-            category="free"
-          />
-          {res?.data.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
-          <BoardList
-            boardCategory={res?.data.result.category.toLowerCase()}
-            articles={res?.data.result.articles}
-          />
-        </>
+      {!res ? (
+        <BoardSkeleton />
+      ) : (
+        <BoardContainer>
+          <>
+            <BoardHeader
+              setSort={setSort}
+              setPage={setPage}
+              setPerPage={setPerPage}
+              page={page}
+              sort={sort}
+              perPage={perPage}
+              category="free"
+            />
+            {res?.data.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
+            <BoardList
+              boardCategory={res?.data.result.category.toLowerCase()}
+              articles={res?.data.result.articles}
+            />
+          </>
 
-        <Pagination length={TOTAL_PAGE} handler={pageNumber => handlePageNavigate(pageNumber)} />
-      </BoardContainer>
+          <Pagination length={TOTAL_PAGE} handler={pageNumber => handlePageNavigate(pageNumber)} />
+        </BoardContainer>
+      )}
     </>
   );
 }

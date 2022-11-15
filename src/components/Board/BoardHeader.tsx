@@ -18,6 +18,7 @@ interface BoardHeaderProps {
   setPage: Dispatch<SetStateAction<string>>;
   setPerPage: Dispatch<SetStateAction<string>>;
   sort: string | undefined;
+  page: string | undefined;
   perPage: string | undefined;
   category: 'free' | 'doctor' | 'nurse';
 }

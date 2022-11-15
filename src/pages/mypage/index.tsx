@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Grid } from '@mui/material';
 import Job from '@components/mypage/Job';
 import ProfileCard from '@components/mypage/ProfileCard';
-// import CustomSideBar from '@components/SideBar/CustomSideBar';
+
 import Account from '@components/mypage/Account';
 import Security from '@components/mypage/Security';
 import Activity from '@components/mypage/Acivity';
@@ -28,7 +28,6 @@ export default function MypageIndex() {
         p: 2,
       }}
     >
-      {/* <CustomSideBar /> */}
       {userInfo && (
         <>
           <Grid item xs={10}>

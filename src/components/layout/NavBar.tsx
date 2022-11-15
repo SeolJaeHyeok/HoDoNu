@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -10,7 +10,7 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 
 import ResponsiveNavMenu from './ResponsiveNavMenu';
 import { useRecoilValue } from 'recoil';
-import { isLoginState } from 'src/atoms/userAtom';
+import { isLoginState, userInfoState } from 'src/atoms/userAtom';
 import AvartarMenu from './AvartarMenu';
 import NavButton from './NavButton';
 
@@ -18,8 +18,7 @@ export default function NavBar() {
   const router = useRouter();
   const curPath = router.pathname;
 
-  // eslint-disable-next-line no-unused-vars
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const userInfo = useRecoilValue(userInfoState);
   const isLogin = useRecoilValue(isLoginState);
   const handleClick = () => {};
 
@@ -79,6 +78,18 @@ export default function NavBar() {
               채용
             </MuiLink>
           </Link>
+          {userInfo?.role === 'Admin' && (
+            <Link href="/admin/user">
+              <MuiLink
+                underline="none"
+                component="button"
+                color={curPath.includes('/admin') ? '#fff' : '#424242'}
+                sx={linkStyle}
+              >
+                관리자 게시판
+              </MuiLink>
+            </Link>
+          )}
         </Box>
         <Box sx={style}>
           {isLogin ? (
@@ -91,9 +102,9 @@ export default function NavBar() {
           ) : (
             <NavButton />
           )}
-          {isAdmin && (
+          {userInfo?.role === 'Admin' && (
             <Typography fontWeight="500" fontSize="0.85rem" sx={{ color: '#fff' }}>
-              관리자 계정입니다.{' '}
+              관리자 계정입니다.
             </Typography>
           )}
         </Box>

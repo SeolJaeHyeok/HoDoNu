@@ -1,14 +1,35 @@
 import styled from '@emotion/styled';
 import Checkbox from '@mui/material/Checkbox';
+import { BoardDataState } from '@pages/admin/board';
+import { Dispatch, SetStateAction } from 'react';
 
-export default function BoardHeader() {
-  const handleClickCheckMultiple = () => {
-    alert('전부 선택하자');
+interface BoardTableHeaderProps {
+  articles: BoardDataState[];
+  setCheckItems: Dispatch<SetStateAction<number[]>>;
+  checkItems: number[];
+}
+
+export default function BoardTableHeader({
+  articles,
+  setCheckItems,
+  checkItems,
+}: BoardTableHeaderProps) {
+  const handleClickMultipleCheck = (e: any) => {
+    if (e.target.checked) {
+      const idArray: number[] = [];
+      articles.map(el => idArray.push(el.articleId));
+      setCheckItems(idArray);
+      return;
+    }
+    setCheckItems([]);
   };
 
   return (
     <HeaderWrapper>
-      <Checkbox onClick={handleClickCheckMultiple} />
+      <Checkbox
+        onClick={handleClickMultipleCheck}
+        checked={checkItems.length === articles?.length ? true : false}
+      />
       <HeaderId>ID</HeaderId>
       <HeaderTitle>제목</HeaderTitle>
       <HeaderCreate>작성일</HeaderCreate>

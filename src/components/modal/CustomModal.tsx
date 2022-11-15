@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
 interface ModalProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   value?: string;
   btnStyle?: any;
   btnContent?: any;

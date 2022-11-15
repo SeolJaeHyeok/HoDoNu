@@ -1,46 +1,15 @@
+import useSidebarValidation from '@hooks/useSidebarValidation';
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import {
-  adminSideBarMenus,
-  boardSideBarMenus,
-  SideBarPath,
-  SIDE_BAR_ICONS,
-  userSideBarMenus,
-} from 'src/utils/const/sidebarMenus';
+import { SideBarPath, SIDE_BAR_ICONS } from 'src/utils/const/sidebarMenus';
 
 export default function CustomDrawer() {
-  const [targetMenus, setTargetMenus] = useState<string[]>([]);
   const router = useRouter();
+  const { targetMenus } = useSidebarValidation();
 
   const handleMenuClick = (menu: string) => {
     router.replace(SideBarPath[menu]);
-    router.reload();
   };
-
-  // URL을 통해 현재 페이지에 맞는 사이드바 검증
-  useEffect(() => {
-    if (
-      router.asPath.includes('/board') ||
-      router.asPath.includes('/board/free') ||
-      router.asPath.includes('/board/doctor') ||
-      router.asPath.includes('/board/nurse')
-    ) {
-      return setTargetMenus(boardSideBarMenus);
-    }
-
-    if (router.asPath.includes('/mypage') || router.asPath.includes('/mypage/articles')) {
-      return setTargetMenus(userSideBarMenus);
-    }
-
-    if (
-      router.asPath.includes('/admin/user') ||
-      router.asPath.includes('/admin/recruit') ||
-      router.asPath.includes('/admin/board')
-    ) {
-      return setTargetMenus(adminSideBarMenus);
-    }
-  }, [router.asPath]);
 
   return (
     <div

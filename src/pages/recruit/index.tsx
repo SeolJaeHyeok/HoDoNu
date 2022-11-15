@@ -40,15 +40,17 @@ export default function Recruit({ jobList, tagList }: RecruitProps) {
         searchBarFilterInput={searchBarFilterInput}
       />
       <RecruitContentContainer>
-        {jobLists?.map((job, idx: number) => (
-          <RecruitCardView
-            key={idx}
-            company={job.company}
-            title={job.title}
-            address={job.mainAddress}
-            jobId={job.jobId}
-          />
-        ))}
+        {jobLists
+          ?.filter(el => el.isActive === true)
+          .map((job, idx: number) => (
+            <RecruitCardView
+              key={idx}
+              company={job.company}
+              title={job.title}
+              address={job.mainAddress}
+              jobId={job.jobId}
+            />
+          ))}
       </RecruitContentContainer>
     </RecruitWrapper>
   );
