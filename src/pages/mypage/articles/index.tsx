@@ -18,13 +18,11 @@ import { dateFormatter, getComparator } from '@utils/func';
 import { Button, Container } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import ArticleIcon from '@mui/icons-material/Article';
-import CustomSideBar from '@components/SideBar/CustomSideBar';
+
 import { useQuery } from '@tanstack/react-query';
 import userApi from '@apis/user';
 import { UserArticlesProps } from '@interfaces/user/userInfo';
 import { useRouter } from 'next/router';
-import { useRecoilState } from 'recoil';
-import { sidebarAtom } from '@atoms/sidebarAtom';
 
 const CATEGORY_TABLE: {
   [index: string]: string;
@@ -58,7 +56,6 @@ export default function MyPageArticles() {
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [isSidebarOpen, setIsSideBarOpen] = useRecoilState(sidebarAtom);
 
   const { data: userArticles } = useQuery(['mypage', 'articles'], () => userApi.getUserArticles(), {
     cacheTime: Infinity,
@@ -171,7 +168,6 @@ export default function MyPageArticles() {
 
   return (
     <Container>
-      <CustomSideBar isOpen={isSidebarOpen} setIsOpen={setIsSideBarOpen} />
       <Box sx={{ width: '1000px', margin: '50px auto' }}>
         <Paper sx={{ width: '100%', mb: 2 }}>
           <MyPageTableToolbar selectedItems={selected} />

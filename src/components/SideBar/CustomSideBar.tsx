@@ -6,6 +6,7 @@ import CustomDrawer from './CustomDrawer';
 import { Button } from '@mui/material';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import { SetterOrUpdater } from 'recoil';
+
 // 사이드바의 가로 길이
 const SIDE_BAR_WIDTH = 200;
 
@@ -29,6 +30,7 @@ export default function CustomSideBar({ isOpen, setIsOpen }: SideBarProps) {
   const handleSideBarClose = () => {
     setIsOpen(false);
   };
+
   return (
     <Box sx={{ display: 'flex' }}>
       <Button sx={{ position: 'absolute', left: '0', top: '50%' }} onClick={handleSideBarOpen}>

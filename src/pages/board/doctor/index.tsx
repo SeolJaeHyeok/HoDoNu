@@ -3,13 +3,10 @@ import BoardHeader from '@components/Board/BoardHeader';
 import BoardList from '@components/Board/BoardList';
 import BoardSkeleton from '@components/Board/BoardSkeleton';
 import Pagination from '@components/Pagination';
-import CustomSideBar from '@components/SideBar/CustomSideBar';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useRecoilState } from 'recoil';
-import { sidebarAtom } from '@atoms/sidebarAtom';
 
 export default function DoctorBoard() {
   const router = useRouter();
@@ -17,7 +14,6 @@ export default function DoctorBoard() {
   const [sort, setSort] = useState('createdAt');
   const [page, setPage] = useState('1');
   const [perPage, setPerPage] = useState('5');
-  const [isSidebarOpen, setIsSideBarOpen] = useRecoilState(sidebarAtom);
 
   const { data: res } = useQuery(['board', 'doctor', sort, page, perPage], () =>
     boardApi.getAllDoctorBoards({ page, perPage, sort })
@@ -42,7 +38,6 @@ export default function DoctorBoard() {
   };
   return (
     <>
-      <CustomSideBar isOpen={isSidebarOpen} setIsOpen={setIsSideBarOpen} />
       <BoardContainer>
         {!res ? (
           <BoardSkeleton />
