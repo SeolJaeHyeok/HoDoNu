@@ -24,7 +24,7 @@ const useSidebarValidation = () => {
       setIsActive(true);
       setTargetMenus(userSideBarMenus);
     } else if (
-      router.asPath.includes('/admin/user') ||
+      router.asPath.includes('/admin/users') ||
       router.asPath.includes('/admin/recruit') ||
       router.asPath.includes('/admin/board')
     ) {
