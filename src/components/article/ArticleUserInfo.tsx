@@ -7,6 +7,8 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { useMutation } from '@tanstack/react-query';
 import detailApi from '@apis/board/detail';
 import MessageSendModal from '@components/modal/MessageSendModal';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '@atoms/userAtom';
 
 interface ArticleUserInfoProps {
   content: {
@@ -30,11 +32,12 @@ export default function ArticleUserInfo({ content }: ArticleUserInfoProps) {
     title: '',
     content: '',
   });
+  const loginUserId = useRecoilValue(userInfoState);
 
   const open = Boolean(anchorEl);
 
   const handleMenuClick = (e: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(e.currentTarget);
+    loginUserId?.userId !== content?.user.userId && setAnchorEl(e.currentTarget);
   };
 
   const handleMenuClose = () => {
