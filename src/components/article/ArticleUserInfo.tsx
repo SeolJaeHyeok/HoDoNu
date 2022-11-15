@@ -1,13 +1,12 @@
 import CustomAvatarImage from '@components/CustomAvartar';
-import CustomModal from '@components/modal/CustomModal';
 import styled from '@emotion/styled';
 import { IconButton, Menu } from '@mui/material';
 import { convertTime } from '@utils/func';
 import { ChangeEvent, MouseEvent, useState } from 'react';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-import Button from '@mui/material/Button';
 import { useMutation } from '@tanstack/react-query';
 import detailApi from '@apis/board/detail';
+import MessageSendModal from '@components/modal/MessageSendModal';
 
 interface ArticleUserInfoProps {
   content: {
@@ -49,7 +48,14 @@ export default function ArticleUserInfo({ content }: ArticleUserInfoProps) {
       [name]: value,
     });
   };
-  const requsetSendMessage = useMutation(detailApi.postSendMessage);
+  const requsetSendMessage = useMutation(detailApi.postSendMessage, {
+    onSuccess: () => {
+      alert(`쪽지가 전송되었습니다.`);
+    },
+    onError: (e: any) => {
+      alert(`${e.response.data.message}`);
+    },
+  });
 
   const handleClickSendMessage = () => {
     requsetSendMessage.mutate({ takerId: content?.user.userId, msg: sendMessage });
@@ -62,7 +68,7 @@ export default function ArticleUserInfo({ content }: ArticleUserInfoProps) {
       </IconButton>
       <Menu sx={{ width: '400px' }} anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
         <ModalWrapper style={{ width: '100%' }}>
-          <CustomModal btnContent={'쪽지 보내기'} btnStyle={{ width: '100%' }}>
+          <MessageSendModal btnContent={'쪽지 보내기'} onSendMessage={handleClickSendMessage}>
             <Receiver>받는 사람: {content?.user.email}</Receiver>
             <TextareaAutosize
               name="title"
@@ -84,10 +90,7 @@ export default function ArticleUserInfo({ content }: ArticleUserInfoProps) {
                 fontSize: '18px',
               }}
             />
-            <Button variant="contained" onClick={handleClickSendMessage}>
-              전송
-            </Button>
-          </CustomModal>
+          </MessageSendModal>
         </ModalWrapper>
       </Menu>
       <ContentContainer>
