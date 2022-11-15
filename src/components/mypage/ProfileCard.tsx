@@ -1,4 +1,4 @@
-import { Avatar, Badge, Box, Button, Typography, alpha, TextField } from '@mui/material';
+import { Box, Button, Typography, alpha, TextField } from '@mui/material';
 import CustomAvatarImage from '@components/CustomAvartar';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import React, { ChangeEvent, useRef, useState } from 'react';
@@ -79,27 +79,21 @@ export default function ProfileCard({ user }: { user: UserDetail }) {
       }}
     >
       <Box sx={{ p: 1, mr: 5 }}>
-        <Badge
-          overlap="circular"
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          badgeContent={<Avatar sx={{ bgcolor: 'grey.400' }}>{user.name[0]}</Avatar>}
-        >
-          <CustomAvatarImage
-            alt="user profile"
-            src={user.imgUrl}
-            width={180}
-            height={180}
-            handleClick={onAvatarClick}
-          />
-          <input
-            type="file"
-            style={{ display: 'none' }}
-            accept="image/jpg,image/png,image/jpeg"
-            name="profileImage"
-            onChange={handleUploadProfileImg}
-            ref={fileInput}
-          />
-        </Badge>
+        <CustomAvatarImage
+          alt="user profile"
+          src={user.imgUrl}
+          width={180}
+          height={180}
+          handleClick={onAvatarClick}
+        />
+        <input
+          type="file"
+          style={{ display: 'none' }}
+          accept="image/jpg,image/png,image/jpeg"
+          name="profileImage"
+          onChange={handleUploadProfileImg}
+          ref={fileInput}
+        />
       </Box>
       <Box sx={{ m: 1, p: 1 }}>
         <Typography sx={{ fontWeight: 800, fontSize: '30px', mb: 1 }}>{user.nickname}</Typography>

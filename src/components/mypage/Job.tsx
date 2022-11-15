@@ -1,12 +1,11 @@
-import { Box, Button, Divider, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import EastIcon from '@mui/icons-material/East';
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
 import { UserDetail } from '@interfaces/user/userInfo';
+import RecruiterCertificationModal from '@components/modal/RecruiterCertificationModal';
 
 export default function Job({ user }: { user: UserDetail }) {
-  //쪽지 기능 완성 후 수정 예정
-  const handleRecruiterReq = () => {};
   return (
     <Box
       sx={{
@@ -26,22 +25,22 @@ export default function Job({ user }: { user: UserDetail }) {
 
       <Box sx={{ m: 1, p: 1 }}>
         <Box sx={{ display: 'flex', mt: 1 }}>
-          <Typography sx={{ fontWeight: 600, mr: 1 }}>Job.</Typography>
+          <Typography sx={{ fontWeight: 600, mr: 1 }}>Job :</Typography>
           <Typography> {user.jobCategory}</Typography>
         </Box>
 
         <Box sx={{ display: 'flex', mt: 1 }}>
-          <Typography sx={{ fontWeight: 600, mr: 1 }}>병원.</Typography>
+          <Typography sx={{ fontWeight: 600, mr: 1 }}>병원 :</Typography>
           <Typography>{user.hospitalAddressDetail}</Typography>
         </Box>
 
         <Box sx={{ display: 'flex', mt: 1 }}>
-          <Typography sx={{ fontWeight: 600, mr: 1 }}>병원 주소.</Typography>
+          <Typography sx={{ fontWeight: 600, mr: 1 }}>병원 주소 :</Typography>
           <Typography>{user.hospitalAddress}</Typography>
         </Box>
 
         <Box sx={{ mt: 2 }}>
-          {user.isRecruiter ? (
+          {/* {user.isRecruiter ? (
             <Box sx={{ display: 'flex', alignItems: 'center', color: 'primary.main' }}>
               <FileDownloadDoneIcon sx={{ mr: 1 }} />
               <Typography>승인된 채용담당자입니다.</Typography>
@@ -49,9 +48,18 @@ export default function Job({ user }: { user: UserDetail }) {
           ) : (
             <Box sx={{ display: 'flex', alignItems: 'center', color: 'primary.main' }}>
               <EastIcon />
-              <Button sx={{ boxShadow: 0, color: 'primary' }} onClick={handleRecruiterReq}>
-                채용 담당자 신청하기
-              </Button>
+              <RecruiterCertificationModal status={user.recruitStatus} />
+            </Box>
+          )} */}
+          {user.recruitStatus === 'active' ? (
+            <Box sx={{ display: 'flex', alignItems: 'center', color: 'primary.main' }}>
+              <FileDownloadDoneIcon sx={{ mr: 1 }} />
+              <Typography>승인된 채용담당자입니다.</Typography>
+            </Box>
+          ) : (
+            <Box sx={{ display: 'flex', alignItems: 'center', color: 'primary.main' }}>
+              <EastIcon />
+              <RecruiterCertificationModal status={user.recruitStatus} />
             </Box>
           )}
         </Box>

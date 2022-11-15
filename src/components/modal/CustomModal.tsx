@@ -52,4 +52,6 @@ const style = {
   boxShadow: 24,
   p: 4,
   borderRadius: '12px',
+  overflowY: 'auto',
+  '&::-webkit-scrollbar': { display: 'none' },
 };

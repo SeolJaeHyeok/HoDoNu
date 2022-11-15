@@ -39,6 +39,8 @@ const authApi = {
 
   postCertification: (file: FormData): Promise<AxiosResponse<any>> =>
     instance.post('/users/certification', file).then(res => res.data),
+  postRecruiterCertification: (file: FormData): Promise<AxiosResponse<any>> =>
+    instance.post('users/recruiter/document', file).then(res => res.data),
 };
 
 export default authApi;

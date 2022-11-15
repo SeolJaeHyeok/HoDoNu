@@ -27,6 +27,8 @@ export interface UserArticlesProps {
   creator: string;
   updater: string;
 }
+
+export type Status = 'inActive' | 'pending' | 'active' | 'reject';
 export interface UserDetail {
   userId: string;
   email: string;
@@ -45,6 +47,8 @@ export interface UserDetail {
   isAuth: boolean;
   blockArticleCategoties: string[];
   totalArticles: number;
+  recruitStatus: Status;
+  authStatus: Status;
 }
 
 export interface GetUserRes {
