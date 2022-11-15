@@ -16,7 +16,10 @@ const useSidebarValidation = () => {
     if (
       router.pathname === '/board/free' ||
       router.pathname === '/board/doctor' ||
-      router.pathname === '/board/nurse'
+      router.pathname === '/board/nurse' ||
+      router.pathname === '/board/free/[id]' ||
+      router.pathname === '/board/doctor/[id]' ||
+      router.pathname === '/board/nurse/[id]'
     ) {
       setIsActive(true);
       setTargetMenus(boardSideBarMenus);

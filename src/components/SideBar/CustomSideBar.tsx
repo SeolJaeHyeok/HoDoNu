@@ -5,21 +5,21 @@ import Drawer from '@mui/material/Drawer';
 import CustomDrawer from './CustomDrawer';
 import { Button } from '@mui/material';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
-import { SetterOrUpdater } from 'recoil';
+import { useRecoilState } from 'recoil';
+import useSidebarValidation from '@hooks/useSidebarValidation';
+import { sidebarAtom } from '@atoms/sidebarAtom';
 
 const SIDE_BAR_WIDTH = 200;
 
-interface SideBarProps {
-  isSideBarOpen: boolean;
-  setIsSidebarOpen: SetterOrUpdater<boolean>;
-}
+export default function CustomSideBar() {
+  const [isSideBarOpen, setIsSidebarOpen] = useRecoilState(sidebarAtom);
+  const { isActive } = useSidebarValidation();
 
-export default function CustomSideBar({ isSideBarOpen, setIsSidebarOpen }: SideBarProps) {
   const handleSideBar = () => {
     setIsSidebarOpen(prev => !prev);
   };
 
-  return (
+  return isActive ? (
     <Box sx={{ display: 'flex' }}>
       <Button sx={{ position: 'fixed', left: '0', top: '50%' }} onClick={handleSideBar}>
         <MenuOpenIcon fontSize="large" />
@@ -41,5 +41,5 @@ export default function CustomSideBar({ isSideBarOpen, setIsSidebarOpen }: SideB
         </Drawer>
       </Box>
     </Box>
-  );
+  ) : null;
 }
