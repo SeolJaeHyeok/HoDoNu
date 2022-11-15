@@ -117,10 +117,17 @@ export default function AdminUserTable({
                     src={`${user.recruiterDocument}`}
                   />
                   <Box component="div" sx={{ textAlign: 'center' }}>
-                    <Button onClick={() => handleToggleRecruiter(user.userId, 'Active')}>
+                    <Button
+                      variant="outlined"
+                      sx={{ mr: 3 }}
+                      onClick={() => handleToggleRecruiter(user.userId, 'Active')}
+                    >
                       활성화
                     </Button>
-                    <Button onClick={() => handleToggleRecruiter(user.userId, 'Reject')}>
+                    <Button
+                      variant="outlined"
+                      onClick={() => handleToggleRecruiter(user.userId, 'Reject')}
+                    >
                       비활성화
                     </Button>
                   </Box>
@@ -139,8 +146,17 @@ export default function AdminUserTable({
                     src={`${user.authDocument}`}
                   />
                   <Box component="div" sx={{ textAlign: 'center' }}>
-                    <Button onClick={() => handleToggleAuth(user.userId, 'Active')}>활성화</Button>
-                    <Button onClick={() => handleToggleAuth(user.userId, 'Reject')}>
+                    <Button
+                      variant="outlined"
+                      sx={{ mr: 3 }}
+                      onClick={() => handleToggleAuth(user.userId, 'Active')}
+                    >
+                      활성화
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      onClick={() => handleToggleAuth(user.userId, 'Reject')}
+                    >
                       비활성화
                     </Button>
                   </Box>
