@@ -71,7 +71,7 @@ export default function RecruiterCertificationModal({
             <Typography fontSize={15}>
               인증서류는 유저가 채용담당자임을 확인할 수 있는 서류 중 어느 것이든 제출 가능합니다.
               <br />
-              (pdf 파일만 업로드 가능합니다.)
+              (이미지 파일만 업로드 가능합니다.)
             </Typography>
           </Box>
           <Box sx={{ display: 'flex' }}>
