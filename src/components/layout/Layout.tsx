@@ -13,6 +13,7 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const [isSideBarOpen, setIsSidebarOpen] = useRecoilState(sidebarAtom);
   const { isActive } = useSidebarValidation();
+
   return (
     <div>
       <Head>
@@ -20,7 +21,9 @@ export default function Layout({ children }: LayoutProps) {
       </Head>
       <header>
         <NavBar />
-        {isActive && <CustomSideBar isOpen={isSideBarOpen} setIsOpen={setIsSidebarOpen} />}
+        {isActive && (
+          <CustomSideBar isSideBarOpen={isSideBarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+        )}
       </header>
       <main> {children}</main>
     </div>

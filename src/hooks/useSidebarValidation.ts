@@ -14,26 +14,26 @@ const useSidebarValidation = () => {
   // URL을 통해 현재 페이지에 맞는 사이드바 검증
   useEffect(() => {
     if (
-      router.asPath.includes('/board/free') ||
-      router.asPath.includes('/board/doctor') ||
-      router.asPath.includes('/board/nurse')
+      router.pathname === '/board/free' ||
+      router.pathname === '/board/doctor' ||
+      router.pathname === '/board/nurse'
     ) {
       setIsActive(true);
       setTargetMenus(boardSideBarMenus);
-    } else if (router.asPath.includes('/mypage') || router.asPath.includes('/mypage/articles')) {
+    } else if (router.pathname === '/mypage' || router.pathname === '/mypage/articles') {
       setIsActive(true);
       setTargetMenus(userSideBarMenus);
     } else if (
-      router.asPath.includes('/admin/users') ||
-      router.asPath.includes('/admin/recruit') ||
-      router.asPath.includes('/admin/board')
+      router.pathname === '/admin/users' ||
+      router.pathname === '/admin/recruit' ||
+      router.pathname === '/admin/board'
     ) {
       setIsActive(true);
       setTargetMenus(adminSideBarMenus);
     } else {
       setIsActive(false);
     }
-  }, [router.asPath]);
+  }, [router.pathname]);
 
   return { targetMenus, isActive };
 };
