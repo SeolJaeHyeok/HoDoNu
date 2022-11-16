@@ -67,11 +67,13 @@ export default function Register() {
   const handleMergeFormData = async (data: RegisterUserInfo) => {
     const registerUserData = {
       ...data,
-      hospitalAddressNumber,
-      hospitalAddress,
-      hospitalAddressDetail,
+      address: {
+        mainAddress: hospitalAddressDetail,
+        detailAddress: hospitalAddress,
+        postalCode: hospitalAddressNumber,
+      },
     };
-
+    console.log(registerUserData);
     await handleRequestUserData(registerUserData);
   };
 
