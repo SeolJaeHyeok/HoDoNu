@@ -1,5 +1,5 @@
 import { instance } from '@apis/index';
-import EditForm from '@components/Board/ArticleEditForm';
+import EditForm from '@components/board/ArticleEditForm';
 import { Container, Box, Typography } from '@mui/material';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 

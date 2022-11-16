@@ -1,4 +1,4 @@
-import ArticleCreateForm from '@components/Board/ArticleCreateForm';
+import ArticleCreateForm from '@components/board/ArticleCreateForm';
 import { Container, Box, Typography } from '@mui/material';
 
 export default function createBoard() {
