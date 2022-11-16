@@ -25,7 +25,7 @@ export default function MessageItem({
   const queryClient = useQueryClient();
 
   const deleteRecievedMessage = useMutation(
-    ['message', 'received'],
+    ['message', 'received', message.messageId],
     messageApi.deleteRecievedMessage,
     {
       onSuccess: () => {
@@ -38,15 +38,19 @@ export default function MessageItem({
     }
   );
 
-  const deleteSentMessage = useMutation(['message', 'sent'], messageApi.deleteSentMessage, {
-    onSuccess: () => {
-      alert('삭제되었습니다.');
-      queryClient.invalidateQueries(['message', 'sent']);
-    },
-    onError: (e: Error) => {
-      alert(e.message);
-    },
-  });
+  const deleteSentMessage = useMutation(
+    ['message', 'sent', message.messageId],
+    messageApi.deleteSentMessage,
+    {
+      onSuccess: () => {
+        alert('삭제되었습니다.');
+        queryClient.invalidateQueries(['message', 'sent']);
+      },
+      onError: (e: Error) => {
+        alert(e.message);
+      },
+    }
+  );
 
   const handleDeleteMessage = () => {
     if (status === 'sent') {
