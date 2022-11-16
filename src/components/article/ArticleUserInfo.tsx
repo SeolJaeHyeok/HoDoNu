@@ -9,7 +9,6 @@ import detailApi from '@apis/board/detail';
 import MessageSendModal from '@components/modal/MessageSendModal';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
-
 interface ArticleUserInfoProps {
   content: {
     createdAt: string;
@@ -32,12 +31,12 @@ export default function ArticleUserInfo({ content }: ArticleUserInfoProps) {
     title: '',
     content: '',
   });
-  const loginUserId = useRecoilValue(userInfoState);
+  const { userId } = useRecoilValue<any>(userInfoState);
+
   const open = Boolean(anchorEl);
 
   const handleMenuClick = (e: MouseEvent<HTMLButtonElement>) => {
-    if (loginUserId?.userId !== content?.user.userId && loginUserId?.userId !== undefined)
-      setAnchorEl(e.currentTarget);
+    if (userId !== content?.user.userId && userId !== undefined) setAnchorEl(e.currentTarget);
   };
 
   const handleMenuClose = () => {
