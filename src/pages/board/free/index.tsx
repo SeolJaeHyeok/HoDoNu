@@ -7,17 +7,10 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-<<<<<<< HEAD
-import BoardHeader from '@components/Board/BoardHeader';
-import { searchDataAtom } from '@atoms/searchAtom';
-import { useRecoilValue } from 'recoil';
-import BoardSkeleton from '@components/Board/BoardSkeleton';
-=======
 import BoardHeader from '@components/board/BoardHeader';
 import { searchDataAtom } from '@atoms/searchAtom';
 import { useRecoilValue } from 'recoil';
 import BoardSkeleton from '@components/board/BoardSkeleton';
->>>>>>> develop
 
 /*
   TODO  

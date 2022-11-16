@@ -14,21 +14,6 @@ const useSidebarValidation = () => {
   // URL을 통해 현재 페이지에 맞는 사이드바 검증
   useEffect(() => {
     if (
-<<<<<<< HEAD
-      router.asPath.includes('/board/free') ||
-      router.asPath.includes('/board/doctor') ||
-      router.asPath.includes('/board/nurse')
-    ) {
-      setIsActive(true);
-      setTargetMenus(boardSideBarMenus);
-    } else if (router.asPath.includes('/mypage') || router.asPath.includes('/mypage/articles')) {
-      setIsActive(true);
-      setTargetMenus(userSideBarMenus);
-    } else if (
-      router.asPath.includes('/admin/user') ||
-      router.asPath.includes('/admin/recruit') ||
-      router.asPath.includes('/admin/board')
-=======
       router.pathname === '/board/free' ||
       router.pathname === '/board/doctor' ||
       router.pathname === '/board/nurse' ||
@@ -45,18 +30,13 @@ const useSidebarValidation = () => {
       router.pathname === '/admin/users' ||
       router.pathname === '/admin/recruit' ||
       router.pathname === '/admin/board'
->>>>>>> develop
     ) {
       setIsActive(true);
       setTargetMenus(adminSideBarMenus);
     } else {
       setIsActive(false);
     }
-<<<<<<< HEAD
-  }, [router.asPath]);
-=======
   }, [router.pathname]);
->>>>>>> develop
 
   return { targetMenus, isActive };
 };
