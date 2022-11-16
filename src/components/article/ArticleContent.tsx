@@ -1,5 +1,5 @@
 import ArticleComment from '@components/article/ArticleComment';
-import CustomSideBar from '@components/SideBar/CustomSideBar';
+import CustomSideBar from '@components/sidebar/CustomSideBar';
 import styled from '@emotion/styled';
 import { ContentProps } from '@interfaces/board/detailUserInfoType';
 import CommentIcon from '@mui/icons-material/Comment';
