@@ -1,5 +1,5 @@
 import boardApi from '@apis/board';
-import BoardList from '@components/Board/BoardList';
+import BoardList from '@components/board/BoardList';
 
 import Pagination from '@components/Pagination';
 import styled from '@emotion/styled';
@@ -7,10 +7,10 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import BoardHeader from '@components/Board/BoardHeader';
+import BoardHeader from '@components/board/BoardHeader';
 import { searchDataAtom } from '@atoms/searchAtom';
 import { useRecoilValue } from 'recoil';
-import BoardSkeleton from '@components/Board/BoardSkeleton';
+import BoardSkeleton from '@components/board/BoardSkeleton';
 
 /*
   TODO  

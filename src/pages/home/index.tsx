@@ -1,10 +1,10 @@
-import MainBoardList from '@components/Main/MainBoardList';
+import MainBoardList from '@components/main/MainBoardList';
 import Carousel from '@components/MainCarousel';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import boardApi from 'src/apis/board';
 import { useQuery } from '@tanstack/react-query';
-import MainBoardSkeleton from '@components/Main/MainBoardSkeleton';
+import MainBoardSkeleton from '@components/main/MainBoardSkeleton';
 
 export default function Home() {
   const params = { page: '1', perPage: '5' };

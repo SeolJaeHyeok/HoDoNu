@@ -25,7 +25,8 @@ instance.interceptors.request.use((config: any) => {
     config.url === '/imgUpload/array' ||
     config.url === '/imgUpload/single' ||
     config.url === '/users/profile-image' ||
-    config.url === '/users/certification'
+    config.url === '/users/certification/document' ||
+    config.url === '/users/recruiter/document'
   ) {
     config.headers['Content-Type'] = 'multipart/form-data';
   }

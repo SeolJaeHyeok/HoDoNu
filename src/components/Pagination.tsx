@@ -16,7 +16,6 @@ type PaginationProps = {
   length?: number;
   show?: number;
   start?: number;
-  // eslint-disable-next-line no-unused-vars
   handler: (pageNumber: number) => void;
 } & typeof defaultProps;
 

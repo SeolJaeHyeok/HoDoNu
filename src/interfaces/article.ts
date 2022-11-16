@@ -5,24 +5,27 @@ export interface UserProps {
   nickname: string;
 }
 
-export interface ArticleProps extends ArticleCategoryProps {
+export type CategoryType = 'doctor' | 'nurse' | 'free';
+
+export interface ArticleProps {
   id: number;
   createdAt: Date;
   articleId: number;
-  userId: string;
+  userId?: string;
   title: string;
-  hits: number;
-  isActive: boolean;
+  hits?: number;
+  isActive?: boolean;
   user: UserProps;
-  comments: number;
+  comments?: number;
+  category: CategoryType;
 }
 
 export interface ArticleCategoryProps {
-  category: 'doctor' | 'nurse' | 'free';
+  category: CategoryType;
 }
 
 export interface ArticleForm {
-  category: 'Doctor' | 'Nurse' | 'Free';
+  category: ArticleCategoryProps;
   title: string;
   content: string;
   articleId?: string;

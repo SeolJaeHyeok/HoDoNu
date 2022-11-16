@@ -1,7 +1,7 @@
 import boardApi from '@apis/board';
-import BoardHeader from '@components/Board/BoardHeader';
-import BoardList from '@components/Board/BoardList';
-import BoardSkeleton from '@components/Board/BoardSkeleton';
+import BoardHeader from '@components/board/BoardHeader';
+import BoardList from '@components/board/BoardList';
+import BoardSkeleton from '@components/board/BoardSkeleton';
 import Pagination from '@components/Pagination';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';

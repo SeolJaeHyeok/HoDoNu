@@ -59,20 +59,7 @@ export default function RecruitDetail(props: RecruitDetailProps) {
   );
 }
 
-export const getStaticPaths = async () => {
-  const { data } = await recruitApi.getAll();
-  const paths = data.result[0].map((job: { jobId: number }) => ({
-    params: { id: job.jobId.toString() },
-  }));
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-//errorCode = ""
-export const getStaticProps = async ({ params }: ParamProps) => {
+export const getServerSideProps = async ({ params }: ParamProps) => {
   const { data } = await recruitApi.getOne(params.id);
 
   if (!params) {

@@ -79,7 +79,7 @@ export default function NavBar() {
             </MuiLink>
           </Link>
           {userInfo?.role === 'Admin' && (
-            <Link href="/admin/user">
+            <Link href="/admin/users">
               <MuiLink
                 underline="none"
                 component="button"

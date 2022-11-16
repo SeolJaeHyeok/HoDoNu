@@ -1,17 +1,15 @@
 import { ReactNode } from 'react';
 import Head from 'next/head';
 import NavBar from './NavBar';
-import { useRecoilState } from 'recoil';
-import { sidebarAtom } from '@atoms/sidebarAtom';
-import CustomSideBar from '@components/SideBar/CustomSideBar';
+
 import useSidebarValidation from '@hooks/useSidebarValidation';
+import CustomSideBar from '@components/sidebar/CustomSideBar';
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const [isSideBarOpen, setIsSidebarOpen] = useRecoilState(sidebarAtom);
   const { isActive } = useSidebarValidation();
   return (
     <div>
@@ -20,7 +18,7 @@ export default function Layout({ children }: LayoutProps) {
       </Head>
       <header>
         <NavBar />
-        {isActive && <CustomSideBar isOpen={isSideBarOpen} setIsOpen={setIsSidebarOpen} />}
+        {isActive && <CustomSideBar />}
       </header>
       <main> {children}</main>
     </div>

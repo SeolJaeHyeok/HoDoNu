@@ -11,11 +11,27 @@ import boardApi from 'src/apis/board';
 import { boardValidationSchema } from '@utils/validationSchema';
 import { ArticleForm } from '@interfaces/article';
 import { categoryAssertion } from '@utils/const/category';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '@atoms/userAtom';
+import { useEffect, useState } from 'react';
 
 export default function ArticleCreateForm() {
   const router = useRouter();
+  const initBoard = router.query ? router.query.category : categoryAssertion.FREE;
+  console.log(initBoard);
+  const userInfo = useRecoilValue(userInfoState);
+  const jobCategory = userInfo?.jobCategory!;
+  const userRole = userInfo?.role;
+  const [categories, setCategories] = useState<string[]>([]);
 
-  const initBoard = router.query.category || categoryAssertion.FREE;
+  useEffect(() => {
+    if (userRole === 'User') {
+      setCategories([categoryAssertion.FREE, jobCategory]);
+    }
+    if (userRole === 'Admin') {
+      setCategories([categoryAssertion.FREE, categoryAssertion.DOCTOR, categoryAssertion.NURSE]);
+    }
+  }, [jobCategory, userRole]);
 
   const {
     register,
@@ -25,7 +41,7 @@ export default function ArticleCreateForm() {
     formState: { errors },
   } = useForm<ArticleForm>({ resolver: yupResolver(boardValidationSchema) });
 
-  const mutation = useMutation(['createArticle'], boardApi.createFreeArticle, {
+  const postArticle = useMutation(['createArticle'], boardApi.createArticle, {
     onSuccess: res => {
       const { articleId } = res.data.result;
       router.push(`free/${articleId}`);
@@ -38,7 +54,7 @@ export default function ArticleCreateForm() {
   const onSubmit: SubmitHandler<ArticleForm> = async data => {
     const { title, category, content } = data;
     // 게시글 생성
-    mutation.mutate({ title, category, content });
+    postArticle.mutate({ title, category, content });
   };
 
   const handleCancle = () => {
@@ -73,9 +89,13 @@ export default function ArticleCreateForm() {
           defaultValue={initBoard}
           helperText={errors.category ? errors.category.message : null}
         >
-          <option value={categoryAssertion.NURSE}>간호사 게시판</option>
-          <option value={categoryAssertion.DOCTOR}>의사 게시판</option>
-          <option value={categoryAssertion.FREE}>자유 게시판</option>
+          {categories.map(item => {
+            return (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            );
+          })}
         </TextField>
 
         <TextField
