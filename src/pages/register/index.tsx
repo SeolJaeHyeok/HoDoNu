@@ -20,6 +20,7 @@ export default function Register() {
   const [hospitalAddressNumber, setHospitalAddressNumber] = useState<string>();
   const [hospitalAddress, setHospitalAddress] = useState<string>('');
   const [hospitalAddressDetail, setHospitalAddressDetail] = useState<string>('');
+  const [isCheckPasswordAuth, setIsCheckPasswordAuth] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -72,6 +73,7 @@ export default function Register() {
   const handleCheckEmailAuth = () => {
     const email = getValues('email');
     checkEmailAuth.mutate(email);
+    setIsCheckPasswordAuth(!isCheckPasswordAuth);
   };
 
   // react-hook-form 관련 홤수
@@ -133,6 +135,8 @@ export default function Register() {
             이메일 인증
           </Button>
         </div>
+
+        {isCheckPasswordAuth && <div>인증번호 입력 모달</div>}
 
         <Label htmlFor="password">비밀번호</Label>
         <TextField
