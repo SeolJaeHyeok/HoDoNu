@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { useRef } from 'react';
-import SearchForm from './SearchForm';
+// import SearchForm from './SearchForm';
 import { useQuery } from '@tanstack/react-query';
-import SearchList from './SearchList';
+// import SearchList from './SearchList';
 
 import boardApi from '@apis/board';
 import useDebounce from '@hooks/useDebounce';
 import { ArticleCategoryProps } from '@interfaces/article';
+import SearchForm from '@components/board/search/SearchForm';
+import SearchList from '@components/board/search/SearchList';
 
 const Search = ({ category }: ArticleCategoryProps) => {
   const scrollRef = useRef(null);

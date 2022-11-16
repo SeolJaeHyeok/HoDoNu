@@ -9,7 +9,7 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 import { useRouter } from 'next/router';
-import Search from '@components/board/Search/Search';
+import Search from '@components/board/search/Search';
 import styled from '@emotion/styled';
 import React, { Dispatch, SetStateAction } from 'react';
 
