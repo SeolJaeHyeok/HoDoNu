@@ -10,7 +10,7 @@ interface ModalProps {
   children?: React.ReactNode;
   value?: string;
   btnStyle?: any;
-  btnContent: any;
+  btnContent?: any;
 }
 
 export default function CustomModal({ children, btnStyle, btnContent }: ModalProps) {
