@@ -3,9 +3,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Box, Typography, Button, Divider, IconButton, TextField } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
+import EastIcon from '@mui/icons-material/East';
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
+
 import authApi from '@apis/auth/auth';
-import CertificationModal from './CertificationModal';
+import UserActiveCertificationModal from '../modal/UserActiveCertificationModal';
 import { UserDetail } from '@interfaces/user/userInfo';
 
 export default function Account({ user }: { user: UserDetail }) {
@@ -51,7 +53,7 @@ export default function Account({ user }: { user: UserDetail }) {
           <AccountCircleIcon fontSize="large" sx={{ color: 'grey.500', mr: 1 }} />
           <Typography sx={{ fontWeight: 600 }}>Account</Typography>
         </Box>
-        {!user.isAuth && (
+        {user.authStatus !== 'Active' && (
           <Typography color="#FF5353" fontStyle="oblique" fontSize="small">
             승인되지 않은 회원입니다.
           </Typography>
@@ -100,14 +102,15 @@ export default function Account({ user }: { user: UserDetail }) {
           <Typography>{user.birth}</Typography>
         </Box>
         <Box sx={{ mt: 2 }}>
-          {user.isAuth ? (
-            <Box sx={buttonStyle}>
+          {user.authStatus === 'Active' ? (
+            <Box sx={{ display: 'flex', alignItems: 'center', color: 'primary.main' }}>
               <FileDownloadDoneIcon sx={{ mr: 1 }} />
               <Typography>승인된 회원입니다.</Typography>
             </Box>
           ) : (
-            <Box sx={buttonStyle}>
-              <CertificationModal />
+            <Box sx={{ display: 'flex', alignItems: 'center', color: 'primary.main' }}>
+              <EastIcon />
+              <UserActiveCertificationModal status={user.authStatus} userId={user.userId} />
             </Box>
           )}
         </Box>
@@ -125,10 +128,4 @@ const itemStyle = {
 const itemTypoStyle = {
   fontWeight: 600,
   mr: 1,
-};
-
-const buttonStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  color: 'primary.main',
 };

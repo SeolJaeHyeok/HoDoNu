@@ -1,16 +1,28 @@
-import { ChangeEvent, useRef } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { Box, Divider, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Box, Button, Divider, Typography } from '@mui/material';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import authApi from '@apis/auth/auth';
 import CustomModal from '@components/modal/CustomModal';
+import { Status } from '@interfaces/user/userInfo';
+import FileUploader from '@components/Recruit/FileUploader';
+import { FileProps } from '@interfaces/recruit';
 
-export default function CertificationModal() {
-  const fileInput = useRef(null);
+//authStatus : inActive, pending, active, reject
+export default function UserActiveCertificationModal({
+  status,
+  userId,
+}: {
+  status: Status;
+  userId: string;
+}) {
+  const [fileList, setFileList] = useState<FileProps[]>([]);
+  const queryClient = useQueryClient();
 
-  const updateProfile = useMutation(authApi.postCertification, {
+  const updateFile = useMutation(authApi.postCertification, {
     onSuccess: () => {
+      queryClient.invalidateQueries(['detailUser', userId]);
       alert('성공적으로 등록되었습니다. ');
     },
     onError: (e: Error) => {
@@ -18,15 +30,14 @@ export default function CertificationModal() {
     },
   });
 
-  const handleUploadProfile = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleUploadAuthFile = async (e: React.SyntheticEvent<HTMLElement>) => {
+    e.preventDefault();
     const formData = new FormData();
-    const file = e.target.files;
-    if (file !== null) {
-      formData.append('certification', file[0]);
-      updateProfile.mutate(formData);
-    } else {
-      console.log('파일을 선택해주세요.');
+    if (fileList.length === 0) {
+      alert('파일을 선택해주세요.');
     }
+    formData.append('certification', fileList[0].file!);
+    updateFile.mutate(formData);
   };
 
   const btnStyle = { boxShadow: 0, color: 'primary' };
@@ -51,24 +62,40 @@ export default function CertificationModal() {
             <Typography fontSize={15}>
               인증서류는 유저가 의료인임을 확인할 수 있는 서류 중 어느 것이든 제출 가능합니다.
               <br />
-              (이미지, pdf 파일만 업로드 가능합니다.)
+              (이미지 파일만 업로드 가능합니다.)
             </Typography>
           </Box>
           <Box sx={{ display: 'flex' }}>
             <CheckCircleOutlineIcon sx={{ mr: 1 }} fontSize="small" color="primary" />
             <Typography fontSize={15}>
-              인증 서류 업로드 시 관리자가 일주일 이내에 확인 후 인증 결과를 쪽지로 보내드립니다.
+              인증 결과는 해당 페이지에서 일주일 이내에 확인하실 수 있습니다.
             </Typography>
           </Box>
         </Box>
         <Box sx={{ my: 1, py: 1 }}>
-          <input
-            type="file"
-            accept="image/jpg,image/png,image/jpeg"
-            name="profileImage"
-            onChange={handleUploadProfile}
-            ref={fileInput}
-          />
+          {status === 'Pending' && (
+            <Box>
+              <Typography fontSize={15} color="#FF5353">
+                관리자가 인증서류를 확인중입니다.
+              </Typography>
+            </Box>
+          )}
+
+          {status === 'Reject' && (
+            <Box>
+              <Typography fontSize={15} color="#FF5353" sx={{ mb: 1 }}>
+                인증 서류가 거절되었습니다. 인증서류를 다시 제출해주세요.
+              </Typography>
+            </Box>
+          )}
+        </Box>
+        <Box>
+          <form onSubmit={handleUploadAuthFile}>
+            <FileUploader fileList={fileList} setFileList={setFileList} name="userAuth" />
+            <Button type="submit" variant="contained" sx={{ color: '#fff', width: '100%', mt: 1 }}>
+              인증서류 업로드하기
+            </Button>
+          </form>
         </Box>
         <Box sx={{ my: 1, py: 1 }}>
           <Typography color="grey" fontStyle="oblique" fontSize={13}>
