@@ -25,7 +25,7 @@ export interface ArticleCategoryProps {
 }
 
 export interface ArticleForm {
-  category: 'Doctor' | 'Nurse' | 'Free';
+  category: ArticleCategoryProps;
   title: string;
   content: string;
   articleId?: string;

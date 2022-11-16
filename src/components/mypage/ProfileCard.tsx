@@ -1,10 +1,11 @@
-import { Avatar, Badge, Box, Button, Typography, alpha, TextField } from '@mui/material';
+import { Badge, Box, Button, Typography, alpha, TextField } from '@mui/material';
 import CustomAvatarImage from '@components/CustomAvartar';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import React, { ChangeEvent, useRef, useState } from 'react';
 import authApi from '@apis/auth/auth';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UserDetail } from '@interfaces/user/userInfo';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
 export default function ProfileCard({ user }: { user: UserDetail }) {
   const [introduce, setIntroduce] = useState<string>(user.introduce);
@@ -33,8 +34,12 @@ export default function ProfileCard({ user }: { user: UserDetail }) {
 
   const onAvatarClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
+    console.log('out');
     if (fileInput.current) {
+      console.log('in');
       fileInput.current.click();
+    } else {
+      console.log('hi');
     }
   };
 
@@ -82,7 +87,8 @@ export default function ProfileCard({ user }: { user: UserDetail }) {
         <Badge
           overlap="circular"
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          badgeContent={<Avatar sx={{ bgcolor: 'grey.400' }}>{user.name[0]}</Avatar>}
+          badgeContent={<AddAPhotoIcon />}
+          // onClick={onAvatarClick}
         >
           <CustomAvatarImage
             alt="user profile"
