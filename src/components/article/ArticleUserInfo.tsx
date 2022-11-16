@@ -31,12 +31,13 @@ export default function ArticleUserInfo({ content }: ArticleUserInfoProps) {
     title: '',
     content: '',
   });
-  const { userId } = useRecoilValue<any>(userInfoState);
+  const loginInfo = useRecoilValue<any>(userInfoState);
 
   const open = Boolean(anchorEl);
 
   const handleMenuClick = (e: MouseEvent<HTMLButtonElement>) => {
-    if (userId !== content?.user.userId && userId !== undefined) setAnchorEl(e.currentTarget);
+    if (loginInfo?.userId !== content?.user.userId && loginInfo?.userId !== undefined)
+      setAnchorEl(e.currentTarget);
   };
 
   const handleMenuClose = () => {
