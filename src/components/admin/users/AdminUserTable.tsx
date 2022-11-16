@@ -24,6 +24,18 @@ interface AdminUserTableProps {
   searchQueryKey: string;
 }
 
+const TABLE_COLUMN = [
+  '회원 목록',
+  '작성글 수',
+  '직업',
+  '생년월일',
+  '주소',
+  '게시글 작성 권한',
+  '채용 권한',
+  '활동 권한',
+  '회원 삭제',
+];
+
 /**
  TODO
  -[O]: 게시글 작성 권한 default value 설정 -> 아이템 클릭 시 권한 변경 요청
@@ -63,15 +75,11 @@ export default function AdminUserTable({
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align="center">회원 목록</TableCell>
-            <TableCell align="center">작성글 수</TableCell>
-            <TableCell align="center">직업</TableCell>
-            <TableCell align="center">생년월일</TableCell>
-            <TableCell align="center">주소</TableCell>
-            <TableCell align="center">게시글 작성 권한</TableCell>
-            <TableCell align="center">채용 권한</TableCell>
-            <TableCell align="center">활동 권한</TableCell>
-            <TableCell align="center">회원 삭제</TableCell>
+            {TABLE_COLUMN.map((title, i) => (
+              <TableCell key={i} align="center">
+                {title}
+              </TableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>
