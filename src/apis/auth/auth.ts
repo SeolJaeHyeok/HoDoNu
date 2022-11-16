@@ -17,6 +17,7 @@ const authApi = {
   register: (regisetUserData: RegisterUserInfo): Promise<AxiosResponse<any, any>> => {
     return instance.post('/users/signup', regisetUserData);
   },
+  registerEmailCheck: (email: string) => instance.post(`/users/email/code`, { email }),
   login: ({ email, password }: LoginAPI): Promise<AxiosResponse<LoginRes>> =>
     instance.post(`/users/signin`, { email, password }).then(res => res.data),
 

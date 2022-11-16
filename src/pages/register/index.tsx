@@ -9,6 +9,7 @@ import * as yup from 'yup';
 import authApi from 'src/apis/auth/auth';
 import { useRouter } from 'next/router';
 import { RegisterUserInfo } from 'src/interfaces/user/registerUserInfo';
+import { useMutation } from '@tanstack/react-query';
 
 interface AddressProps {
   zonecode: string;
@@ -42,9 +43,14 @@ export default function Register() {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<RegisterUserInfo>({
     resolver: yupResolver(registerSchema),
+  });
+
+  const checkEmailAuth = useMutation(authApi.registerEmailCheck, {
+    onSuccess: () => alert(`전송되었습니다.`),
   });
 
   // 주소 관련 함수
@@ -63,6 +69,11 @@ export default function Register() {
     setHospitalAddressDetail(e.target.value);
   };
 
+  const handleCheckEmailAuth = () => {
+    const email = getValues('email');
+    checkEmailAuth.mutate(email);
+  };
+
   // react-hook-form 관련 홤수
   const handleMergeFormData = async (data: RegisterUserInfo) => {
     const registerUserData = {
@@ -73,7 +84,6 @@ export default function Register() {
         postalCode: hospitalAddressNumber,
       },
     };
-    console.log(registerUserData);
     await handleRequestUserData(registerUserData);
   };
 
@@ -104,16 +114,25 @@ export default function Register() {
         />
 
         <Label htmlFor="userId">아이디</Label>
-        <TextField
-          id="userId"
-          placeholder="이메일을 입력해주세요."
-          sx={{
-            width: '450px',
-            mt: '8px',
-          }}
-          {...register('email')}
-          helperText={<ErrorMsg>{errors.email?.message}</ErrorMsg>}
-        />
+        <div style={{ display: 'flex' }}>
+          <TextField
+            id="userId"
+            placeholder="이메일을 입력해주세요."
+            sx={{
+              width: '450px',
+              mt: '8px',
+            }}
+            {...register('email')}
+            helperText={<ErrorMsg>{errors.email?.message}</ErrorMsg>}
+          />
+          <Button
+            variant="contained"
+            sx={{ width: '150px', height: '56px', mt: '8px' }}
+            onClick={handleCheckEmailAuth}
+          >
+            이메일 인증
+          </Button>
+        </div>
 
         <Label htmlFor="password">비밀번호</Label>
         <TextField
