@@ -7,7 +7,6 @@ const recruitListApi = {
   getRecruitAllData: (paths: any) => {
     return instance.get(`/jobs?${paths}`);
   },
-
   getRecruitTagData: () => instance.get(`/tags`),
 };
 

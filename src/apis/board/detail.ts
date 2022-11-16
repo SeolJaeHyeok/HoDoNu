@@ -48,6 +48,8 @@ const detailApi = {
   deleteBoard: (articleId: string) => {
     return instance.delete(`/free/articles/${articleId}`);
   },
+  postSendMessage: (sendMessageData: any) =>
+    instance.post(`/messages/taker/${sendMessageData.takerId}`, sendMessageData.msg),
 };
 
 export default detailApi;

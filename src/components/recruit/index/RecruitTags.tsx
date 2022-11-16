@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import recruitListApi from '@apis/recruit/list';
 import styled from '@emotion/styled';
 import filterTagJoinUrl from '@utils/filterTagJoinUrl';
