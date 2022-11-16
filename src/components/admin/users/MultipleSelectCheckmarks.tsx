@@ -54,8 +54,8 @@ export default function MultipleSelectCheckmarks({
     onSuccess: () => {
       alert('성공적으로 변경되었습니다.');
     },
-    onError: e => {
-      alert('권한 변경에 문제가 발생하였습니다. 다시 시도해주세요.');
+    onError: (e: any) => {
+      alert(e.response.data.message);
     },
   });
 

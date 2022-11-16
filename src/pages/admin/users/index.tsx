@@ -27,9 +27,8 @@ export default function AdminUser() {
       if (searchQueryKey === 'jobCategory') {
         if (CATEGORY_TABLE[searchQuery]) {
           return adminApi.getAllUsers({ jobCategory: CATEGORY_TABLE[searchQuery] });
-        } else {
-          return adminApi.getAllUsers();
         }
+        return adminApi.getAllUsers();
       }
 
       if (searchQueryKey === 'startDate') {
