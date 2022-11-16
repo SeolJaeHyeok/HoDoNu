@@ -17,12 +17,8 @@ interface articlaParamProps {
 
 const boardApi = {
   //게시글 생성
-  createFreeArticle: (articleForm: ArticleForm): Promise<AxiosResponse<PostArticleRes>> =>
-    instance.post('/free/articles', articleForm),
-  createNurseArticle: (articleForm: ArticleForm): Promise<AxiosResponse<PostArticleRes>> =>
-    instance.post('/nurse/articles', articleForm),
-  createDoctorArticle: (articleForm: ArticleForm): Promise<AxiosResponse<PostArticleRes>> =>
-    instance.post('/doctor/articles', articleForm),
+  createArticle: (articleForm: ArticleForm): Promise<AxiosResponse<PostArticleRes>> =>
+    instance.post(`/${articleForm.category}/articles`, articleForm),
 
   //이미지 생성
   createArticleImg: (file: FormData) => instance.post('/imgUpload/single', file),

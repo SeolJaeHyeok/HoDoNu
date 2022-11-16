@@ -9,6 +9,8 @@ import Security from '@components/mypage/Security';
 import Activity from '@components/mypage/Acivity';
 import authApi from '@apis/auth/auth';
 import { userInfoState } from '@atoms/userAtom';
+import Sent from '@components/mypage/message/Sent';
+import Received from '@components/mypage/message/Received';
 
 export default function MypageIndex() {
   const user = useRecoilValue(userInfoState);
@@ -42,6 +44,12 @@ export default function MypageIndex() {
               </Grid>
               <Grid item xs={6}>
                 <Job user={userInfo} />
+              </Grid>
+              <Grid item xs={6}>
+                <Sent />
+              </Grid>
+              <Grid item xs={6}>
+                <Received />
               </Grid>
               <Grid item xs={6}>
                 <Activity user={userInfo} />

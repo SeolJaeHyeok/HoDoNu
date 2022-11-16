@@ -4,16 +4,27 @@ import ArticleIcon from '@mui/icons-material/Article';
 import TitleIcon from '@mui/icons-material/Title';
 
 interface MessageUserProps {
-  senderEmail: string;
+  senderEmail?: string;
+  receiverEmail?: string;
   title: string;
   content: string;
+  messageId: string;
 }
 
-export default function MessageModalForm({ senderEmail, title, content }: MessageUserProps) {
+export default function MessageModalForm({
+  senderEmail,
+  title,
+  content,
+  receiverEmail,
+  messageId,
+}: MessageUserProps) {
+  console.log(messageId);
+
   return (
     <>
       <CustomModal btnContent={'확인'}>
-        <Sender>보낸 사람: {senderEmail}</Sender>
+        {senderEmail && <Mail>받은 사람: {senderEmail}</Mail>}
+        {receiverEmail && <Mail>보낸 사람: {receiverEmail}</Mail>}
         <ModalTitle>
           <TitleIcon sx={{ fontSize: '14px', marginRight: '10px' }} />
           제목 : {title}
@@ -28,7 +39,7 @@ export default function MessageModalForm({ senderEmail, title, content }: Messag
   );
 }
 
-const Sender = styled.h2`
+const Mail = styled.h2`
   font-size: 20px;
   text-align: 'center';
 `;

@@ -9,6 +9,11 @@ const nextConfig = {
         destination: '/board/free?page=1&perPage=10&sort=createdAt',
         permanent: true,
       },
+      {
+        source: '/',
+        destination: '/home',
+        permanent: true,
+      },
     ];
   },
 };

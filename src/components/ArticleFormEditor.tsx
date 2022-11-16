@@ -35,7 +35,7 @@ const ReactQuillDynamic: ComponentType<ReactQuillProps & { forwardedRef?: Ref<Re
     }
   );
 
-export default function ArticleFormEditor({ onChange, content }: ArticleFormEditorProps) {
+export default function ArticleFormEditor({ onChange, content, height }: ArticleFormEditorProps) {
   const QuillRef = useRef<any>(null);
 
   const imageHandler = async () => {
@@ -90,7 +90,7 @@ export default function ArticleFormEditor({ onChange, content }: ArticleFormEdit
         modules={modules}
         formats={formats}
         theme="snow"
-        style={{ height: '200px' }}
+        style={{ height: height }}
         onChange={onChange}
         forwardedRef={QuillRef}
         defaultValue={content}
@@ -100,5 +100,5 @@ export default function ArticleFormEditor({ onChange, content }: ArticleFormEdit
 }
 
 const FormEditorContainer = styled.div`
-  height: 250px;
+  height: 280px;
 `;

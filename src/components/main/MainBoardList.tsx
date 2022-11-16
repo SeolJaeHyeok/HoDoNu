@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { ArticleProps } from 'src/interfaces/article';
+import { ArticleProps, CategoryType } from 'src/interfaces/article';
 import MainBoardListItem from './MainBoardListItem';
 import MainBoardNavBar from './MainBoardNavBar';
 
@@ -28,7 +28,7 @@ export default function MainBoardList({ category, articles }: ListProps) {
       <MainBoardNavBar />
       {articles.slice(0, 5).map(article => (
         <MainBoardListItem
-          category={CATEGORY_TABLE[category as string]}
+          category={CATEGORY_TABLE[category] as CategoryType}
           articleId={article.articleId}
           createdAt={article.createdAt}
           title={article.title}

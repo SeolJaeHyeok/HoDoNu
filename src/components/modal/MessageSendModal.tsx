@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
@@ -10,16 +10,26 @@ interface ModalProps {
   value?: string;
   btnStyle?: any;
   btnContent: any;
-  modal: any;
+  onSendMessage: any;
 }
 
-export default function CustomModal({ children, btnStyle, btnContent, modal }: ModalProps) {
+export default function MessageSendModal({
+  children,
+  btnStyle,
+  btnContent,
+  onSendMessage,
+}: ModalProps) {
+  const [open, setOpen] = useState<boolean>(false);
   const handleOpen = () => {
-    modal.openModal();
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
 
-  const handleClose = () => {
-    modal.closeModal();
+  const handleSendMessage = () => {
+    onSendMessage();
+    handleClose();
   };
 
   return (
@@ -27,12 +37,15 @@ export default function CustomModal({ children, btnStyle, btnContent, modal }: M
       <Button sx={{ btnStyle }} onClick={handleOpen}>
         {btnContent}
       </Button>
-      <Modal hideBackdrop open={modal.isOpen} onClose={handleClose}>
+      <Modal hideBackdrop open={open} onClose={handleClose}>
         <Box sx={{ ...style, width: 433 }}>
           <IconButton style={{ position: 'absolute', top: '0', right: '0' }} onClick={handleClose}>
             <CloseIcon />
           </IconButton>
           {children}
+          <Button variant="contained" onClick={handleSendMessage}>
+            전송
+          </Button>
         </Box>
       </Modal>
     </>
@@ -51,6 +64,4 @@ const style = {
   boxShadow: 24,
   p: 4,
   borderRadius: '12px',
-  overflowY: 'auto',
-  '&::-webkit-scrollbar': { display: 'none' },
 };

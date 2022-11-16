@@ -33,8 +33,12 @@ export default function ProfileCard({ user }: { user: UserDetail }) {
 
   const onAvatarClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
+    console.log('out');
     if (fileInput.current) {
+      console.log('in');
       fileInput.current.click();
+    } else {
+      console.log('hi');
     }
   };
 
