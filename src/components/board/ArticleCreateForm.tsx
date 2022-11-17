@@ -56,7 +56,6 @@ export default function ArticleCreateForm() {
 
   const onSubmit: SubmitHandler<ArticleForm> = async data => {
     const { title, category, content } = data;
-    console.log(category);
     // 게시글 생성
     postArticle.mutate({ title, category, content });
   };
