@@ -62,8 +62,6 @@ export default function AdminUserTableBody({
     }
   };
 
-  console.log(user);
-
   return (
     <>
       <TableRow key={user.userId} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
