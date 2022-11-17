@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useQuery } from '@tanstack/react-query';
 import { Grid } from '@mui/material';
 import Job from '@components/mypage/Job';
@@ -8,14 +8,23 @@ import Account from '@components/mypage/Account';
 import Security from '@components/mypage/Security';
 import Activity from '@components/mypage/Acivity';
 import authApi from '@apis/auth/auth';
-import { userInfoState } from '@atoms/userAtom';
+import { profileUrl, userInfoState } from '@atoms/userAtom';
 import Sent from '@components/mypage/message/Sent';
 import Received from '@components/mypage/message/Received';
 
 export default function MypageIndex() {
+  // const [user, setUser] = useRecoilState(userInfoState);
   const user = useRecoilValue(userInfoState);
+  const setProfileImg = useSetRecoilState(profileUrl);
 
-  const { data } = useQuery(['detailUser', user?.userId], () => authApi.getOne(user?.userId!));
+  const { data } = useQuery(['detailUser', user?.userId], () => authApi.getOne(user?.userId!), {
+    onSuccess: data => {
+      setProfileImg(data.data.result.imgUrl);
+    },
+    onError: (e: Error) => {
+      alert(e.message);
+    },
+  });
   const userInfo = data?.data.result;
 
   return (

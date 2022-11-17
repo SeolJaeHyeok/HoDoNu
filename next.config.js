@@ -2,6 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  images: {
+    domains: ['https://toy-project-s3.s3.ap-northeast-2.amazonaws.com'],
+  },
   async redirects() {
     return [
       {

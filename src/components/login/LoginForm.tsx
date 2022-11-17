@@ -8,8 +8,7 @@ import { useMutation } from '@tanstack/react-query';
 
 import { loginValidationSchema } from '@utils/validationSchema';
 import authApi from 'src/apis/auth/auth';
-import { useUserActions } from '@utils/hooks/useUserAction';
-// import { NextApiRequest } from 'next';
+import { useUserActions } from '@hooks/useUserAction';
 
 // 비밀번호 찾기
 // 아이디 찾기
