@@ -6,7 +6,7 @@ import MessageItem from './MessageItem';
 
 export default function Sent() {
   const { data } = useQuery(['message', 'sent'], () => messageApi.getSentMessage());
-  const dataBeforeCheck = data?.result.filter(item => item.check === false);
+  const dataBeforeCheck = data?.result.filter(item => item.isCheck === false);
   return (
     <Box
       sx={{
@@ -32,7 +32,7 @@ export default function Sent() {
               return <MessageItem key={message.messageId} message={message} status={'sent'} />;
             })
           ) : (
-            <Box>보낸 메일이 없습니다.</Box>
+            <Box>보낸 쪽지가 없습니다.</Box>
           )}
         </Box>
       )}
