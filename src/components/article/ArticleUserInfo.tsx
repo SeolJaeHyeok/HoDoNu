@@ -66,8 +66,6 @@ export default function ArticleUserInfo({ content }: ArticleUserInfoProps) {
     requsetSendMessage.mutate({ takerId: content?.user.userId, msg: sendMessage });
   };
 
-  console.log(content);
-
   return (
     <CommentContainer>
       <IconButton onClick={handleMenuClick}>
