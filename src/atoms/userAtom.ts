@@ -23,5 +23,4 @@ export const userInfoState = atom<UserInfo | null>({
 export const profileUrl = atom<string | null>({
   key: 'profileImg',
   default: null,
-  effects_UNSTABLE: [persistAtom],
 });
