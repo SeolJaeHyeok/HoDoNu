@@ -5,13 +5,12 @@ import Button from '@mui/material/Button';
 import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import authApi from 'src/apis/auth/auth';
 import { useRouter } from 'next/router';
 import { RegisterUserInfo } from 'src/interfaces/user/registerUserInfo';
 import { useMutation } from '@tanstack/react-query';
-import { EmailAuthCheck } from '@components/register/EmailAuthCheck';
 import Link from 'next/link';
+import { registerSchema } from '@utils/registerSchema';
 
 interface AddressProps {
   zonecode: string;
@@ -23,30 +22,21 @@ export default function Register() {
   const [hospitalAddress, setHospitalAddress] = useState<string>('');
   const [hospitalAddressDetail, setHospitalAddressDetail] = useState<string>('');
   const [isCheckPasswordAuth, setIsCheckPasswordAuth] = useState<boolean>(false);
+  const [authNumber, setAuthNumber] = useState<string>('');
+
+  const registerEmailAuthQuery = useMutation(authApi.registerEmailAuth, {
+    onSuccess: () => alert(`인증에 성공하였습니다!`),
+    onError: () => alert(`인증에 실패하셨습니다.`),
+  });
+
+  const handleCheckAuthPassword = () => {
+    registerEmailAuthQuery.mutate({
+      authNumber,
+      email: getValues('email'),
+    });
+  };
 
   const router = useRouter();
-
-  const registerSchema = yup.object({
-    name: yup.string().required('이름을 입력해주세요!'),
-    email: yup.string().email('이메일 형식을 맞춰주세요!').required('이메일을 입력해주세요!'),
-    password: yup
-      .string()
-      .min(8, '최소 8글자 이상 입력해주세요!')
-      .max(20, '최대 20글자까지 입력가능합니다!')
-      .required('비밀번호를 입력해주세요!'),
-    checkPassword: yup
-      .string()
-      .oneOf([yup.ref('password'), null], '비밀번호가 일치하지 않습니다!')
-      .required('비밀번호를 다시 입력해주세요!'),
-    phoneNumber: yup
-      .string()
-      .matches(
-        /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
-        '전화번호를 다시 입력해주세요'
-      )
-      .required('전화번호를 입력해주세요!'),
-    birth: yup.string().required('생년월일을 입력해주세요!'),
-  });
 
   // react-hook-form 관련
   const {
@@ -59,7 +49,11 @@ export default function Register() {
   });
 
   const checkEmailAuth = useMutation(authApi.registerEmailCheck, {
-    onSuccess: () => alert(`전송되었습니다.`),
+    onSuccess: () => {
+      alert(`전송되었습니다.`);
+      setIsCheckPasswordAuth(!isCheckPasswordAuth);
+    },
+    onError: () => alert(`이메일을 입력해주세요`),
   });
 
   // 주소 관련 함수
@@ -81,7 +75,10 @@ export default function Register() {
   const handleCheckEmailAuth = () => {
     const email = getValues('email');
     checkEmailAuth.mutate(email);
-    setIsCheckPasswordAuth(!isCheckPasswordAuth);
+  };
+
+  const handleChangeAuthNumber = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setAuthNumber(e.target.value);
   };
 
   // react-hook-form 관련 홤수
@@ -144,7 +141,29 @@ export default function Register() {
           </Button>
         </div>
 
-        {isCheckPasswordAuth && <EmailAuthCheck email={getValues('email')} />}
+        <Label htmlFor="userId">인증 번호 확인</Label>
+
+        <div style={{ display: 'flex', marginTop: 8 }}>
+          <TextField
+            id="userId"
+            placeholder="인증번호를 입력해주세요."
+            sx={{
+              width: '450px',
+              mt: '8px',
+            }}
+            {...register('authCheck')}
+            helperText={<ErrorMsg>{errors.authCheck?.message}</ErrorMsg>}
+            onChange={handleChangeAuthNumber}
+            disabled={!isCheckPasswordAuth}
+          />
+          <Button
+            variant="contained"
+            sx={{ width: '150px', height: '56px', mt: '8px' }}
+            onClick={handleCheckAuthPassword}
+          >
+            인증 번호 확인
+          </Button>
+        </div>
 
         <Label htmlFor="password">비밀번호</Label>
         <TextField
