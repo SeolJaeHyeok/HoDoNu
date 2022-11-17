@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import { RegisterUserInfo } from 'src/interfaces/user/registerUserInfo';
 import { useMutation } from '@tanstack/react-query';
 import { EmailAuthCheck } from '@components/register/EmailAuthCheck';
+import Link from 'next/link';
 
 interface AddressProps {
   zonecode: string;
@@ -254,7 +255,9 @@ export default function Register() {
         >
           등록하기
         </Button>
-        <GoToLogin>로그인으로 돌아가시겠습니까?</GoToLogin>
+        <GoToLogin>
+          <Link href={'/login'}>로그인으로 돌아가시겠습니까?</Link>
+        </GoToLogin>
       </RegisterWrapper>
     </form>
   );
