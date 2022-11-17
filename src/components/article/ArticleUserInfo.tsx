@@ -69,7 +69,7 @@ export default function ArticleUserInfo({ content }: ArticleUserInfoProps) {
       <IconButton onClick={handleMenuClick}>
         <CustomAvatarImage src={content?.user.imgUrl} />
       </IconButton>
-      <Menu sx={{ width: '400px' }} anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
+      <Menu sx={{ width: '500px' }} anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
         <ModalWrapper style={{ width: '100%' }}>
           <MessageSendModal btnContent={'쪽지 보내기'} onSendMessage={handleClickSendMessage}>
             <Receiver>받는 사람: {content?.user.email}</Receiver>
