@@ -17,8 +17,8 @@ export default function ProfileCard({ user }: { user: UserDetail }) {
     onSuccess: () => {
       queryClient.invalidateQueries(['detailUser', user.userId]);
     },
-    onError: (e: Error) => {
-      alert(e.message);
+    onError: (e: any) => {
+      alert(e.response.data.message);
     },
   });
 
@@ -26,8 +26,8 @@ export default function ProfileCard({ user }: { user: UserDetail }) {
     onSuccess: () => {
       queryClient.invalidateQueries(['detailUser', user.userId]);
     },
-    onError: (e: Error) => {
-      alert(e.message);
+    onError: (e: any) => {
+      alert(e.response.data.message);
     },
   });
 

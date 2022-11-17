@@ -46,8 +46,8 @@ export default function ArticleCreateForm() {
       const { articleId } = res.data.result;
       router.push(`free/${articleId}`);
     },
-    onError: (e: Error) => {
-      alert(e.message);
+    onError: (e: any) => {
+      alert(e.response.data.message);
     },
   });
 

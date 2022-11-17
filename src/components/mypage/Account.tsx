@@ -19,8 +19,8 @@ export default function Account({ user }: { user: UserDetail }) {
     onSuccess: () => {
       queryClient.invalidateQueries(['detailUser', user.userId]);
     },
-    onError: (e: Error) => {
-      alert(e.message);
+    onError: (e: any) => {
+      alert(e.response.data.message);
     },
   });
 
