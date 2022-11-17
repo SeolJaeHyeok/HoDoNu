@@ -1,16 +1,13 @@
 export const recruitEditorInitialValue = `   
-    <h2>회사 소개</h2>
-    <i>(여기에 회사에 대한 소개를 적어주세요)</i>
+    <h2 style={{fontSize: '24px'}}>회사 소개</h2>
     <br />
     <br />
-    <h2>주요 업무</h2>
-    <i>(여기에 주요 업무를 적어주세요)</i>
+    <h2 style={{fontSize: '24px'}}>주요 업무</h2>
     <br />
     <br />
-    <h2>자격 요건</h2>
-    <i>(여기에 자격 요건을 적어주세요)</i>
+    <h2 style={{fontSize: '24px'}}>자격 요건</h2>
     <br />
     <br />
-    <h2>우대 사항</h2>
-    <i>(여기에 우대 사항을 적어주세요)</i>
+    <h2 style={{fontSize: '24px'}}>우대 사항</h2>
+    
 `;
