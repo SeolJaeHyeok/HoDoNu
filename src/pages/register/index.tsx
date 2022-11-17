@@ -10,6 +10,7 @@ import authApi from 'src/apis/auth/auth';
 import { useRouter } from 'next/router';
 import { RegisterUserInfo } from 'src/interfaces/user/registerUserInfo';
 import { useMutation } from '@tanstack/react-query';
+import { EmailAuthCheck } from '@components/register/EmailAuthCheck';
 
 interface AddressProps {
   zonecode: string;
@@ -36,7 +37,13 @@ export default function Register() {
       .string()
       .oneOf([yup.ref('password'), null], '비밀번호가 일치하지 않습니다!')
       .required('비밀번호를 다시 입력해주세요!'),
-    phoneNumber: yup.string().required('전화번호를 입력해주세요!'),
+    phoneNumber: yup
+      .string()
+      .matches(
+        /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+        '전화번호를 다시 입력해주세요'
+      )
+      .required('전화번호를 입력해주세요!'),
     birth: yup.string().required('생년월일을 입력해주세요!'),
   });
 
@@ -136,7 +143,7 @@ export default function Register() {
           </Button>
         </div>
 
-        {isCheckPasswordAuth && <div>인증번호 입력 모달</div>}
+        {isCheckPasswordAuth && <EmailAuthCheck email={getValues('email')} />}
 
         <Label htmlFor="password">비밀번호</Label>
         <TextField

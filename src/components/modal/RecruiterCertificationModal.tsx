@@ -6,8 +6,8 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import authApi from '@apis/auth/auth';
 import CustomModal from '@components/modal/CustomModal';
 import { Status } from '@interfaces/user/userInfo';
-import FileUploader from '@components/Recruit/FileUploader';
 import { FileProps } from '@interfaces/recruit';
+import FileUploader from '@components/recruit/FileUploader';
 
 //recruitStatus : inActive, pending, active, reject
 /**
