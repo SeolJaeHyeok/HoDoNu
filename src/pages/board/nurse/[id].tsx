@@ -6,7 +6,7 @@ import { categoryAssertion } from '@utils/const/category';
 
 export default function Nurse({ content }: any) {
   const detailQuery = useQuery(
-    ['detailContent', categoryAssertion.NURSE],
+    ['detailContent', categoryAssertion.NURSE, content.articleId],
     () => detailApi.getDetailData('nurse', content.articleId),
     {
       initialData: content,

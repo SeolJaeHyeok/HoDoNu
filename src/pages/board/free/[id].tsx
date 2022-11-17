@@ -17,7 +17,7 @@ export default function Free({ content }: any) {
   }, []);
 
   const detailQuery = useQuery(
-    ['detailContent', categoryAssertion.FREE],
+    ['detailContent', categoryAssertion.FREE, content.articleId],
     () => detailApi.getDetailData('free', content.articleId),
     {
       initialData: content,
