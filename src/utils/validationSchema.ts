@@ -10,6 +10,10 @@ export const recruitPostSchema = yup.object({
   companyName: yup.string().required('회사 이름을 입력해주세요:('),
   companyRecruiterContact: yup
     .string()
+    .matches(
+      /^01([0|1|6|7|8|9]?)-([0-9]{3,4})-([0-9]{4})$/,
+      '양식에 맞춰 작성해주세요. Ex. 010-9999-9999'
+    )
     .required('채용 담당자의 연락처 또는 이메일을 입력해주세요:('),
 });
 
