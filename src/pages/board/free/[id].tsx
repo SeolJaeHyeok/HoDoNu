@@ -17,19 +17,7 @@ export default function Free({ content }: any) {
   );
 }
 
-export const getStaticPaths = async () => {
-  const { data } = await detailApi.getDetailAllData('free');
-  const paths = data.result.articles.map((article: { articleId: number }) => ({
-    params: { id: article.articleId.toString() },
-  }));
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps = async ({ params }: ParamsProps) => {
+export const getServerSideProps = async ({ params }: ParamsProps) => {
   const { data } = await detailApi.getDetailData('free', params.id);
 
   if (!params) {

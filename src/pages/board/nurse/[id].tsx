@@ -20,19 +20,7 @@ export default function Nurse({ content }: any) {
   );
 }
 
-export const getStaticPaths = async () => {
-  const { data } = await detailApi.getDetailAllData('nurse');
-  const paths = data.result.articles.map((article: { articleId: number }) => ({
-    params: { id: article.articleId.toString() },
-  }));
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps = async ({ params }: ParamsProps) => {
+export const getServerSideProps = async ({ params }: ParamsProps) => {
   const { data }: any = await detailApi.getDetailData('nurse', params.id);
 
   if (!params) {
