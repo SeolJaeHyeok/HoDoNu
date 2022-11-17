@@ -29,8 +29,8 @@ export default function PasswordModal() {
       alert('비밀번호가 성공적으로 변경되었습니다.');
       passwordModal.closeModal();
     },
-    onError: (e: Error) => {
-      alert(e.message);
+    onError: (e: any) => {
+      alert(e.response.data.message);
     },
   });
 
