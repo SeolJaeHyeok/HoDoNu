@@ -31,12 +31,12 @@ export default function Job({ user }: { user: UserDetail }) {
 
         <Box sx={{ display: 'flex', mt: 1 }}>
           <Typography sx={{ fontWeight: 600, mr: 1 }}>병원 :</Typography>
-          <Typography>{user.hospitalAddressDetail}</Typography>
+          <Typography>{user.address.detailAddress}</Typography>
         </Box>
 
         <Box sx={{ display: 'flex', mt: 1 }}>
           <Typography sx={{ fontWeight: 600, mr: 1 }}>병원 주소 :</Typography>
-          <Typography>{user.hospitalAddress}</Typography>
+          <Typography>{user.address.mainAddress}</Typography>
         </Box>
 
         <Box sx={{ mt: 2 }}>
