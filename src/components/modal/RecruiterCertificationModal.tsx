@@ -6,8 +6,9 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import authApi from '@apis/auth/auth';
 import CustomModal from '@components/modal/CustomModal';
 import { Status } from '@interfaces/user/userInfo';
-import { FileProps } from '@interfaces/recruit';
 import FileUploader from '@components/recruit/FileUploader';
+import { FileProps } from '@interfaces/recruit';
+import useModal from '@hooks/useModal';
 
 //recruitStatus : inActive, pending, active, reject
 /**
@@ -23,14 +24,15 @@ export default function RecruiterCertificationModal({
   status: Status;
   userId: string;
 }) {
+  const recruitCertificationModal = useModal('recruitCertificationModal');
   const [fileList, setFileList] = useState<FileProps[]>([]);
   const queryClient = useQueryClient();
 
   const updateFile = useMutation(authApi.postRecruiterCertification, {
     onSuccess: () => {
       queryClient.invalidateQueries(['detailUser', userId]);
-
       alert('성공적으로 등록되었습니다. ');
+      recruitCertificationModal.closeModal();
     },
     onError: (e: Error) => {
       alert(e.message);
@@ -50,7 +52,11 @@ export default function RecruiterCertificationModal({
   const btnStyle = { boxShadow: 0, color: 'primary' };
 
   return (
-    <CustomModal btnContent="채용 담당자 등록하기" btnStyle={btnStyle}>
+    <CustomModal
+      modal={recruitCertificationModal}
+      btnContent="채용 담당자 등록하기"
+      btnStyle={btnStyle}
+    >
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <BadgeIcon sx={{ mr: 1 }} color="primary" />

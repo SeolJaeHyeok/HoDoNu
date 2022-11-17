@@ -6,8 +6,9 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import authApi from '@apis/auth/auth';
 import CustomModal from '@components/modal/CustomModal';
 import { Status } from '@interfaces/user/userInfo';
-import FileUploader from '@components/Recruit/FileUploader';
+import FileUploader from '@components/recruit/FileUploader';
 import { FileProps } from '@interfaces/recruit';
+import useModal from '@hooks/useModal';
 
 //authStatus : inActive, pending, active, reject
 export default function UserActiveCertificationModal({
@@ -17,6 +18,7 @@ export default function UserActiveCertificationModal({
   status: Status;
   userId: string;
 }) {
+  const userActiveCertificationModal = useModal('userActiveCertificationModal');
   const [fileList, setFileList] = useState<FileProps[]>([]);
   const queryClient = useQueryClient();
 
@@ -24,6 +26,7 @@ export default function UserActiveCertificationModal({
     onSuccess: () => {
       queryClient.invalidateQueries(['detailUser', userId]);
       alert('성공적으로 등록되었습니다. ');
+      userActiveCertificationModal.closeModal();
     },
     onError: (e: Error) => {
       alert(e.message);
@@ -43,7 +46,7 @@ export default function UserActiveCertificationModal({
   const btnStyle = { boxShadow: 0, color: 'primary' };
 
   return (
-    <CustomModal btnContent="회원인증하기" btnStyle={btnStyle}>
+    <CustomModal modal={userActiveCertificationModal} btnContent="회원인증하기" btnStyle={btnStyle}>
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <AdminPanelSettingsIcon sx={{ mr: 1 }} color="primary" />

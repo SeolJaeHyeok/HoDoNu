@@ -6,6 +6,7 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import authApi from '@apis/auth/auth';
 import CustomModal from '@components/modal/CustomModal';
 import { updatePasswordSchema } from '@utils/validationSchema';
+import useModal from '@hooks/useModal';
 
 interface UpdatePassword {
   presentPassword: string;
@@ -14,6 +15,7 @@ interface UpdatePassword {
 }
 
 export default function PasswordModal() {
+  const passwordModal = useModal('passwordModal');
   const {
     register,
     handleSubmit,
@@ -25,6 +27,7 @@ export default function PasswordModal() {
     onSuccess: () => {
       reset();
       alert('비밀번호가 성공적으로 변경되었습니다.');
+      passwordModal.closeModal();
     },
     onError: (e: Error) => {
       alert(e.message);
@@ -39,7 +42,7 @@ export default function PasswordModal() {
   const btnStyle = { boxShadow: 0, color: 'primary' };
 
   return (
-    <CustomModal btnContent="비밀번호 변경하기" btnStyle={btnStyle}>
+    <CustomModal modal={passwordModal} btnContent="비밀번호 변경하기" btnStyle={btnStyle}>
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <AdminPanelSettingsIcon sx={{ mr: 1 }} color="primary" />
