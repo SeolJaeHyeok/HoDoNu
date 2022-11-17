@@ -115,7 +115,7 @@ const ContentContainer = styled.div`
 const NameContent = styled.p`
   font-size: 16px;
   margin-bottom: 4px;
-  width: 70px;
+  margin-top: 8px;
 `;
 const TimeContent = styled.p`
   font-size: 13px;
