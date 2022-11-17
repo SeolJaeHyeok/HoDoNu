@@ -3,7 +3,11 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['https://toy-project-s3.s3.ap-northeast-2.amazonaws.com'],
+    domains: [
+      process.env.NODE_ENV === 'development'
+        ? process.env.NEXT_PUBLIC_DEVELOPMENT_API_BASE_URL
+        : process.env.NEXT_PUBLIC_PRODUCTION_IMAGE_BASE_URL,
+    ],
   },
   async redirects() {
     return [
