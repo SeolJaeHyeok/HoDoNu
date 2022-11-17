@@ -17,8 +17,6 @@ import { useEffect, useState } from 'react';
 
 export default function ArticleCreateForm() {
   const router = useRouter();
-  const initBoard = router.query ? router.query.category : categoryAssertion.FREE;
-  console.log(initBoard);
   const userInfo = useRecoilValue(userInfoState);
   const jobCategory = userInfo?.jobCategory!;
   const userRole = userInfo?.role;
@@ -39,7 +37,12 @@ export default function ArticleCreateForm() {
     setValue,
     reset,
     formState: { errors },
-  } = useForm<ArticleForm>({ resolver: yupResolver(boardValidationSchema) });
+  } = useForm<ArticleForm>({
+    resolver: yupResolver(boardValidationSchema),
+    defaultValues: {
+      category: router.query.category && 'Free',
+    },
+  });
 
   const postArticle = useMutation(['createArticle'], boardApi.createArticle, {
     onSuccess: res => {
@@ -53,6 +56,7 @@ export default function ArticleCreateForm() {
 
   const onSubmit: SubmitHandler<ArticleForm> = async data => {
     const { title, category, content } = data;
+    console.log(category);
     // 게시글 생성
     postArticle.mutate({ title, category, content });
   };
@@ -86,7 +90,7 @@ export default function ArticleCreateForm() {
             native: true,
           }}
           {...register('category')}
-          defaultValue={initBoard}
+          defaultValue={router.query ? router.query.category : categoryAssertion.FREE}
           helperText={errors.category ? errors.category.message : null}
         >
           {categories.map(item => {

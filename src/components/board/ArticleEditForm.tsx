@@ -19,7 +19,14 @@ export default function EditForm({ data, category }: any) {
     setValue,
     reset,
     formState: { errors },
-  } = useForm<ArticleForm>({ resolver: yupResolver(boardValidationSchema) });
+  } = useForm<ArticleForm>({
+    resolver: yupResolver(boardValidationSchema),
+    defaultValues: {
+      title,
+      category,
+      content,
+    },
+  });
 
   const mutation = useMutation(['createArticle'], boardApi.updateArticle, {
     onSuccess: res => {
@@ -36,13 +43,8 @@ export default function EditForm({ data, category }: any) {
     setValue('content', editorState);
   };
 
-  register('category', { value: category });
-  register('title', { value: title });
-
   const onSubmit: SubmitHandler<ArticleForm> = async data => {
     const { title, category, content } = data;
-
-    // 게시글 생성
     mutation.mutate({ title, category, content, articleId });
   };
 
