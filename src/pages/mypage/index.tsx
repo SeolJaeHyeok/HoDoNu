@@ -13,7 +13,6 @@ import Sent from '@components/mypage/message/Sent';
 import Received from '@components/mypage/message/Received';
 
 export default function MypageIndex() {
-  // const [user, setUser] = useRecoilState(userInfoState);
   const user = useRecoilValue(userInfoState);
   const setProfileImg = useSetRecoilState(profileUrl);
 
