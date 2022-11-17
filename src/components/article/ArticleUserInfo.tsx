@@ -4,6 +4,7 @@ import { IconButton, Menu } from '@mui/material';
 import { convertTime } from '@utils/func';
 import { ChangeEvent, MouseEvent, useState } from 'react';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { useMutation } from '@tanstack/react-query';
 import detailApi from '@apis/board/detail';
 import MessageSendModal from '@components/modal/MessageSendModal';
@@ -18,6 +19,7 @@ interface ArticleUserInfoProps {
       nickname: string;
       email: string;
     };
+    hits: number;
   };
 }
 
@@ -64,6 +66,8 @@ export default function ArticleUserInfo({ content }: ArticleUserInfoProps) {
     requsetSendMessage.mutate({ takerId: content?.user.userId, msg: sendMessage });
   };
 
+  console.log(content);
+
   return (
     <CommentContainer>
       <IconButton onClick={handleMenuClick}>
@@ -99,6 +103,10 @@ export default function ArticleUserInfo({ content }: ArticleUserInfoProps) {
       <ContentContainer>
         <NameContent>{content?.user.nickname}</NameContent>
         <TimeContent>{convertTime(content?.createdAt)}</TimeContent>
+        <div style={{ display: 'flex', marginTop: '5px' }}>
+          <RemoveRedEyeIcon sx={{ fontSize: '16px' }} />
+          <HitContent>{content?.hits}</HitContent>
+        </div>
       </ContentContainer>
     </CommentContainer>
   );
@@ -121,6 +129,11 @@ const TimeContent = styled.p`
   font-size: 13px;
   color: #6a7280;
   width: 70px;
+`;
+
+const HitContent = styled.span`
+  color: #6a7280;
+  margin-left: 5px;
 `;
 
 const ModalWrapper = styled.div``;
