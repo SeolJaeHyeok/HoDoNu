@@ -26,7 +26,16 @@ interface DaumAddressAPIProps {
 }
 
 export default function RecruitCreatePage() {
-  const { quill, quillRef } = useQuill();
+  const theme = 'snow';
+
+  const modules = {
+    toolbar: [['bold', 'italic', 'underline', 'strike']],
+  };
+
+  const { quill, quillRef } = useQuill({
+    theme,
+    modules,
+  });
   const open = useDaumPostcodePopup();
   const router = useRouter();
 
