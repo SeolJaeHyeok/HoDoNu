@@ -14,21 +14,13 @@ interface BoardListItemProps extends ArticleProps {
 export default function BoardListItem(props: BoardListItemProps) {
   const { createdAt, articleId, title, hits, user, comments, boardCategory } = props;
 
-  const handleAuthorClick = () => {
-    alert('TODO: 작성자 누르면 메세지 보내기 보여주기');
-  };
-
-  const handleBookmarkClick = () => {
-    alert('TODO: 북마크 기능 ');
-  };
-
   return (
     <ItemContainer>
       <ItemHeader>
         <CustomAvatarImage src={user?.imgUrl} width={30} height={30} />
-        <AuthorButton onClick={handleAuthorClick}>{user?.nickname},</AuthorButton>
+        <AuthorButton>{user?.nickname},</AuthorButton>
         <ItemCreatedTime>{convertTime(createdAt!.toString())}</ItemCreatedTime>
-        <BookmarkBorderIcon className="bookmark-btn" onClick={handleBookmarkClick} />
+        <BookmarkBorderIcon className="bookmark-btn" />
       </ItemHeader>
       <ItemContent>
         <Link href={`/board/${boardCategory}/${articleId}`}>
@@ -79,11 +71,7 @@ const ItemHeader = styled.div`
 const AuthorButton = styled.button`
   border: none;
   background-color: inherit;
-  cursor: pointer;
   color: #4c5662;
-  &:hover {
-    text-decoration: underline;
-  }
 `;
 
 const ItemCreatedTime = styled.span`
