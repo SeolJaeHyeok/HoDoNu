@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import MultipleSelectCheckmarks from './MultipleSelectCheckmarks';
 import CustomAvatarImage from '@components/CustomAvartar';
 import { Box, Container, IconButton, Switch, TableCell, TableRow } from '@mui/material';
@@ -7,6 +6,7 @@ import PersonOffIcon from '@mui/icons-material/PersonOff';
 import CustomModal from '@components/modal/CustomModal';
 import { AdminUserProps } from '@interfaces/admin';
 import useModal from '@hooks/useModal';
+import Image from 'next/image';
 
 interface AdminUserTableBodyProps {
   user: AdminUserProps;
@@ -39,6 +39,7 @@ export default function AdminUserTableBody({
       handleDeleteUser(userId);
     }
   };
+  console.log(user);
 
   const handleToggle = (status: string, type: 'auth' | 'recruit', userId: string) => {
     // 활동 권한 변경
@@ -101,7 +102,7 @@ export default function AdminUserTableBody({
           />
           {user.recruiterStatus === 'Pending' && (
             <CustomModal btnContent={'보기'} modal={adminModal}>
-              <img
+              <Image
                 alt="채용 인증 이미지"
                 width={300}
                 height={300}
@@ -119,7 +120,7 @@ export default function AdminUserTableBody({
           />
           {user.authStatus === 'Pending' && (
             <CustomModal btnContent={'보기'} modal={adminModal}>
-              <img alt="회원 인증 이미지" width={300} height={300} src={`${user.authDocument}`} />
+              <Image alt="회원 인증 이미지" width={300} height={300} src={`${user.authDocument}`} />
             </CustomModal>
           )}
         </TableCell>
