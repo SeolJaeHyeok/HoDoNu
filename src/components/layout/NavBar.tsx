@@ -4,9 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import { Link as MuiLink, AppBar, Box, IconButton, Typography } from '@mui/material';
+import { Link as MuiLink, AppBar, Box, Typography } from '@mui/material';
 import { alpha } from '@mui/material';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 
 import ResponsiveNavMenu from './ResponsiveNavMenu';
 import { useRecoilValue } from 'recoil';
@@ -20,7 +19,6 @@ export default function NavBar() {
 
   const userInfo = useRecoilValue(userInfoState);
   const isLogin = useRecoilValue(isLoginState);
-  const handleClick = () => {};
 
   const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
@@ -48,11 +46,11 @@ export default function NavBar() {
           }}
           onClick={preventDefault}
         >
-          <Link href="/">
+          <Link href="/home">
             <MuiLink
               underline="none"
               component="button"
-              color={curPath === '/' ? '#fff' : '#424242'}
+              color={curPath === '/home' ? '#fff' : '#424242'}
               sx={linkStyle}
             >
               Home
@@ -94,9 +92,6 @@ export default function NavBar() {
         <Box sx={style}>
           {isLogin ? (
             <Box sx={style}>
-              <IconButton onClick={handleClick}>
-                <NotificationsNoneIcon sx={{ color: '#fff' }} />
-              </IconButton>
               <AvartarMenu />
             </Box>
           ) : (

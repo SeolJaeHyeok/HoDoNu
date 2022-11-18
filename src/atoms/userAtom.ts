@@ -19,3 +19,8 @@ export const userInfoState = atom<UserInfo | null>({
   default: null,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const profileUrl = atom<string | null>({
+  key: 'profileImg',
+  default: null,
+});
