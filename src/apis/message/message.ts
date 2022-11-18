@@ -11,7 +11,7 @@ interface Message {
   takerEmail?: string;
   title: string;
   content: string;
-  check: boolean;
+  isCheck: boolean;
 }
 
 interface MessageRes {

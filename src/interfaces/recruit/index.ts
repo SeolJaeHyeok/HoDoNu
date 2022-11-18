@@ -18,7 +18,7 @@ export interface RecruitPostProps {
   address: AddressProps;
   content: string;
   images?: string[];
-  phoneNumber: string;
+  contact: string;
 }
 
 export interface TagsProps {

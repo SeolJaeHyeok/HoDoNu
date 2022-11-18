@@ -9,4 +9,5 @@ export interface RegisterUserInfo {
   hospitalAddressNumber?: string;
   hospitalAddress?: string;
   hospitalAddressDetail?: string;
+  authCheck?: string;
 }

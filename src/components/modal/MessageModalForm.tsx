@@ -2,6 +2,7 @@ import CustomModal from './CustomModal';
 import styled from '@emotion/styled';
 import ArticleIcon from '@mui/icons-material/Article';
 import TitleIcon from '@mui/icons-material/Title';
+import useModal from '@hooks/useModal';
 
 interface MessageUserProps {
   senderEmail?: string;
@@ -18,11 +19,11 @@ export default function MessageModalForm({
   receiverEmail,
   messageId,
 }: MessageUserProps) {
-  console.log(messageId);
+  const messageModal = useModal(`messageModal${messageId}`);
 
   return (
     <>
-      <CustomModal btnContent={'확인'}>
+      <CustomModal modal={messageModal} btnContent={'확인'}>
         {senderEmail && <Mail>받은 사람: {senderEmail}</Mail>}
         {receiverEmail && <Mail>보낸 사람: {receiverEmail}</Mail>}
         <ModalTitle>

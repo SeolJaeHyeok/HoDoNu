@@ -24,8 +24,8 @@ export default function AdminRecruit() {
         setJobs(data.data[0]);
         setPage(0);
       },
-      onError: (e: Error) => {
-        alert(e.message);
+      onError: (e: any) => {
+        alert(e.response.data.message);
       },
     }
   );

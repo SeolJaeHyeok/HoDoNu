@@ -20,8 +20,8 @@ export default function RecruitTableToolbar(props: EnhancedTableToolbarProps) {
       alert(data.data.result);
       setNumSelected([]);
     },
-    onError: (e: Error) => {
-      alert(e.message);
+    onError: (e: any) => {
+      alert(e.response.data.message);
     },
   });
 
