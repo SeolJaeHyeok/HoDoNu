@@ -4,9 +4,10 @@ const nextConfig = {
   swcMinify: true,
   images: {
     domains: [
-      process.env.NODE_ENV === 'development'
-        ? process.env.NEXT_PUBLIC_DEVELOPMENT_IMAGE_BASE_URL
-        : process.env.NEXT_PUBLIC_PRODUCTION_IMAGE_BASE_URL,
+      // process.env.NODE_ENV === 'development'
+      //   ? process.env.NEXT_PUBLIC_DEVELOPMENT_IMAGE_BASE_URL
+      //   : process.env.NEXT_PUBLIC_PRODUCTION_IMAGE_BASE_URL,
+      'toy-project-s3.s3.ap-northeast-2.amazonaws.com',
     ],
   },
   async redirects() {
