@@ -20,8 +20,8 @@ export default function MypageIndex() {
     onSuccess: data => {
       setProfileImg(data.data.result.imgUrl);
     },
-    onError: (e: Error) => {
-      alert(e.message);
+    onError: (e: any) => {
+      alert(e.response.data.message);
     },
   });
   const userInfo = data?.data.result;
