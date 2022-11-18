@@ -3,15 +3,19 @@ export interface RecruitCardViewProps {
   title: string;
   address: string;
   jobId: number;
+  images: string;
 }
 
 export interface JobList {
   company: string;
   detailAddress: string;
-  mainAddress: string;
+  address: {
+    mainAddress: string;
+  };
   isActive: boolean;
   title: string;
   jobId: number;
+  image: string[];
 }
 
 export interface TagList {

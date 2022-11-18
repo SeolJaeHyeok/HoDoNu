@@ -47,8 +47,9 @@ export default function Recruit({ jobList, tagList }: RecruitProps) {
               key={idx}
               company={job.company}
               title={job.title}
-              address={job.mainAddress}
+              address={job.address.mainAddress}
               jobId={job.jobId}
+              images={job.image[0]}
             />
           ))}
       </RecruitContentContainer>
