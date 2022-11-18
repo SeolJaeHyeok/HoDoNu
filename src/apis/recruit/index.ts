@@ -7,7 +7,7 @@ interface PostRecruitTagsProps {
 }
 
 const recruitApi = {
-  postImageArray: (bodyData: any) => instance.post(`imgUpload/array`, bodyData),
+  postImageArray: (bodyData: any) => instance.post(`/imgUpload/array`, bodyData),
   postRecruit: (bodyData: RecruitPostProps) => instance.post(`/jobs`, bodyData),
   getAllTags: () => instance.get('/tags'),
   postRecruitTags: ({ jobId, tagIds }: PostRecruitTagsProps) =>
