@@ -3,27 +3,19 @@ import { Skeleton } from '@mui/material';
 
 export default function MainBoardSkeleton() {
   const styles = {
-    width: '635px',
+    width: '600px',
     height: '40px',
     margin: '0 auto',
   };
   return (
     <SkeletonContainer>
       <Wrapper>
+        <Skeleton
+          variant="text"
+          animation="wave"
+          sx={{ width: '600px', height: '80px', margin: '0 auto' }}
+        />
         <Skeleton variant="text" animation="wave" sx={styles} />
-        <Skeleton variant="text" animation="wave" sx={styles} />
-        <Skeleton variant="text" animation="wave" sx={styles} />
-        <Skeleton variant="text" animation="wave" sx={styles} />
-        <Skeleton variant="text" animation="wave" sx={styles} />
-      </Wrapper>
-      <Wrapper>
-        <Skeleton variant="text" animation="wave" sx={styles} />
-        <Skeleton variant="text" animation="wave" sx={styles} />
-        <Skeleton variant="text" animation="wave" sx={styles} />
-        <Skeleton variant="text" animation="wave" sx={styles} />
-        <Skeleton variant="text" animation="wave" sx={styles} />
-      </Wrapper>
-      <Wrapper>
         <Skeleton variant="text" animation="wave" sx={styles} />
         <Skeleton variant="text" animation="wave" sx={styles} />
         <Skeleton variant="text" animation="wave" sx={styles} />
@@ -31,6 +23,25 @@ export default function MainBoardSkeleton() {
         <Skeleton variant="text" animation="wave" sx={styles} />
       </Wrapper>
       <Wrapper>
+        <Skeleton
+          variant="text"
+          animation="wave"
+          sx={{ width: '600px', height: '80px', margin: '0 auto' }}
+        />
+        <Skeleton variant="text" animation="wave" sx={styles} />
+        <Skeleton variant="text" animation="wave" sx={styles} />
+        <Skeleton variant="text" animation="wave" sx={styles} />
+        <Skeleton variant="text" animation="wave" sx={styles} />
+        <Skeleton variant="text" animation="wave" sx={styles} />
+        <Skeleton variant="text" animation="wave" sx={styles} />
+      </Wrapper>
+      <Wrapper>
+        <Skeleton
+          variant="text"
+          animation="wave"
+          sx={{ width: '600px', height: '80px', margin: '0 auto' }}
+        />
+        <Skeleton variant="text" animation="wave" sx={styles} />
         <Skeleton variant="text" animation="wave" sx={styles} />
         <Skeleton variant="text" animation="wave" sx={styles} />
         <Skeleton variant="text" animation="wave" sx={styles} />
@@ -52,5 +63,5 @@ const SkeletonContainer = styled.div`
 `;
 
 const Wrapper = styled.div`
-  margin: 50px 0;
+  margin: 50px 50px;
 `;
