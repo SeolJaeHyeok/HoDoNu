@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import AdminUserSearch from '@components/admin/users/AdminUserSearch';
 import AdminUserTable from '@components/admin/users/AdminUserTable';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import adminApi from '@apis/admin';
-import LoadingSpinner from '@components/LoadingSpinner';
+import styled from '@emotion/styled';
+import useInterSect from '@hooks/useInterSect';
 
 const CATEGORY_TABLE: {
   [index: string]: 'Doctor' | 'Nurse';
@@ -18,31 +19,81 @@ export default function AdminUser() {
   const [searchQueryKey, setSearchQueryKey] = useState('name');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { data: usersData, isFetching } = useQuery(
-    ['admin', 'users', searchQueryKey, searchQuery],
-    () => {
-      if (searchQueryKey === 'name') {
-        return adminApi.getAllUsers({ name: searchQuery });
-      }
+  // const { data: usersData } = useQuery(
+  //   ['admin', 'users', searchQueryKey, searchQuery],
+  //   () => {
+  //     if (searchQueryKey === 'name') {
+  //       return adminApi.getAllUsers({ name: searchQuery });
+  //     }
 
+  //     if (searchQueryKey === 'jobCategory') {
+  //       if (CATEGORY_TABLE[searchQuery]) {
+  //         return adminApi.getAllUsers({ jobCategory: CATEGORY_TABLE[searchQuery] });
+  //       }
+  //       return adminApi.getAllUsers();
+  //     }
+
+  //     if (searchQueryKey === 'startDate') {
+  //       return adminApi.getAllUsers({ startDate: searchQuery });
+  //     }
+
+  //     if (searchQueryKey === '') {
+  //       return adminApi.getAllUsers();
+  //     }
+  //   },
+  //   {
+  //     staleTime: 30000,
+  //     cacheTime: 30000,
+  //   }
+  // );
+
+  const {
+    data: tempData,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+  } = useInfiniteQuery(
+    ['admin', 'users', 'pagination', searchQueryKey, searchQuery],
+    ({ pageParam = 1 }) => {
+      // console.log(pageParam);
+      if (searchQueryKey === 'name') {
+        return adminApi.getAllUsers({
+          name: searchQuery,
+          page: pageParam,
+          perPage: String(10),
+        });
+      }
       if (searchQueryKey === 'jobCategory') {
         if (CATEGORY_TABLE[searchQuery]) {
-          return adminApi.getAllUsers({ jobCategory: CATEGORY_TABLE[searchQuery] });
+          return adminApi.getAllUsers({
+            jobCategory: CATEGORY_TABLE[searchQuery],
+            page: pageParam,
+            perPage: String(10),
+          });
         }
-        return adminApi.getAllUsers();
+        return adminApi.getAllUsers({ page: pageParam, perPage: String(10) });
       }
-
       if (searchQueryKey === 'startDate') {
-        return adminApi.getAllUsers({ startDate: searchQuery });
+        return adminApi.getAllUsers({
+          startDate: searchQuery,
+          page: pageParam,
+          perPage: String(10),
+        });
       }
-
       if (searchQueryKey === '') {
-        return adminApi.getAllUsers();
+        return adminApi.getAllUsers({ page: pageParam, perPage: String(10) });
       }
     },
     {
       staleTime: 30000,
       cacheTime: 30000,
+      getNextPageParam: (lastPage, allPages) => {
+        // console.log(lastPage, allPages);
+        return allPages.length + 1;
+      },
+      getPreviousPageParam: (firstPage, allPages) => {
+        return allPages.length - 1;
+      },
     }
   );
 
@@ -96,6 +147,21 @@ export default function AdminUser() {
     await editUserActiveAuthMutate({ userId, bodyData });
   };
 
+  const ref = useInterSect(async (entry: any, observer: any) => {
+    observer.unobserve(entry.target);
+    if (hasNextPage && !isFetching && tempData?.pages.at(-1)?.data.result.response.length !== 0) {
+      console.log(tempData);
+      // console.log(entry);
+      fetchNextPage();
+    }
+  });
+
+  const pageDatas = useMemo(
+    () => (tempData ? tempData.pages.flatMap(({ data }: any) => data.result.response) : []),
+
+    [tempData]
+  );
+
   return (
     <div
       style={{
@@ -111,20 +177,22 @@ export default function AdminUser() {
         setSearchQuery={setSearchQuery}
         setSearchQueryKey={setSearchQueryKey}
       />
-      {isFetching ? (
-        <div style={{ position: 'absolute', top: '50%' }}>
-          <LoadingSpinner />
-        </div>
-      ) : (
+
+      <>
         <AdminUserTable
           handleEditUserActiveAuth={handleEditUserActiveAuth}
           handleEditUserRecruitAuth={handleEditUserRecruitAuth}
           handleDeleteUser={handleDeleteUser}
-          users={usersData?.data.result.response}
+          users={pageDatas}
           searchQuery={searchQuery}
           searchQueryKey={searchQueryKey}
         />
-      )}
+        <Target ref={ref}></Target>
+      </>
     </div>
   );
 }
+
+const Target = styled.div`
+  height: 1px;
+`;
