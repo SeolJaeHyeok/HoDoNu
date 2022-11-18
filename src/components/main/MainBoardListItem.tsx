@@ -19,7 +19,7 @@ export default function MainBoardListItem({
         <ItemTitle>{title}</ItemTitle>
       </Link>
       <AuthorContainer>
-        <CustomAvatarImage src={user.imgUrl} width={20} height={20} />
+        <CustomAvatarImage cursor={false} src={user.imgUrl} width={20} height={20} />
         <ItemAuthor>{user?.nickname}</ItemAuthor>
       </AuthorContainer>
       <ItemCreatedTime>{convertTime(createdAt!.toString())}</ItemCreatedTime>
@@ -58,15 +58,15 @@ const ItemTitle = styled.a`
 const AuthorContainer = styled.div`
   display: flex;
   align-items: center;
+  margin-left: 8px;
 `;
 
 const ItemAuthor = styled.button`
-  width: 150px;
+  width: 100px;
   padding: 0 5px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-
   border: none;
   background-color: inherit;
 `;
