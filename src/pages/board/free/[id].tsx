@@ -1,12 +1,22 @@
 import ArticleContent from '@components/article/ArticleContent';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import detailApi from '@apis/board/detail';
 import { ParamsProps } from '@interfaces/board/detailUserInfoType';
 import { categoryAssertion } from '@utils/const/category';
+import { useEffect } from 'react';
 
 export default function Free({ content }: any) {
+  const raiseHitsQuery = useMutation(detailApi.patchRaiseHit);
+
+  useEffect(() => {
+    raiseHitsQuery.mutate({
+      category: 'free',
+      articleId: content.articleId,
+    });
+  }, []);
+
   const detailQuery = useQuery(
-    ['detailContent', categoryAssertion.FREE],
+    ['detailContent', categoryAssertion.FREE, content.articleId],
     () => detailApi.getDetailData('free', content.articleId),
     {
       initialData: content,
@@ -17,19 +27,7 @@ export default function Free({ content }: any) {
   );
 }
 
-export const getStaticPaths = async () => {
-  const { data } = await detailApi.getDetailAllData('free');
-  const paths = data.result.articles.map((article: { articleId: number }) => ({
-    params: { id: article.articleId.toString() },
-  }));
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps = async ({ params }: ParamsProps) => {
+export const getServerSideProps = async ({ params }: ParamsProps) => {
   const { data } = await detailApi.getDetailData('free', params.id);
 
   if (!params) {
