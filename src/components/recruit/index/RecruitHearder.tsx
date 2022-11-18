@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { JobList } from '@interfaces/recruit/list/list';
 import Button from '@mui/material/Button';
+import Link from 'next/link';
 import { Dispatch, SetStateAction } from 'react';
 import RecruitHeaderSelect from './RecruitHeaderSelect';
 
@@ -35,9 +36,11 @@ export default function RecruitHeader({
         searchBarFilterInput={searchBarFilterInput}
       />
       <RegisetButtonContainer>
-        <Button variant="outlined" sx={{ lineHeight: '3.0', marginBottom: '8px' }}>
-          공고 등록
-        </Button>
+        <Link href={'/recruit/create'}>
+          <Button variant="outlined" sx={{ lineHeight: '3.0', marginBottom: '8px' }}>
+            공고 등록
+          </Button>
+        </Link>
       </RegisetButtonContainer>
     </>
   );
