@@ -52,6 +52,11 @@ export default function ArticleFormEditor({ onChange, content, height }: Article
 
     input.addEventListener('change', async () => {
       const file = input.files;
+      if (!file) return;
+      if (file[0].size >= 1024 * 1024 * 5) {
+        alert('파일 크기는 5mb를 넘어갈 수 없습니다:(');
+        return;
+      }
       if (file !== null) {
         formData.append('images', file[0]);
       }
@@ -74,7 +79,7 @@ export default function ArticleFormEditor({ onChange, content, height }: Article
         container: [
           ['image'],
           [{ header: [1, 2, 3, false] }],
-          ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+          ['list', 'code-block', 'blockquote'],
         ],
         handlers: {
           image: imageHandler,
@@ -83,7 +88,7 @@ export default function ArticleFormEditor({ onChange, content, height }: Article
     };
   }, []);
 
-  const formats = ['header', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'image'];
+  const formats = ['header', 'blockquote', 'indent', 'list', 'code-block', 'image'];
   return (
     <FormEditorContainer>
       <ReactQuillDynamic
