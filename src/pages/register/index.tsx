@@ -25,7 +25,9 @@ export default function Register() {
   const [authNumber, setAuthNumber] = useState<string>('');
 
   const registerEmailAuthQuery = useMutation(authApi.registerEmailAuth, {
-    onSuccess: () => alert(`인증에 성공하였습니다!`),
+    onSuccess: () => {
+      alert(`인증에 성공하였습니다!`);
+    },
     onError: () => alert(`인증에 실패하셨습니다.`),
   });
 
@@ -134,7 +136,7 @@ export default function Register() {
           />
           <Button
             variant="contained"
-            sx={{ width: '150px', height: '56px', mt: '8px' }}
+            sx={{ width: '170px', height: '56px', mt: '8px' }}
             onClick={handleCheckEmailAuth}
           >
             이메일 인증
@@ -158,8 +160,9 @@ export default function Register() {
           />
           <Button
             variant="contained"
-            sx={{ width: '150px', height: '56px', mt: '8px' }}
+            sx={{ width: '170px', height: '56px', mt: '8px' }}
             onClick={handleCheckAuthPassword}
+            disabled={!isCheckPasswordAuth}
           >
             인증 번호 확인
           </Button>
@@ -271,6 +274,7 @@ export default function Register() {
             color: 'white',
           }}
           type="submit"
+          disabled={!isCheckPasswordAuth}
         >
           등록하기
         </Button>
