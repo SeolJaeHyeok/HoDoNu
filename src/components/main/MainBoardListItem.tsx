@@ -12,14 +12,6 @@ export default function MainBoardListItem({
   id,
   category,
 }: ArticleProps) {
-  const handleAvartarClick = () => {
-    alert('메인페이지에서 게시판 안에 있는 프로필 이미지 클릭 시 발생시킬 함수');
-  };
-
-  const handleAuthorClick = () => {
-    alert('메인페이지에서 작성자 이름을 클릭했을 때 발생시킬 함수');
-  };
-
   return (
     <ItemContainer>
       <ItemNumber>{id}</ItemNumber>
@@ -27,8 +19,8 @@ export default function MainBoardListItem({
         <ItemTitle>{title}</ItemTitle>
       </Link>
       <AuthorContainer>
-        <CustomAvatarImage handleClick={handleAvartarClick} width={20} height={20} />
-        <ItemAuthor onClick={handleAuthorClick}>{user?.nickname}</ItemAuthor>
+        <CustomAvatarImage src={user.imgUrl} width={20} height={20} />
+        <ItemAuthor>{user?.nickname}</ItemAuthor>
       </AuthorContainer>
       <ItemCreatedTime>{convertTime(createdAt!.toString())}</ItemCreatedTime>
     </ItemContainer>
@@ -74,14 +66,9 @@ const ItemAuthor = styled.button`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  cursor: pointer;
+
   border: none;
   background-color: inherit;
-
-  &:hover {
-    text-decoration: underline;
-    font-weight: 500;
-  }
 `;
 
 const ItemCreatedTime = styled.span`
