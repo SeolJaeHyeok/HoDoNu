@@ -54,7 +54,7 @@ export default function ArticleCreateForm() {
   const postArticle = useMutation(['createArticle'], boardApi.createArticle, {
     onSuccess: res => {
       const { articleId } = res.data.result;
-      router.push(`free/${articleId}`);
+      router.push(`${jobCategory.toLowerCase()}/${articleId}`);
     },
     onError: (e: any) => {
       alert(e.response.data.message);
