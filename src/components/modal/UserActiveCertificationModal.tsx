@@ -28,8 +28,8 @@ export default function UserActiveCertificationModal({
       alert('성공적으로 등록되었습니다. ');
       userActiveCertificationModal.closeModal();
     },
-    onError: (e: Error) => {
-      alert(e.message);
+    onError: (e: any) => {
+      alert(e.response.data.message);
     },
   });
 

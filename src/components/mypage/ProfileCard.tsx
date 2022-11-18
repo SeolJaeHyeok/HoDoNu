@@ -1,6 +1,7 @@
-import { Box, Button, Typography, alpha, TextField } from '@mui/material';
+import { Box, Button, Typography, alpha, TextField, Badge, IconButton } from '@mui/material';
 import CustomAvatarImage from '@components/CustomAvartar';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import React, { ChangeEvent, useRef, useState } from 'react';
 import authApi from '@apis/auth/auth';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -16,29 +17,27 @@ export default function ProfileCard({ user }: { user: UserDetail }) {
   const updateProfileImg = useMutation(authApi.patchProfile, {
     onSuccess: () => {
       queryClient.invalidateQueries(['detailUser', user.userId]);
+      alert('프로필 이미지가 성공적으로 변경되었습니다.');
     },
-    onError: (e: Error) => {
-      alert(e.message);
+    onError: (e: any) => {
+      alert(e.response.data.message);
     },
   });
 
   const updateIntoduce = useMutation(authApi.patchIntroduce, {
     onSuccess: () => {
       queryClient.invalidateQueries(['detailUser', user.userId]);
+      alert('자기소개가 성공적으로 변경되었습니다.');
     },
-    onError: (e: Error) => {
-      alert(e.message);
+    onError: (e: any) => {
+      alert(e.response.data.message);
     },
   });
 
-  const onAvatarClick = (e: React.MouseEvent<HTMLElement>) => {
+  const onAddBtnClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    console.log('out');
     if (fileInput.current) {
-      console.log('in');
       fileInput.current.click();
-    } else {
-      console.log('hi');
     }
   };
 
@@ -83,13 +82,18 @@ export default function ProfileCard({ user }: { user: UserDetail }) {
       }}
     >
       <Box sx={{ p: 1, mr: 5 }}>
-        <CustomAvatarImage
-          alt="user profile"
-          src={user.imgUrl}
-          width={180}
-          height={180}
-          handleClick={onAvatarClick}
-        />
+        <Badge
+          overlap="circular"
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          badgeContent={
+            <IconButton onClick={onAddBtnClick}>
+              <AddAPhotoIcon />
+            </IconButton>
+          }
+        >
+          <CustomAvatarImage alt="user profile" src={user.imgUrl} width={180} height={180} />
+        </Badge>
+
         <input
           type="file"
           style={{ display: 'none' }}

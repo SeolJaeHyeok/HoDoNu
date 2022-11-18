@@ -33,8 +33,8 @@ export default function LoginForm() {
     onSuccess: data => {
       userAction.login(data);
     },
-    onError: (e: Error) => {
-      alert(e.message);
+    onError: (e: any) => {
+      alert(e.response.data.message);
     },
   });
 
