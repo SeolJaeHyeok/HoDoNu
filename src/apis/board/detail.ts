@@ -50,6 +50,8 @@ const detailApi = {
   },
   postSendMessage: (sendMessageData: any) =>
     instance.post(`/messages/taker/${sendMessageData.takerId}`, sendMessageData.msg),
+  patchRaiseHit: ({ category, articleId }: any) =>
+    instance.patch(`/${category}/articles/${articleId}/hits`),
 };
 
 export default detailApi;

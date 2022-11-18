@@ -118,20 +118,24 @@ export default function Comment({
 }
 
 const CommentWrapper = styled.div`
-  width: 732px;
   margin-bottom: 30px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 6px;
 `;
 const CommentContainer = styled.div`
   display: flex;
 `;
 const CommentContent = styled.p`
   display: inline-block;
-  width: 345px;
+  width: 360px;
   word-break: break-all;
   margin: auto 0;
   margin-left: 20px;
+  margin-right: 8px;
   font-size: 14px;
   line-height: 130%;
+  color: #6b7280;
 `;
 const ContentContainer = styled.div`
   padding-top: 10px;
@@ -150,11 +154,11 @@ const TimeContent = styled.p`
 `;
 
 const CommentTextArea = styled.textarea`
-  width: 100%;
   border: 1px solid #e5e7eb;
   resize: none;
   padding: 10px 15px;
   border-radius: 15px;
-  width: 700px;
+  width: 360px;
   overflow: hidden;
+  margin-right: 8px;
 `;

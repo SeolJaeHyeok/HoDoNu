@@ -4,6 +4,7 @@ import { IconButton, Menu } from '@mui/material';
 import { convertTime } from '@utils/func';
 import { ChangeEvent, MouseEvent, useState } from 'react';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { useMutation } from '@tanstack/react-query';
 import detailApi from '@apis/board/detail';
 import MessageSendModal from '@components/modal/MessageSendModal';
@@ -18,6 +19,7 @@ interface ArticleUserInfoProps {
       nickname: string;
       email: string;
     };
+    hits: number;
   };
 }
 
@@ -69,7 +71,7 @@ export default function ArticleUserInfo({ content }: ArticleUserInfoProps) {
       <IconButton onClick={handleMenuClick}>
         <CustomAvatarImage src={content?.user.imgUrl} />
       </IconButton>
-      <Menu sx={{ width: '400px' }} anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
+      <Menu sx={{ width: '500px' }} anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
         <ModalWrapper style={{ width: '100%' }}>
           <MessageSendModal btnContent={'쪽지 보내기'} onSendMessage={handleClickSendMessage}>
             <Receiver>받는 사람: {content?.user.email}</Receiver>
@@ -99,6 +101,10 @@ export default function ArticleUserInfo({ content }: ArticleUserInfoProps) {
       <ContentContainer>
         <NameContent>{content?.user.nickname}</NameContent>
         <TimeContent>{convertTime(content?.createdAt)}</TimeContent>
+        <div style={{ display: 'flex', marginTop: '5px' }}>
+          <RemoveRedEyeIcon sx={{ fontSize: '16px' }} />
+          <HitContent>{content?.hits}</HitContent>
+        </div>
       </ContentContainer>
     </CommentContainer>
   );
@@ -115,12 +121,17 @@ const ContentContainer = styled.div`
 const NameContent = styled.p`
   font-size: 16px;
   margin-bottom: 4px;
-  width: 70px;
+  margin-top: 8px;
 `;
 const TimeContent = styled.p`
   font-size: 13px;
   color: #6a7280;
   width: 70px;
+`;
+
+const HitContent = styled.span`
+  color: #6a7280;
+  margin-left: 5px;
 `;
 
 const ModalWrapper = styled.div``;
