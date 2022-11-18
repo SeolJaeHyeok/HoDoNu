@@ -27,6 +27,7 @@ export default function Register() {
   const registerEmailAuthQuery = useMutation(authApi.registerEmailAuth, {
     onSuccess: () => {
       alert(`인증에 성공하였습니다!`);
+      setIsCheckPasswordAuth(!isCheckPasswordAuth);
     },
     onError: () => alert(`인증에 실패하셨습니다.`),
   });
@@ -102,6 +103,8 @@ export default function Register() {
       router.push('/login');
     } catch (e: any) {
       alert(e.response.data.message);
+      if (e.response.data.message === '해당 이메일은 이미 사용중입니다.')
+        setIsCheckPasswordAuth(!isCheckPasswordAuth);
     }
   };
 
@@ -197,7 +200,7 @@ export default function Register() {
         <Label htmlFor="phoneNumber">전화번호</Label>
         <TextField
           id="phoneNumber"
-          placeholder="전화번호를 입력해주세요."
+          placeholder="양식에 맞춰 작성해주세요. ( EX. 010-9999-9999 )"
           sx={{
             width: '450px',
             mt: '8px',
@@ -233,6 +236,8 @@ export default function Register() {
             sx={{
               width: '225px',
             }}
+            {...register('postalCode')}
+            helperText={<ErrorMsg>{errors.postalCode?.message}</ErrorMsg>}
           />
           <Button
             variant="outlined"
@@ -248,11 +253,13 @@ export default function Register() {
         <AddressContainer>
           <TextField
             placeholder="주소"
+            {...register('mainAddress')}
             value={hospitalAddress}
             sx={{
               width: '450px',
               mt: '8px',
             }}
+            helperText={<ErrorMsg>{errors.mainAddress?.message}</ErrorMsg>}
           />
           <TextField
             placeholder="상세 주소"
@@ -274,7 +281,7 @@ export default function Register() {
             color: 'white',
           }}
           type="submit"
-          disabled={!isCheckPasswordAuth}
+          disabled={isCheckPasswordAuth}
         >
           등록하기
         </Button>
