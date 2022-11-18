@@ -18,8 +18,6 @@ export default function Recruit({ jobList, tagList }: RecruitProps) {
     tagIds: [],
   });
 
-  console.log(jobLists);
-
   return (
     <RecruitWrapper>
       <RecruitContainer>

@@ -54,13 +54,18 @@ export default function RecruitHeaderSelect({
 
   const requestURL = filterTagJoinUrl(searchFilterTagNames, tagsId, searchBarFilterInput);
 
-  const handleClickSearchRequest = () => {
+  const handleClickSearchRequest = (e: any) => {
+    e.preventDefault();
     requestTagData.mutate(requestURL);
   };
 
   return (
     <HeaderSearchBarWrapper>
-      <FormControl sx={{ m: 1, width: 350 }}>
+      <FormControl
+        sx={{ m: 1, width: 350, display: 'flex' }}
+        component={'form'}
+        onSubmit={handleClickSearchRequest}
+      >
         <InputLabel id="demo-multiple-chip-label">Filter</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"
@@ -84,12 +89,12 @@ export default function RecruitHeaderSelect({
             </MenuItem>
           ))}
         </Select>
-      </FormControl>
 
-      <SearchBarWrapper>
-        <SearchInput onChange={handleChangeSearchInput} placeholder="검색어를 입력해주세요" />
-        <SearchButton onClick={handleClickSearchRequest} />
-      </SearchBarWrapper>
+        <SearchBarWrapper>
+          <SearchInput onChange={handleChangeSearchInput} placeholder="검색어를 입력해주세요" />
+          <SearchButton onClick={handleClickSearchRequest} />
+        </SearchBarWrapper>
+      </FormControl>
     </HeaderSearchBarWrapper>
   );
 }
