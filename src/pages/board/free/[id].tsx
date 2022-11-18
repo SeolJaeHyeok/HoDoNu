@@ -9,7 +9,6 @@ export default function Free({ content }: any) {
   const raiseHitsQuery = useMutation(detailApi.patchRaiseHit);
 
   useEffect(() => {
-    console.log('들어옴');
     raiseHitsQuery.mutate({
       category: 'free',
       articleId: content.articleId,
