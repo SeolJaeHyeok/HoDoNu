@@ -4,6 +4,7 @@ import AdminUserSearch from '@components/admin/users/AdminUserSearch';
 import AdminUserTable from '@components/admin/users/AdminUserTable';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import adminApi from '@apis/admin';
+import LoadingSpinner from '@components/LoadingSpinner';
 
 const CATEGORY_TABLE: {
   [index: string]: 'Doctor' | 'Nurse';
@@ -17,7 +18,7 @@ export default function AdminUser() {
   const [searchQueryKey, setSearchQueryKey] = useState('name');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { data: usersData } = useQuery(
+  const { data: usersData, isFetching } = useQuery(
     ['admin', 'users', searchQueryKey, searchQuery],
     () => {
       if (searchQueryKey === 'name') {
@@ -110,14 +111,18 @@ export default function AdminUser() {
         setSearchQuery={setSearchQuery}
         setSearchQueryKey={setSearchQueryKey}
       />
-      <AdminUserTable
-        handleEditUserActiveAuth={handleEditUserActiveAuth}
-        handleEditUserRecruitAuth={handleEditUserRecruitAuth}
-        handleDeleteUser={handleDeleteUser}
-        users={usersData?.data.result.response}
-        searchQuery={searchQuery}
-        searchQueryKey={searchQueryKey}
-      />
+      {isFetching ? (
+        <LoadingSpinner />
+      ) : (
+        <AdminUserTable
+          handleEditUserActiveAuth={handleEditUserActiveAuth}
+          handleEditUserRecruitAuth={handleEditUserRecruitAuth}
+          handleDeleteUser={handleDeleteUser}
+          users={usersData?.data.result.response}
+          searchQuery={searchQuery}
+          searchQueryKey={searchQueryKey}
+        />
+      )}
     </div>
   );
 }
