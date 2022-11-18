@@ -112,7 +112,9 @@ export default function AdminUser() {
         setSearchQueryKey={setSearchQueryKey}
       />
       {isFetching ? (
-        <LoadingSpinner />
+        <div style={{ position: 'absolute', top: '50%' }}>
+          <LoadingSpinner />
+        </div>
       ) : (
         <AdminUserTable
           handleEditUserActiveAuth={handleEditUserActiveAuth}
