@@ -11,9 +11,18 @@ interface ModalProps {
   btnStyle?: any;
   btnContent: any;
   modal: any;
+  width?: number;
+  height?: number;
 }
 
-export default function CustomModal({ children, btnStyle, btnContent, modal }: ModalProps) {
+export default function CustomModal({
+  children,
+  btnStyle,
+  btnContent,
+  modal,
+  width = 433,
+  height = 404,
+}: ModalProps) {
   const handleOpen = () => {
     modal.openModal();
   };
@@ -28,7 +37,7 @@ export default function CustomModal({ children, btnStyle, btnContent, modal }: M
         {btnContent}
       </Button>
       <Modal hideBackdrop open={modal.isOpen} onClose={handleClose}>
-        <Box sx={{ ...style, width: 433 }}>
+        <Box sx={{ ...style, width, height }}>
           <IconButton style={{ position: 'absolute', top: '0', right: '0' }} onClick={handleClose}>
             <CloseIcon />
           </IconButton>
@@ -44,8 +53,6 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 433,
-  height: 404,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
