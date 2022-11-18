@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AdminUserSearch from '@components/admin/users/AdminUserSearch';
 import AdminUserTable from '@components/admin/users/AdminUserTable';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import adminApi from '@apis/admin';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '@atoms/userAtom';
+import { useRouter } from 'next/router';
 
 const CATEGORY_TABLE: {
   [index: string]: 'Doctor' | 'Nurse';
@@ -16,6 +19,8 @@ export default function AdminUser() {
   const queryClient = useQueryClient();
   const [searchQueryKey, setSearchQueryKey] = useState('name');
   const [searchQuery, setSearchQuery] = useState('');
+  const router = useRouter();
+  const loginInfo = useRecoilValue(userInfoState);
 
   const { data: usersData } = useQuery(
     ['admin', 'users', searchQueryKey, searchQuery],
@@ -95,29 +100,38 @@ export default function AdminUser() {
     await editUserActiveAuthMutate({ userId, bodyData });
   };
 
+  useEffect(() => {
+    if (loginInfo?.role !== 'Admin') {
+      alert('접근 권한이 없는 페이지입니다.');
+      router.push('/home');
+    }
+  }, []);
+
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        marginTop: '50px',
-      }}
-    >
-      <AdminUserSearch
-        searchQueryKey={searchQueryKey}
-        setSearchQuery={setSearchQuery}
-        setSearchQueryKey={setSearchQueryKey}
-      />
-      <AdminUserTable
-        handleEditUserActiveAuth={handleEditUserActiveAuth}
-        handleEditUserRecruitAuth={handleEditUserRecruitAuth}
-        handleDeleteUser={handleDeleteUser}
-        users={usersData?.data.result.response}
-        searchQuery={searchQuery}
-        searchQueryKey={searchQueryKey}
-      />
-    </div>
+    loginInfo?.role === 'Admin' && (
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          marginTop: '50px',
+        }}
+      >
+        <AdminUserSearch
+          searchQueryKey={searchQueryKey}
+          setSearchQuery={setSearchQuery}
+          setSearchQueryKey={setSearchQueryKey}
+        />
+        <AdminUserTable
+          handleEditUserActiveAuth={handleEditUserActiveAuth}
+          handleEditUserRecruitAuth={handleEditUserRecruitAuth}
+          handleDeleteUser={handleDeleteUser}
+          users={usersData?.data.result.response}
+          searchQuery={searchQuery}
+          searchQueryKey={searchQueryKey}
+        />
+      </div>
+    )
   );
 }
