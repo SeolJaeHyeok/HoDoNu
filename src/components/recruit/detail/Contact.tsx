@@ -10,8 +10,9 @@ interface UserProps {
   nickname: string;
 }
 
-export default function Contact({ user }: { user: UserProps }) {
-  const { email, imgUrl, nickname } = user;
+export default function Contact({ user, contact }: { user: UserProps; contact: string }) {
+  const { imgUrl, nickname } = user;
+  console.log(user);
   return (
     <Box
       sx={{
@@ -24,7 +25,6 @@ export default function Contact({ user }: { user: UserProps }) {
         borderRadius: '5px',
         border: 1,
         borderColor: 'grey.400',
-
         mb: 10,
       }}
     >
@@ -38,7 +38,7 @@ export default function Contact({ user }: { user: UserProps }) {
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <EmailIcon color="primary" />
-          <Typography sx={{ ml: 1, fontWeight: 'medium' }}>{email}</Typography>
+          <Typography sx={{ ml: 1, fontWeight: 'medium' }}>{contact}</Typography>
         </Box>
       </Box>
     </Box>

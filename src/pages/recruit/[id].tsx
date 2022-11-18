@@ -1,4 +1,5 @@
-import { Container, Divider, Typography, Box } from '@mui/material';
+import { useRouter } from 'next/router';
+import { Container, Divider, Typography, Box, Button } from '@mui/material';
 import { recruitApi } from '@apis/recuit';
 import ImageCarousel from '@components/recruit/detail/ImageCarousel';
 import CompanyInfo from '@components/recruit/detail/CompanyInfo';
@@ -6,9 +7,9 @@ import { RecruitContent } from '@interfaces/recruit/detail';
 import Contact from '@components/recruit/detail/Contact';
 import Content from '@components/recruit/detail/Content';
 import Tags from '@components/recruit/detail/Tags';
-import OwnerButton from '@components/recruit/detail/OwnerButton';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
+import { useMutation } from '@tanstack/react-query';
 
 export interface ParamProps {
   params: {
@@ -22,9 +23,24 @@ export interface RecruitDetailProps {
 }
 
 export default function RecruitDetail(props: RecruitDetailProps) {
+  const router = useRouter();
   const { content, articleId } = props;
   const curUser = useRecoilValue(userInfoState);
   const curUserId = curUser?.userId;
+
+  const deleteRecruit = useMutation(['deleteRecruit'], recruitApi.deleteOne, {
+    onSuccess: () => {
+      alert('공고가 삭제되었습니다.');
+      router.push('/recruit');
+    },
+    onError: (e: any) => {
+      alert(e.response.data.message);
+    },
+  });
+
+  const handleDeleteBoard = async () => {
+    deleteRecruit.mutate(articleId);
+  };
 
   return (
     <Container
@@ -52,8 +68,12 @@ export default function RecruitDetail(props: RecruitDetailProps) {
       <Box>
         <Content content={content.content} />
         <CompanyInfo address={content.address} company={content.company} />
-        <Contact user={content.user} />
-        {curUserId === content.user.userId && <OwnerButton articleId={articleId} />}
+        <Contact user={content.user} contact={content.contact} />
+        {curUserId === content.user.userId && (
+          <Button variant="outlined" onClick={handleDeleteBoard} sx={{ m: 2 }}>
+            삭제
+          </Button>
+        )}
       </Box>
     </Container>
   );
