@@ -32,8 +32,8 @@ export default function MessageItem({
         alert('삭제되었습니다.');
         queryClient.invalidateQueries(['message', 'received']);
       },
-      onError: (e: Error) => {
-        alert(e.message);
+      onError: (e: any) => {
+        alert(e.response.data.message);
       },
     }
   );
@@ -46,8 +46,8 @@ export default function MessageItem({
         alert('삭제되었습니다.');
         queryClient.invalidateQueries(['message', 'sent']);
       },
-      onError: (e: Error) => {
-        alert(e.message);
+      onError: (e: any) => {
+        alert(e.response.data.message);
       },
     }
   );

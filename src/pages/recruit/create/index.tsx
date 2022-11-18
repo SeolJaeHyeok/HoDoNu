@@ -26,7 +26,16 @@ interface DaumAddressAPIProps {
 }
 
 export default function RecruitCreatePage() {
-  const { quill, quillRef } = useQuill();
+  const theme = 'snow';
+
+  const modules = {
+    toolbar: [['bold', 'italic', 'underline', 'strike']],
+  };
+
+  const { quill, quillRef } = useQuill({
+    theme,
+    modules,
+  });
   const open = useDaumPostcodePopup();
   const router = useRouter();
 
@@ -61,7 +70,7 @@ export default function RecruitCreatePage() {
       router.push(`/recruit/create/${jobId}`);
     },
     onError: (error: any) => {
-      alert(error.message);
+      alert(error.response.data.message);
     },
   });
 
@@ -139,7 +148,7 @@ export default function RecruitCreatePage() {
       address: addressInfo,
       content,
       images: companyImages,
-      phoneNumber: data.companyRecruiterContact,
+      contact: data.companyRecruiterContact,
     };
 
     // POST 요청
@@ -192,7 +201,7 @@ export default function RecruitCreatePage() {
         <div>
           <div ref={quillRef} />
         </div>
-        <Label htmlFor="companyRecruiterContact">연락처</Label>
+        <Label htmlFor="companyRecruiterContact">담당자 전화번호</Label>
         <TextField
           {...register('companyRecruiterContact')}
           id="companyRecruiterContact"

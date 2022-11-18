@@ -62,8 +62,8 @@ export default function AdminUser() {
       alert(data.data.result);
       queryClient.invalidateQueries(['admin', 'users', searchQueryKey, searchQuery]);
     },
-    onError: (e: unknown) => {
-      alert(e);
+    onError: (e: any) => {
+      alert(e.response.data.message);
     },
   });
 
@@ -73,8 +73,8 @@ export default function AdminUser() {
       alert(data.data.result);
       queryClient.invalidateQueries(['admin', 'users', searchQueryKey, searchQuery]);
     },
-    onError: (e: unknown) => {
-      alert(e);
+    onError: (e: any) => {
+      alert(e.response.data.message);
     },
   });
 

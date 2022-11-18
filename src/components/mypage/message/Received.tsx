@@ -7,7 +7,7 @@ import MessageItem from './MessageItem';
 
 export default function Received() {
   const { data } = useQuery(['message', 'received'], () => messageApi.getReceivedMessage());
-  const dataBeforeCheck = data?.result.filter(item => item.check === false);
+  const dataBeforeCheck = data?.result.filter(item => item.isCheck === false);
 
   return (
     <Box

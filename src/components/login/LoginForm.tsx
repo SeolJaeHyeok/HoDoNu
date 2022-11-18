@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { Link as MuiLink, Button, Stack, Box, TextField, Typography } from '@mui/material';
 import Link from 'next/link';
 
@@ -8,8 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 
 import { loginValidationSchema } from '@utils/validationSchema';
 import authApi from 'src/apis/auth/auth';
-import { useUserActions } from '@utils/hooks/useUserAction';
-// import { NextApiRequest } from 'next';
+import { useUserActions } from '@hooks/useUserAction';
 
 // 비밀번호 찾기
 // 아이디 찾기
@@ -19,8 +17,6 @@ interface UserLoginForm {
   password: string;
 }
 export default function LoginForm() {
-  const router = useRouter();
-
   const {
     register,
     handleSubmit,
@@ -33,18 +29,15 @@ export default function LoginForm() {
     onSuccess: data => {
       userAction.login(data);
     },
-    onError: (e: Error) => {
-      alert(e.message);
+    onError: (e: any) => {
+      alert(e.response.data.message);
     },
   });
 
   const onLoginFormSubmit: SubmitHandler<UserLoginForm> = async data => {
     const { email, password } = data;
-
     mutation.mutate({ email, password });
-
     reset({ email: '', password: '' });
-    router.push('/');
   };
 
   return (

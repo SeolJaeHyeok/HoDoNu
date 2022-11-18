@@ -40,9 +40,11 @@ export interface UserDetail {
   role: string;
   introduce: string;
   nickname: string;
-  hospitalAddress: string;
-  hospitalAddressDetail: string;
-  hospitalAddressNumber: string;
+  address: {
+    detailAddress: string;
+    mainAddress: string;
+    postalCode: string;
+  };
   isAuth: boolean;
   blockArticleCategoties: string[];
   totalArticles: number;
