@@ -20,7 +20,6 @@ export default function MypageIndex() {
   const { data } = useQuery(['detailUser', user?.userId], () => authApi.getOne(user?.userId!), {
     onSuccess: data => {
       setProfileImg(makeProfileUrl(data.data.result.imgUrl));
-      // setProfileImg(data.data.result.imgUrl);
     },
     onError: (e: any) => {
       alert(e.response.data.message);

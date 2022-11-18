@@ -15,8 +15,8 @@ export default function AvartarMenu() {
   const profileImg = useRecoilValue(profileUrl);
   const s3Url =
     process.env.NODE_ENV === 'development'
-      ? process.env.NEXT_PUBLIC_DEVELOPMENT_IMAGE_BASE_URL
-      : process.env.NEXT_PUBLIC_PRODUCTION_IMAGE_BASE_URL;
+      ? `https://${process.env.NEXT_PUBLIC_DEVELOPMENT_IMAGE_BASE_URL}`
+      : `https://${process.env.NEXT_PUBLIC_PRODUCTION_IMAGE_BASE_URL}`;
 
   const open = Boolean(anchorEl);
   const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
