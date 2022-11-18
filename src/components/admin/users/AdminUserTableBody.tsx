@@ -1,10 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import MultipleSelectCheckmarks from './MultipleSelectCheckmarks';
 import CustomAvatarImage from '@components/CustomAvartar';
 import { Box, Container, IconButton, Switch, TableCell, TableRow } from '@mui/material';
 import { CATEGORY_TABLE } from '@utils/const/category';
 import PersonOffIcon from '@mui/icons-material/PersonOff';
 import CustomModal from '@components/modal/CustomModal';
-import Image from 'next/image';
 import { AdminUserProps } from '@interfaces/admin';
 import useModal from '@hooks/useModal';
 
@@ -101,7 +101,7 @@ export default function AdminUserTableBody({
           />
           {user.recruiterStatus === 'Pending' && (
             <CustomModal btnContent={'보기'} modal={adminModal}>
-              <Image
+              <img
                 alt="채용 인증 이미지"
                 width={300}
                 height={300}
@@ -119,7 +119,7 @@ export default function AdminUserTableBody({
           />
           {user.authStatus === 'Pending' && (
             <CustomModal btnContent={'보기'} modal={adminModal}>
-              <Image alt="회원 인증 이미지" width={300} height={300} src={`${user.authDocument}`} />
+              <img alt="회원 인증 이미지" width={300} height={300} src={`${user.authDocument}`} />
             </CustomModal>
           )}
         </TableCell>
