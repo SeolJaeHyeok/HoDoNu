@@ -12,6 +12,8 @@ import { useRouter } from 'next/router';
 import Search from '@components/board/search/Search';
 import styled from '@emotion/styled';
 import React, { Dispatch, SetStateAction } from 'react';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '@atoms/userAtom';
 
 interface BoardHeaderProps {
   setSort: Dispatch<SetStateAction<string>>;
@@ -32,6 +34,7 @@ export default function BoardHeader({
   category,
 }: BoardHeaderProps) {
   const router = useRouter();
+  const loginInfo = useRecoilValue(userInfoState);
 
   // 최신 순, 조회순 정렬
   const handleSortClick = (sort: string) => {
@@ -96,9 +99,11 @@ export default function BoardHeader({
         </Select>
       </FormControl>
       <Search category={category} />
-      <Link href={`/board/create?category=${category}`}>
-        <Button variant="outlined">작성하기</Button>
-      </Link>
+      {loginInfo && (
+        <Link href={`/board/create?category=${category}`}>
+          <Button variant="outlined">작성하기</Button>
+        </Link>
+      )}
     </BoardHeaderConatiner>
   );
 }
