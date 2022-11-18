@@ -63,5 +63,5 @@ const SkeletonContainer = styled.div`
 `;
 
 const Wrapper = styled.div`
-  margin: 50px 50px;
+  margin: 15px 50px;
 `;
