@@ -7,11 +7,21 @@ import { Box, Button, Stack, TextField } from '@mui/material';
 import ArticleFormEditor from '@components/ArticleFormEditor';
 import { useRouter } from 'next/router';
 import boardApi from '@apis/board';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '@atoms/userAtom';
 
 export default function EditForm({ data, category }: any) {
   const router = useRouter();
+  const userInfo = useRecoilValue(userInfoState);
   const { title, content, articleId } = data;
+
+  useEffect(() => {
+    if (!userInfo) {
+      alert('비회원은 게시글을 작성할 수 없습니다. 로그인을 진행해주세요.');
+      router.push('/login');
+    }
+  }, [userInfo, router]);
 
   const {
     register,

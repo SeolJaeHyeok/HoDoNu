@@ -23,6 +23,13 @@ export default function ArticleCreateForm() {
   const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
+    if (!userInfo) {
+      alert('비회원은 게시글을 작성할 수 없습니다. 로그인을 진행해주세요.');
+      router.push('/login');
+    }
+  }, [userInfo, router]);
+
+  useEffect(() => {
     if (userRole === 'User') {
       setCategories([categoryAssertion.FREE, jobCategory]);
     }

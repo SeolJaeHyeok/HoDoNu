@@ -88,7 +88,7 @@ export default function ArticleFormEditor({ onChange, content, height }: Article
     };
   }, []);
 
-  const formats = ['header', 'blockquote', 'indent', 'list', 'code-block', 'image'];
+  const formats = ['header', 'blockquote', 'list', 'code-block', 'image'];
   return (
     <FormEditorContainer>
       <ReactQuillDynamic

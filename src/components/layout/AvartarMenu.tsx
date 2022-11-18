@@ -13,6 +13,15 @@ export default function AvartarMenu() {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const profileImg = useRecoilValue(profileUrl);
+
+  const s3Url =
+    process.env.NODE_ENV === 'development'
+      ? process.env.NEXT_PUBLIC_DEVELOPMENT_IMAGE_BASE_URL
+      : process.env.NEXT_PUBLIC_PRODUCTION_IMAGE_BASE_URL;
+  const temp = profileImg?.replace(s3Url!, '');
+
+  console.log(temp);
+
   const open = Boolean(anchorEl);
   const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
