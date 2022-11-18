@@ -103,11 +103,11 @@ export default function Register() {
       router.push('/login');
     } catch (e: any) {
       alert(e.response.data.message);
-      if (e.response.data.message === '해당 이메일은 이미 사용중입니다.')
+      if (e.response.status === 400) {
         setIsCheckPasswordAuth(!isCheckPasswordAuth);
+      }
     }
   };
-
   return (
     <form onSubmit={handleSubmit(data => handleMergeFormData(data))}>
       <RegisterWrapper>
