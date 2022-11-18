@@ -14,19 +14,30 @@ export default function AdminRecruit() {
   const [query, setQuery] = useState<string>('');
   const [jobs, setJobs] = useState<TableData[] | null>(null);
   const [page, setPage] = useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(5);
+  const [total, setTotal] = useState<number>(0);
   const debouncedQuery = useDebounce(query, 200);
 
   useQuery(
-    ['admin', 'recruit', debouncedQuery],
-    () => adminRecruitApi.getAll({ filter: filter, query: debouncedQuery }),
+    ['admin', 'recruit', debouncedQuery, page],
+    () =>
+      adminRecruitApi.getAll({
+        filter: filter,
+        query: debouncedQuery,
+        page: page + 1,
+        perPage: rowsPerPage,
+      }),
     {
       onSuccess: data => {
+        console.log(data);
         setJobs(data.data[0]);
-        setPage(0);
+        setTotal(data.data[1]);
       },
       onError: (e: any) => {
         alert(e.response.data.message);
       },
+      staleTime: Infinity,
+      cacheTime: Infinity,
     }
   );
 
@@ -73,7 +84,16 @@ export default function AdminRecruit() {
           <IconButton type="button" sx={{ p: '10px' }} aria-label="search"></IconButton>
         </form>
       </Box>
-      {jobs && <RecruitTable jobs={jobs} page={page} setPage={setPage} />}
+      {jobs && (
+        <RecruitTable
+          jobs={jobs}
+          page={page}
+          setPage={setPage}
+          rowsPerPage={rowsPerPage}
+          setRowsPerPage={setRowsPerPage}
+          total={total}
+        />
+      )}
     </Box>
   );
 }

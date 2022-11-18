@@ -23,16 +23,22 @@ export default function RecruitTable({
   jobs,
   page,
   setPage,
+  rowsPerPage,
+  setRowsPerPage,
+  total,
 }: {
   jobs: TableData[];
   page: number;
   setPage: Dispatch<SetStateAction<number>>;
+  rowsPerPage: number;
+  setRowsPerPage: Dispatch<SetStateAction<number>>;
+  total: number;
 }) {
   const [order, setOrder] = useState<Order>('desc');
   const [orderBy, setOrderBy] = useState<keyof TableData>('jobId');
   const [selected, setSelected] = useState<number[]>([]);
   const [dense, setDense] = useState(false);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  // const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof TableData) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -84,8 +90,6 @@ export default function RecruitTable({
 
   const isSelected = (jobId: number) => selected.indexOf(jobId) !== -1;
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - jobs.length) : 0;
-
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
@@ -108,61 +112,49 @@ export default function RecruitTable({
             )}
             <TableBody>
               {jobs &&
-                jobs
-                  .sort(getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    const isItemSelected = isSelected(row.jobId);
-                    const labelId = `enhanced-table-checkbox-${index}`;
+                jobs.sort(getComparator(order, orderBy)).map((row, index) => {
+                  const isItemSelected = isSelected(row.jobId);
+                  const labelId = `enhanced-table-checkbox-${index}`;
 
-                    return (
-                      <TableRow
-                        hover
-                        onClick={event => handleClick(event, row.jobId)}
-                        role="checkbox"
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={row.jobId}
-                        selected={isItemSelected}
+                  return (
+                    <TableRow
+                      hover
+                      onClick={event => handleClick(event, row.jobId)}
+                      role="checkbox"
+                      aria-checked={isItemSelected}
+                      tabIndex={-1}
+                      key={row.jobId}
+                      selected={isItemSelected}
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          color="primary"
+                          checked={isItemSelected}
+                          inputProps={{
+                            'aria-labelledby': labelId,
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell
+                        component="th"
+                        align="center"
+                        id={labelId}
+                        scope="row"
+                        padding="none"
                       >
-                        <TableCell padding="checkbox">
-                          <Checkbox
-                            color="primary"
-                            checked={isItemSelected}
-                            inputProps={{
-                              'aria-labelledby': labelId,
-                            }}
-                          />
-                        </TableCell>
-                        <TableCell
-                          component="th"
-                          align="center"
-                          id={labelId}
-                          scope="row"
-                          padding="none"
-                        >
-                          {row.jobId}
-                        </TableCell>
-                        <TableCell align="center">{row.email}</TableCell>
-                        <TableCell align="center">{dateFormatter(row.createdAt)}</TableCell>
-                        <TableCell align="center">{row.title}</TableCell>
-                        <TableCell align="center">{row.hits}</TableCell>
-                        <TableCell align="center">{row.company}</TableCell>
-                        <TableCell align="center">
-                          {row.isActive ? 'activate' : 'deactivate'}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: (dense ? 33 : 53) * emptyRows,
-                  }}
-                >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
+                        {row.jobId}
+                      </TableCell>
+                      <TableCell align="center">{row.email}</TableCell>
+                      <TableCell align="center">{dateFormatter(row.createdAt)}</TableCell>
+                      <TableCell align="center">{row.title}</TableCell>
+                      <TableCell align="center">{row.hits}</TableCell>
+                      <TableCell align="center">{row.company}</TableCell>
+                      <TableCell align="center">
+                        {row.isActive ? 'activate' : 'deactivate'}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
             </TableBody>
           </Table>
         </TableContainer>
@@ -170,7 +162,7 @@ export default function RecruitTable({
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={jobs.length}
+            count={total}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
