@@ -18,9 +18,18 @@ interface GetAllProps {
 }
 
 const adminRecruitApi = {
-  getAll: (ParamProps: GetAllProps): Promise<AxiosResponse<any[]>> =>
+  getAll: (params: GetAllProps): Promise<AxiosResponse<any[]>> =>
     instance.get(
-      `/admin/jobs?page=${ParamProps?.page}&perPage=${ParamProps?.perPage}&${ParamProps?.filter}=${ParamProps?.query}`
+      `admin/jobs?${params.filter}=${params.query}&${
+        params.query ? '' : `page=${params.page}&perPage=${params.perPage}`
+      }`
+    ),
+
+  getSearchData: (params: GetAllProps): Promise<AxiosResponse<any[]>> =>
+    instance.get(
+      `admin/jobs?${params.filter}=${params.query}&page=${params.page ?? 1}&perPage=${
+        params.perPage
+      }`
     ),
   patchOneActive: (isActiveProps: IsActiveProps): Promise<AxiosResponse<PatchRes>> =>
     instance.patch(
