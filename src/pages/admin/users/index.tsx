@@ -5,7 +5,7 @@ import AdminUserTable from '@components/admin/users/AdminUserTable';
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import adminApi from '@apis/admin';
 import styled from '@emotion/styled';
-import useInterSect from '@hooks/useInterSect';
+import useInterSectionObeserver from '@hooks/useInterSectionObeserver';
 
 const CATEGORY_TABLE: {
   [index: string]: 'Doctor' | 'Nurse';
@@ -118,12 +118,16 @@ export default function AdminUser() {
   };
 
   // Intersection Observer Hook
-  const ref = useInterSect(async (entry: any, observer: any) => {
-    observer.unobserve(entry.target);
-    if (hasNextPage && !isFetching && userData?.pages.at(-1)?.data.result.response.length !== 0) {
-      fetchNextPage();
+  const ref = useInterSectionObeserver(
+    async (entry: IntersectionObserverEntry, observer: IntersectionObserver) => {
+      observer.unobserve(entry.target);
+
+      // 다음 페이지가 있고, 이전 데이터 요청이 끝났고, 마지막 요청의 응답으로 온 데이터의 길이가 0이 아닐 경우, 다음 페이지 호출
+      if (hasNextPage && !isFetching && userData?.pages.at(-1)?.data.result.response.length !== 0) {
+        fetchNextPage();
+      }
     }
-  });
+  );
 
   // Data Processing
   const usersData = useMemo(
@@ -133,15 +137,7 @@ export default function AdminUser() {
   );
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        marginTop: '50px',
-      }}
-    >
+    <Container>
       <AdminUserSearch
         searchQueryKey={searchQueryKey}
         setSearchQuery={setSearchQuery}
@@ -159,9 +155,17 @@ export default function AdminUser() {
         />
         <Target ref={ref}></Target>
       </>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  display: 'flex';
+  align-items: 'center';
+  justify-content: 'center';
+  flex-direction: 'column';
+  margin-top: '50px';
+`;
 
 const Target = styled.div`
   height: 1px;

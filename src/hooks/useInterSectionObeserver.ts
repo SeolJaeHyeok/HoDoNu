@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-const useInterSect = (onIntersect: any, options?: any) => {
+const useInterSectionObserver = (onIntersect: any, options?: any) => {
   const ref = useRef(null);
 
   const callback = useCallback(
-    (entries: any, observer: any) => {
-      entries.forEach((entry: any) => {
+    (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+      entries.forEach((entry: IntersectionObserverEntry) => {
         if (entry.isIntersecting) onIntersect(entry, observer);
       });
     },
@@ -14,12 +14,16 @@ const useInterSect = (onIntersect: any, options?: any) => {
 
   useEffect(() => {
     if (!ref.current) return;
+
+    // Observer 등록
     const observer = new IntersectionObserver(callback, options);
     observer.observe(ref.current);
+
+    // cleanup function - Observer 해제
     return () => observer.disconnect();
   }, [ref, options, callback]);
 
   return ref;
 };
 
-export default useInterSect;
+export default useInterSectionObserver;
