@@ -160,11 +160,11 @@ export default function AdminUser() {
 }
 
 const Container = styled.div`
-  display: 'flex';
-  align-items: 'center';
-  justify-content: 'center';
-  flex-direction: 'column';
-  margin-top: '50px';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 50px;
 `;
 
 const Target = styled.div`
