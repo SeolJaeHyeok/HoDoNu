@@ -2,6 +2,7 @@ import { Avatar } from '@mui/material';
 import React from 'react';
 
 interface AvatarProps {
+  cursor?: boolean;
   alt?: string;
   src?: string;
   width?: number;
@@ -17,7 +18,14 @@ interface AvatarProps {
  * @param {() => void} handleClick - 이미지를 클릭했을 때 실행할 함수
  */
 
-export default function CustomAvatarImage({ alt, src, width, height, handleClick }: AvatarProps) {
+export default function CustomAvatarImage({
+  cursor,
+  alt,
+  src,
+  width,
+  height,
+  handleClick,
+}: AvatarProps) {
   return (
     <Avatar
       alt={alt}
@@ -28,7 +36,7 @@ export default function CustomAvatarImage({ alt, src, width, height, handleClick
         height,
         borderRadius: '50%',
         ':hover': {
-          cursor: 'pointer',
+          cursor: cursor ? 'pointer' : '',
         },
       }}
     />

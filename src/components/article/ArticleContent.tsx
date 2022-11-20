@@ -81,7 +81,6 @@ export default function ArticleContent({
     <BoardWrapper>
       <CustomSideBar />
       <BoardContainer>
-        <BlankContent></BlankContent>
         <BoardContent>
           <ArticleUserInfo content={result} />
           <BoardTitle>{result?.title}</BoardTitle>
@@ -147,21 +146,15 @@ export default function ArticleContent({
 }
 
 const BoardWrapper = styled.div`
-  display: flex;
   margin-top: 30px;
 `;
 
 const BoardContainer = styled.div`
   display: flex;
   width: 750px;
+  margin: 0 auto;
 `;
-const BlankContent = styled.div`
-  width: 200px;
-`;
-const BoardContent = styled.div`
-  flex-grow: 3;
-  /* width: 750px; */
-`;
+const BoardContent = styled.div``;
 const BoardTitle = styled.h1`
   font-size: 25px;
   margin-top: 20px;
@@ -208,6 +201,6 @@ const CommentTextArea = styled.textarea`
   resize: none;
   padding: 10px 15px;
   border-radius: 15px;
-  width: 700px;
+  width: 750px;
   overflow: hidden;
 `;

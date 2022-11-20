@@ -1,18 +1,19 @@
 import React from 'react';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 import { Box, IconButton, MenuItem, Menu } from '@mui/material';
 import CustomAvatarImage from '@components/CustomAvartar';
-import { useRouter } from 'next/router';
-import { useResetRecoilState } from 'recoil';
-import { isLoginState, userInfoState } from 'src/atoms/userAtom';
+import { useUserActions } from '@hooks/useUserAction';
+import { useRecoilValue } from 'recoil';
+import { profileUrl } from '@atoms/userAtom';
 
 export default function AvartarMenu() {
+  const userAction = useUserActions();
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const profileImg = useRecoilValue(profileUrl);
   const open = Boolean(anchorEl);
-  const resetUserInfo = useResetRecoilState(userInfoState);
-  const resetIsLogin = useResetRecoilState(isLoginState);
   const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -23,9 +24,7 @@ export default function AvartarMenu() {
 
   const handleLogout = () => {
     setAnchorEl(null);
-    resetUserInfo();
-    resetIsLogin();
-    sessionStorage.clear();
+    userAction.logout();
   };
 
   const handleMypage = () => {
@@ -36,8 +35,9 @@ export default function AvartarMenu() {
   return (
     <Box>
       <IconButton aria-label="menu" onClick={handleMenuClick} sx={{ padding: 0 }}>
-        <CustomAvatarImage alt="profile" />
+        <CustomAvatarImage alt="profile" src={profileImg!} />
       </IconButton>
+
       <Menu sx={{ width: '160px' }} anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
         <MenuItem onClick={handleMypage}>Mypage</MenuItem>
