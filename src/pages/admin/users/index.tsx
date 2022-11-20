@@ -19,43 +19,14 @@ export default function AdminUser() {
   const [searchQueryKey, setSearchQueryKey] = useState('name');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // const { data: usersData } = useQuery(
-  //   ['admin', 'users', searchQueryKey, searchQuery],
-  //   () => {
-  //     if (searchQueryKey === 'name') {
-  //       return adminApi.getAllUsers({ name: searchQuery });
-  //     }
-
-  //     if (searchQueryKey === 'jobCategory') {
-  //       if (CATEGORY_TABLE[searchQuery]) {
-  //         return adminApi.getAllUsers({ jobCategory: CATEGORY_TABLE[searchQuery] });
-  //       }
-  //       return adminApi.getAllUsers();
-  //     }
-
-  //     if (searchQueryKey === 'startDate') {
-  //       return adminApi.getAllUsers({ startDate: searchQuery });
-  //     }
-
-  //     if (searchQueryKey === '') {
-  //       return adminApi.getAllUsers();
-  //     }
-  //   },
-  //   {
-  //     staleTime: 30000,
-  //     cacheTime: 30000,
-  //   }
-  // );
-
   const {
-    data: tempData,
+    data: userData,
     fetchNextPage,
     hasNextPage,
     isFetching,
   } = useInfiniteQuery(
     ['admin', 'users', 'pagination', searchQueryKey, searchQuery],
     ({ pageParam = 1 }) => {
-      // console.log(pageParam);
       if (searchQueryKey === 'name') {
         return adminApi.getAllUsers({
           name: searchQuery,
@@ -88,7 +59,6 @@ export default function AdminUser() {
       staleTime: 30000,
       cacheTime: 30000,
       getNextPageParam: (lastPage, allPages) => {
-        // console.log(lastPage, allPages);
         return allPages.length + 1;
       },
       getPreviousPageParam: (firstPage, allPages) => {
@@ -147,19 +117,19 @@ export default function AdminUser() {
     await editUserActiveAuthMutate({ userId, bodyData });
   };
 
+  // Intersection Observer Hook
   const ref = useInterSect(async (entry: any, observer: any) => {
     observer.unobserve(entry.target);
-    if (hasNextPage && !isFetching && tempData?.pages.at(-1)?.data.result.response.length !== 0) {
-      console.log(tempData);
-      // console.log(entry);
+    if (hasNextPage && !isFetching && userData?.pages.at(-1)?.data.result.response.length !== 0) {
       fetchNextPage();
     }
   });
 
-  const pageDatas = useMemo(
-    () => (tempData ? tempData.pages.flatMap(({ data }: any) => data.result.response) : []),
+  // Data Processing
+  const usersData = useMemo(
+    () => (userData ? userData.pages.flatMap(({ data }: any) => data.result.response) : []),
 
-    [tempData]
+    [userData]
   );
 
   return (
@@ -183,7 +153,7 @@ export default function AdminUser() {
           handleEditUserActiveAuth={handleEditUserActiveAuth}
           handleEditUserRecruitAuth={handleEditUserRecruitAuth}
           handleDeleteUser={handleDeleteUser}
-          users={pageDatas}
+          users={usersData}
           searchQuery={searchQuery}
           searchQueryKey={searchQueryKey}
         />
