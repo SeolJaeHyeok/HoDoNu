@@ -6,6 +6,7 @@ export interface UserProps {
 }
 
 export type CategoryType = 'doctor' | 'nurse' | 'free';
+export type CategoryUpperType = 'Doctor' | 'Nurse' | 'Free';
 
 export interface ArticleProps {
   id: number;
@@ -25,7 +26,7 @@ export interface ArticleCategoryProps {
 }
 
 export interface ArticleForm {
-  category: ArticleCategoryProps;
+  category: string;
   title: string;
   content: string;
   articleId?: string;
