@@ -40,7 +40,15 @@ export default function NavBar() {
         }}
       >
         <ResponsiveNavMenu />
-        <Image src={'/assets/images/wellcheck.png'} alt="logo" width={80} height={35} />
+        <Link href="/home">
+          <MuiLink
+            underline="none"
+            component="button"
+            color={curPath === '/home' ? '#fff' : '#424242'}
+          >
+            <Image src={'/assets/images/wellcheck.png'} alt="logo" width={80} height={35} />
+          </MuiLink>
+        </Link>
         <Box
           sx={{
             display: { xs: 'none', sm: 'flex' },
