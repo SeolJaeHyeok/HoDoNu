@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import boardManageApi from '@apis/admin/board/boardManage';
 import { BoardDataState } from '@pages/admin/board';
+import { dateFormatter } from '@utils/func';
 
 interface BoardTableRowProps {
   articles: BoardDataState;
@@ -41,7 +42,7 @@ export default function BoardTableRow({
       <Link href={`/board/${currentBoard.slice(0, -1)}/${articles.articleId}`}>
         <ColumnTitle>{articles.title}</ColumnTitle>
       </Link>
-      <ColumnCreate>{articles.createdAt}</ColumnCreate>
+      <ColumnCreate>{dateFormatter(articles.createdAt)}</ColumnCreate>
       <ColumnUser>{articles.user.email}</ColumnUser>
       <ColumnHit>{articles.hits}</ColumnHit>
       <Tooltip title="Delete" sx={{ width: 140 }}>
