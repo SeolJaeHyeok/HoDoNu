@@ -38,7 +38,7 @@ export default function RecruitDetail(props: RecruitDetailProps) {
     },
   });
 
-  const handleDeleteBoard = async () => {
+  const handleDeleteBoard = () => {
     deleteRecruit.mutate(articleId);
   };
 
