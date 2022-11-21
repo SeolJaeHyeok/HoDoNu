@@ -70,12 +70,14 @@ export default function Account({ user }: { user: UserDetail }) {
                 defaultValue={nickname}
                 onChange={handleEditNickname}
                 inputProps={{ maxLength: 8 }}
+                helperText={!nickname ? '닉네임을 입력해주세요' : ''}
               />
               <Button
                 type="submit"
                 variant="contained"
                 sx={{ boxShadow: 0, mt: 2, color: '#fff' }}
                 onClick={handleSubmitNickName}
+                disabled={!nickname}
               >
                 제출하기
               </Button>
