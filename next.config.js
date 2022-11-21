@@ -15,7 +15,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: [imgUrl],
+    domains: [imgUrl.toString()],
   },
   async redirects() {
     return [
