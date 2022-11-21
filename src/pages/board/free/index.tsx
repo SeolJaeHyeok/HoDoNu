@@ -65,15 +65,15 @@ export default function FreeBoard() {
             boardCategory={res?.data.result.category.toLowerCase()}
             articles={res?.data.result.articles}
           />
+          <Pagination
+            length={TOTAL_PAGE}
+            start={router.query.page ? +router.query.page - 1 : 0}
+            handler={pageNumber => handlePageNavigate(pageNumber)}
+          />
         </>
       ) : (
         <BoardSkeleton />
       )}
-      <Pagination
-        length={TOTAL_PAGE}
-        start={router.query.page ? +router.query.page - 1 : 0}
-        handler={pageNumber => handlePageNavigate(pageNumber)}
-      />
     </BoardContainer>
   );
 }
