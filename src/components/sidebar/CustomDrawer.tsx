@@ -1,14 +1,18 @@
+import { searchDataAtom } from '@atoms/searchAtom';
 import useSidebarValidation from '@hooks/useSidebarValidation';
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
 import { useRouter } from 'next/router';
+import { useSetRecoilState } from 'recoil';
 import { SideBarPath, SIDE_BAR_ICONS } from 'src/utils/const/sidebarMenus';
 
 // Test
 export default function CustomDrawer() {
   const router = useRouter();
   const { targetMenus } = useSidebarValidation();
+  const resetBoardSearchText = useSetRecoilState(searchDataAtom);
 
   const handleMenuClick = (menu: string) => {
+    resetBoardSearchText('');
     router.replace(SideBarPath[menu]);
   };
 

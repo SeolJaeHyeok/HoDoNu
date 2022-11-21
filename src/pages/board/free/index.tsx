@@ -12,15 +12,6 @@ import { searchDataAtom } from '@atoms/searchAtom';
 import { useRecoilValue } from 'recoil';
 import BoardSkeleton from '@components/board/BoardSkeleton';
 
-/*
-  TODO  
-  -[O] API 연결 후 테스트
-  -[O] Pagination - 테스트 완료, 해당 페이지에 Data가 없는 경우 예외 처리
-  -[] 검색 - 진행 중
-  -[] 같은 양식으로 의사, 간호사 게시판 만들기
-  -[] SSR 적용하기
-*/
-
 export default function FreeBoard() {
   const router = useRouter();
   const searchText = useRecoilValue<string>(searchDataAtom);
@@ -30,7 +21,7 @@ export default function FreeBoard() {
   const [perPage, setPerPage] = useState('5');
 
   const { data: res } = useQuery(
-    ['board', 'free', sort, page, perPage, searchText],
+    ['board', 'free', { sort, page, perPage, searchText }],
     () => boardApi.getAllFreeBoards({ page, perPage, sort, search: searchText }),
     {
       staleTime: Infinity,

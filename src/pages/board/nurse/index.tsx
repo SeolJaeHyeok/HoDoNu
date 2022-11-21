@@ -7,6 +7,8 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useRecoilValue } from 'recoil';
+import { searchDataAtom } from '@atoms/searchAtom';
 
 export default function NurseBoard() {
   const router = useRouter();
@@ -14,9 +16,15 @@ export default function NurseBoard() {
   const [sort, setSort] = useState('createdAt');
   const [page, setPage] = useState('1');
   const [perPage, setPerPage] = useState('5');
+  const searchText = useRecoilValue<string>(searchDataAtom);
 
-  const { data: res } = useQuery(['board', 'nurse', sort, page, perPage], () =>
-    boardApi.getAllNurseBoards({ page, perPage, sort })
+  const { data: res } = useQuery(
+    ['board', 'nurse', sort, page, perPage, searchText],
+    () => boardApi.getAllNurseBoards({ page, perPage, sort, search: searchText }),
+    {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    }
   );
 
   // 총 페이지 수

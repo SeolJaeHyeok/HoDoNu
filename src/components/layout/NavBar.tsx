@@ -8,10 +8,11 @@ import { Link as MuiLink, AppBar, Box, Typography } from '@mui/material';
 import { alpha } from '@mui/material';
 
 import ResponsiveNavMenu from './ResponsiveNavMenu';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { isLoginState, userInfoState } from 'src/atoms/userAtom';
 import AvartarMenu from './AvartarMenu';
 import NavButton from './NavButton';
+import { searchDataAtom } from '@atoms/searchAtom';
 
 export default function NavBar() {
   const router = useRouter();
@@ -19,8 +20,13 @@ export default function NavBar() {
 
   const userInfo = useRecoilValue(userInfoState);
   const isLogin = useRecoilValue(isLoginState);
+  const resetBoardSearchText = useSetRecoilState(searchDataAtom);
 
   const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
+
+  const handleBoardMenuClick = () => {
+    resetBoardSearchText('');
+  };
 
   return (
     <AppBar position="static" elevation={1} sx={{ backgroundColor: alpha('#17A8FF', 0.6) }}>
@@ -62,6 +68,7 @@ export default function NavBar() {
               component="button"
               color={curPath.includes('/board') ? '#fff' : '#424242'}
               sx={linkStyle}
+              onClick={handleBoardMenuClick}
             >
               게시판
             </MuiLink>
