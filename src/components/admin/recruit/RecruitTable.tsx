@@ -38,7 +38,6 @@ export default function RecruitTable({
   const [orderBy, setOrderBy] = useState<keyof TableData>('jobId');
   const [selected, setSelected] = useState<number[]>([]);
   const [dense, setDense] = useState(false);
-  // const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof TableData) => {
     const isAsc = orderBy === property && order === 'asc';

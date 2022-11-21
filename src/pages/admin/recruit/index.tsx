@@ -33,8 +33,6 @@ export default function AdminRecruit() {
       onError: (e: any) => {
         alert(e.response.data.message);
       },
-      staleTime: Infinity,
-      cacheTime: Infinity,
     }
   );
 
@@ -46,6 +44,7 @@ export default function AdminRecruit() {
   const handleSearchChange = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
     setQuery(e.target.value);
+    console.log(query);
   };
 
   const handleSearchSubmit = (e: React.SyntheticEvent) => {
