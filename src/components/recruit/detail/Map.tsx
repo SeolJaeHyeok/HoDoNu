@@ -23,7 +23,6 @@ export default function Map({ companyName, address }: MapProps) {
   const [mapLoaded, setMapLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!mapLoaded) return;
     window.kakao.maps.load(() => {
       const container = document.getElementById('map');
       const options = {
