@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import AdminUserSearch from '@components/admin/users/AdminUserSearch';
 import AdminUserTable from '@components/admin/users/AdminUserTable';
@@ -8,6 +8,9 @@ import styled from '@emotion/styled';
 import useInterSectionObeserver from '@hooks/useInterSectionObeserver';
 import LoadingSpinner from '@components/LoadingSpinner';
 import { Box } from '@mui/material';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '@atoms/userAtom';
+import { useRouter } from 'next/router';
 
 const CATEGORY_TABLE: {
   [index: string]: 'Doctor' | 'Nurse';
@@ -20,6 +23,8 @@ export default function AdminUser() {
   const queryClient = useQueryClient();
   const [searchQueryKey, setSearchQueryKey] = useState('name');
   const [searchQuery, setSearchQuery] = useState('');
+  const userInfo = useRecoilValue(userInfoState);
+  const router = useRouter();
 
   const {
     data: userData,
@@ -138,6 +143,14 @@ export default function AdminUser() {
 
     [userData]
   );
+
+  // TODO: ServerSide에서 처리
+  useEffect(() => {
+    if (userInfo && userInfo?.role !== 'Admin') {
+      alert('관리자가 아니면 접근할 수 없는 페이지입니다.');
+      router.push('/home');
+    }
+  }, [userInfo]);
 
   return (
     <Container>
