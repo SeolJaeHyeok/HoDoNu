@@ -79,7 +79,11 @@ export default function ArticleCreateForm() {
       alert('비회원은 게시글을 작성할 수 없습니다. 로그인을 진행해주세요.');
       router.push('/login');
     }
-  }, [userInfo, router]);
+    if (!categories.includes(router?.query?.category! as string)) {
+      alert('해당 게시판의 작성권한이 없습니다.');
+      router.push('/board');
+    }
+  }, [userInfo, router, categories]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
