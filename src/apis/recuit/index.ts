@@ -8,5 +8,5 @@ export const recruitApi = {
     instance.get(`/jobs/${articleId}`),
   getTags: (): Promise<AxiosResponse<getTagsRes>> => instance.get('/tags'),
   deleteOne: (articleId: number): Promise<AxiosResponse<any>> =>
-    instance.delete(`/tags/${articleId}`),
+    instance.delete(`/jobs/${articleId}`),
 };
