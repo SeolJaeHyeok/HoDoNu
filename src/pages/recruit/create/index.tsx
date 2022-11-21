@@ -205,7 +205,7 @@ export default function RecruitCreatePage() {
         <TextField
           {...register('companyRecruiterContact')}
           id="companyRecruiterContact"
-          placeholder="채용 담당자의 연락처 또는 이메일을 입력해주세요:)"
+          placeholder="채용 담당자의 연락처를 입력해주세요:)"
           sx={{
             width: '450px',
             mt: '8px',

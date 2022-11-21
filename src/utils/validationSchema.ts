@@ -15,7 +15,7 @@ export const recruitPostSchema = yup.object({
       /^01([0|1|6|7|8|9]?)-([0-9]{3,4})-([0-9]{4})$/,
       '양식에 맞춰 작성해주세요. Ex. 010-9999-9999'
     )
-    .required('채용 담당자의 연락처 또는 이메일을 입력해주세요:('),
+    .required('채용 담당자의 연락처를 입력해주세요.'),
 });
 
 export const boardValidationSchema = yup.object({
