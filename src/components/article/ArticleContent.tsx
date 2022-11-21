@@ -37,11 +37,19 @@ export default function ArticleContent({
   const requestDeleteBoard = useMutation(detailApi.deleteBoard, {
     onSuccess: () => {
       queryClient.invalidateQueries(['detailContent', categoryName]);
+      alert('게시글이 성공적으로 삭제됐습니다.');
+      router.back();
+    },
+    onError: (e: any) => {
+      alert(e.response.data.message);
     },
   });
 
   const handleDeleteBoard = () => {
-    requestDeleteBoard.mutate(result.articleId);
+    if (confirm('정말 삭제하시겠습니까?')) {
+      console.log(result.articleId, categoryName);
+      requestDeleteBoard.mutate({ articleId: result.articleId, categoryName });
+    }
   };
 
   // 댓글 등록 로직
@@ -77,7 +85,6 @@ export default function ArticleContent({
     });
   };
 
-  console.log(loginUserId);
   return (
     <BoardWrapper>
       <CustomSideBar />
