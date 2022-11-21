@@ -3,17 +3,17 @@ import { RecruitCardViewProps } from '@interfaces/recruit/list/list';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function RecruitCardView({ company, title, address, jobId }: RecruitCardViewProps) {
+export default function RecruitCardView({
+  company,
+  title,
+  address,
+  jobId,
+  images,
+}: RecruitCardViewProps) {
   return (
     <Link href={`/recruit/${jobId}`}>
       <CardContainer>
-        <Image
-          src="/assets/images/wellcheck.avif"
-          width={308}
-          height={160}
-          style={{ borderRadius: '12px' }}
-          alt="공고"
-        />
+        <Image src={images} width={308} height={160} style={{ borderRadius: '12px' }} alt="공고" />
         <RecruitTitle>{title}</RecruitTitle>
         <RecruitCompanyName>{company}</RecruitCompanyName>
         <RecruitAddress>{address}</RecruitAddress>

@@ -1,8 +1,6 @@
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 import recruitListApi from '@apis/recruit/list';
@@ -54,23 +52,24 @@ export default function RecruitHeaderSelect({
 
   const requestURL = filterTagJoinUrl(searchFilterTagNames, tagsId, searchBarFilterInput);
 
-  const handleClickSearchRequest = () => {
+  const handleClickSearchRequest = (e: any) => {
+    e.preventDefault();
     requestTagData.mutate(requestURL);
   };
 
   return (
     <HeaderSearchBarWrapper>
-      <FormControl sx={{ m: 1, width: 350 }}>
-        <InputLabel id="demo-multiple-chip-label">Filter</InputLabel>
+      <form style={{ margin: '1px', display: 'flex' }} onSubmit={handleClickSearchRequest}>
         <Select
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
+          sx={{ width: 350 }}
           multiple
           value={searchFilterTagNames}
           onChange={handleChange}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={selected => (
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, width: 350 }}>
               {selected.map(value => (
                 <Chip key={value} label={value} />
               ))}
@@ -84,26 +83,26 @@ export default function RecruitHeaderSelect({
             </MenuItem>
           ))}
         </Select>
-      </FormControl>
-      <SearchBarWrapper>
-        <SearchInput onChange={handleChangeSearchInput} placeholder="검색어를 입력해주세요" />
-        <SearchButton onClick={handleClickSearchRequest} />
-      </SearchBarWrapper>
+
+        <SearchBarWrapper>
+          <SearchInput onChange={handleChangeSearchInput} placeholder="검색어를 입력해주세요" />
+          <SearchButton onClick={handleClickSearchRequest} />
+        </SearchBarWrapper>
+      </form>
     </HeaderSearchBarWrapper>
   );
 }
-const HeaderSearchBarWrapper = styled.div`
-  display: flex;
-`;
+const HeaderSearchBarWrapper = styled.div``;
 export const SearchBarWrapper = styled.div`
   position: relative;
   display: flex;
   width: 400px;
-  height: 56px;
+  height: 65px;
   border: 1px solid #a3a3a3;
   border-radius: 6px;
   margin-left: 20px;
   margin: auto 0;
+  margin-left: 10px;
 `;
 export const SearchInput = styled.input`
   border: none;
@@ -119,7 +118,7 @@ export const SearchButton = styled.button`
   height: 25px;
   // 호진TODO: 아이콘 색상을 바꾸던가 다른 아이콘을 써야할 것 같음!
   background: url('/assets/images/searchIcon.svg');
-  top: 13px;
+  top: 17px;
   right: 15px;
   border: none;
   cursor: pointer;

@@ -12,7 +12,7 @@ export interface TagsIdState {
 
 export default function Recruit({ jobList, tagList }: RecruitProps) {
   const [jobLists, setJobLists] = useState(jobList);
-  const [searchFilterTagNames, setSearchFilterTagNames] = useState<string[]>([]);
+  const [searchFilterTagNames, setSearchFilterTagNames] = useState<string[]>(['회사 이름']);
   const [searchBarFilterInput, setSearchBarFilterInput] = useState<string>('');
   const [tagsId, setTagsId] = useState<TagsIdState>({
     tagIds: [],
@@ -40,17 +40,22 @@ export default function Recruit({ jobList, tagList }: RecruitProps) {
         searchBarFilterInput={searchBarFilterInput}
       />
       <RecruitContentContainer>
-        {jobLists
-          ?.filter(el => el.isActive === true)
-          .map((job, idx: number) => (
-            <RecruitCardView
-              key={idx}
-              company={job.company}
-              title={job.title}
-              address={job.mainAddress}
-              jobId={job.jobId}
-            />
-          ))}
+        {jobLists.length === 0 ? (
+          <RecruitSearchNoContent>검색 결과가 존재하지 않습니다.</RecruitSearchNoContent>
+        ) : (
+          jobLists
+            ?.filter(el => el.isActive === true)
+            .map((job, idx: number) => (
+              <RecruitCardView
+                key={idx}
+                company={job.company}
+                title={job.title}
+                address={job.address.mainAddress}
+                jobId={job.jobId}
+                images={job.image[0]}
+              />
+            ))
+        )}
       </RecruitContentContainer>
     </RecruitWrapper>
   );
@@ -86,6 +91,15 @@ const RecruitContainer = styled.div`
   width: 1350px;
   display: flex;
   justify-content: space-around;
+`;
+
+const RecruitSearchNoContent = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 25px;
+  color: rgb(102, 102, 102);
 `;
 
 const RecruitLine = styled.hr`
