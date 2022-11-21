@@ -20,7 +20,7 @@ interface BoardHeaderProps {
   sort: string | undefined;
   page: string | undefined;
   perPage: string | undefined;
-  category: 'free' | 'doctor' | 'nurse';
+  category: 'Free' | 'Doctor' | 'Nurse';
 }
 
 export default function BoardHeader({

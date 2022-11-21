@@ -70,7 +70,7 @@ export default function FreeBoard() {
               page={page}
               sort={sort}
               perPage={perPage}
-              category="free"
+              category="Free"
             />
             {res?.data.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
             <BoardList

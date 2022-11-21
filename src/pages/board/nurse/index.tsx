@@ -50,7 +50,7 @@ export default function NurseBoard() {
               sort={sort}
               page={page}
               perPage={perPage}
-              category={res?.data.result.category.toLowerCase()}
+              category={res?.data.result.category}
             />
 
             <BoardList

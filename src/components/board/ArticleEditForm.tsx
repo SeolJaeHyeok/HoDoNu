@@ -41,7 +41,7 @@ export default function EditForm({ data, category }: any) {
   const mutation = useMutation(['createArticle'], boardApi.updateArticle, {
     onSuccess: res => {
       const { articleId } = res.data.result;
-      router.push(`free/${articleId}`);
+      router.push(`${category}/${articleId}`);
     },
     onError: (e: any) => {
       alert(e.response.data.message);
