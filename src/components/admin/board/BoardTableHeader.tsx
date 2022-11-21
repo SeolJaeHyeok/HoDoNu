@@ -55,7 +55,7 @@ const HeaderTitle = styled(HeaderId)`
   width: 215px;
 `;
 const HeaderCreate = styled(HeaderId)`
-  width: 165px;
+  width: 150px;
 `;
 const HeaderUser = styled(HeaderId)`
   width: 165px;

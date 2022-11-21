@@ -68,7 +68,7 @@ const ColumnTitle = styled(ColumnId)`
   cursor: pointer;
 `;
 const ColumnCreate = styled(ColumnId)`
-  width: 165px;
+  width: 150px;
 `;
 const ColumnUser = styled(ColumnId)`
   width: 165px;
