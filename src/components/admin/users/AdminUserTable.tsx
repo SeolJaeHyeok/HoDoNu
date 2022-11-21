@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { AdminUserProps } from '@interfaces/admin';
 import AdminUserTableBody from './AdminUserTableBody';
+import NoSearchResult from './NoSearchResult';
 
 interface AdminUserTableProps {
   users: AdminUserProps[];
@@ -38,7 +39,7 @@ export default function AdminUserTable({
   searchQuery,
   searchQueryKey,
 }: AdminUserTableProps) {
-  return (
+  return users.length > 0 ? (
     <TableContainer sx={{ width: '80%', minWidth: '650px' }} component={Paper}>
       <Table aria-label="simple table">
         <TableHead>
@@ -66,5 +67,7 @@ export default function AdminUserTable({
         </TableBody>
       </Table>
     </TableContainer>
+  ) : (
+    <NoSearchResult searchQuery={searchQuery} />
   );
 }
