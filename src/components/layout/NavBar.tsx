@@ -56,7 +56,7 @@ export default function NavBar() {
               Home
             </MuiLink>
           </Link>
-          <Link href="/board">
+          <Link href="/board/free?page=1&perPage=5&sort=createdAt">
             <MuiLink
               underline="none"
               component="button"

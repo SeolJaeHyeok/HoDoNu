@@ -4,9 +4,9 @@ import { Box, Container, IconButton, Switch, TableCell, TableRow } from '@mui/ma
 import { CATEGORY_TABLE } from '@utils/const/category';
 import PersonOffIcon from '@mui/icons-material/PersonOff';
 import CustomModal from '@components/modal/CustomModal';
-import Image from 'next/image';
 import { AdminUserProps } from '@interfaces/admin';
 import useModal from '@hooks/useModal';
+import Image from 'next/image';
 
 interface AdminUserTableBodyProps {
   user: AdminUserProps;
@@ -39,6 +39,7 @@ export default function AdminUserTableBody({
       handleDeleteUser(userId);
     }
   };
+  console.log(user);
 
   const handleToggle = (status: string, type: 'auth' | 'recruit', userId: string) => {
     // 활동 권한 변경
