@@ -229,7 +229,6 @@ export default function Register() {
               width: '225px',
             }}
             {...register('postalCode')}
-            helperText={<ErrorMsg>{errors.postalCode?.message}</ErrorMsg>}
           />
           <Button
             variant="outlined"
@@ -250,7 +249,6 @@ export default function Register() {
               mt: '8px',
             }}
             {...register('mainAddress')}
-            helperText={<ErrorMsg>{errors.mainAddress?.message}</ErrorMsg>}
           />
           <TextField
             placeholder="상세 주소"

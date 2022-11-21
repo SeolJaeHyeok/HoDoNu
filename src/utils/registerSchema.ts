@@ -22,6 +22,4 @@ export const registerSchema = yup.object({
     .required('전화번호를 입력해주세요!'),
   birth: yup.string().required('생년월일을 입력해주세요!'),
   authCheck: yup.string().required('인증번호를 입력해주세요'),
-  postalCode: yup.string().required('우편번호를 입력해주세요.'),
-  mainAddress: yup.string().required('주소를 입력해주세요.'),
 });
