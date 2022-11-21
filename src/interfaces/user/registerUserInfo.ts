@@ -6,8 +6,8 @@ export interface RegisterUserInfo {
   phoneNumber: string;
   birth: string;
   jobCategory: string;
-  hospitalAddressNumber?: string;
-  hospitalAddress?: string;
-  hospitalAddressDetail?: string;
   authCheck?: string;
+  postalCode: string;
+  mainAddress: string;
+  detailAddress: string;
 }
