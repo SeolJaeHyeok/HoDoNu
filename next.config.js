@@ -1,4 +1,11 @@
+const nextEnv = require('next-env');
+const dotenvLoad = require('dotenv-load');
+
 /** @type {import('next').NextConfig} */
+
+dotenvLoad();
+const withNextEnv = nextEnv();
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
@@ -21,4 +28,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withNextEnv(nextConfig);
