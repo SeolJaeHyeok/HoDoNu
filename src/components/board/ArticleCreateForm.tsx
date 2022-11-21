@@ -39,6 +39,7 @@ export default function ArticleCreateForm() {
     register,
     handleSubmit,
     setValue,
+    getValues,
     reset,
     formState: { errors },
   } = useForm<ArticleForm>({
@@ -70,7 +71,8 @@ export default function ArticleCreateForm() {
   };
 
   const onEditorStateChange = (editorState: any) => {
-    editorState = editorState !== '<p><br></p>' ? editorState : '';
+    console.log(editorState);
+
     setValue('content', editorState);
   };
 
@@ -122,7 +124,11 @@ export default function ArticleCreateForm() {
           helperText={errors.title ? errors.title.message : null}
         />
 
-        <ArticleFormEditor onChange={onEditorStateChange} height="250px" />
+        <ArticleFormEditor
+          content={getValues('content')}
+          onChange={onEditorStateChange}
+          height="250px"
+        />
       </Stack>
       <Box
         sx={{
