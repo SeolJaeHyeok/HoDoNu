@@ -18,6 +18,7 @@ export interface RecruitContent {
     imgUrl: string;
     nickname: string;
   };
+  contact: string;
   address: {
     mainAddress: string;
     detailAddress: string;

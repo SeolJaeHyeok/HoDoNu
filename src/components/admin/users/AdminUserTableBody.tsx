@@ -4,9 +4,9 @@ import { Box, Container, IconButton, Switch, TableCell, TableRow } from '@mui/ma
 import { CATEGORY_TABLE } from '@utils/const/category';
 import PersonOffIcon from '@mui/icons-material/PersonOff';
 import CustomModal from '@components/modal/CustomModal';
-import Image from 'next/image';
 import { AdminUserProps } from '@interfaces/admin';
 import useModal from '@hooks/useModal';
+import Image from 'next/image';
 
 interface AdminUserTableBodyProps {
   user: AdminUserProps;
@@ -39,6 +39,7 @@ export default function AdminUserTableBody({
       handleDeleteUser(userId);
     }
   };
+  console.log(user);
 
   const handleToggle = (status: string, type: 'auth' | 'recruit', userId: string) => {
     // 활동 권한 변경
@@ -100,11 +101,11 @@ export default function AdminUserTableBody({
             onChange={() => handleToggle(user.recruiterStatus, 'recruit', user.userId)}
           />
           {user.recruiterStatus === 'Pending' && (
-            <CustomModal btnContent={'보기'} modal={adminModal}>
+            <CustomModal width={600} height={600} btnContent={'보기'} modal={adminModal}>
               <Image
                 alt="채용 인증 이미지"
-                width={300}
-                height={300}
+                width={600}
+                height={600}
                 src={`${user.recruiterDocument}`}
               />
             </CustomModal>
@@ -118,8 +119,8 @@ export default function AdminUserTableBody({
             onChange={() => handleToggle(user.authStatus, 'auth', user.userId)}
           />
           {user.authStatus === 'Pending' && (
-            <CustomModal btnContent={'보기'} modal={adminModal}>
-              <Image alt="회원 인증 이미지" width={300} height={300} src={`${user.authDocument}`} />
+            <CustomModal width={600} height={600} btnContent={'보기'} modal={adminModal}>
+              <Image alt="회원 인증 이미지" width={600} height={600} src={`${user.authDocument}`} />
             </CustomModal>
           )}
         </TableCell>

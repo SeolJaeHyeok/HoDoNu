@@ -12,6 +12,22 @@ export default function CustomDrawer() {
     router.replace(SideBarPath[menu]);
   };
 
+  const checkRoute = (menu: string) => {
+    if (router.pathname === '/board/free') {
+      return SideBarPath[menu].slice(0, 11) === router.pathname;
+    }
+
+    if (router.pathname === '/board/doctor') {
+      return SideBarPath[menu].slice(0, 13) === router.pathname;
+    }
+
+    if (router.pathname === '/board/nurse') {
+      return SideBarPath[menu].slice(0, 12) === router.pathname;
+    }
+
+    return SideBarPath[menu] === router.pathname;
+  };
+
   return (
     <div
       style={{
@@ -21,7 +37,11 @@ export default function CustomDrawer() {
       <Toolbar />
       <List>
         {targetMenus.map((menu: string) => (
-          <ListItem key={menu} disablePadding>
+          <ListItem
+            sx={{ backgroundColor: checkRoute(menu) ? 'rgba(0, 0, 0, 0.04)' : '' }}
+            key={menu}
+            disablePadding
+          >
             <ListItemButton onClick={() => handleMenuClick(menu)}>
               <ListItemIcon>{SIDE_BAR_ICONS[menu]}</ListItemIcon>
               <ListItemText primary={menu} />
