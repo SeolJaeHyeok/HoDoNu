@@ -66,7 +66,7 @@ export default function NavBar() {
             <MuiLink
               underline="none"
               component="button"
-              color={curPath.includes('/board') ? '#fff' : '#424242'}
+              color={curPath.includes('/board') && !curPath.includes('/admin') ? '#fff' : '#424242'}
               sx={linkStyle}
               onClick={handleBoardMenuClick}
             >
@@ -77,7 +77,9 @@ export default function NavBar() {
             <MuiLink
               underline="none"
               component="button"
-              color={curPath.includes('/recruit') ? '#fff' : '#424242'}
+              color={
+                curPath.includes('/recruit') && !curPath.includes('/admin') ? '#fff' : '#424242'
+              }
               sx={linkStyle}
             >
               채용

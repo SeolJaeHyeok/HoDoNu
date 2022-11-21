@@ -1,13 +1,19 @@
+const nextEnv = require('next-env');
+const dotenvLoad = require('dotenv-load');
+
 /** @type {import('next').NextConfig} */
+
+dotenvLoad();
+const withNextEnv = nextEnv();
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
     domains: [
-      // process.env.NODE_ENV === 'development'
-      //   ? process.env.NEXT_PUBLIC_DEVELOPMENT_IMAGE_BASE_URL
-      //   : process.env.NEXT_PUBLIC_PRODUCTION_IMAGE_BASE_URL,
-      'toy-project-s3.s3.ap-northeast-2.amazonaws.com',
+      process.env.NODE_ENV === 'development'
+        ? process.env.NEXT_PUBLIC_DEVELOPMENT_API_BASE_URL
+        : process.env.NEXT_PUBLIC_PRODUCTION_API_BASE_URL,
     ],
   },
   async redirects() {
@@ -21,4 +27,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withNextEnv(nextConfig);

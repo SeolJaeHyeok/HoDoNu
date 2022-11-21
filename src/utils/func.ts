@@ -64,3 +64,12 @@ export const dateFormatter = (date: string) => {
     minute: 'numeric',
   });
 };
+
+export const makeProfileUrl = (imgUrl: string): string => {
+  const s3Url =
+    process.env.NODE_ENV === 'development'
+      ? `https://${process.env.NEXT_PUBLIC_DEVELOPMENT_IMAGE_BASE_URL}`
+      : `https://${process.env.NEXT_PUBLIC_PRODUCTION_IMAGE_BASE_URL}`;
+
+  return imgUrl.replace(s3Url!, '');
+};

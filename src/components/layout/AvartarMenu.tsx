@@ -13,6 +13,11 @@ export default function AvartarMenu() {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const profileImg = useRecoilValue(profileUrl);
+  const s3Url =
+    process.env.NODE_ENV === 'development'
+      ? `https://${process.env.NEXT_PUBLIC_DEVELOPMENT_IMAGE_BASE_URL}`
+      : `https://${process.env.NEXT_PUBLIC_PRODUCTION_IMAGE_BASE_URL}`;
+
   const open = Boolean(anchorEl);
   const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -35,7 +40,7 @@ export default function AvartarMenu() {
   return (
     <Box>
       <IconButton aria-label="menu" onClick={handleMenuClick} sx={{ padding: 0 }}>
-        <CustomAvatarImage alt="profile" src={profileImg!} />
+        <CustomAvatarImage alt="profile" src={`${s3Url}${profileImg}`!} />
       </IconButton>
 
       <Menu sx={{ width: '160px' }} anchorEl={anchorEl} open={open} onClose={handleMenuClose}>

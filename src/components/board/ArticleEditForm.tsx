@@ -7,11 +7,21 @@ import { Box, Button, Stack, TextField } from '@mui/material';
 import ArticleFormEditor from '@components/ArticleFormEditor';
 import { useRouter } from 'next/router';
 import boardApi from '@apis/board';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '@atoms/userAtom';
 
 export default function EditForm({ data, category }: any) {
   const router = useRouter();
+  const userInfo = useRecoilValue(userInfoState);
   const { title, content, articleId } = data;
+
+  useEffect(() => {
+    if (!userInfo) {
+      alert('비회원은 게시글을 작성할 수 없습니다. 로그인을 진행해주세요.');
+      router.push('/login');
+    }
+  }, [userInfo, router]);
 
   const {
     register,
@@ -19,12 +29,19 @@ export default function EditForm({ data, category }: any) {
     setValue,
     reset,
     formState: { errors },
-  } = useForm<ArticleForm>({ resolver: yupResolver(boardValidationSchema) });
+  } = useForm<ArticleForm>({
+    resolver: yupResolver(boardValidationSchema),
+    defaultValues: {
+      title,
+      category,
+      content,
+    },
+  });
 
   const mutation = useMutation(['createArticle'], boardApi.updateArticle, {
     onSuccess: res => {
       const { articleId } = res.data.result;
-      router.push(`free/${articleId}`);
+      router.push(`${category.toLowerCase()}/${articleId}`);
     },
     onError: (e: any) => {
       alert(e.response.data.message);
@@ -36,13 +53,8 @@ export default function EditForm({ data, category }: any) {
     setValue('content', editorState);
   };
 
-  register('category', { value: category });
-  register('title', { value: title });
-
   const onSubmit: SubmitHandler<ArticleForm> = async data => {
     const { title, category, content } = data;
-
-    // 게시글 생성
     mutation.mutate({ title, category, content, articleId });
   };
 

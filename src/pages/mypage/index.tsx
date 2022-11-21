@@ -11,6 +11,7 @@ import authApi from '@apis/auth/auth';
 import { profileUrl, userInfoState } from '@atoms/userAtom';
 import Sent from '@components/mypage/message/Sent';
 import Received from '@components/mypage/message/Received';
+import { makeProfileUrl } from '@utils/func';
 
 export default function MypageIndex() {
   const user = useRecoilValue(userInfoState);
@@ -18,7 +19,7 @@ export default function MypageIndex() {
 
   const { data } = useQuery(['detailUser', user?.userId], () => authApi.getOne(user?.userId!), {
     onSuccess: data => {
-      setProfileImg(data.data.result.imgUrl);
+      setProfileImg(makeProfileUrl(data.data.result.imgUrl));
     },
     onError: (e: any) => {
       alert(e.response.data.message);

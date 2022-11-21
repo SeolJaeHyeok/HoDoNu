@@ -1,3 +1,4 @@
+import { makeProfileUrl } from './../utils/func';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 import { decodeJWT } from '../utils/decodeJWT';
@@ -14,6 +15,7 @@ export function useUserActions() {
 
   async function login(userData: any) {
     const { accessToken, refreshToken, imgUrl } = await userData.result;
+    const profileUrlWithoutS3 = makeProfileUrl(imgUrl);
 
     sessionStorage.setItem('token', accessToken);
     sessionStorage.setItem('refreshToken', refreshToken);
@@ -21,7 +23,7 @@ export function useUserActions() {
     const decodedToken = decodeJWT(accessToken);
     const { role, userId, jobCategory }: any = decodedToken;
     setUserInfo({ role, userId, jobCategory });
-    setProfieUrl(imgUrl);
+    setProfieUrl(profileUrlWithoutS3);
     setIsLogin(true);
     router.push('/home');
   }
