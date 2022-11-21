@@ -13,6 +13,8 @@ import { recruitEditorInitialValue } from '@utils/const/recruitEditorInitialValu
 import { useRouter } from 'next/router';
 import FileUploader from '@components/recruit/FileUploader';
 import { useMutation } from '@tanstack/react-query';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '@atoms/userAtom';
 
 interface RecruitPostProps {
   companyRecruitmentTitle: string;
@@ -26,8 +28,9 @@ interface DaumAddressAPIProps {
 }
 
 export default function RecruitCreatePage() {
-  const theme = 'snow';
+  const userInfo = useRecoilValue(userInfoState);
 
+  const theme = 'snow';
   const modules = {
     toolbar: [['bold', 'italic', 'underline', 'strike']],
   };
@@ -159,6 +162,14 @@ export default function RecruitCreatePage() {
   useEffect(() => {
     if (quill) quill.clipboard.dangerouslyPasteHTML(recruitEditorInitialValue);
   }, [quill]);
+
+  // TODO: ServerSide에서 처리
+  useEffect(() => {
+    if ((userInfo && userInfo?.role !== 'Admin') || userInfo?.role !== 'User') {
+      alert('작성 권한이 없는 페이지입니다.');
+      router.push('/home');
+    }
+  }, [userInfo]);
 
   return (
     <form>
