@@ -4,7 +4,6 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-import { useRouter } from 'next/router';
 
 const defaultProps = {
   length: 10,
@@ -22,19 +21,17 @@ type PaginationProps = {
 export default function Pagination({ length, show, start, handler }: PaginationProps) {
   const initArray = Array.from({ length }, (_, i) => i);
   const [pageKey, setPageKey] = useState(start);
-  const router = useRouter();
+
+  const numberingHandler = (pageNumber: number) => {
+    if (pageNumber >= 0 && pageNumber < length) {
+      setPageKey(() => pageNumber);
+      handler(pageNumber);
+    }
+  };
 
   useEffect(() => {
     setPageKey(start);
   }, [start]);
-
-  // 버튼(Card) 클릭 시 페이지 상태관리 및 props의 handler(maybe routing) 실행
-  const numberingHandler = (pageNumber: number) => {
-    if (pageNumber >= 0 && pageNumber < length) {
-      setPageKey(pageNumber);
-      handler(pageNumber);
-    }
-  };
 
   return (
     <Container>
@@ -75,8 +72,7 @@ export default function Pagination({ length, show, start, handler }: PaginationP
           .map(page => (
             <Card
               key={page}
-              // selected={page === pageKey}
-              selected={Number(router.query.page) - 1 === page}
+              selected={page === pageKey}
               onClick={() => {
                 numberingHandler(page);
               }}
