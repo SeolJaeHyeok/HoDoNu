@@ -111,7 +111,11 @@ export default function ArticleContent({
           </CommentWrapper>
           <CommnetInputContainer>
             <CommentTextArea
-              value={commentRequestDataForm.content}
+              value={
+                loginUserId === null
+                  ? `로그인이 필요한 서비스입니다. 로그인을 진행해주세요!`
+                  : commentRequestDataForm.content
+              }
               onChange={handleChangeCommentInput}
             />
             <Button
