@@ -21,7 +21,7 @@ export default function FreeBoard() {
   const [perPage, setPerPage] = useState('5');
 
   const { data: res } = useQuery(
-    ['board', 'free', { sort, page, perPage, searchText }],
+    ['board', 'free', sort, page, perPage, searchText],
     () => boardApi.getAllFreeBoards({ page, perPage, sort, search: searchText }),
     {
       staleTime: Infinity,
