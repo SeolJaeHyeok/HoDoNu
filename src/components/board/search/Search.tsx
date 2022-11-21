@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { useRef } from 'react';
-// import SearchForm from './SearchForm';
 import { useQuery } from '@tanstack/react-query';
-// import SearchList from './SearchList';
 
 import boardApi from '@apis/board';
 import useDebounce from '@hooks/useDebounce';

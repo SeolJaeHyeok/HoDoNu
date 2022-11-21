@@ -39,7 +39,6 @@ export default function AdminUserTableBody({
       handleDeleteUser(userId);
     }
   };
-  console.log(user);
 
   const handleToggle = (status: string, type: 'auth' | 'recruit', userId: string) => {
     // 활동 권한 변경
