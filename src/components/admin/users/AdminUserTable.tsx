@@ -39,7 +39,7 @@ export default function AdminUserTable({
   searchQuery,
   searchQueryKey,
 }: AdminUserTableProps) {
-  return users !== undefined && users.length > 0 ? (
+  return users.length > 0 ? (
     <TableContainer sx={{ width: '80%', minWidth: '650px' }} component={Paper}>
       <Table aria-label="simple table">
         <TableHead>

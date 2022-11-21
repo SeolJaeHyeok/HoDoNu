@@ -6,6 +6,8 @@ import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-q
 import adminApi from '@apis/admin';
 import styled from '@emotion/styled';
 import useInterSectionObeserver from '@hooks/useInterSectionObeserver';
+import LoadingSpinner from '@components/LoadingSpinner';
+import { Box } from '@mui/material';
 
 const CATEGORY_TABLE: {
   [index: string]: 'Doctor' | 'Nurse';
@@ -24,6 +26,7 @@ export default function AdminUser() {
     fetchNextPage,
     hasNextPage,
     isFetching,
+    isLoading,
   } = useInfiniteQuery(
     ['admin', 'users', 'pagination', searchQueryKey, searchQuery],
     ({ pageParam = 1 }) => {
@@ -138,23 +141,31 @@ export default function AdminUser() {
 
   return (
     <Container>
-      <AdminUserSearch
-        searchQueryKey={searchQueryKey}
-        setSearchQuery={setSearchQuery}
-        setSearchQueryKey={setSearchQueryKey}
-      />
+      {!isLoading ? (
+        <>
+          <AdminUserSearch
+            searchQueryKey={searchQueryKey}
+            setSearchQuery={setSearchQuery}
+            setSearchQueryKey={setSearchQueryKey}
+          />
 
-      <>
-        <AdminUserTable
-          handleEditUserActiveAuth={handleEditUserActiveAuth}
-          handleEditUserRecruitAuth={handleEditUserRecruitAuth}
-          handleDeleteUser={handleDeleteUser}
-          users={usersData}
-          searchQuery={searchQuery}
-          searchQueryKey={searchQueryKey}
-        />
-        <Target ref={ref}></Target>
-      </>
+          <>
+            <AdminUserTable
+              handleEditUserActiveAuth={handleEditUserActiveAuth}
+              handleEditUserRecruitAuth={handleEditUserRecruitAuth}
+              handleDeleteUser={handleDeleteUser}
+              users={usersData}
+              searchQuery={searchQuery}
+              searchQueryKey={searchQueryKey}
+            />
+            <Target ref={ref}></Target>
+          </>
+        </>
+      ) : (
+        <Box sx={{ position: 'absolute', top: '50%', left: '50%' }}>
+          <LoadingSpinner />
+        </Box>
+      )}
     </Container>
   );
 }
