@@ -79,7 +79,7 @@ export default function AdminUser() {
   const { mutateAsync: deleteUserMutate } = useMutation(adminApi.deleteUser, {
     onSuccess: () => {
       alert('성공적으로 삭제되었습니다.');
-      queryClient.invalidateQueries(['admin', 'users', searchQueryKey, searchQuery]);
+      queryClient.invalidateQueries(['admin', 'users', 'pagination', searchQueryKey, searchQuery]);
     },
     onError: (e: unknown) => {
       alert(e);
@@ -90,7 +90,7 @@ export default function AdminUser() {
   const { mutateAsync: editUserRecruitAuthMutate } = useMutation(adminApi.editUserRecruitAuth, {
     onSuccess: data => {
       alert(data.data.result);
-      queryClient.invalidateQueries(['admin', 'users', searchQueryKey, searchQuery]);
+      queryClient.invalidateQueries(['admin', 'users', 'pagination', searchQueryKey, searchQuery]);
     },
     onError: (e: any) => {
       alert(e.response.data.message);
@@ -101,7 +101,7 @@ export default function AdminUser() {
   const { mutateAsync: editUserActiveAuthMutate } = useMutation(adminApi.editUserActiveAuth, {
     onSuccess: data => {
       alert(data.data.result);
-      queryClient.invalidateQueries(['admin', 'users', searchQueryKey, searchQuery]);
+      queryClient.invalidateQueries(['admin', 'users', 'pagination', searchQueryKey, searchQuery]);
     },
     onError: (e: any) => {
       alert(e.response.data.message);
