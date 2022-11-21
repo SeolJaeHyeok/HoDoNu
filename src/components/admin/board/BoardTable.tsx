@@ -10,14 +10,10 @@ import { TextField } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import boardManageApi from '@apis/admin/board/boardManage';
 import { board, filter } from '@utils/const/adminBoardSelectFilter';
-import {
-  SearchBarWrapper,
-  SearchButton,
-  SearchInput,
-} from '@components/recruit/index/RecruitHeaderSelect';
 import { debounce } from 'lodash';
 import { Pagination, PaginationItem } from '@mui/material';
 import { BoardDataState } from '@pages/admin/board';
+import styled from '@emotion/styled';
 
 interface BoardTableProps {
   articles: BoardDataState[];
@@ -171,3 +167,34 @@ export default function BoardTable({
     </div>
   );
 }
+
+const SearchBarWrapper = styled.div`
+  position: relative;
+  display: flex;
+  width: 400px;
+  height: 56px;
+  border: 1px solid #a3a3a3;
+  border-radius: 6px;
+  margin-left: 20px;
+  margin: auto 0;
+  margin-left: 10px;
+`;
+const SearchInput = styled.input`
+  border: none;
+  width: 80%;
+  outline: none;
+  font-size: 16px;
+  padding-left: 10px;
+  border-radius: 6px;
+`;
+const SearchButton = styled.button`
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  // 호진TODO: 아이콘 색상을 바꾸던가 다른 아이콘을 써야할 것 같음!
+  background: url('/assets/images/searchIcon.svg');
+  top: 15px;
+  right: 15px;
+  border: none;
+  cursor: pointer;
+`;
