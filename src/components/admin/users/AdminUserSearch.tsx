@@ -37,8 +37,7 @@ export default function AdminUserSearch({
     <Container
       sx={{
         display: 'flex',
-        mb: 2,
-        alignItems: 'center',
+        mb: 3,
       }}
     >
       <FormControl sx={{ width: 150, marginRight: '10px' }}>

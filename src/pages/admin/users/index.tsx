@@ -154,25 +154,22 @@ export default function AdminUser() {
 
   return (
     <Container>
+      <AdminUserSearch
+        searchQueryKey={searchQueryKey}
+        setSearchQuery={setSearchQuery}
+        setSearchQueryKey={setSearchQueryKey}
+      />
       {!isLoading ? (
         <>
-          <AdminUserSearch
+          <AdminUserTable
+            handleEditUserActiveAuth={handleEditUserActiveAuth}
+            handleEditUserRecruitAuth={handleEditUserRecruitAuth}
+            handleDeleteUser={handleDeleteUser}
+            users={usersData}
+            searchQuery={searchQuery}
             searchQueryKey={searchQueryKey}
-            setSearchQuery={setSearchQuery}
-            setSearchQueryKey={setSearchQueryKey}
           />
-
-          <>
-            <AdminUserTable
-              handleEditUserActiveAuth={handleEditUserActiveAuth}
-              handleEditUserRecruitAuth={handleEditUserRecruitAuth}
-              handleDeleteUser={handleDeleteUser}
-              users={usersData}
-              searchQuery={searchQuery}
-              searchQueryKey={searchQueryKey}
-            />
-            <Target ref={ref}></Target>
-          </>
+          <Target ref={ref}></Target>
         </>
       ) : (
         <Box sx={{ position: 'absolute', top: '50%', left: '50%' }}>
@@ -188,7 +185,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-top: 50px;
+  margin: 50px auto;
 `;
 
 const Target = styled.div`
