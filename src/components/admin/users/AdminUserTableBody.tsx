@@ -101,11 +101,11 @@ export default function AdminUserTableBody({
             onChange={() => handleToggle(user.recruiterStatus, 'recruit', user.userId)}
           />
           {user.recruiterStatus === 'Pending' && (
-            <CustomModal btnContent={'보기'} modal={adminModal}>
+            <CustomModal width={600} height={600} btnContent={'보기'} modal={adminModal}>
               <Image
                 alt="채용 인증 이미지"
-                width={300}
-                height={300}
+                width={600}
+                height={600}
                 src={`${user.recruiterDocument}`}
               />
             </CustomModal>
@@ -119,8 +119,8 @@ export default function AdminUserTableBody({
             onChange={() => handleToggle(user.authStatus, 'auth', user.userId)}
           />
           {user.authStatus === 'Pending' && (
-            <CustomModal btnContent={'보기'} modal={adminModal}>
-              <Image alt="회원 인증 이미지" width={300} height={300} src={`${user.authDocument}`} />
+            <CustomModal width={600} height={600} btnContent={'보기'} modal={adminModal}>
+              <Image alt="회원 인증 이미지" width={600} height={600} src={`${user.authDocument}`} />
             </CustomModal>
           )}
         </TableCell>
