@@ -5,7 +5,7 @@ export interface UserProps {
   nickname: string;
 }
 
-export type CategoryType = 'Doctor' | 'Nurse' | 'Free';
+export type CategoryType = 'doctor' | 'nurse' | 'free';
 
 export interface ArticleProps {
   id: number;
@@ -20,8 +20,12 @@ export interface ArticleProps {
   category: CategoryType;
 }
 
+export interface ArticleCategoryProps {
+  category: CategoryType;
+}
+
 export interface ArticleForm {
-  category: string;
+  category: ArticleCategoryProps;
   title: string;
   content: string;
   articleId?: string;
