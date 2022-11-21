@@ -12,20 +12,19 @@ import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
 import { registerSchema } from '@utils/registerSchema';
 
-interface AddressProps {
-  zonecode: string;
-  roadAddress: string;
-}
-
 export default function Register() {
-  const [hospitalAddressNumber, setHospitalAddressNumber] = useState<string>();
-  const [hospitalAddress, setHospitalAddress] = useState<string>('');
-  const [hospitalAddressDetail, setHospitalAddressDetail] = useState<string>('');
   const [isCheckPasswordAuth, setIsCheckPasswordAuth] = useState<boolean>(false);
+  const [isRegisterAuth, setIsRegisterAuth] = useState<boolean>(false);
   const [authNumber, setAuthNumber] = useState<string>('');
 
+  const router = useRouter();
+
   const registerEmailAuthQuery = useMutation(authApi.registerEmailAuth, {
-    onSuccess: () => alert(`인증에 성공하였습니다!`),
+    onSuccess: () => {
+      alert(`인증에 성공하였습니다!`);
+      setIsCheckPasswordAuth(!isCheckPasswordAuth);
+      setIsRegisterAuth(!isRegisterAuth);
+    },
     onError: () => alert(`인증에 실패하셨습니다.`),
   });
 
@@ -36,13 +35,12 @@ export default function Register() {
     });
   };
 
-  const router = useRouter();
-
   // react-hook-form 관련
   const {
     register,
     handleSubmit,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm<RegisterUserInfo>({
     resolver: yupResolver(registerSchema),
@@ -63,13 +61,9 @@ export default function Register() {
     open({ onComplete: handleComplete });
   };
 
-  const handleComplete = (data: AddressProps) => {
-    setHospitalAddressNumber(data.zonecode);
-    setHospitalAddress(data.roadAddress);
-  };
-
-  const handleDetailAddress = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setHospitalAddressDetail(e.target.value);
+  const handleComplete = (data: any) => {
+    setValue('postalCode', data.zonecode);
+    setValue('mainAddress', data.roadAddress);
   };
 
   const handleCheckEmailAuth = () => {
@@ -86,11 +80,12 @@ export default function Register() {
     const registerUserData = {
       ...data,
       address: {
-        mainAddress: hospitalAddressDetail,
-        detailAddress: hospitalAddress,
-        postalCode: hospitalAddressNumber,
+        mainAddress: getValues('mainAddress'),
+        detailAddress: getValues('detailAddress'),
+        postalCode: getValues('postalCode'),
       },
     };
+
     await handleRequestUserData(registerUserData);
   };
 
@@ -100,9 +95,12 @@ export default function Register() {
       router.push('/login');
     } catch (e: any) {
       alert(e.response.data.message);
+      // 해당 이메일은 존재하는 이메일입니다!
+      if (e.response.status === 400) {
+        setIsRegisterAuth(!isRegisterAuth);
+      }
     }
   };
-
   return (
     <form onSubmit={handleSubmit(data => handleMergeFormData(data))}>
       <RegisterWrapper>
@@ -134,7 +132,7 @@ export default function Register() {
           />
           <Button
             variant="contained"
-            sx={{ width: '150px', height: '56px', mt: '8px' }}
+            sx={{ width: '170px', height: '56px', mt: '8px' }}
             onClick={handleCheckEmailAuth}
           >
             이메일 인증
@@ -158,8 +156,9 @@ export default function Register() {
           />
           <Button
             variant="contained"
-            sx={{ width: '150px', height: '56px', mt: '8px' }}
+            sx={{ width: '170px', height: '56px', mt: '8px' }}
             onClick={handleCheckAuthPassword}
+            disabled={!isCheckPasswordAuth}
           >
             인증 번호 확인
           </Button>
@@ -194,7 +193,7 @@ export default function Register() {
         <Label htmlFor="phoneNumber">전화번호</Label>
         <TextField
           id="phoneNumber"
-          placeholder="전화번호를 입력해주세요."
+          placeholder="양식에 맞춰 작성해주세요. ( EX. 010-9999-9999 )"
           sx={{
             width: '450px',
             mt: '8px',
@@ -226,10 +225,10 @@ export default function Register() {
           <TextField
             id="organization"
             placeholder="우편번호"
-            value={hospitalAddressNumber}
             sx={{
               width: '225px',
             }}
+            {...register('postalCode')}
           />
           <Button
             variant="outlined"
@@ -245,21 +244,20 @@ export default function Register() {
         <AddressContainer>
           <TextField
             placeholder="주소"
-            value={hospitalAddress}
             sx={{
               width: '450px',
               mt: '8px',
             }}
+            {...register('mainAddress')}
           />
           <TextField
             placeholder="상세 주소"
-            value={hospitalAddressDetail}
-            onChange={handleDetailAddress}
             sx={{
               width: '450px',
               mt: '8px',
               mb: '10px',
             }}
+            {...register('detailAddress')}
           />
         </AddressContainer>
 
@@ -271,6 +269,7 @@ export default function Register() {
             color: 'white',
           }}
           type="submit"
+          disabled={!isRegisterAuth}
         >
           등록하기
         </Button>
