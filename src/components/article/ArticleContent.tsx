@@ -77,6 +77,7 @@ export default function ArticleContent({
     });
   };
 
+  console.log(loginUserId);
   return (
     <BoardWrapper>
       <CustomSideBar />
