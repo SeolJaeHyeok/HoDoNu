@@ -12,18 +12,12 @@ import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
 import { registerSchema } from '@utils/registerSchema';
 
-interface AddressProps {
-  zonecode: string;
-  roadAddress: string;
-}
-
 export default function Register() {
-  const [hospitalAddressNumber, setHospitalAddressNumber] = useState<string>();
-  const [hospitalAddress, setHospitalAddress] = useState<string>('');
-  const [hospitalAddressDetail, setHospitalAddressDetail] = useState<string>('');
   const [isCheckPasswordAuth, setIsCheckPasswordAuth] = useState<boolean>(false);
   const [isRegisterAuth, setIsRegisterAuth] = useState<boolean>(false);
   const [authNumber, setAuthNumber] = useState<string>('');
+
+  const router = useRouter();
 
   const registerEmailAuthQuery = useMutation(authApi.registerEmailAuth, {
     onSuccess: () => {
@@ -41,13 +35,12 @@ export default function Register() {
     });
   };
 
-  const router = useRouter();
-
   // react-hook-form 관련
   const {
     register,
     handleSubmit,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm<RegisterUserInfo>({
     resolver: yupResolver(registerSchema),
@@ -68,13 +61,9 @@ export default function Register() {
     open({ onComplete: handleComplete });
   };
 
-  const handleComplete = (data: AddressProps) => {
-    setHospitalAddressNumber(data.zonecode);
-    setHospitalAddress(data.roadAddress);
-  };
-
-  const handleDetailAddress = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setHospitalAddressDetail(e.target.value);
+  const handleComplete = (data: any) => {
+    setValue('postalCode', data.zonecode);
+    setValue('mainAddress', data.roadAddress);
   };
 
   const handleCheckEmailAuth = () => {
@@ -91,11 +80,12 @@ export default function Register() {
     const registerUserData = {
       ...data,
       address: {
-        mainAddress: hospitalAddressDetail,
-        detailAddress: hospitalAddress,
-        postalCode: hospitalAddressNumber,
+        mainAddress: getValues('mainAddress'),
+        detailAddress: getValues('detailAddress'),
+        postalCode: getValues('postalCode'),
       },
     };
+
     await handleRequestUserData(registerUserData);
   };
 
@@ -235,7 +225,6 @@ export default function Register() {
           <TextField
             id="organization"
             placeholder="우편번호"
-            value={hospitalAddressNumber}
             sx={{
               width: '225px',
             }}
@@ -256,23 +245,21 @@ export default function Register() {
         <AddressContainer>
           <TextField
             placeholder="주소"
-            {...register('mainAddress')}
-            value={hospitalAddress}
             sx={{
               width: '450px',
               mt: '8px',
             }}
+            {...register('mainAddress')}
             helperText={<ErrorMsg>{errors.mainAddress?.message}</ErrorMsg>}
           />
           <TextField
             placeholder="상세 주소"
-            value={hospitalAddressDetail}
-            onChange={handleDetailAddress}
             sx={{
               width: '450px',
               mt: '8px',
               mb: '10px',
             }}
+            {...register('detailAddress')}
           />
         </AddressContainer>
 
