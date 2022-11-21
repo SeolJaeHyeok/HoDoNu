@@ -22,12 +22,14 @@ export default function Register() {
   const [hospitalAddress, setHospitalAddress] = useState<string>('');
   const [hospitalAddressDetail, setHospitalAddressDetail] = useState<string>('');
   const [isCheckPasswordAuth, setIsCheckPasswordAuth] = useState<boolean>(false);
+  const [isRegisterAuth, setIsRegisterAuth] = useState<boolean>(false);
   const [authNumber, setAuthNumber] = useState<string>('');
 
   const registerEmailAuthQuery = useMutation(authApi.registerEmailAuth, {
     onSuccess: () => {
       alert(`인증에 성공하였습니다!`);
       setIsCheckPasswordAuth(!isCheckPasswordAuth);
+      setIsRegisterAuth(!isRegisterAuth);
     },
     onError: () => alert(`인증에 실패하셨습니다.`),
   });
@@ -103,8 +105,9 @@ export default function Register() {
       router.push('/login');
     } catch (e: any) {
       alert(e.response.data.message);
+      // 해당 이메일은 존재하는 이메일입니다!
       if (e.response.status === 400) {
-        setIsCheckPasswordAuth(!isCheckPasswordAuth);
+        setIsRegisterAuth(!isRegisterAuth);
       }
     }
   };
@@ -281,7 +284,7 @@ export default function Register() {
             color: 'white',
           }}
           type="submit"
-          disabled={isCheckPasswordAuth}
+          disabled={!isRegisterAuth}
         >
           등록하기
         </Button>
