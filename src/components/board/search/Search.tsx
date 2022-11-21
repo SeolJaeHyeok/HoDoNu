@@ -19,15 +19,15 @@ const Search = ({ category }: ArticleCategoryProps) => {
   const { data: searchResults } = useQuery(
     ['search', 'preview', debouncedQuery],
     () => {
-      if (category === 'free') {
+      if (category === 'Free') {
         return boardApi.getAllFreeBoards({ search: debouncedQuery });
       }
 
-      if (category === 'doctor') {
+      if (category === 'Doctor') {
         return boardApi.getAllDoctorBoards({ search: debouncedQuery });
       }
 
-      if (category === 'nurse') {
+      if (category === 'Nurse') {
         return boardApi.getAllNurseBoards({ search: debouncedQuery });
       }
     },
