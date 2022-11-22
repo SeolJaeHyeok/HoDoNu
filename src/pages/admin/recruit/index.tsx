@@ -5,24 +5,30 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import useDebounce from '@hooks/useDebounce';
-import { TableData } from '@interfaces/admin/recruit';
 
 type Filter = 'email' | 'title';
 
 export default function AdminRecruit() {
   const [filter, setFilter] = useState<Filter>('title');
   const [query, setQuery] = useState<string>('');
-  const [jobs, setJobs] = useState<TableData[] | null>(null);
   const [page, setPage] = useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
+  const [total, setTotal] = useState<number>(0);
   const debouncedQuery = useDebounce(query, 200);
 
-  useQuery(
-    ['admin', 'recruit', debouncedQuery],
-    () => adminRecruitApi.getAll({ filter: filter, query: debouncedQuery }),
+  const { data: paginationData } = useQuery(
+    ['admin', 'recruit', page, rowsPerPage, filter, debouncedQuery],
+    () =>
+      adminRecruitApi.getAll({
+        page: page + 1,
+        perPage: rowsPerPage,
+        filter: filter,
+        query: debouncedQuery,
+      }),
     {
       onSuccess: data => {
-        setJobs(data.data[0]);
-        setPage(0);
+        setTotal(data.data[1]);
+        if (debouncedQuery && total > rowsPerPage) setPage(0);
       },
       onError: (e: any) => {
         alert(e.response.data.message);
@@ -38,6 +44,7 @@ export default function AdminRecruit() {
   const handleSearchChange = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
     setQuery(e.target.value);
+    console.log(query);
   };
 
   const handleSearchSubmit = (e: React.SyntheticEvent) => {
@@ -73,7 +80,16 @@ export default function AdminRecruit() {
           <IconButton type="button" sx={{ p: '10px' }} aria-label="search"></IconButton>
         </form>
       </Box>
-      {jobs && <RecruitTable jobs={jobs} page={page} setPage={setPage} />}
+      {paginationData?.data[0] && (
+        <RecruitTable
+          jobs={paginationData?.data[0]}
+          page={page}
+          setPage={setPage}
+          rowsPerPage={rowsPerPage}
+          setRowsPerPage={setRowsPerPage}
+          total={total}
+        />
+      )}
     </Box>
   );
 }
