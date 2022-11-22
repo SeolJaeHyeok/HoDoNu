@@ -20,7 +20,7 @@ export default function FreeBoard() {
   const [page, setPage] = useState('1');
   const [perPage, setPerPage] = useState('5');
 
-  const { data: res } = useQuery(
+  const { data: res, isLoading } = useQuery(
     ['board', 'free', sort, page, perPage, searchText],
     () => boardApi.getAllFreeBoards({ page, perPage, sort, search: searchText }),
     {
@@ -35,7 +35,7 @@ export default function FreeBoard() {
   // Pagination - page
   const handlePageNavigate = (pageNumber: number) => {
     // Page 정렬 기준 설정
-    setPage(String(pageNumber + 1));
+    setPage(() => String(pageNumber + 1));
 
     // 해당 값으로 URL 변경
     router.push({
@@ -48,32 +48,33 @@ export default function FreeBoard() {
   };
 
   return (
-    <>
-      {!res ? (
-        <BoardSkeleton />
+    <BoardContainer>
+      <BoardHeader
+        setSort={setSort}
+        setPage={setPage}
+        setPerPage={setPerPage}
+        page={page}
+        sort={sort}
+        perPage={perPage}
+        category={res?.data.result.category}
+      />
+      {!isLoading ? (
+        <>
+          {res?.data.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
+          <BoardList
+            boardCategory={res?.data.result.category.toLowerCase()}
+            articles={res?.data.result.articles}
+          />
+          <Pagination
+            length={TOTAL_PAGE}
+            start={router.query.page ? +router.query.page - 1 : 0}
+            handler={pageNumber => handlePageNavigate(pageNumber)}
+          />
+        </>
       ) : (
-        <BoardContainer>
-          <>
-            <BoardHeader
-              setSort={setSort}
-              setPage={setPage}
-              setPerPage={setPerPage}
-              page={page}
-              sort={sort}
-              perPage={perPage}
-              category="Free"
-            />
-            {res?.data.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
-            <BoardList
-              boardCategory={res?.data.result.category.toLowerCase()}
-              articles={res?.data.result.articles}
-            />
-          </>
-
-          <Pagination length={TOTAL_PAGE} handler={pageNumber => handlePageNavigate(pageNumber)} />
-        </BoardContainer>
+        <BoardSkeleton />
       )}
-    </>
+    </BoardContainer>
   );
 }
 

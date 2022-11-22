@@ -93,18 +93,6 @@ export default function NavBar() {
               채용
             </MuiLink>
           </Link>
-          {userInfo?.role === 'Admin' && (
-            <Link href="/admin/users">
-              <MuiLink
-                underline="none"
-                component="button"
-                color={curPath.includes('/admin') ? '#fff' : '#424242'}
-                sx={linkStyle}
-              >
-                관리자 게시판
-              </MuiLink>
-            </Link>
-          )}
         </Box>
         <Box sx={style}>
           {isLogin ? (

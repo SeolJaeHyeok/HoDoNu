@@ -6,13 +6,14 @@ import { Box, IconButton, MenuItem, Menu } from '@mui/material';
 import CustomAvatarImage from '@components/CustomAvartar';
 import { useUserActions } from '@hooks/useUserAction';
 import { useRecoilValue } from 'recoil';
-import { profileUrl } from '@atoms/userAtom';
+import { profileUrl, userInfoState } from '@atoms/userAtom';
 
 export default function AvartarMenu() {
   const userAction = useUserActions();
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const profileImg = useRecoilValue(profileUrl);
+  const userInfo = useRecoilValue(userInfoState);
   const s3Url =
     process.env.NODE_ENV === 'development'
       ? `https://${process.env.NEXT_PUBLIC_DEVELOPMENT_IMAGE_BASE_URL}`
@@ -37,6 +38,11 @@ export default function AvartarMenu() {
     router.push('/mypage');
   };
 
+  const handleAdminpage = () => {
+    setAnchorEl(null);
+    router.push('/admin/users');
+  };
+
   return (
     <Box>
       <IconButton aria-label="menu" onClick={handleMenuClick} sx={{ padding: 0 }}>
@@ -44,8 +50,17 @@ export default function AvartarMenu() {
       </IconButton>
 
       <Menu sx={{ width: '160px' }} anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
+        {userInfo?.role === 'User' ? (
+          <MenuItem onClick={handleMypage}>mypage</MenuItem>
+        ) : (
+          <MenuItem onClick={handleAdminpage}>관리자 게시판</MenuItem>
+        )}
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
-        <MenuItem onClick={handleMypage}>Mypage</MenuItem>
+        {userInfo?.role === 'User' ? (
+          <MenuItem onClick={handleMypage}>Mypage</MenuItem>
+        ) : (
+          <MenuItem onClick={handleAdminpage}>관리자 게시판</MenuItem>
+        )}
       </Menu>
     </Box>
   );

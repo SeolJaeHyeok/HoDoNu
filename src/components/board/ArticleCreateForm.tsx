@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -10,30 +10,14 @@ import ArticleFormEditor from '@components/ArticleFormEditor';
 import boardApi from 'src/apis/board';
 import { boardValidationSchema } from '@utils/validationSchema';
 import { ArticleForm } from '@interfaces/article';
-import { categoryAssertion } from '@utils/const/category';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
 import { useEffect, useState } from 'react';
-import authApi from '@apis/auth/auth';
 
-export default function ArticleCreateForm() {
+export default function ArticleCreateForm({ categories }: { categories: string[] }) {
   const router = useRouter();
   const userInfo = useRecoilValue(userInfoState);
-  const jobCategory = userInfo?.jobCategory!;
-
-  const [categories, setCategories] = useState<string[]>([
-    categoryAssertion.FREE,
-    categoryAssertion.DOCTOR,
-    categoryAssertion.NURSE,
-  ]);
-
-  useQuery(['board', 'create', userInfo?.userId], () => authApi.getOne(userInfo?.userId!), {
-    onSuccess: data => {
-      const block = data.data.result.blockArticleCategoties;
-      const newCategory = categories.filter(category => !block.includes(category));
-      setCategories(newCategory);
-    },
-  });
+  const [category, setCategory] = useState<string>(router.query.category as string);
 
   const {
     register,
@@ -45,14 +29,14 @@ export default function ArticleCreateForm() {
   } = useForm<ArticleForm>({
     resolver: yupResolver(boardValidationSchema),
     defaultValues: {
-      category: router.query.category as string,
+      category: category,
     },
   });
 
   const postArticle = useMutation(['createArticle'], boardApi.createArticle, {
     onSuccess: res => {
       const { articleId } = res.data.result;
-      router.push(`${jobCategory.toLowerCase()}/${articleId}`);
+      router.push(`${category.toLowerCase()}/${articleId}`);
     },
     onError: (e: any) => {
       alert(e.response.data.message);
@@ -61,7 +45,7 @@ export default function ArticleCreateForm() {
 
   const onSubmit: SubmitHandler<ArticleForm> = data => {
     const { title, category, content } = data;
-    // 게시글 생성
+    setCategory(category);
     postArticle.mutate({ title, category, content });
   };
 
@@ -71,8 +55,6 @@ export default function ArticleCreateForm() {
   };
 
   const onEditorStateChange = (editorState: any) => {
-    console.log(editorState);
-
     setValue('content', editorState);
   };
 

@@ -1,7 +1,6 @@
 import boardApi from '@apis/board';
 import BoardHeader from '@components/board/BoardHeader';
 import BoardList from '@components/board/BoardList';
-import BoardSkeleton from '@components/board/BoardSkeleton';
 import Pagination from '@components/Pagination';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
@@ -9,6 +8,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 import { searchDataAtom } from '@atoms/searchAtom';
+import BoardSkeleton from '@components/board/BoardSkeleton';
 
 export default function NurseBoard() {
   const router = useRouter();
@@ -18,7 +18,7 @@ export default function NurseBoard() {
   const [perPage, setPerPage] = useState('5');
   const searchText = useRecoilValue<string>(searchDataAtom);
 
-  const { data: res } = useQuery(
+  const { data: res, isLoading } = useQuery(
     ['board', 'nurse', sort, page, perPage, searchText],
     () => boardApi.getAllNurseBoards({ page, perPage, sort, search: searchText }),
     {
@@ -45,31 +45,33 @@ export default function NurseBoard() {
     });
   };
   return (
-    <>
-      <BoardContainer>
-        {!res ? (
-          <BoardSkeleton />
-        ) : (
-          <>
-            <BoardHeader
-              setSort={setSort}
-              setPage={setPage}
-              setPerPage={setPerPage}
-              sort={sort}
-              page={page}
-              perPage={perPage}
-              category={res?.data.result.category}
-            />
-
-            <BoardList
-              boardCategory={res.data.result.category.toLowerCase()}
-              articles={res.data.result.articles}
-            />
-          </>
-        )}
-        <Pagination length={TOTAL_PAGE} handler={pageNumber => handlePageNavigate(pageNumber)} />
-      </BoardContainer>
-    </>
+    <BoardContainer>
+      <BoardHeader
+        setSort={setSort}
+        setPage={setPage}
+        setPerPage={setPerPage}
+        page={page}
+        sort={sort}
+        perPage={perPage}
+        category={res?.data.result.category}
+      />
+      {!isLoading ? (
+        <>
+          {res?.data.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
+          <BoardList
+            boardCategory={res?.data.result.category.toLowerCase()}
+            articles={res?.data.result.articles}
+          />
+          <Pagination
+            length={TOTAL_PAGE}
+            start={router.query.page ? +router.query.page - 1 : 0}
+            handler={pageNumber => handlePageNavigate(pageNumber)}
+          />
+        </>
+      ) : (
+        <BoardSkeleton />
+      )}
+    </BoardContainer>
   );
 }
 const BoardContainer = styled.div`

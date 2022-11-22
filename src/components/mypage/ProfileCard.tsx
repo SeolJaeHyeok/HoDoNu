@@ -114,11 +114,13 @@ export default function ProfileCard({ user }: { user: UserDetail }) {
               rows={3}
               defaultValue={introduce}
               onChange={handleEditIntroduce}
+              helperText={!introduce ? '자기소개를 입력해주세요' : ''}
             />
             <Button
               type="submit"
               variant="contained"
               sx={{ boxShadow: 0, mt: 2, color: '#fff' }}
+              disabled={!introduce}
               onClick={handleSubmitIntroduce}
             >
               제출하기

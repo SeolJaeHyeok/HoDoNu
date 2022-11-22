@@ -41,5 +41,5 @@ export default function BoardSkeleton() {
 const BoardSkeletonContainer = styled.div`
   width: 900px;
   position: relative;
-  margin: 50px auto;
+  margin: 20px auto;
 `;
