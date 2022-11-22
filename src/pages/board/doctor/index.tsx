@@ -20,7 +20,8 @@ export default function DoctorBoard() {
 
   const { data: res, isLoading } = useQuery(
     ['board', 'doctor', sort, router.query.page, perPage, searchText],
-    () => boardApi.getAllDoctorBoards({ page, perPage, sort, search: searchText }),
+    () =>
+      boardApi.getAllDoctorBoards({ page: router.query.page, perPage, sort, search: searchText }),
     {
       staleTime: Infinity,
       cacheTime: Infinity,

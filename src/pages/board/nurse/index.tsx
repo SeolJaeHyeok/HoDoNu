@@ -20,7 +20,8 @@ export default function NurseBoard() {
 
   const { data: res, isLoading } = useQuery(
     ['board', 'nurse', sort, router.query.page, perPage, searchText],
-    () => boardApi.getAllNurseBoards({ page, perPage, sort, search: searchText }),
+    () =>
+      boardApi.getAllNurseBoards({ page: router.query.page, perPage, sort, search: searchText }),
     {
       staleTime: Infinity,
       cacheTime: Infinity,
