@@ -66,7 +66,7 @@ export default function ArticleCreateForm({ categories }: { categories: string[]
     }
     if (!categories.includes(router?.query?.category! as string)) {
       alert('해당 게시판의 작성권한이 없습니다.');
-      router.push('/board');
+      router.push('/board/free');
     }
   }, [userInfo, router, categories]);
 
