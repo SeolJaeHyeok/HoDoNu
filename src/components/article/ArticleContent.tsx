@@ -185,8 +185,14 @@ const BoardButtonContainer = styled.div`
 `;
 
 const BoardSubTitleContainer = styled.div`
+  width: 782px;
+  overflow: hidden;
+  line-height: 150%;
   img {
     width: 100%;
+  }
+  p {
+    width: 782px;
   }
 `;
 
