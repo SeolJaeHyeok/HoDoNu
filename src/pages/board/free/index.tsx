@@ -46,7 +46,7 @@ export default function FreeBoard() {
       },
     });
   };
-  console.log(res?.data.result.articles);
+
   return (
     <BoardContainer>
       <BoardHeader
