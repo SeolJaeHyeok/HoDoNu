@@ -47,7 +47,7 @@ export default function Map({ companyName, address }: MapProps) {
           infowindow.open(map, marker);
           map.setCenter(coords);
         } else {
-          console.log('정확한 주소를 입력해주세요!');
+          alert('정확한 주소를 입력해주세요!');
         }
       });
     });

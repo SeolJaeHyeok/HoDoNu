@@ -56,11 +56,6 @@ export default function AvartarMenu() {
           <MenuItem onClick={handleAdminpage}>관리자 게시판</MenuItem>
         )}
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
-        {userInfo?.role === 'User' ? (
-          <MenuItem onClick={handleMypage}>Mypage</MenuItem>
-        ) : (
-          <MenuItem onClick={handleAdminpage}>관리자 게시판</MenuItem>
-        )}
       </Menu>
     </Box>
   );

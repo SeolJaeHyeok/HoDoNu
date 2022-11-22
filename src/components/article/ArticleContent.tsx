@@ -47,7 +47,6 @@ export default function ArticleContent({
 
   const handleDeleteBoard = () => {
     if (confirm('정말 삭제하시겠습니까?')) {
-      console.log(result.articleId, categoryName);
       requestDeleteBoard.mutate({ articleId: result.articleId, categoryName });
     }
   };

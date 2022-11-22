@@ -21,7 +21,6 @@ export default function MyPageTableToolbar(props: TableToolbarProps) {
       )
         .then(result => {
           alert('게시글이 성공적으로 삭제되었습니다.');
-          console.log(result);
         })
         .catch((e: Error) => {
           alert(e.message);

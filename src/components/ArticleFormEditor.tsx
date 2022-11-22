@@ -69,7 +69,7 @@ export default function ArticleFormEditor({ onChange, content, height }: Article
         quillEditor.setSelection(range, 1);
         quillEditor.clipboard.dangerouslyPasteHTML(range, `<img src="${IMG_URL}"/>`);
       } catch (err) {
-        console.log(err);
+        alert(err);
       }
     });
   };

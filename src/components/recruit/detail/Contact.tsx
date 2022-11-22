@@ -12,7 +12,7 @@ interface UserProps {
 
 export default function Contact({ user, contact }: { user: UserProps; contact: string }) {
   const { imgUrl, nickname } = user;
-  console.log(user);
+
   return (
     <Box
       sx={{
