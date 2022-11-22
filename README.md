@@ -20,21 +20,27 @@
 ## ⚒️ 사용 기술 및 라이브러리
 
 - Language
+
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white">
 
 - Framework
+
   <img src="https://img.shields.io/badge/Next-000000?style=for-the-badge&logo=Next.js&logoColor=white">
 
 - Library
+
   <img src="https://img.shields.io/badge/MUI-007FFF?style=for-the-badge&logo=MUI&logoColor=white"><img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white">
 
 - State Management
+
   <img src="https://img.shields.io/badge/React-Query-FF4154?style=for-the-badge&logo=React Query&logoColor=white"><img alt="Recoil" src="https://img.shields.io/badge/-Recoil-75aadb?style=flat-square&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAMAAABhq6zVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAnFBMVEX////7+/u/v8DU1dXn5+c+QEJzdHb9/f38/Pz4+Ph3eHqoqarDxMW4ubq8vb51dni/wMDe3993eXrc3d3T09RvcHLd3d2pqquSk5Sen6B2d3nn5+i+v8B5enyoqKqGh4jOz8+ur7CDhIbl5eW0tbaJiov6+vrz8/N0dXfZ2dmio6Tt7e35+flwcXOmpqj+/v7o6OhBQ0XJysrc3NxQjO1xAAAAAWJLR0QAiAUdSAAAAAd0SU1FB+YHFwMoN5SBVPUAAABbSURBVAjXY2AAAkYmZgY4YGFlY4exOTi5uOESPLx8/AIcUI6gkLCIqBhMmbiEpJQ0lCMjKyevANOjqKSsoqoG5ahza2hqacOkdHT19PVhHANDDbilDBxGxmAaAEfHBbB7ddEZAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTA3LTIzVDAzOjQwOjU1KzAwOjAwgs0+gwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0wNy0yM1QwMzo0MDo1NSswMDowMPOQhj8AAAAASUVORK5CYII=&logoColor=white&color=white" />
 
 - Setting
+
   <img src="https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=Prettier&logoColor=white"><img src="https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=ESLint&logoColor=white">
 
 - Version Control
+
   <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white">
 
 ## 🗂폴더 구조
