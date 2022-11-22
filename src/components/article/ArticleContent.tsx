@@ -38,7 +38,7 @@ export default function ArticleContent({
     onSuccess: () => {
       queryClient.invalidateQueries(['detailContent', categoryName]);
       alert('게시글이 성공적으로 삭제됐습니다.');
-      router.back();
+      router.push(`/board/${categoryName.toLowerCase()}`);
     },
     onError: (e: any) => {
       alert(e.response.data.message);
