@@ -7,7 +7,7 @@ export default function NotFoundPage() {
   const router = useRouter();
 
   const handleMoveHomePage = () => {
-    router.push('/');
+    router.push('/home');
   };
   return (
     <Container>
