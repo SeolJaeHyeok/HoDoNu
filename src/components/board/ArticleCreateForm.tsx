@@ -36,6 +36,7 @@ export default function ArticleCreateForm({ categories }: { categories: string[]
   const postArticle = useMutation(['createArticle'], boardApi.createArticle, {
     onSuccess: res => {
       const { articleId } = res.data.result;
+      const category = getValues('category');
       router.push(`${category.toLowerCase()}/${articleId}`);
     },
     onError: (e: any) => {
