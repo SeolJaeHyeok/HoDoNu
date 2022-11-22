@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { Container, Box } from '@mui/material';
 
 interface ContentProps {
@@ -15,8 +16,15 @@ export default function Content({ content }: ContentProps) {
       }}
     >
       <Box>
-        <div dangerouslySetInnerHTML={{ __html: content }} />
+        <ContentContainer dangerouslySetInnerHTML={{ __html: content }}></ContentContainer>
       </Box>
     </Container>
   );
 }
+
+const ContentContainer = styled.div`
+  h2 {
+    font-size: 1.5rem;
+    font-style: bold;
+  }
+`;
