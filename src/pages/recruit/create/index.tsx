@@ -167,7 +167,7 @@ export default function RecruitCreatePage() {
   useEffect(() => {
     if (userInfo?.recruiterStatus !== 'Active') {
       alert('작성 권한이 없는 페이지입니다.');
-      router.push('/home');
+      router.push('/recruit');
     }
   }, [userInfo]);
 
