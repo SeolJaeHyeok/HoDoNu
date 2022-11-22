@@ -1,9 +1,19 @@
 import ArticleContent from '@components/article/ArticleContent';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import detailApi from '@apis/board/detail';
 import { categoryAssertion } from '@utils/const/category';
+import { useEffect } from 'react';
 
 export default function Doctor({ content }: any) {
+  const raiseHitsQuery = useMutation(detailApi.patchRaiseHit);
+
+  useEffect(() => {
+    raiseHitsQuery.mutate({
+      category: 'doctor',
+      articleId: content.articleId,
+    });
+  }, []);
+
   const detailDoctorQuery = useQuery(
     ['detailContent', categoryAssertion.DOCTOR, content.articleId],
     () => detailApi.getDetailData('doctor', content.articleId),
