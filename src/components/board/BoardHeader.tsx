@@ -99,7 +99,7 @@ export default function BoardHeader({
           <MenuItem value={20}>20개씩 보기</MenuItem>
         </Select>
       </FormControl>
-      <Search category={category} />
+      <Search setPage={setPage} category={category} />
       {loginInfo && (
         <Link href={`/board/create?category=${category}`}>
           <Button variant="outlined">작성하기</Button>

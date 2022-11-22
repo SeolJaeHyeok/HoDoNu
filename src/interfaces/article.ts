@@ -23,6 +23,7 @@ export interface ArticleProps {
 
 export interface ArticleCategoryProps {
   category: 'Doctor' | 'Nurse' | 'Free';
+  setPage: any;
 }
 
 export interface ArticleForm {

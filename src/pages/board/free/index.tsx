@@ -21,7 +21,7 @@ export default function FreeBoard() {
   const [perPage, setPerPage] = useState('5');
 
   const { data: res, isLoading } = useQuery(
-    ['board', 'free', sort, page, perPage, searchText],
+    ['board', 'free', sort, router.query.page, perPage, searchText],
     () => boardApi.getAllFreeBoards({ page, perPage, sort, search: searchText }),
     {
       staleTime: Infinity,
@@ -46,7 +46,7 @@ export default function FreeBoard() {
       },
     });
   };
-
+  console.log(res?.data.result.articles);
   return (
     <BoardContainer>
       <BoardHeader
@@ -58,9 +58,9 @@ export default function FreeBoard() {
         perPage={perPage}
         category={res?.data.result.category}
       />
+      {res?.data.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
       {!isLoading ? (
         <>
-          {res?.data.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
           <BoardList
             boardCategory={res?.data.result.category.toLowerCase()}
             articles={res?.data.result.articles}
