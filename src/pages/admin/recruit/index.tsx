@@ -44,7 +44,6 @@ export default function AdminRecruit() {
   const handleSearchChange = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
     setQuery(e.target.value);
-    console.log(query);
   };
 
   const handleSearchSubmit = (e: React.SyntheticEvent) => {

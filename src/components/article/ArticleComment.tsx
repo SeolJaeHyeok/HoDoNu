@@ -30,8 +30,8 @@ export default function Comment({
     onSuccess: () => {
       queryClient.invalidateQueries(['detailContent', categoryName]);
     },
-    onError: data => {
-      console.log(data);
+    onError: (e: any) => {
+      alert(e.data.response.message);
     },
   });
 
@@ -56,7 +56,6 @@ export default function Comment({
   };
   // 댓글 삭제 로직
   const handleDeleteCommentData = () => {
-    console.log('삭제!');
     deleteCommentData.mutate({ categoryName, commentId });
   };
 

@@ -54,10 +54,7 @@ export default function ArticleCreateForm({ categories }: { categories: string[]
   };
 
   const onEditorStateChange = (editorState: any) => {
-    console.log(editorState);
     setValue('content', editorState);
-    // setContent(editorState);
-    // console.log(content);
   };
 
   useEffect(() => {

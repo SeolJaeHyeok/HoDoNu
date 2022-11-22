@@ -68,7 +68,7 @@ export default function ArticleFormEditor({ onChange, content, height }: Article
         const range = editor.getSelection().index + 1;
         editor.insertEmbed(range, 'image', IMG_URL);
       } catch (err) {
-        console.log(err);
+        alert(err);
       }
     });
   };
