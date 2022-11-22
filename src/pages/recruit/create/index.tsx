@@ -165,7 +165,7 @@ export default function RecruitCreatePage() {
 
   // TODO: ServerSide에서 처리
   useEffect(() => {
-    if ((userInfo && userInfo?.role !== 'Admin') || userInfo?.role !== 'User') {
+    if (!userInfo?.role) {
       alert('작성 권한이 없는 페이지입니다.');
       router.push('/home');
     }

@@ -64,9 +64,10 @@ export default function ArticleFormEditor({ onChange, content, height }: Article
       try {
         const res = await boardApi.createArticleImg(formData);
         const IMG_URL = res.data.result;
-
-        const range = editor.getSelection().index + 1;
-        editor.insertEmbed(range, 'image', IMG_URL);
+        const range = QuillRef.current.getEditor().getSelection();
+        const quillEditor = QuillRef.current.getEditor();
+        quillEditor.setSelection(range, 1);
+        quillEditor.clipboard.dangerouslyPasteHTML(range, `<img src="${IMG_URL}"/>`);
       } catch (err) {
         alert(err);
       }
@@ -98,7 +99,7 @@ export default function ArticleFormEditor({ onChange, content, height }: Article
         style={{ height: height }}
         onChange={onChange}
         forwardedRef={QuillRef}
-        defaultValue={content}
+        value={content}
       />
     </FormEditorContainer>
   );

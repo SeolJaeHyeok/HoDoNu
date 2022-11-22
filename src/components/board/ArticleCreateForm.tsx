@@ -23,6 +23,7 @@ export default function ArticleCreateForm({ categories }: { categories: string[]
     register,
     handleSubmit,
     setValue,
+    getValues,
     reset,
     formState: { errors },
   } = useForm<ArticleForm>({
@@ -35,6 +36,7 @@ export default function ArticleCreateForm({ categories }: { categories: string[]
   const postArticle = useMutation(['createArticle'], boardApi.createArticle, {
     onSuccess: res => {
       const { articleId } = res.data.result;
+      const category = getValues('category');
       router.push(`${category.toLowerCase()}/${articleId}`);
     },
     onError: (e: any) => {
@@ -105,7 +107,11 @@ export default function ArticleCreateForm({ categories }: { categories: string[]
           helperText={errors.title ? errors.title.message : null}
         />
 
-        <ArticleFormEditor onChange={onEditorStateChange} height="250px" />
+        <ArticleFormEditor
+          content={getValues('content')}
+          onChange={onEditorStateChange}
+          height="250px"
+        />
       </Stack>
       <Box
         sx={{
