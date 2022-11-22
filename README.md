@@ -13,6 +13,57 @@
 
 ☞ https://toy-project-web-green.vercel.app/home
 
+## 😀 구성원
+<table>
+  <tr>
+    <td align="center">
+        <a href="https://github.com/milkboy2564" >
+            <img src="./public/assets/images/wellcheck.png"  width="100px" alt="설재혁"/><br />
+            <sub>
+                <b>설재혁</b><br>
+            </sub>
+        </a>
+        <br />
+    </td>
+    <td align="center">
+        <a href="https://github.com/kimhojin3714" >
+            <img src="./public/assets/images/wellcheck.png"  width="100px;" alt="김호진"/><br />
+            <sub>
+                <b>김호진</b><br>
+            </sub>
+        </a>
+        <br />
+    </td>
+   <td align="center">
+        <a href="https://github.com/yeseul119" >
+            <img src="./public/assets/images/wellcheck.png"  width="100px;" alt="이예슬"/><br />
+            <sub>
+                <b>이예슬</b><br>
+            </sub>
+        </a>
+        <br />
+    </td>
+    <td align="center">
+        <a href="https://github.com/dhkim-mcircle" >
+            <img src="./public/assets/images/wellcheck.png"  width="100px;" alt="김동현"/><br />
+            <sub>
+                <b>김동현</b><br>
+            </sub>
+        </a>
+        <br />
+    </td>
+    <td align="center">
+        <a href="https://github.com/KIDOHEEDO" >
+            <img src="./public/assets/images/wellcheck.png"  width="100px;" alt="신도희"/><br />
+            <sub>
+                <b>신도희</b><br>
+            </sub>
+        </a>
+        <br />
+    </td>
+   </tr>
+</table>
+
 ## 📖 서비스 소개
 
 간호사, 의사 등 의료인을 위한 커뮤니티 서비스 TP입니다.
