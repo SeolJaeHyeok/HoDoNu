@@ -10,6 +10,8 @@ export interface UserInfo {
   role: string;
   userId: string;
   jobCategory: string;
+  authStatus: string;
+  recruiterStatus: string;
 }
 
 export interface UserArticlesProps {
