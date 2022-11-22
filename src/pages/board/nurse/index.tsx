@@ -19,9 +19,14 @@ export default function NurseBoard() {
   const searchText = useRecoilValue<string>(searchDataAtom);
 
   const { data: res, isLoading } = useQuery(
-    ['board', 'nurse', sort, router.query.page, perPage, searchText],
+    ['board', 'nurse', router.query.sort, router.query.page, router.query.perPage, searchText],
     () =>
-      boardApi.getAllNurseBoards({ page: router.query.page, perPage, sort, search: searchText }),
+      boardApi.getAllNurseBoards({
+        page: router.query.page,
+        perPage: router.query.perPage,
+        sort: router.query.sort,
+        search: searchText,
+      }),
     {
       staleTime: Infinity,
       cacheTime: Infinity,

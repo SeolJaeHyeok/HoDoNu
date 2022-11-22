@@ -165,119 +165,121 @@ export default function RecruitCreatePage() {
 
   // TODO: ServerSide에서 처리
   useEffect(() => {
-    if (!userInfo?.role) {
+    if (userInfo?.recruiterStatus !== 'Active') {
       alert('작성 권한이 없는 페이지입니다.');
-      router.push('/home');
+      router.push('/recruit');
     }
   }, [userInfo]);
 
   return (
-    <form>
-      <RegisterWrapper>
-        <RegisterTitle>공고 등록하기</RegisterTitle>
-        <RegisterSubTitle>아래 모든 내용을 기입해주세요.</RegisterSubTitle>
-        <Label htmlFor="companyRecruitmentTitle">공고 제목</Label>
-        <TextField
-          {...register('companyRecruitmentTitle')}
-          id="recruitmentTitle"
-          placeholder="공고 제목을 입력해주세요:)"
-          sx={{
-            width: '450px',
-            mt: '8px',
-          }}
-          helperText={<ErrorMsg>{errors.companyRecruitmentTitle?.message}</ErrorMsg>}
-        />
-        <Label htmlFor="companyName">회사 이름</Label>
-        <TextField
-          {...register('companyName')}
-          id="companyName"
-          placeholder="회사 이름을 입력해주세요:)"
-          sx={{
-            width: '450px',
-            mt: '8px',
-          }}
-          helperText={<ErrorMsg>{errors.companyName?.message}</ErrorMsg>}
-        />
-        <Label htmlFor="companyPictures">회사 소개 사진</Label>
-        <ImageWarningMsg>✅ 사진은 .jpg .png .jpeg 파일만 가능합니다.</ImageWarningMsg>
-        <ImageWarningMsg>✅ 사진 크기는 최대 5mb입니다.</ImageWarningMsg>
-        <ImageWarningMsg>✅ 첨부된 사진이 없으면 기본 이미지가 보여집니다.</ImageWarningMsg>
-        <FileUploader
-          name="Company Picture"
-          fileList={companyPictures}
-          setFileList={setCompanyPictures}
-          multiple
-        />
-        <Label htmlFor="companyIntroduction">회사 소개</Label>
-        <div>
-          <div ref={quillRef} />
-        </div>
-        <Label htmlFor="companyRecruiterContact">담당자 전화번호</Label>
-        <TextField
-          {...register('companyRecruiterContact')}
-          id="companyRecruiterContact"
-          placeholder="채용 담당자의 연락처를 입력해주세요:)"
-          sx={{
-            width: '450px',
-            mt: '8px',
-          }}
-          helperText={<ErrorMsg>{errors.companyRecruiterContact?.message}</ErrorMsg>}
-        />
-        <Label htmlFor="organization">소속 기관 ( 병원 주소 )</Label>
-        <PostalCodeContainer>
+    userInfo?.recruiterStatus === 'Active' && (
+      <form>
+        <RegisterWrapper>
+          <RegisterTitle>공고 등록하기</RegisterTitle>
+          <RegisterSubTitle>아래 모든 내용을 기입해주세요.</RegisterSubTitle>
+          <Label htmlFor="companyRecruitmentTitle">공고 제목</Label>
           <TextField
-            id="organization"
-            placeholder="우편번호"
-            value={addressInfo.postalCode}
+            {...register('companyRecruitmentTitle')}
+            id="recruitmentTitle"
+            placeholder="공고 제목을 입력해주세요:)"
             sx={{
-              width: '225px',
+              width: '450px',
+              mt: '8px',
             }}
+            helperText={<ErrorMsg>{errors.companyRecruitmentTitle?.message}</ErrorMsg>}
           />
+          <Label htmlFor="companyName">회사 이름</Label>
+          <TextField
+            {...register('companyName')}
+            id="companyName"
+            placeholder="회사 이름을 입력해주세요:)"
+            sx={{
+              width: '450px',
+              mt: '8px',
+            }}
+            helperText={<ErrorMsg>{errors.companyName?.message}</ErrorMsg>}
+          />
+          <Label htmlFor="companyPictures">회사 소개 사진</Label>
+          <ImageWarningMsg>✅ 사진은 .jpg .png .jpeg 파일만 가능합니다.</ImageWarningMsg>
+          <ImageWarningMsg>✅ 사진 크기는 최대 5mb입니다.</ImageWarningMsg>
+          <ImageWarningMsg>✅ 첨부된 사진이 없으면 기본 이미지가 보여집니다.</ImageWarningMsg>
+          <FileUploader
+            name="Company Picture"
+            fileList={companyPictures}
+            setFileList={setCompanyPictures}
+            multiple
+          />
+          <Label htmlFor="companyIntroduction">회사 소개</Label>
+          <div>
+            <div ref={quillRef} />
+          </div>
+          <Label htmlFor="companyRecruiterContact">담당자 전화번호</Label>
+          <TextField
+            {...register('companyRecruiterContact')}
+            id="companyRecruiterContact"
+            placeholder="채용 담당자의 연락처를 입력해주세요:)"
+            sx={{
+              width: '450px',
+              mt: '8px',
+            }}
+            helperText={<ErrorMsg>{errors.companyRecruiterContact?.message}</ErrorMsg>}
+          />
+          <Label htmlFor="organization">소속 기관 ( 병원 주소 )</Label>
+          <PostalCodeContainer>
+            <TextField
+              id="organization"
+              placeholder="우편번호"
+              value={addressInfo.postalCode}
+              sx={{
+                width: '225px',
+              }}
+            />
+            <Button
+              variant="outlined"
+              onClick={handleClickOpen}
+              sx={{
+                width: 225,
+                height: 56,
+              }}
+            >
+              주소 검색
+            </Button>
+          </PostalCodeContainer>
+          <AddressContainer>
+            <TextField
+              placeholder="주소"
+              value={addressInfo.mainAddress}
+              sx={{
+                width: '450px',
+                mt: '8px',
+              }}
+            />
+            <TextField
+              placeholder="상세 주소"
+              value={addressInfo.detailAddress}
+              onChange={handleDetailAddress}
+              sx={{
+                width: '450px',
+                mt: '8px',
+                mb: '10px',
+              }}
+            />
+          </AddressContainer>
           <Button
-            variant="outlined"
-            onClick={handleClickOpen}
+            onClick={handleSubmit(handleImagePrePost)}
+            variant="contained"
             sx={{
-              width: 225,
+              width: 450,
               height: 56,
+              color: 'white',
             }}
+            type="submit"
           >
-            주소 검색
+            다음
           </Button>
-        </PostalCodeContainer>
-        <AddressContainer>
-          <TextField
-            placeholder="주소"
-            value={addressInfo.mainAddress}
-            sx={{
-              width: '450px',
-              mt: '8px',
-            }}
-          />
-          <TextField
-            placeholder="상세 주소"
-            value={addressInfo.detailAddress}
-            onChange={handleDetailAddress}
-            sx={{
-              width: '450px',
-              mt: '8px',
-              mb: '10px',
-            }}
-          />
-        </AddressContainer>
-        <Button
-          onClick={handleSubmit(handleImagePrePost)}
-          variant="contained"
-          sx={{
-            width: 450,
-            height: 56,
-            color: 'white',
-          }}
-          type="submit"
-        >
-          다음
-        </Button>
-      </RegisterWrapper>
-    </form>
+        </RegisterWrapper>
+      </form>
+    )
   );
 }
 

@@ -21,8 +21,9 @@ export function useUserActions() {
     sessionStorage.setItem('refreshToken', refreshToken);
 
     const decodedToken = decodeJWT(accessToken);
-    const { role, userId, jobCategory }: any = decodedToken;
-    setUserInfo({ role, userId, jobCategory });
+
+    const { role, userId, jobCategory, authStatus, recruiterStatus }: any = decodedToken;
+    setUserInfo({ role, userId, jobCategory, authStatus, recruiterStatus });
     setProfieUrl(profileUrlWithoutS3);
     setIsLogin(true);
     router.push('/home');
