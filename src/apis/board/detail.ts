@@ -45,8 +45,8 @@ const detailApi = {
   getDetailAllData: (category: string) => {
     return instance.get(`/${category}/articles`);
   },
-  deleteBoard: (articleId: string) => {
-    return instance.delete(`/free/articles/${articleId}`);
+  deleteBoard: ({ articleId, categoryName }: { articleId: string; categoryName: string }) => {
+    return instance.delete(`/${categoryName.toLowerCase()}/articles/${articleId}`);
   },
   postSendMessage: (sendMessageData: any) =>
     instance.post(`/messages/taker/${sendMessageData.takerId}`, sendMessageData.msg),
