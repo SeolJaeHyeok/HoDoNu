@@ -36,7 +36,7 @@ export default function FreeBoard() {
   );
 
   // 총 페이지 수
-  const TOTAL_PAGE = Math.ceil(res?.data.result.count / Number(perPage));
+  const TOTAL_PAGE = Math.ceil(res?.data.result.count / Number(router.query.perPage));
 
   // Pagination - page
   const handlePageNavigate = (pageNumber: number) => {
@@ -47,8 +47,8 @@ export default function FreeBoard() {
     router.push({
       query: {
         page: pageNumber + 1,
-        perPage,
-        sort,
+        perPage: router.query.perPage,
+        sort: router.query.sort,
       },
     });
   };
