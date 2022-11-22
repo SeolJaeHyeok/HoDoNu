@@ -9,7 +9,7 @@ import { ArticleCategoryProps } from '@interfaces/article';
 import SearchForm from '@components/board/search/SearchForm';
 import SearchList from '@components/board/search/SearchList';
 
-const Search = ({ category }: ArticleCategoryProps) => {
+const Search = ({ category, setPage }: ArticleCategoryProps) => {
   const scrollRef = useRef(null);
   const [index, setIndex] = useState(-1);
   const [query, setQuery] = useState<string>('');
@@ -46,6 +46,7 @@ const Search = ({ category }: ArticleCategoryProps) => {
         setIndex={setIndex}
         scrollRef={scrollRef}
         searchResults={searchResults}
+        setPage={setPage}
       />
       {query && (
         <SearchResult>

@@ -19,7 +19,7 @@ export default function DoctorBoard() {
   const searchText = useRecoilValue<string>(searchDataAtom);
 
   const { data: res, isLoading } = useQuery(
-    ['board', 'doctor', sort, page, perPage, searchText],
+    ['board', 'doctor', sort, router.query.page, perPage, searchText],
     () => boardApi.getAllDoctorBoards({ page, perPage, sort, search: searchText }),
     {
       staleTime: Infinity,

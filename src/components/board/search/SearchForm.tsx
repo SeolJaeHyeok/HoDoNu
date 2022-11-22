@@ -2,6 +2,7 @@ import { searchDataAtom } from '@atoms/searchAtom';
 import styled from '@emotion/styled';
 import useDebounce from '@hooks/useDebounce';
 import SearchIcon from '@mui/icons-material/Search';
+import { useRouter } from 'next/router';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
@@ -16,6 +17,7 @@ interface SearchProps {
   setIndex: Dispatch<SetStateAction<number>>;
   scrollRef?: any;
   searchResults: any;
+  setPage: any;
 }
 
 export default function SearchForm({
@@ -25,16 +27,19 @@ export default function SearchForm({
   setIndex,
   scrollRef,
   searchResults,
+  setPage,
 }: SearchProps) {
   const setSearchText = useSetRecoilState(searchDataAtom);
   const [isComposing, setIsComposing] = useState<boolean>(false);
-
   const debouncedSearchText = useDebounce(query, 200);
+  const router = useRouter();
 
   const onSearchSubmit = async (e: React.KeyboardEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSearchText(debouncedSearchText);
+    setSearchText(() => debouncedSearchText);
     setQuery('');
+    setPage('1');
+    router.push(router.route + `?page=1&perPage=${router.query.perPage}&sort=${router.query.sort}`);
   };
 
   const onSearchTextChange = (e: any) => {
