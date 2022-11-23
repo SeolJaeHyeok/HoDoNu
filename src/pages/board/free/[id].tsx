@@ -30,7 +30,10 @@ export default function Free() {
 export const getServerSideProps = async ({ params }: ParamsProps) => {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(['detailContent', 'Free', params.id]);
+  await queryClient.prefetchQuery(
+    ['detailContent', 'Free', params.id],
+    detailApi.getDetailData('free', params.id)
+  );
 
   if (!params) {
     return {
