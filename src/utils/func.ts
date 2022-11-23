@@ -1,7 +1,7 @@
 export function convertTime(date: string) {
   // http://ccambo.github.io/Dev/Typescript/1.typescript-problem-solving-and-tips/
   const start = +new Date(date);
-  const end = +new Date(); // 현재 날짜
+  const end = +new Date() + 9 * 60 * 60 * 1000; // 현재 날짜
   const diff = end - start; // 경과 시간
 
   const times = [
