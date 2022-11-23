@@ -1,13 +1,19 @@
 import ArticleContent from '@components/article/ArticleContent';
-import { dehydrate, QueryClient, useMutation, useQuery } from '@tanstack/react-query';
+import { dehydrate, QueryClient, useMutation } from '@tanstack/react-query';
 import detailApi from '@apis/board/detail';
 import { ParamsProps } from '@interfaces/board/detailUserInfoType';
 import { categoryAssertion } from '@utils/const/category';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import useBoardDetailQuery from '@hooks/query/useBoardDetailQuery';
 
 export default function Free() {
   const router = useRouter();
+  const { data } = useBoardDetailQuery(
+    'detailContent',
+    categoryAssertion.FREE,
+    router.query.id as string
+  );
 
   const raiseHitsQuery = useMutation(detailApi.patchRaiseHit);
 
@@ -18,14 +24,6 @@ export default function Free() {
     });
   }, []);
 
-  const { data } = useQuery(
-    ['detailContent', categoryAssertion.FREE, router.query.id],
-    () => detailApi.getDetailData('free', router.query.id as string),
-    {
-      staleTime: 10000,
-      cacheTime: 100000,
-    }
-  );
   return <ArticleContent result={data?.result} categoryName={categoryAssertion.FREE} />;
 }
 
