@@ -156,7 +156,7 @@ export default function MyPageArticles() {
 
   // 게시글 수정 이동
   const handleArticleEdit = (articleId: number, category: string) => {
-    router.push(`/board/edit?id=${articleId}&category=${category.toLowerCase()}`);
+    router.push(`/board/edit?id=${articleId}&category=${category}`);
   };
 
   return (
