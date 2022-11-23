@@ -5,7 +5,7 @@ import {
   CommentRegisterResponseAPI,
   CommentUpdateProps,
   CommentUpdateResponseAPI,
-  GetDetailDataResponseAPI,
+  // GetDetailDataResponseAPI,
 } from '@interfaces/board/detailUserInfoType';
 import { AxiosResponse } from 'axios';
 import { instance } from '../index';
@@ -35,11 +35,8 @@ const detailApi = {
   }: CommentUpdateProps): Promise<AxiosResponse<CommentUpdateResponseAPI>> => {
     return instance.patch(`/${categoryName}/comments/${commentUpdateId}`, commentUpdateMsg);
   },
-  getDetailData: (
-    category: string,
-    articleId?: string
-  ): Promise<AxiosResponse<GetDetailDataResponseAPI>> => {
-    return instance.get(`/${category}/articles/${articleId}`);
+  getDetailData: (category: string, articleId?: string): any => {
+    return instance.get(`/${category}/articles/${articleId}`).then(res => res.data);
   },
   // 카테고리별 데이터 불러오기!
   getDetailAllData: (category: string) => {
