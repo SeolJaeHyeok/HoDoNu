@@ -1,7 +1,6 @@
 import ArticleComment from '@components/article/ArticleComment';
 import CustomSideBar from '@components/sidebar/CustomSideBar';
 import styled from '@emotion/styled';
-// import { ContentProps } from '@interfaces/board/detailUserInfoType';
 import CommentIcon from '@mui/icons-material/Comment';
 import { Button } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
@@ -59,9 +58,8 @@ export default function ArticleContent({
   });
 
   const requestCommentData = useMutation(detailApi.commentRegister, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['detailContent', categoryName]);
-    },
+    onSuccess: () =>
+      queryClient.invalidateQueries(['detailContent', categoryName, result.articleId.toString()]),
   });
 
   const handleChangeCommentInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
