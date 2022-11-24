@@ -64,11 +64,11 @@ export default function MessageItem({
   return (
     <>
       <Box key={message.messageId} sx={itemStyle}>
-        <Typography sx={{ fontSize: { xs: '0.8rem', sm: '1rem' } }}>
+        <Typography sx={{ fontSize: { xs: '0.7rem', sm: '1rem' } }}>
           {message.senderEmail}
         </Typography>
-        <Typography sx={{ fontSize: { xs: '0.8rem', sm: '1rem' } }}>
-          {message.title.length < 6 ? message.title : `${message.title.slice(0, 6)}...`}
+        <Typography sx={{ fontSize: { xs: '0.7rem', sm: '1rem' } }}>
+          {message.title.length < 4 ? message.title : `${message.title.slice(0, 4)}...`}
         </Typography>
         <Box>
           <MessageModalForm

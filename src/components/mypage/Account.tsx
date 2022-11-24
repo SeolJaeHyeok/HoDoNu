@@ -61,7 +61,7 @@ export default function Account({ user }: { user: UserDetail }) {
           <Typography sx={{ fontWeight: 600 }}>Account</Typography>
         </Box>
         {user.authStatus !== 'Active' && (
-          <Typography color="#FF5353" fontStyle="oblique" fontSize="small">
+          <Typography color="#FF5353" fontStyle="oblique" fontSize="0.7rem">
             승인되지 않은 회원입니다.
           </Typography>
         )}
