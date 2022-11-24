@@ -73,12 +73,12 @@ export default function ArticleCreateForm({ categories }: { categories: string[]
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack
-        width="550px"
         sx={{
           mt: 3,
           '& > :not(style) + :not(style)': {
             mt: 2,
           },
+          width: { xs: '300px', sm: '650px' },
         }}
       >
         <TextField
