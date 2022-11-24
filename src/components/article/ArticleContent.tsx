@@ -96,7 +96,7 @@ export default function ArticleContent({
               dangerouslySetInnerHTML={{ __html: result?.content }}
             ></BoardSubTitleContainer>
           </BoardSubTitle>
-          {/* <BoardButtonContainer>
+          <BoardButtonContainer>
             {loginUserId?.userId === result?.userId && (
               <>
                 <Button variant="outlined" onClick={handleMoveToEdit}>
@@ -138,7 +138,7 @@ export default function ArticleContent({
               댓글 등록
             </Button>
           </CommnetInputContainer>
-          {result?.comments?.map((content: any, i: number) => {
+          {/* {result?.comments?.map((content: any, i: number) => {
             return (
               <ArticleComment
                 key={i}
@@ -172,13 +172,14 @@ const BoardContent = styled.div`
   @media screen and (min-width: 320px) and (max-width: 768px) {
     width: 95vw;
     margin: 0 auto;
+    padding: 0 10px;
   }
 `;
 const BoardTitle = styled.h1`
   font-size: 25px;
   margin-top: 20px;
   @media screen and (min-width: 320px) and (max-width: 768px) {
-    padding: 0 10px;
+    padding: 0 5px;
   }
 `;
 
@@ -201,7 +202,7 @@ const BoardSubTitleContainer = styled.div`
   line-height: 150%;
 
   @media screen and (min-width: 320px) and (max-width: 768px) {
-    width: 95vw;
+    width: 90vw;
   }
 
   img {
@@ -242,4 +243,7 @@ const CommentTextArea = styled.textarea`
   border-radius: 15px;
   width: 750px;
   overflow: hidden;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 83vw;
+  }
 `;
