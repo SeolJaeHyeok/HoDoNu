@@ -9,6 +9,7 @@ import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
 import { useRouter } from 'next/router';
 import useBoardCommentQuery from '@hooks/query/useBoardCommentQuery';
+import useBoardArticleQuery from '@hooks/query/useBoardArticleQuery';
 
 interface CommentRequestDataState {
   category: string;
@@ -22,13 +23,10 @@ export default function ArticleContent({
   result: any;
   categoryName: string;
 }) {
-  // const queryClient = useQueryClient();
   const loginUserId = useRecoilValue(userInfoState);
   const router = useRouter();
-  const { fetchPostComment, fetchDeleteComment } = useBoardCommentQuery(
-    categoryName,
-    result?.articleId.toString()
-  );
+  const { fetchPostComment } = useBoardCommentQuery();
+  const { fetchDeleteBoard } = useBoardArticleQuery(categoryName);
 
   const [commentRequestDataForm, setCommentRequestData] = useState<CommentRequestDataState>({
     category: categoryName,
@@ -43,7 +41,7 @@ export default function ArticleContent({
 
   const handleDeleteBoard = () => {
     if (confirm('정말 삭제하시겠습니까?')) {
-      fetchDeleteComment.mutate({ articleId: result.articleId, categoryName });
+      fetchDeleteBoard.mutate({ articleId: result.articleId, categoryName });
     }
   };
 

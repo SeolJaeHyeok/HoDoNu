@@ -2,7 +2,6 @@ import detailApi from '@apis/board/detail';
 import { useQuery } from '@tanstack/react-query';
 
 const useBoardDetailQuery = (queryKey: string, category: string, articleId: string) => {
-  console.log('나 실행됨');
   const boardDetailQuery = useQuery(
     [queryKey, category, articleId],
     () => detailApi.getDetailData('free', articleId as string),
