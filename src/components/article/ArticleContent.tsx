@@ -1,21 +1,14 @@
-import ArticleComment from '@components/article/ArticleComment';
+// import ArticleComment from '@components/article/ArticleComment';
 import CustomSideBar from '@components/sidebar/CustomSideBar';
 import styled from '@emotion/styled';
-import CommentIcon from '@mui/icons-material/Comment';
 import { Button } from '@mui/material';
-import { ChangeEvent, useState } from 'react';
 import ArticleUserInfo from './ArticleUserInfo';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
 import { useRouter } from 'next/router';
-import useBoardCommentQuery from '@hooks/query/useBoardCommentQuery';
 import useBoardArticleQuery from '@hooks/query/useBoardArticleQuery';
+import ArticleCommentContainer from './ArticleCommentContainer';
 
-interface CommentRequestDataState {
-  category: string;
-  content: string;
-  articleId: string;
-}
 export default function ArticleContent({
   result,
   categoryName,
@@ -25,44 +18,17 @@ export default function ArticleContent({
 }) {
   const loginUserId = useRecoilValue(userInfoState);
   const router = useRouter();
-  const { fetchPostComment } = useBoardCommentQuery();
   const { fetchDeleteBoard } = useBoardArticleQuery(categoryName);
-
-  const [commentRequestDataForm, setCommentRequestData] = useState<CommentRequestDataState>({
-    category: categoryName,
-    content: '',
-    articleId: result?.articleId,
-  });
 
   // 게시글 수정 클릭시 router에 값 넣어서 보내기!
   const handleMoveToEdit = () => {
-    router.push(`/board/edit?id=${result.articleId}&category=${commentRequestDataForm.category}`);
+    router.push(`/board/edit?id=${result.articleId}&category=${categoryName.toLowerCase()}`);
   };
 
   const handleDeleteBoard = () => {
     if (confirm('정말 삭제하시겠습니까?')) {
       fetchDeleteBoard.mutate({ articleId: result.articleId, categoryName });
     }
-  };
-
-  const handleChangeCommentInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setCommentRequestData({
-      category: categoryName,
-      content: e.target.value,
-      articleId: result?.articleId,
-    });
-  };
-
-  const handleRequestCommentData = () => {
-    fetchPostComment.mutate(commentRequestDataForm);
-  };
-
-  const handleClickCommentRegister = () => {
-    handleRequestCommentData();
-    setCommentRequestData({
-      ...commentRequestDataForm,
-      content: '',
-    });
   };
 
   return (
@@ -89,48 +55,7 @@ export default function ArticleContent({
               </>
             )}
           </BoardButtonContainer>
-          <CommentWrapper>
-            <CommentIcon
-              sx={{
-                fontSize: '28px',
-              }}
-            />
-            <CommentTitle>댓글</CommentTitle>
-          </CommentWrapper>
-          <CommnetInputContainer>
-            <CommentTextArea
-              value={
-                loginUserId === null
-                  ? `로그인이 필요한 서비스입니다. 로그인을 진행해주세요!`
-                  : commentRequestDataForm.content
-              }
-              onChange={handleChangeCommentInput}
-            />
-            <Button
-              variant="outlined"
-              type="submit"
-              sx={{
-                display: 'block',
-                float: 'right',
-                mt: '8px',
-              }}
-              onClick={handleClickCommentRegister}
-            >
-              댓글 등록
-            </Button>
-          </CommnetInputContainer>
-          {result?.comments?.map((content: any, i: number) => {
-            return (
-              <ArticleComment
-                key={i}
-                content={content}
-                userId={loginUserId?.userId!}
-                commentId={content.commentId}
-                commentUserId={content.user.userId}
-                categoryName={categoryName}
-              />
-            );
-          })}
+          <ArticleCommentContainer result={result} categoryName={categoryName} />
         </BoardContent>
       </BoardContainer>
     </BoardWrapper>
@@ -197,34 +122,5 @@ const BoardSubTitleContainer = styled.div`
     @media screen and (min-width: 320px) and (max-width: 768px) {
       width: 95vw;
     }
-  }
-`;
-
-const CommentWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  padding-top: 20px;
-`;
-const CommentTitle = styled.p`
-  font-size: 18px;
-  margin: auto 0;
-  margin-left: 8px;
-`;
-
-const CommnetInputContainer = styled.div`
-  height: 150px;
-  margin-top: 15px;
-`;
-
-const CommentTextArea = styled.textarea`
-  width: 100%;
-  border: 1px solid #e5e7eb;
-  resize: none;
-  padding: 10px 15px;
-  border-radius: 15px;
-  width: 750px;
-  overflow: hidden;
-  @media screen and (min-width: 320px) and (max-width: 768px) {
-    width: 83vw;
   }
 `;
