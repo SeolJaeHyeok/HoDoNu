@@ -144,12 +144,24 @@ const BoardWrapper = styled.div`
 const BoardContainer = styled.div`
   display: flex;
   width: 750px;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 95vw;
+  }
   margin: 0 auto;
 `;
-const BoardContent = styled.div``;
+const BoardContent = styled.div`
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 95vw;
+    margin: 0 auto;
+    padding: 0 10px;
+  }
+`;
 const BoardTitle = styled.h1`
   font-size: 25px;
   margin-top: 20px;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    padding: 0 5px;
+  }
 `;
 
 const BoardSubTitle = styled.p`
@@ -169,11 +181,22 @@ const BoardSubTitleContainer = styled.div`
   width: 782px;
   overflow: hidden;
   line-height: 150%;
+
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 90vw;
+  }
+
   img {
     width: 100%;
+    @media screen and (min-width: 320px) and (max-width: 768px) {
+      width: 95vw;
+    }
   }
   p {
     width: 782px;
+    @media screen and (min-width: 320px) and (max-width: 768px) {
+      width: 95vw;
+    }
   }
 `;
 
@@ -201,4 +224,7 @@ const CommentTextArea = styled.textarea`
   border-radius: 15px;
   width: 750px;
   overflow: hidden;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 83vw;
+  }
 `;
