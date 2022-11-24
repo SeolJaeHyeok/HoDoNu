@@ -13,7 +13,7 @@ export default function RecruitCardView({
   return (
     <Link href={`/recruit/${jobId}`}>
       <CardContainer>
-        <Image src={images} width={308} height={160} style={{ borderRadius: '12px' }} alt="공고" />
+        <Image src={images} width={320} height={160} style={{ borderRadius: '12px' }} alt="공고" />
         <RecruitTitle>{title}</RecruitTitle>
         <RecruitCompanyName>{company}</RecruitCompanyName>
         <RecruitAddress>{address}</RecruitAddress>
@@ -31,6 +31,11 @@ const CardContainer = styled.div`
   margin-right: 27px;
   border-radius: 12px;
   cursor: pointer;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 20rem;
+    margin: 0 auto;
+    margin-bottom: 20px;
+  }
 `;
 
 const RecruitTitle = styled.h1`

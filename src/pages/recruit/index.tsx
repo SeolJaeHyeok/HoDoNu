@@ -20,7 +20,7 @@ export default function Recruit({ jobList, tagList }: RecruitProps) {
 
   return (
     <RecruitWrapper>
-      <RecruitContainer>
+      {/* <RecruitContainer>
         <RecruitHeader
           tagsId={tagsId}
           setJobLists={setJobLists}
@@ -29,16 +29,16 @@ export default function Recruit({ jobList, tagList }: RecruitProps) {
           setSearchBarFilterInput={setSearchBarFilterInput}
           searchBarFilterInput={searchBarFilterInput}
         />
-      </RecruitContainer>
-      <RecruitLine />
-      <RecruitTags
+      </RecruitContainer> */}
+      {/* <RecruitLine /> */}
+      {/* <RecruitTags
         tags={tagList}
         setJobList={setJobLists}
         tagsId={tagsId}
         setTagsId={setTagsId}
         searchFilterTagNames={searchFilterTagNames}
         searchBarFilterInput={searchBarFilterInput}
-      />
+      /> */}
       <RecruitContentContainer>
         {jobLists.length === 0 ? (
           <RecruitSearchNoContent>검색 결과가 존재하지 않습니다.</RecruitSearchNoContent>
@@ -109,7 +109,7 @@ const RecruitLine = styled.hr`
 
 const RecruitContentContainer = styled.div`
   display: flex;
-  width: 1350px;
   margin: 0 auto;
   flex-wrap: wrap;
+  justify-content: center;
 `;
