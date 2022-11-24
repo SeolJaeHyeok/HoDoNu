@@ -54,8 +54,11 @@ export default function Map({ companyName, address }: MapProps) {
   }, [mapLoaded, address, companyName]);
 
   return (
-    <Box sx={{ width: '650px' }}>
-      <Box id="map" sx={{ width: '650px', height: '250px' }}></Box>
+    <Box sx={{ width: { sm: '650px', xs: '320px' } }}>
+      <Box
+        id="map"
+        sx={{ width: { sm: '650px', xs: '320px' }, height: { sm: '250px', xs: '200px' } }}
+      ></Box>
       <Script
         type="text/javascript"
         strategy="lazyOnload"

@@ -15,7 +15,7 @@ export default function Tags({ tags }: TagProps) {
   return (
     <Box
       sx={{
-        width: '650px',
+        width: { sm: '650px', xs: '320px' },
         display: 'flex',
         flexWrap: 'wrap',
         alignItems: 'center',
