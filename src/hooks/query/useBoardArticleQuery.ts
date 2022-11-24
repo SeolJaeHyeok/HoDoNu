@@ -18,8 +18,6 @@ const useBoardArticleQuery = (categoryName: string) => {
     },
   });
 
-  // 게시글 수정
-
   return { fetchDeleteBoard };
 };
 

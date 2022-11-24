@@ -6,8 +6,8 @@ const useBoardDetailQuery = (queryKey: string, category: string, articleId: stri
     [queryKey, category, articleId],
     () => detailApi.getDetailData('free', articleId as string),
     {
-      staleTime: 30000,
-      cacheTime: 100000,
+      staleTime: Infinity,
+      cacheTime: Infinity,
       refetchOnMount: false,
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,

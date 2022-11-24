@@ -10,7 +10,6 @@ const useBoardCommentQuery = () => {
   });
 
   // 댓글 삭제 ( invalidateQueries key에 앞에 2개만 넣어도 인식한다! , 1개만 넣어도 똑같은거를 찾아준다! )
-
   const fetchDeleteComment = useMutation(detailApi.commentDelete, {
     onSuccess: () => queryClient.invalidateQueries(['detailContent']),
   });
