@@ -101,6 +101,10 @@ const RecruitSearchNoContent = styled.div`
   transform: translate(-50%, -50%);
   font-size: 25px;
   color: rgb(102, 102, 102);
+
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    top: 75%;
+  }
 `;
 
 const RecruitLine = styled.hr`
