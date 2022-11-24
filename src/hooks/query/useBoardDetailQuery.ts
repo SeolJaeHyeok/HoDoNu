@@ -12,8 +12,7 @@ const useBoardDetailQuery = (queryKey: string, category: string, articleId: stri
       refetchOnMount: false,
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,
-      // enabled: true,
-      // retry: 0,
+      retry: 0,
     }
   );
 

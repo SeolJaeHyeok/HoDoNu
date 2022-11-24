@@ -4,12 +4,11 @@ import styled from '@emotion/styled';
 import CommentIcon from '@mui/icons-material/Comment';
 import { Button } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import detailApi from '@apis/board/detail';
 import ArticleUserInfo from './ArticleUserInfo';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
 import { useRouter } from 'next/router';
+import useBoardCommentQuery from '@hooks/query/useBoardCommentQuery';
 
 interface CommentRequestDataState {
   category: string;
@@ -23,44 +22,30 @@ export default function ArticleContent({
   result: any;
   categoryName: string;
 }) {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   const loginUserId = useRecoilValue(userInfoState);
   const router = useRouter();
+  const { fetchPostComment, fetchDeleteComment } = useBoardCommentQuery(
+    categoryName,
+    result?.articleId.toString()
+  );
 
-  // 게시글 수정 클릭시 router에 값 넣어서 보내기!
-  const handleMoveToEdit = () => {
-    router.push(`/board/edit?id=${result.articleId}&category=${commentRequestDataForm.category}`);
-  };
-
-  // 게시글 삭제
-  const requestDeleteBoard = useMutation(detailApi.deleteBoard, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['detailContent', categoryName]);
-      alert('게시글이 성공적으로 삭제됐습니다.');
-      router.push(`/board/${categoryName.toLowerCase()}`);
-    },
-    onError: (e: any) => {
-      alert(e.response.data.message);
-    },
-  });
-
-  const handleDeleteBoard = () => {
-    if (confirm('정말 삭제하시겠습니까?')) {
-      requestDeleteBoard.mutate({ articleId: result.articleId, categoryName });
-    }
-  };
-
-  // 댓글 등록 로직
   const [commentRequestDataForm, setCommentRequestData] = useState<CommentRequestDataState>({
     category: categoryName,
     content: '',
     articleId: result?.articleId,
   });
 
-  const requestCommentData = useMutation(detailApi.commentRegister, {
-    onSuccess: () =>
-      queryClient.invalidateQueries(['detailContent', categoryName, result.articleId.toString()]),
-  });
+  // 게시글 수정 클릭시 router에 값 넣어서 보내기!
+  const handleMoveToEdit = () => {
+    router.push(`/board/edit?id=${result.articleId}&category=${commentRequestDataForm.category}`);
+  };
+
+  const handleDeleteBoard = () => {
+    if (confirm('정말 삭제하시겠습니까?')) {
+      fetchDeleteComment.mutate({ articleId: result.articleId, categoryName });
+    }
+  };
 
   const handleChangeCommentInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setCommentRequestData({
@@ -71,7 +56,7 @@ export default function ArticleContent({
   };
 
   const handleRequestCommentData = () => {
-    requestCommentData.mutate(commentRequestDataForm);
+    fetchPostComment.mutate(commentRequestDataForm);
   };
 
   const handleClickCommentRegister = () => {
