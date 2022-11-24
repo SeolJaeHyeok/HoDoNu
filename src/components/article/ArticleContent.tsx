@@ -138,7 +138,7 @@ export default function ArticleContent({
               댓글 등록
             </Button>
           </CommnetInputContainer>
-          {/* {result?.comments?.map((content: any, i: number) => {
+          {result?.comments?.map((content: any, i: number) => {
             return (
               <ArticleComment
                 key={i}
@@ -149,7 +149,7 @@ export default function ArticleContent({
                 categoryName={categoryName}
               />
             );
-          })} */}
+          })}
         </BoardContent>
       </BoardContainer>
     </BoardWrapper>
