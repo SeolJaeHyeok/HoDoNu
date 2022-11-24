@@ -20,7 +20,7 @@ export default function Recruit({ jobList, tagList }: RecruitProps) {
 
   return (
     <RecruitWrapper>
-      {/* <RecruitContainer>
+      <RecruitContainer>
         <RecruitHeader
           tagsId={tagsId}
           setJobLists={setJobLists}
@@ -29,7 +29,7 @@ export default function Recruit({ jobList, tagList }: RecruitProps) {
           setSearchBarFilterInput={setSearchBarFilterInput}
           searchBarFilterInput={searchBarFilterInput}
         />
-      </RecruitContainer> */}
+      </RecruitContainer>
       <RecruitLine />
       <RecruitTags
         tags={tagList}
@@ -88,9 +88,10 @@ const RecruitWrapper = styled.div`
 
 const RecruitContainer = styled.div`
   margin: 0 auto;
-  width: 1350px;
+  width: 90vw;
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
 `;
 
 const RecruitSearchNoContent = styled.div`
