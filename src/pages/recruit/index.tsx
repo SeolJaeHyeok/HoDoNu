@@ -30,15 +30,15 @@ export default function Recruit({ jobList, tagList }: RecruitProps) {
           searchBarFilterInput={searchBarFilterInput}
         />
       </RecruitContainer> */}
-      {/* <RecruitLine /> */}
-      {/* <RecruitTags
+      <RecruitLine />
+      <RecruitTags
         tags={tagList}
         setJobList={setJobLists}
         tagsId={tagsId}
         setTagsId={setTagsId}
         searchFilterTagNames={searchFilterTagNames}
         searchBarFilterInput={searchBarFilterInput}
-      /> */}
+      />
       <RecruitContentContainer>
         {jobLists.length === 0 ? (
           <RecruitSearchNoContent>검색 결과가 존재하지 않습니다.</RecruitSearchNoContent>
@@ -103,7 +103,7 @@ const RecruitSearchNoContent = styled.div`
 `;
 
 const RecruitLine = styled.hr`
-  width: 1350px;
+  width: 90vw;
   margin-top: 14px;
 `;
 
