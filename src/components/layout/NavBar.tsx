@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import { Link as MuiLink, AppBar, Box, Typography } from '@mui/material';
+import { Link as MuiLink, AppBar, Box } from '@mui/material';
 import { alpha } from '@mui/material';
 
 import ResponsiveNavMenu from './ResponsiveNavMenu';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { isLoginState, userInfoState } from 'src/atoms/userAtom';
+import { isLoginState, profileUrl } from 'src/atoms/userAtom';
 import AvartarMenu from './AvartarMenu';
 import NavButton from './NavButton';
 import { searchDataAtom } from '@atoms/searchAtom';
@@ -17,9 +17,11 @@ import { searchDataAtom } from '@atoms/searchAtom';
 export default function NavBar() {
   const router = useRouter();
   const curPath = router.pathname;
+  const [temp, setTemp] = useState(false);
 
-  const userInfo = useRecoilValue(userInfoState);
+  // const userInfo = useRecoilValue(userInfoState);
   const isLogin = useRecoilValue(isLoginState);
+  const profileImg = useRecoilValue(profileUrl);
   const resetBoardSearchText = useSetRecoilState(searchDataAtom);
 
   const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
@@ -27,6 +29,14 @@ export default function NavBar() {
   const handleBoardMenuClick = () => {
     resetBoardSearchText('');
   };
+
+  useEffect(() => {
+    if (isLogin) {
+      setTemp(true);
+    } else {
+      setTemp(false);
+    }
+  }, [isLogin]);
 
   return (
     <AppBar position="static" elevation={1} sx={{ backgroundColor: alpha('#17A8FF', 0.6) }}>
@@ -95,18 +105,19 @@ export default function NavBar() {
           </Link>
         </Box>
         <Box sx={style}>
-          {isLogin ? (
+          {profileImg && temp ? (
             <Box sx={style}>
-              <AvartarMenu />
+              <AvartarMenu profileImg={profileImg} />
             </Box>
           ) : (
             <NavButton />
           )}
-          {userInfo?.role === 'Admin' && (
+
+          {/* {userInfo?.role === 'Admin' && (
             <Typography fontWeight="500" fontSize="0.85rem" sx={{ color: '#fff' }}>
               관리자 계정입니다.
             </Typography>
-          )}
+          )} */}
         </Box>
       </Box>
     </AppBar>

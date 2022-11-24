@@ -6,13 +6,13 @@ import { Box, IconButton, MenuItem, Menu } from '@mui/material';
 import CustomAvatarImage from '@components/CustomAvartar';
 import { useUserActions } from '@hooks/useUserAction';
 import { useRecoilValue } from 'recoil';
-import { profileUrl, userInfoState } from '@atoms/userAtom';
+import { userInfoState } from '@atoms/userAtom';
 
-export default function AvartarMenu() {
+export default function AvartarMenu({ profileImg }: { profileImg: string }) {
   const userAction = useUserActions();
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const profileImg = useRecoilValue(profileUrl);
+
   const userInfo = useRecoilValue(userInfoState);
   const s3Url =
     process.env.NODE_ENV === 'development'
@@ -20,6 +20,7 @@ export default function AvartarMenu() {
       : `https://${process.env.NEXT_PUBLIC_PRODUCTION_IMAGE_BASE_URL}`;
 
   const open = Boolean(anchorEl);
+
   const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
