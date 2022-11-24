@@ -96,7 +96,7 @@ export default function ArticleContent({
               dangerouslySetInnerHTML={{ __html: result?.content }}
             ></BoardSubTitleContainer>
           </BoardSubTitle>
-          <BoardButtonContainer>
+          {/* <BoardButtonContainer>
             {loginUserId?.userId === result?.userId && (
               <>
                 <Button variant="outlined" onClick={handleMoveToEdit}>
@@ -149,7 +149,7 @@ export default function ArticleContent({
                 categoryName={categoryName}
               />
             );
-          })}
+          })} */}
         </BoardContent>
       </BoardContainer>
     </BoardWrapper>
@@ -163,12 +163,23 @@ const BoardWrapper = styled.div`
 const BoardContainer = styled.div`
   display: flex;
   width: 750px;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 95vw;
+  }
   margin: 0 auto;
 `;
-const BoardContent = styled.div``;
+const BoardContent = styled.div`
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 95vw;
+    margin: 0 auto;
+  }
+`;
 const BoardTitle = styled.h1`
   font-size: 25px;
   margin-top: 20px;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    padding: 0 10px;
+  }
 `;
 
 const BoardSubTitle = styled.p`
@@ -188,11 +199,22 @@ const BoardSubTitleContainer = styled.div`
   width: 782px;
   overflow: hidden;
   line-height: 150%;
+
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 95vw;
+  }
+
   img {
     width: 100%;
+    @media screen and (min-width: 320px) and (max-width: 768px) {
+      width: 95vw;
+    }
   }
   p {
     width: 782px;
+    @media screen and (min-width: 320px) and (max-width: 768px) {
+      width: 95vw;
+    }
   }
 `;
 
