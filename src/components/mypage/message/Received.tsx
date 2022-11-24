@@ -28,7 +28,7 @@ export default function Received() {
       </Box>
       <Divider sx={{ width: '100%' }}></Divider>
       {dataBeforeCheck && (
-        <Box sx={{ m: 1, p: 1 }}>
+        <Box sx={{ m: { xs: 0, sm: 1 }, p: { xs: 0, sm: 1 } }}>
           {dataBeforeCheck.length > 0 ? (
             dataBeforeCheck.slice(0, 5).map(message => {
               return <MessageItem key={message.messageId} message={message} status={'received'} />;

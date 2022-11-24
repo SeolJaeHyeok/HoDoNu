@@ -30,13 +30,13 @@ export default function MypageIndex() {
   return (
     <Grid
       container
-      spacing={2}
+      spacing={{ xs: 1, sm: 3 }}
       direction="row"
       justifyContent="center"
       alignItems="center"
       sx={{
-        mt: 2,
-        p: 2,
+        mt: { xs: 1, md: 2 },
+        p: { xs: 1, md: 2 },
       }}
     >
       {userInfo && (
@@ -47,23 +47,23 @@ export default function MypageIndex() {
             </Grid>
           </Grid>
           <Grid item xs={10}>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
+            <Grid container spacing={{ xs: 1, md: 2 }}>
+              <Grid item xs={12} md={6}>
                 <Account user={userInfo} />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Job user={userInfo} />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Sent />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Received />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Activity user={userInfo} />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Security />
               </Grid>
             </Grid>

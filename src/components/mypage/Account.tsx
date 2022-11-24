@@ -48,7 +48,14 @@ export default function Account({ user }: { user: UserDetail }) {
         p: 1,
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 1 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          p: 1,
+        }}
+      >
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <AccountCircleIcon fontSize="large" sx={{ color: 'grey.500', mr: 1 }} />
           <Typography sx={{ fontWeight: 600 }}>Account</Typography>
@@ -84,7 +91,7 @@ export default function Account({ user }: { user: UserDetail }) {
             </Box>
           ) : (
             <>
-              <Typography sx={itemTypoStyle}>닉네임 :</Typography>
+              <Typography sx={itemTypoStyle}>닉네임 </Typography>
               <Typography>{user.nickname}</Typography>
               <IconButton onClick={handleOpenEditNickname}>
                 <BorderColorIcon fontSize="small" sx={{ mr: 1 }} />
@@ -93,15 +100,15 @@ export default function Account({ user }: { user: UserDetail }) {
           )}
         </Box>
         <Box sx={itemStyle}>
-          <Typography sx={itemTypoStyle}>이메일 : </Typography>
+          <Typography sx={itemTypoStyle}>이메일 </Typography>
           <Typography>{user.email}</Typography>
         </Box>
         <Box sx={itemStyle}>
-          <Typography sx={itemTypoStyle}>이름 : </Typography>
+          <Typography sx={itemTypoStyle}>이름 </Typography>
           <Typography>{user.name}</Typography>
         </Box>
         <Box sx={itemStyle}>
-          <Typography sx={itemTypoStyle}>생년월일 : </Typography>
+          <Typography sx={itemTypoStyle}>생년월일 </Typography>
           <Typography>{user.birth}</Typography>
         </Box>
         <Box sx={{ mt: 2 }}>
@@ -124,6 +131,7 @@ export default function Account({ user }: { user: UserDetail }) {
 
 const itemStyle = {
   display: 'flex',
+  flexWrap: 'wrap',
   mt: 1,
   alignItems: 'center',
 };

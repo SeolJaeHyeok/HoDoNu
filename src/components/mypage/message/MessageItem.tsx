@@ -64,8 +64,10 @@ export default function MessageItem({
   return (
     <>
       <Box key={message.messageId} sx={itemStyle}>
-        <Typography sx={itemTypoStyle}> {message.senderEmail}</Typography>
-        <Typography>
+        <Typography sx={{ fontSize: { xs: '0.8rem', sm: '1rem' } }}>
+          {message.senderEmail}
+        </Typography>
+        <Typography sx={{ fontSize: { xs: '0.8rem', sm: '1rem' } }}>
           {message.title.length < 6 ? message.title : `${message.title.slice(0, 6)}...`}
         </Typography>
         <Box>
@@ -95,9 +97,4 @@ const itemStyle = {
     transitionTimingFunction: 'ease-in-out',
     transitionDuration: '0.2s',
   },
-};
-
-const itemTypoStyle = {
-  fontWeight: 600,
-  mr: 1,
 };

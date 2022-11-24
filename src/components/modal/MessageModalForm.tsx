@@ -23,7 +23,7 @@ export default function MessageModalForm({
 
   return (
     <>
-      <CustomModal modal={messageModal} btnContent={'확인'}>
+      <CustomModal modal={messageModal} btnContent={'확인'} btnStyle={{ margin: 0, padding: 0 }}>
         {senderEmail && <Mail>받은 사람: {senderEmail}</Mail>}
         {receiverEmail && <Mail>보낸 사람: {receiverEmail}</Mail>}
         <ModalTitle>
