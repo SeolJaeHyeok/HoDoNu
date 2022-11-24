@@ -7,40 +7,27 @@ import useBoardCommentQuery from '@hooks/query/useBoardCommentQuery';
 import { ChangeEvent, useState } from 'react';
 import { Button } from '@mui/material';
 
-interface CommentRequestDataState {
-  category: string;
-  content: string;
-  articleId: string;
-}
-
 export default function ArticleCommentContainer({ result, categoryName }: any) {
   const loginUserId = useRecoilValue(userInfoState);
   const { fetchPostComment } = useBoardCommentQuery();
 
-  const [commentRequestDataForm, setCommentRequestData] = useState<CommentRequestDataState>({
-    category: categoryName,
-    content: '',
-    articleId: result?.articleId,
-  });
+  const [comment, setComment] = useState<string>('');
 
   const handleRequestCommentData = () => {
-    fetchPostComment.mutate(commentRequestDataForm);
-  };
-
-  const handleChangeCommentInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setCommentRequestData({
+    fetchPostComment.mutate({
       category: categoryName,
-      content: e.target.value,
+      content: comment,
       articleId: result?.articleId,
     });
   };
 
+  const handleChangeCommentInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setComment(e.target.value);
+  };
+
   const handleClickCommentRegister = () => {
     handleRequestCommentData();
-    setCommentRequestData({
-      ...commentRequestDataForm,
-      content: '',
-    });
+    setComment('');
   };
 
   return (
@@ -56,9 +43,7 @@ export default function ArticleCommentContainer({ result, categoryName }: any) {
       <CommnetInputContainer>
         <CommentTextArea
           value={
-            loginUserId === null
-              ? `로그인이 필요한 서비스입니다. 로그인을 진행해주세요!`
-              : commentRequestDataForm.content
+            loginUserId === null ? `로그인이 필요한 서비스입니다. 로그인을 진행해주세요!` : comment
           }
           onChange={handleChangeCommentInput}
         />
