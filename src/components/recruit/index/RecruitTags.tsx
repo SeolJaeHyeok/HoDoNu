@@ -69,6 +69,11 @@ export default function RecruitTags({
 const RecruitTagWrapper = styled.div`
   width: 1350px;
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 90vw;
+  }
 `;
 
 const Nav = styled.nav`

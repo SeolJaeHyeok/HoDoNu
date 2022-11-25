@@ -59,11 +59,23 @@ export default function RecruitHeaderSelect({
 
   return (
     <HeaderSearchBarWrapper>
-      <form style={{ margin: '1px', display: 'flex' }} onSubmit={handleClickSearchRequest}>
+      <form
+        style={{ margin: '1px', display: 'flex', flexWrap: 'wrap' }}
+        onSubmit={handleClickSearchRequest}
+      >
         <Select
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
-          sx={{ width: 350 }}
+          sx={{
+            height: '65px',
+            width: {
+              xs: '320px',
+            },
+            margin: {
+              xs: '0 auto',
+              sm: 'auto 0',
+            },
+          }}
           multiple
           value={searchFilterTagNames}
           onChange={handleChange}
@@ -92,7 +104,10 @@ export default function RecruitHeaderSelect({
     </HeaderSearchBarWrapper>
   );
 }
-const HeaderSearchBarWrapper = styled.div``;
+const HeaderSearchBarWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
 const SearchBarWrapper = styled.div`
   position: relative;
   display: flex;
@@ -103,6 +118,11 @@ const SearchBarWrapper = styled.div`
   margin-left: 20px;
   margin: auto 0;
   margin-left: 10px;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 320px;
+    margin: 10px 0 0 0;
+    margin: 0 auto;
+  }
 `;
 const SearchInput = styled.input`
   border: none;
