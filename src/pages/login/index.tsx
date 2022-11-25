@@ -5,7 +5,7 @@ export default function LoginPage() {
   return (
     <Container
       sx={{
-        width: '380px',
+        width: { xs: '320px', sm: '385px' },
         mt: 10,
         '& > :not(style) + :not(style)': {
           mt: 5,

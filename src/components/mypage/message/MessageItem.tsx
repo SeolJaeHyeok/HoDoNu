@@ -64,9 +64,11 @@ export default function MessageItem({
   return (
     <>
       <Box key={message.messageId} sx={itemStyle}>
-        <Typography sx={itemTypoStyle}> {message.senderEmail}</Typography>
-        <Typography>
-          {message.title.length < 6 ? message.title : `${message.title.slice(0, 6)}...`}
+        <Typography sx={{ fontSize: { xs: '0.7rem', sm: '1rem' } }}>
+          {message.senderEmail}
+        </Typography>
+        <Typography sx={{ fontSize: { xs: '0.7rem', sm: '1rem' } }}>
+          {message.title.length < 4 ? message.title : `${message.title.slice(0, 4)}...`}
         </Typography>
         <Box>
           <MessageModalForm
@@ -95,9 +97,4 @@ const itemStyle = {
     transitionTimingFunction: 'ease-in-out',
     transitionDuration: '0.2s',
   },
-};
-
-const itemTypoStyle = {
-  fontWeight: 600,
-  mr: 1,
 };

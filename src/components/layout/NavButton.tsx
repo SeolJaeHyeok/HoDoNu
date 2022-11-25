@@ -9,7 +9,7 @@ export default function NavButton() {
   return (
     <Box
       sx={{
-        display: { sm: 'flex', xs: 'none' },
+        display: { sm: 'flex' },
         '& > :not(style) + :not(style)': {
           ml: 1.5,
         },

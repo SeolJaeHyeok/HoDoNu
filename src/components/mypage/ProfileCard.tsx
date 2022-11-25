@@ -1,5 +1,13 @@
-import { Box, Button, Typography, alpha, TextField, Badge, IconButton } from '@mui/material';
-import CustomAvatarImage from '@components/CustomAvartar';
+import {
+  Box,
+  Button,
+  Typography,
+  alpha,
+  TextField,
+  Badge,
+  IconButton,
+  Avatar,
+} from '@mui/material';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import React, { ChangeEvent, useRef, useState } from 'react';
@@ -72,6 +80,7 @@ export default function ProfileCard({ user }: { user: UserDetail }) {
     <Box
       sx={{
         display: 'flex',
+        flexWrap: 'wrap',
         alignItems: 'center',
         borderRadius: '8px',
         border: 2,
@@ -91,7 +100,10 @@ export default function ProfileCard({ user }: { user: UserDetail }) {
             </IconButton>
           }
         >
-          <CustomAvatarImage alt="user profile" src={user.imgUrl} width={180} height={180} />
+          <Avatar
+            src={user.imgUrl}
+            sx={{ width: { xs: 80, md: 170 }, height: { xs: 80, md: 170 } }}
+          />
         </Badge>
 
         <input
@@ -104,7 +116,7 @@ export default function ProfileCard({ user }: { user: UserDetail }) {
         />
       </Box>
       <Box sx={{ m: 1, p: 1 }}>
-        <Typography sx={{ fontWeight: 800, fontSize: '30px', mb: 1 }}>{user.nickname}</Typography>
+        <Typography sx={{ fontWeight: 600, fontSize: '1.5rem', mb: 1 }}>{user.nickname}</Typography>
         {isIntroduceEdit ? (
           <Box>
             <TextField
