@@ -28,16 +28,19 @@ export default function CreateBoard() {
     <Container
       sx={{
         display: 'flex',
+        width: '100%',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         mt: 6,
+        mb: 3,
       }}
     >
       <Box
         sx={{
           '& > :not(style) + :not(style)': {
             mt: 1,
+            width: { xs: '300px', sm: '650px' },
           },
         }}
       >
