@@ -16,7 +16,7 @@ export default function Contact({ user, contact }: { user: UserProps; contact: s
   return (
     <Box
       sx={{
-        width: '650px',
+        width: { sm: '650px', xs: '320px' },
         display: 'flex',
         alignItems: 'center',
         '& > :not(style) + :not(style)': {

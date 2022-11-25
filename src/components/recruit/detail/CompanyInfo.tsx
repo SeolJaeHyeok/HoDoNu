@@ -17,7 +17,7 @@ export default function CompanyInfo(props: CompanyInfoProps) {
   return (
     <Box
       sx={{
-        width: '650px',
+        width: { sm: '650px', xs: '320px' },
         height: '320px',
         display: 'flex',
         flexDirection: 'column',

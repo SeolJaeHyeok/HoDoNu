@@ -8,11 +8,11 @@ export default function Content({ content }: ContentProps) {
   return (
     <Container
       sx={{
-        width: '650px',
+        width: { sm: '650px', xs: '320px' },
         display: 'flex',
         flexDirection: 'column',
-        margin: 2,
-        padding: 2,
+        my: 2,
+        py: 2,
       }}
     >
       <Box>

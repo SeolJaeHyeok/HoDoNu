@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { Container, Divider, Typography, Box, Button } from '@mui/material';
+import { Divider, Typography, Box, Button, Stack } from '@mui/material';
 import { recruitApi } from '@apis/recuit';
 import ImageCarousel from '@components/recruit/detail/ImageCarousel';
 import CompanyInfo from '@components/recruit/detail/CompanyInfo';
@@ -43,26 +43,26 @@ export default function RecruitDetail(props: RecruitDetailProps) {
   };
 
   return (
-    <Container
+    <Stack
+      direction="column"
+      justifyContent="center"
+      alignItems="center"
+      spacing={2}
       sx={{
-        width: '650px',
-        display: 'flex',
-        flexDirection: 'column',
+        width: '100%',
       }}
     >
-      <Box sx={{ width: '100%', my: 2 }}>
-        <ImageCarousel images={content.images} />
-        <Box sx={{ py: 1 }}>
-          <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-            {content.title}
-          </Typography>
-          <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
-            {content.company}
-          </Typography>
-        </Box>
-        <Tags tags={content.tags} />
+      <ImageCarousel images={content.images} />
+      <Box sx={{ py: 1, width: { sm: '650px', xs: '320px' } }}>
+        <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+          {content.title}
+        </Typography>
+        <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+          {content.company}
+        </Typography>
       </Box>
-      <Divider textAlign="left" sx={{ width: '650px', fontWeight: '500' }}>
+      <Tags tags={content.tags} />
+      <Divider textAlign="left" sx={{ width: { sm: '650px', xs: '320px' }, fontWeight: '500' }}>
         채용 정보
       </Divider>
       <Box>
@@ -75,7 +75,7 @@ export default function RecruitDetail(props: RecruitDetailProps) {
           </Button>
         )}
       </Box>
-    </Container>
+    </Stack>
   );
 }
 

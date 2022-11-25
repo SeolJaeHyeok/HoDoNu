@@ -13,7 +13,7 @@ export default function ImageCarousel({ images }: ImageProps) {
   };
 
   return (
-    <Box sx={{ width: { sm: '650px', xs: '320' }, mt: 5, mb: 2 }}>
+    <Box sx={{ width: { sm: '650px', xs: '320px' }, mt: 5, mb: 2 }}>
       <Carousel settings={settings}>
         {images?.length ? (
           images.map(img => {
@@ -32,4 +32,7 @@ const CarouselImage = styled.img`
   width: 100%;
   cursor: pointer;
   border-radius: 12px;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    height: 200px;
+  }
 `;
