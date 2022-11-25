@@ -52,7 +52,17 @@ export default function RecruitHeader({
       <RegisetButtonContainer>
         <Button
           variant="outlined"
-          sx={{ lineHeight: '3.0', marginBottom: '8px' }}
+          sx={{
+            lineHeight: '3.0',
+            marginBottom: '8px',
+            width: {
+              xs: '320px',
+              sm: '85px',
+            },
+            marginTop: {
+              xs: '20px',
+            },
+          }}
           onClick={handleClickRecruitRegister}
         >
           공고 등록
@@ -67,8 +77,14 @@ const HeaderTitle = styled.h1`
   padding-top: 3px;
   margin: auto 0;
   margin-right: 30px;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    margin-right: 0px;
+  }
 `;
 
 const RegisetButtonContainer = styled.div`
   margin: auto 0 0 auto;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    margin-left: 0px;
+  }
 `;

@@ -88,9 +88,10 @@ const RecruitWrapper = styled.div`
 
 const RecruitContainer = styled.div`
   margin: 0 auto;
-  width: 1350px;
+  width: 90vw;
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
 `;
 
 const RecruitSearchNoContent = styled.div`
@@ -100,16 +101,20 @@ const RecruitSearchNoContent = styled.div`
   transform: translate(-50%, -50%);
   font-size: 25px;
   color: rgb(102, 102, 102);
+
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    top: 75%;
+  }
 `;
 
 const RecruitLine = styled.hr`
-  width: 1350px;
+  width: 90vw;
   margin-top: 14px;
 `;
 
 const RecruitContentContainer = styled.div`
   display: flex;
-  width: 1350px;
   margin: 0 auto;
   flex-wrap: wrap;
+  justify-content: center;
 `;

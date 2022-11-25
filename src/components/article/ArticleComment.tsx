@@ -124,6 +124,7 @@ const CommentWrapper = styled.div`
 `;
 const CommentContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `;
 const CommentContent = styled.p`
   display: inline-block;
@@ -135,6 +136,9 @@ const CommentContent = styled.p`
   font-size: 14px;
   line-height: 130%;
   color: #6b7280;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    margin: 10px 0 0 0;
+  }
 `;
 const ContentContainer = styled.div`
   padding-top: 10px;

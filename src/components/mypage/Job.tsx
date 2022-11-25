@@ -24,18 +24,18 @@ export default function Job({ user }: { user: UserDetail }) {
       <Divider textAlign="left" sx={{ width: '100%', fontWeight: '500' }}></Divider>
 
       <Box sx={{ m: 1, p: 1 }}>
-        <Box sx={{ display: 'flex', mt: 1 }}>
-          <Typography sx={{ fontWeight: 600, mr: 1 }}>Job :</Typography>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', mt: 1 }}>
+          <Typography sx={{ fontWeight: 600, mr: 1 }}>Job </Typography>
           <Typography> {user.jobCategory}</Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', mt: 1 }}>
-          <Typography sx={{ fontWeight: 600, mr: 1 }}>병원 :</Typography>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', mt: 1 }}>
+          <Typography sx={{ fontWeight: 600, mr: 1 }}>병원 </Typography>
           <Typography>{user.address.detailAddress}</Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', mt: 1 }}>
-          <Typography sx={{ fontWeight: 600, mr: 1 }}>병원 주소 :</Typography>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', mt: 1 }}>
+          <Typography sx={{ fontWeight: 600, mr: 1 }}>병원 주소 </Typography>
           <Typography>{user.address.mainAddress}</Typography>
         </Box>
 

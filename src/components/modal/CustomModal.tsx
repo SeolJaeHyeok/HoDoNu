@@ -12,7 +12,9 @@ interface ModalProps {
   btnContent: any;
   modal: any;
   width?: number;
+  mobileWidth?: any;
   height?: number;
+  mobileHeight?: any;
 }
 
 export default function CustomModal({
@@ -21,7 +23,9 @@ export default function CustomModal({
   btnContent,
   modal,
   width = 433,
+  mobileWidth = '90%',
   height = 404,
+  mobileHeight = '50%',
 }: ModalProps) {
   const handleOpen = () => {
     modal.openModal();
@@ -37,7 +41,13 @@ export default function CustomModal({
         {btnContent}
       </Button>
       <Modal hideBackdrop open={modal.isOpen} onClose={handleClose}>
-        <Box sx={{ ...style, width, height }}>
+        <Box
+          sx={{
+            ...style,
+            width: { xs: mobileWidth, sm: width },
+            height: { xs: mobileHeight, sm: height },
+          }}
+        >
           <IconButton style={{ position: 'absolute', top: '0', right: '0' }} onClick={handleClose}>
             <CloseIcon />
           </IconButton>
