@@ -5,6 +5,7 @@ import Link from 'next/link';
 import boardApi from 'src/apis/board';
 import { useQuery } from '@tanstack/react-query';
 import MainBoardSkeleton from '@components/main/MainBoardSkeleton';
+import * as Sentry from '@sentry/nextjs';
 
 export default function Home() {
   const params = { page: '1', perPage: '5' };
@@ -15,6 +16,9 @@ export default function Home() {
     {
       staleTime: Infinity,
       cacheTime: Infinity,
+      onError: error => {
+        Sentry.captureException(error);
+      },
     }
   );
 

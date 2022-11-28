@@ -1,10 +1,17 @@
 const nextEnv = require('next-env');
 const dotenvLoad = require('dotenv-load');
-
 /** @type {import('next').NextConfig} */
 
 dotenvLoad();
 const withNextEnv = nextEnv();
+const SentryOptions = {
+  sentry: {
+    hideSourceMaps: true,
+  },
+};
+const SentryWebpackPluginOptions = {
+  silent: true,
+};
 
 const imgUrl =
   process.env.NODE_ENV === 'development'
@@ -26,6 +33,8 @@ const nextConfig = {
       },
     ];
   },
+  SentryOptions,
+  SentryWebpackPluginOptions,
 };
 
 module.exports = withNextEnv(nextConfig);
