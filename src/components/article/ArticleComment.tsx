@@ -1,11 +1,10 @@
-import detailApi from '@apis/board/detail';
 import styled from '@emotion/styled';
 import { CommentArticleProps } from '@interfaces/board/detailUserInfoType';
 import { Button } from '@mui/material';
 import { convertTime } from '@utils/func';
 import { ChangeEvent, useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import CustomAvatarImage from '@components/CustomAvartar';
+import useBoardCommentQuery from '@hooks/query/board/useBoardCommentQuery';
 
 export default function Comment({
   content,
@@ -19,21 +18,7 @@ export default function Comment({
     content: content.content,
   });
 
-  const queryClient = useQueryClient();
-  const deleteCommentData = useMutation(detailApi.commentDelete, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['detailContent', categoryName]);
-    },
-  });
-
-  const updateCommentData = useMutation(detailApi.commentUpdate, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['detailContent', categoryName]);
-    },
-    onError: (e: any) => {
-      alert(e.data.response.message);
-    },
-  });
+  const { fetchDeleteComment, fetchUpdateComment } = useBoardCommentQuery();
 
   // 댓글 수정 로직
   const handleUpdateCommentData = () => {
@@ -47,7 +32,7 @@ export default function Comment({
   };
 
   const handleRegisetUpdateComment = () => {
-    updateCommentData.mutate({
+    fetchUpdateComment.mutate({
       commentUpdateId: commentId,
       commentUpdateMsg: commentUpdateData,
       categoryName,
@@ -56,7 +41,7 @@ export default function Comment({
   };
   // 댓글 삭제 로직
   const handleDeleteCommentData = () => {
-    deleteCommentData.mutate({ categoryName, commentId });
+    fetchDeleteComment.mutate({ categoryName, commentId });
   };
 
   return (
@@ -124,6 +109,7 @@ const CommentWrapper = styled.div`
 `;
 const CommentContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `;
 const CommentContent = styled.p`
   display: inline-block;
@@ -135,6 +121,9 @@ const CommentContent = styled.p`
   font-size: 14px;
   line-height: 130%;
   color: #6b7280;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    margin: 10px 0 0 0;
+  }
 `;
 const ContentContainer = styled.div`
   padding-top: 10px;
