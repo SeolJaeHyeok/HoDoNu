@@ -5,7 +5,7 @@ import { ParamsProps } from '@interfaces/board/detailUserInfoType';
 import { categoryAssertion } from '@utils/const/category';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import useBoardDetailQuery from '@hooks/query/useBoardDetailQuery';
+import useBoardDetailQuery from '@hooks/query/board/useBoardDetailQuery';
 
 export default function Free() {
   const router = useRouter();

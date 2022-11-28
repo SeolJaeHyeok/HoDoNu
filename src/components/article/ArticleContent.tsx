@@ -6,7 +6,7 @@ import ArticleUserInfo from './ArticleUserInfo';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
 import { useRouter } from 'next/router';
-import useBoardArticleQuery from '@hooks/query/useBoardArticleQuery';
+import useBoardArticleQuery from '@hooks/query/board/useBoardArticleQuery';
 import ArticleCommentContainer from './ArticleCommentContainer';
 
 export default function ArticleContent({
