@@ -1,7 +1,7 @@
 import detailApi from '@apis/board/detail';
 import { useQuery } from '@tanstack/react-query';
 
-const useBoardDetailQuery = (queryKey: string, category: string, articleId: string) => {
+const useBoardDetailQuery = ([queryKey, category, articleId]: any) => {
   const boardDetailQuery = useQuery(
     [queryKey, category, articleId],
     () => detailApi.getDetailData('free', articleId as string),

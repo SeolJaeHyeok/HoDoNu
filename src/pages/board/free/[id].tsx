@@ -6,14 +6,11 @@ import { categoryAssertion } from '@utils/const/category';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import useBoardDetailQuery from '@hooks/query/board/useBoardDetailQuery';
+import boardKeys from '@hooks/query/board/boardKeys';
 
 export default function Free() {
   const router = useRouter();
-  const { data } = useBoardDetailQuery(
-    'detailContent',
-    categoryAssertion.FREE,
-    router.query.id as string
-  );
+  const { data } = useBoardDetailQuery(boardKeys.detail('Free', router.query.id as string));
 
   const raiseHitsQuery = useMutation(detailApi.patchRaiseHit);
 
@@ -31,7 +28,7 @@ export const getServerSideProps = async ({ params }: ParamsProps) => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery(
-    ['detailContent', 'Free', params.id],
+    boardKeys.detail('Free', params.id),
     detailApi.getDetailData('free', params.id)
   );
 
