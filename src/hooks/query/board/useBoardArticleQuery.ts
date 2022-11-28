@@ -18,6 +18,8 @@ const useBoardArticleQuery = (categoryName: string) => {
     },
   });
 
+  // 예슬TODO: 게시글 수정 넣으면 좋을듯
+
   return { fetchDeleteBoard };
 };
 
