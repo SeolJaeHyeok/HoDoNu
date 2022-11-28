@@ -5,7 +5,6 @@ import {
   CommentRegisterResponseAPI,
   CommentUpdateProps,
   CommentUpdateResponseAPI,
-  // GetDetailDataResponseAPI,
 } from '@interfaces/board/detailUserInfoType';
 import { AxiosResponse } from 'axios';
 import { instance } from '../index';
