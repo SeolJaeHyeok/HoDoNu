@@ -1,7 +1,20 @@
 import axios from 'axios';
 import qs from 'qs';
+import { getCookie } from 'cookies-next';
 
-const sessionStorage = typeof window !== 'undefined' ? window.sessionStorage : undefined;
+const refreshToken = getCookie('refreshToken');
+const userId = getCookie('userId');
+const role = getCookie('role');
+
+const refresh = async () => {
+  const res = await instance.post(`/users/${userId}/reissue/version2`, {
+    role,
+    refreshToken,
+  });
+
+  const newAccessToken = await res.data.result.accessToken;
+  instance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
+};
 
 export const instance = axios.create({
   baseURL:
@@ -16,11 +29,10 @@ export const instance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 });
 
 instance.interceptors.request.use((config: any) => {
-  config.headers.Authorization = `Bearer ${sessionStorage?.getItem('token')}`;
-
   if (
     config.url === '/imgUpload/array' ||
     config.url === '/imgUpload/single' ||
@@ -32,3 +44,16 @@ instance.interceptors.request.use((config: any) => {
   }
   return config;
 });
+
+instance.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  async function (error) {
+    if (error.response && error.response.data && error.response.data.errorCode === 'JwtError') {
+      await refresh();
+      return await instance(error.config);
+    }
+    return Promise.reject(error);
+  }
+);

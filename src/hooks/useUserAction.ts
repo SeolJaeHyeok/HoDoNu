@@ -3,26 +3,52 @@ import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 import { decodeJWT } from '../utils/decodeJWT';
 import { isLoginState, profileUrl, userInfoState } from 'src/atoms/userAtom';
+import { deleteCookie, setCookie } from 'cookies-next';
+import axios from 'axios';
+
+/**
+ * 유저 로그인시
+ * accessToken은 res body, refresh token은 res header cookie에 있다.
+ * setCookie로 refresh token을 cookie에 저장한다.
+ * accessToken은 axios header에만 상수로 저장한다.
+ * 단 axios header는 refresh할 경우 사라지므로 initialProps에서 다시 저장해
+ *
+ * access token 만료시
+ * accessToken이 만료되었다는 JWTError가 response로 들어오면
+ * interceptor가 accesstoken 재발급을 요청
+ * 재발급 받은 accesstoken을 axios header에 저장
+ *
+ * refresh token 만료시
+ * 로그아웃!!
+ *
+ *
+ */
 
 export function useUserActions() {
   const router = useRouter();
+
   const setUserInfo = useSetRecoilState(userInfoState);
   const setIsLogin = useSetRecoilState(isLoginState);
   const setProfieUrl = useSetRecoilState(profileUrl);
 
   const resetUserInfo = useResetRecoilState(userInfoState);
   const resetIsLogin = useResetRecoilState(isLoginState);
+  const resetProfileUrl = useResetRecoilState(profileUrl);
 
   async function login(userData: any) {
     const { accessToken, refreshToken, imgUrl } = await userData.result;
     const profileUrlWithoutS3 = makeProfileUrl(imgUrl);
 
-    sessionStorage.setItem('token', accessToken);
-    sessionStorage.setItem('refreshToken', refreshToken);
+    setCookie('refreshToken', refreshToken);
+    axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
     const decodedToken = decodeJWT(accessToken);
 
     const { role, userId, jobCategory, authStatus, recruiterStatus }: any = decodedToken;
+
+    setCookie('role', role);
+    setCookie('userId', userId);
+
     setUserInfo({ role, userId, jobCategory, authStatus, recruiterStatus });
     setProfieUrl(profileUrlWithoutS3);
     setIsLogin(true);
@@ -32,7 +58,12 @@ export function useUserActions() {
   async function logout() {
     resetUserInfo();
     resetIsLogin();
+    resetProfileUrl();
     sessionStorage.clear();
+
+    deleteCookie('refreshToken');
+    deleteCookie('userId');
+    deleteCookie('role');
     router.push('/home');
   }
 
