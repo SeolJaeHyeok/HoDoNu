@@ -1,3 +1,5 @@
+import { ArticleProps, CategoryUpperType } from '@interfaces/article';
+
 export interface PostArticleRes {
   result: {
     articleId: number;
@@ -28,6 +30,15 @@ export interface PatchArticleRes {
       imgUrl: string;
       nickname: string;
     };
+  };
+  status: number;
+}
+
+export interface GetArticleRes {
+  result: {
+    articles: ArticleProps[];
+    category: CategoryUpperType;
+    count: number;
   };
   status: number;
 }

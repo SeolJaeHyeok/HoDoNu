@@ -1,4 +1,9 @@
-import { GetOneArticleRes, PatchArticleRes, PostArticleRes } from '@interfaces/board/article';
+import {
+  GetArticleRes,
+  GetOneArticleRes,
+  PatchArticleRes,
+  PostArticleRes,
+} from '@interfaces/board/article';
 import { AxiosResponse } from 'axios';
 import { ArticleForm } from '@interfaces/article';
 import { instance } from '..';
@@ -27,12 +32,12 @@ const boardApi = {
   updateArticle: (articleForm: ArticleForm): Promise<AxiosResponse<PatchArticleRes>> =>
     instance.patch(`/${articleForm.category}/articles/${articleForm.articleId}`, articleForm),
 
-  getAllFreeBoards: (params?: ParamsProps): Promise<AxiosResponse<any, any>> =>
-    instance.get(`/free/articles`, { params }),
-  getAllDoctorBoards: (params?: ParamsProps): Promise<AxiosResponse<any, any>> =>
-    instance.get('/doctor/articles', { params }),
-  getAllNurseBoards: (params?: ParamsProps): Promise<AxiosResponse<any, any>> =>
-    instance.get('/nurse/articles', { params }),
+  getAllFreeBoards: (params?: ParamsProps): Promise<GetArticleRes> =>
+    instance.get(`/free/articles`, { params }).then(res => res.data),
+  getAllDoctorBoards: (params?: ParamsProps): Promise<GetArticleRes> =>
+    instance.get('/doctor/articles', { params }).then(res => res.data),
+  getAllNurseBoards: (params?: ParamsProps): Promise<GetArticleRes> =>
+    instance.get('/nurse/articles', { params }).then(res => res.data),
 
   getOneArticle: (articleParams?: articlaParamProps): Promise<AxiosResponse<GetOneArticleRes>> =>
     instance.get(`/${articleParams?.category}/articles/${articleParams?.id}`),
