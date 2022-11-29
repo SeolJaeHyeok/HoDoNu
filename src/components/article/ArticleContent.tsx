@@ -8,13 +8,29 @@ import { useRouter } from 'next/router';
 import ArticleCommentContainer from './ArticleCommentContainer';
 import useBoardArticleMutation from '@hooks/query/board/useBoardArticleMutation';
 
+interface ArticleContentProps {
+  articleId: string;
+  createdAt: string;
+  content: string;
+  hits: number;
+  isActive: boolean;
+  title: string;
+  user: {
+    email: string;
+    imgUrl: string;
+    nickname: string;
+    userId: string;
+  };
+  userId: string;
+}
 export default function ArticleContent({
   result,
   categoryName,
 }: {
-  result: any;
+  result: ArticleContentProps;
   categoryName: string;
 }) {
+  console.log(result);
   const loginUserId = useRecoilValue(userInfoState);
   const router = useRouter();
   const { fetchDeleteBoard } = useBoardArticleMutation(categoryName);
