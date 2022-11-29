@@ -30,7 +30,6 @@ export default function ArticleContent({
   result: ArticleContentProps;
   categoryName: string;
 }) {
-  console.log(result);
   const loginUserId = useRecoilValue(userInfoState);
   const router = useRouter();
   const { fetchDeleteBoard } = useBoardArticleMutation(categoryName);
