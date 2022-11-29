@@ -48,14 +48,14 @@ const Search = ({ category, setPage }: ArticleCategoryProps) => {
         searchResults={searchResults}
         setPage={setPage}
       />
-      {query && (
+      {query && searchResults && (
         <SearchResult>
-          {searchResults?.data.result.articles.length === 0 && <NoResult>검색 결과 없음</NoResult>}
+          {searchResults.result.articles.length === 0 && <NoResult>검색 결과 없음</NoResult>}
           <SearchList
             ref={scrollRef}
             setIndex={setIndex}
             index={index}
-            results={searchResults?.data.result.articles.slice(0, 10)}
+            results={searchResults.result.articles.slice(0, 10)}
             query={query}
           />
         </SearchResult>
