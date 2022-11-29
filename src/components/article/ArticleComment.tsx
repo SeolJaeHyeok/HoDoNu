@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import { convertTime } from '@utils/func';
 import { ChangeEvent, useState } from 'react';
 import CustomAvatarImage from '@components/CustomAvartar';
-import useBoardCommentQuery from '@hooks/query/board/useBoardCommentQuery';
+import useBoardCommentMutation from '@hooks/query/board/useBoardCommentMutation';
 
 export default function Comment({
   content,
@@ -18,7 +18,7 @@ export default function Comment({
     content: content.content,
   });
 
-  const { fetchDeleteComment, fetchUpdateComment } = useBoardCommentQuery();
+  const { fetchDeleteComment, fetchUpdateComment } = useBoardCommentMutation();
 
   // 댓글 수정 로직
   const handleUpdateCommentData = () => {

@@ -2,7 +2,7 @@ import detailApi from '@apis/board/detail';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 
-const useBoardArticleQuery = (categoryName: string) => {
+const useBoardArticleMutation = (categoryName: string) => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -23,4 +23,4 @@ const useBoardArticleQuery = (categoryName: string) => {
   return { fetchDeleteBoard };
 };
 
-export default useBoardArticleQuery;
+export default useBoardArticleMutation;

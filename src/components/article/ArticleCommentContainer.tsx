@@ -3,13 +3,13 @@ import CommentIcon from '@mui/icons-material/Comment';
 import ArticleComment from '@components/article/ArticleComment';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
-import useBoardCommentQuery from '@hooks/query/board/useBoardCommentQuery';
 import { ChangeEvent, useState } from 'react';
 import { Button } from '@mui/material';
+import useBoardCommentMutation from '@hooks/query/board/useBoardCommentMutation';
 
 export default function ArticleCommentContainer({ result, categoryName }: any) {
   const loginUserId = useRecoilValue(userInfoState);
-  const { fetchPostComment } = useBoardCommentQuery();
+  const { fetchPostComment } = useBoardCommentMutation();
 
   const [comment, setComment] = useState<string>('');
 

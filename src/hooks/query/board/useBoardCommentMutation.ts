@@ -2,7 +2,7 @@ import detailApi from '@apis/board/detail';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import boardKeys from './boardKeys';
 
-const useBoardCommentQuery = () => {
+const useBoardCommentMutation = () => {
   const queryClient = useQueryClient();
 
   // 댓글 등록
@@ -26,4 +26,4 @@ const useBoardCommentQuery = () => {
   return { fetchPostComment, fetchDeleteComment, fetchUpdateComment };
 };
 
-export default useBoardCommentQuery;
+export default useBoardCommentMutation;

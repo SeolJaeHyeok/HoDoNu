@@ -1,4 +1,3 @@
-// import ArticleComment from '@components/article/ArticleComment';
 import CustomSideBar from '@components/sidebar/CustomSideBar';
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
@@ -6,8 +5,8 @@ import ArticleUserInfo from './ArticleUserInfo';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
 import { useRouter } from 'next/router';
-import useBoardArticleQuery from '@hooks/query/board/useBoardArticleQuery';
 import ArticleCommentContainer from './ArticleCommentContainer';
+import useBoardArticleMutation from '@hooks/query/board/useBoardArticleMutation';
 
 export default function ArticleContent({
   result,
@@ -18,7 +17,7 @@ export default function ArticleContent({
 }) {
   const loginUserId = useRecoilValue(userInfoState);
   const router = useRouter();
-  const { fetchDeleteBoard } = useBoardArticleQuery(categoryName);
+  const { fetchDeleteBoard } = useBoardArticleMutation(categoryName);
 
   // 게시글 수정 클릭시 router에 값 넣어서 보내기!
   const handleMoveToEdit = () => {
