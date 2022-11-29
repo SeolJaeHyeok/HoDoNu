@@ -1,9 +1,7 @@
 import { instance } from '..';
 
 const recruitListApi = {
-  getRecruitData: (params?: any) => {
-    return instance.get(`/jobs`, { params });
-  },
+  getRecruitData: (params?: any) => instance.get(`/jobs`, { params }).then(res => res.data.result),
   getRecruitAllData: (paths: any) => {
     return instance.get(`/jobs?${paths}`);
   },
