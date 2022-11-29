@@ -4,12 +4,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import { Link as MuiLink, AppBar, Box } from '@mui/material';
+import { Link as MuiLink, AppBar, Box, Typography } from '@mui/material';
 import { alpha } from '@mui/material';
 
 import ResponsiveNavMenu from './ResponsiveNavMenu';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { isLoginState, profileUrl } from 'src/atoms/userAtom';
+import { isLoginState, profileUrl, userInfoState } from 'src/atoms/userAtom';
 import AvartarMenu from './AvartarMenu';
 import NavButton from './NavButton';
 import { searchDataAtom } from '@atoms/searchAtom';
@@ -17,9 +17,9 @@ import { searchDataAtom } from '@atoms/searchAtom';
 export default function NavBar() {
   const router = useRouter();
   const curPath = router.pathname;
-  const [temp, setTemp] = useState(false);
+  const [match, setMatch] = useState(false);
 
-  // const userInfo = useRecoilValue(userInfoState);
+  const userInfo = useRecoilValue(userInfoState);
   const isLogin = useRecoilValue(isLoginState);
   const profileImg = useRecoilValue(profileUrl);
   const resetBoardSearchText = useSetRecoilState(searchDataAtom);
@@ -32,9 +32,9 @@ export default function NavBar() {
 
   useEffect(() => {
     if (isLogin) {
-      setTemp(true);
+      setMatch(true);
     } else {
-      setTemp(false);
+      setMatch(false);
     }
   }, [isLogin]);
 
@@ -105,19 +105,18 @@ export default function NavBar() {
           </Link>
         </Box>
         <Box sx={style}>
-          {profileImg && temp ? (
+          {match && profileImg ? (
             <Box sx={style}>
               <AvartarMenu profileImg={profileImg} />
             </Box>
           ) : (
             <NavButton />
           )}
-
-          {/* {userInfo?.role === 'Admin' && (
+          {userInfo?.role === 'Admin' && (
             <Typography fontWeight="500" fontSize="0.85rem" sx={{ color: '#fff' }}>
               관리자 계정입니다.
             </Typography>
-          )} */}
+          )}
         </Box>
       </Box>
     </AppBar>
