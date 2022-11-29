@@ -11,6 +11,7 @@ import BoardHeader from '@components/board/BoardHeader';
 import { searchDataAtom } from '@atoms/searchAtom';
 import { useRecoilValue } from 'recoil';
 import BoardSkeleton from '@components/board/BoardSkeleton';
+import { CategoryType } from '@interfaces/article';
 
 export default function FreeBoard() {
   const router = useRouter();
@@ -36,9 +37,9 @@ export default function FreeBoard() {
   );
 
   // 총 페이지 수
-  const TOTAL_PAGE = Math.ceil(res?.data.result.count / Number(router.query.perPage));
+  const TOTAL_PAGE = res && Math.ceil(res.result.count / Number(router.query.perPage));
 
-  // Pagination - page
+  // Pagination - page!
   const handlePageNavigate = (pageNumber: number) => {
     // Page 정렬 기준 설정
     setPage(() => String(pageNumber + 1));
@@ -54,33 +55,35 @@ export default function FreeBoard() {
   };
 
   return (
-    <BoardContainer>
-      <BoardHeader
-        setSort={setSort}
-        setPage={setPage}
-        setPerPage={setPerPage}
-        page={page}
-        sort={sort}
-        perPage={perPage}
-        category={res?.data.result.category}
-      />
-      {res?.data.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
-      {!isLoading ? (
-        <>
-          <BoardList
-            boardCategory={res?.data.result.category.toLowerCase()}
-            articles={res?.data.result.articles}
-          />
-          <Pagination
-            length={TOTAL_PAGE}
-            start={router.query.page ? +router.query.page - 1 : 0}
-            handler={pageNumber => handlePageNavigate(pageNumber)}
-          />
-        </>
-      ) : (
-        <BoardSkeleton />
-      )}
-    </BoardContainer>
+    res && (
+      <BoardContainer>
+        <BoardHeader
+          setSort={setSort}
+          setPage={setPage}
+          setPerPage={setPerPage}
+          page={page}
+          sort={sort}
+          perPage={perPage}
+          category={res.result.category}
+        />
+        {res?.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
+        {!isLoading ? (
+          <>
+            <BoardList
+              boardCategory={res.result.category.toLowerCase() as CategoryType}
+              articles={res.result.articles}
+            />
+            <Pagination
+              length={TOTAL_PAGE}
+              start={router.query.page ? +router.query.page - 1 : 0}
+              handler={pageNumber => handlePageNavigate(pageNumber)}
+            />
+          </>
+        ) : (
+          <BoardSkeleton />
+        )}
+      </BoardContainer>
+    )
   );
 }
 
