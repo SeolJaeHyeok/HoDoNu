@@ -52,7 +52,7 @@ export default function Recruit({ jobList, tagList }: RecruitProps) {
                 title={job.title}
                 address={job.address.mainAddress}
                 jobId={job.jobId}
-                images={job.image[0]}
+                images={`/assets/images/wellcheck.png`}
               />
             ))
         )}
