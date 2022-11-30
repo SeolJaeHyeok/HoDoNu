@@ -28,7 +28,7 @@ export const getStaticPaths = async () => {
 
   return {
     paths: posts,
-    fallback: false,
+    fallback: true,
   };
 };
 
