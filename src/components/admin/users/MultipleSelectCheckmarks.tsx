@@ -42,31 +42,29 @@ export default function MultipleSelectCheckmarks({
   searchQuery,
   searchQueryKey,
 }: MultipleSelectProps) {
+  const queryClient = useQueryClient();
+
   const { mutate: postBlockMutate } = useMutation(adminApi.addBoardBlock, {
     onSuccess: () => {
       alert('성공적으로 변경되었습니다.');
+      queryClient.invalidateQueries(['admin', 'users']);
     },
-    onError: e => {
-      alert('권한 변경에 문제가 발생하였습니다. 다시 시도해주세요.');
+    onError: (e: any) => {
+      alert(e.response.data.message);
     },
   });
   const { mutate: deleteBlockMutate } = useMutation(adminApi.deleteBoardBlock, {
     onSuccess: () => {
       alert('성공적으로 변경되었습니다.');
+      queryClient.invalidateQueries(['admin', 'users', 'pagination']);
     },
     onError: (e: any) => {
       alert(e.response.data.message);
     },
   });
 
-  const queryClient = useQueryClient();
-
   const [initialItems, setInitialItems] = useState<ItemProps[]>([]);
   const [totalItems, setTotalItems] = useState<ItemProps[]>([]);
-  const a = new Set(totalArticleAuthList);
-  const b = new Set(authList);
-  const selectedItems = [...new Set([...a].filter(x => !b.has(x)))];
-  const unselectedItems = [...new Set([...a].filter(x => b.has(x)))];
 
   const parsingSelectedItems = (selectedItems: string[]) => {
     return selectedItems.reduce(
@@ -82,7 +80,7 @@ export default function MultipleSelectCheckmarks({
     );
   };
 
-  const handleAuthClick = (e: React.MouseEvent) => {
+  const handleBoardAuthChange = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
 
     setTotalItems((prev: any) => {
@@ -99,7 +97,7 @@ export default function MultipleSelectCheckmarks({
     });
   };
 
-  const handleAuthChange = () => {
+  const handleChangedBoardAuthSubmit = () => {
     for (const item of totalItems) {
       for (const iItem of initialItems) {
         if (iItem.value === item.value && item.isSelected !== iItem.isSelected) {
@@ -117,6 +115,11 @@ export default function MultipleSelectCheckmarks({
   };
 
   useEffect(() => {
+    const totalAuthList = new Set(totalArticleAuthList);
+    const userAuthList = new Set(authList);
+    const selectedItems = [...new Set([...totalAuthList].filter(x => !userAuthList.has(x)))];
+    const unselectedItems = [...new Set([...totalAuthList].filter(x => userAuthList.has(x)))];
+
     setTotalItems([
       ...parsingSelectedItems(selectedItems),
       ...parsingUnselectedItems(unselectedItems),
@@ -126,7 +129,7 @@ export default function MultipleSelectCheckmarks({
       ...parsingSelectedItems(selectedItems),
       ...parsingUnselectedItems(unselectedItems),
     ]);
-  }, []);
+  }, [authList]);
 
   return (
     <span>
@@ -142,12 +145,12 @@ export default function MultipleSelectCheckmarks({
           MenuProps={MenuProps}
         >
           {totalItems.map((item: any, idx: number) => (
-            <MenuItem onClick={handleAuthClick} key={idx} value={item}>
+            <MenuItem onClick={handleBoardAuthChange} key={idx} value={item}>
               <Checkbox checked={item.isSelected} />
               <ListItemText primary={item.value} />
             </MenuItem>
           ))}
-          <Button sx={{ ml: 11 }} onClick={handleAuthChange}>
+          <Button sx={{ ml: 11 }} onClick={handleChangedBoardAuthSubmit}>
             변경하기
           </Button>
         </Select>
