@@ -46,7 +46,6 @@ export const getStaticProps = async ({ params }: ParamProps) => {
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
-      fallback: true,
     },
   };
 };
