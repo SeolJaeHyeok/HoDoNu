@@ -61,14 +61,15 @@ export default function MultipleSelectCheckmarks({ userId, blockTableList }: Mul
 
   const parsingSelectedItems = React.useCallback((selectedItems: string[]) => {
     return selectedItems.reduce(
-      (acc: any, cur: any) => acc.concat({ isSelected: true, value: cur }),
+      (acc: ItemProps[], currentValue: string) =>
+        acc.concat({ isSelected: true, value: currentValue }),
       []
     );
   }, []);
 
   const parsingUnselectedItems = React.useCallback((unselectedItems: string[]) => {
     return unselectedItems.reduce(
-      (acc: any, cur: any) => acc.concat({ isSelected: false, value: cur }),
+      (acc: ItemProps[], cur: string) => acc.concat({ isSelected: false, value: cur }),
       []
     );
   }, []);
