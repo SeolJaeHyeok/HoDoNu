@@ -1,31 +1,28 @@
 import { userInfoState } from '@atoms/userAtom';
 import styled from '@emotion/styled';
-import { JobList } from '@interfaces/recruit/list/list';
 import Button from '@mui/material/Button';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import { useRecoilValue } from 'recoil';
 import RecruitHeaderSelect from './RecruitHeaderSelect';
 
-// export interface RecruitHeaderProps {
-//   tagsId: {
-//     tagIds: number[];
-//   };
-//   setJobLists: Dispatch<SetStateAction<JobList[]>>;
-//   searchFilterTagNames: string[];
-//   setSearchFilterTagNames: Dispatch<SetStateAction<string[]>>;
-//   searchBarFilterInput: string;
-//   setSearchBarFilterInput: Dispatch<SetStateAction<string>>;
-// }
+export interface RecruitHeaderProps {
+  tagsId: {
+    tagIds: number[];
+  };
+  searchFilterTagNames: string[];
+  setSearchFilterTagNames: Dispatch<SetStateAction<string[]>>;
+  searchBarFilterInput: string;
+  setSearchBarFilterInput: Dispatch<SetStateAction<string>>;
+}
 
 export default function RecruitHeader({
   tagsId,
-  setJobLists,
   searchFilterTagNames,
   setSearchFilterTagNames,
   setSearchBarFilterInput,
   searchBarFilterInput,
-}: any) {
+}: RecruitHeaderProps) {
   const userInfo = useRecoilValue(userInfoState);
   const router = useRouter();
 
@@ -43,7 +40,6 @@ export default function RecruitHeader({
       <HeaderTitle>채용 목록</HeaderTitle>
       <RecruitHeaderSelect
         tagsId={tagsId}
-        setJobLists={setJobLists}
         searchFilterTagNames={searchFilterTagNames}
         setSearchFilterTagNames={setSearchFilterTagNames}
         setSearchBarFilterInput={setSearchBarFilterInput}

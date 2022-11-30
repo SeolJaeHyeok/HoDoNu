@@ -25,6 +25,7 @@ export default function RecruitTags({
   const requestURL = filterTagJoinUrl(searchFilterTagNames, tagsId, searchBarFilterInput);
   const recruitTagMutation = useRecruitTagMutation();
 
+  // 태그 클릭할때마다 요청
   useEffect(() => {
     recruitTagMutation.mutate(requestURL);
   }, [tagsId]);

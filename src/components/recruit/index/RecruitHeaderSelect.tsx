@@ -3,12 +3,9 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
-import recruitListApi from '@apis/recruit/list';
 import styled from '@emotion/styled';
-import { useMutation } from '@tanstack/react-query';
 import { RecruitHeaderProps } from './RecruitHearder';
 import { debounce } from 'lodash';
-import filterTagJoinUrl from '@utils/filterTagJoinUrl';
 import { searchFilterTags } from '@utils/const/searchFilterTags';
 import { ChangeEvent } from 'react';
 
@@ -25,7 +22,6 @@ const MenuProps = {
 
 export default function RecruitHeaderSelect({
   tagsId,
-  setJobLists,
   searchFilterTagNames,
   setSearchFilterTagNames,
   setSearchBarFilterInput,
@@ -46,23 +42,9 @@ export default function RecruitHeaderSelect({
     debounceFunc(e.target.value);
   };
 
-  const requestTagData = useMutation(recruitListApi.getRecruitAllData, {
-    onSuccess: data => setJobLists(data.data.result[0]),
-  });
-
-  const requestURL = filterTagJoinUrl(searchFilterTagNames, tagsId, searchBarFilterInput);
-
-  const handleClickSearchRequest = (e: any) => {
-    e.preventDefault();
-    requestTagData.mutate(requestURL);
-  };
-
   return (
     <HeaderSearchBarWrapper>
-      <form
-        style={{ margin: '1px', display: 'flex', flexWrap: 'wrap' }}
-        onSubmit={handleClickSearchRequest}
-      >
+      <form style={{ margin: '1px', display: 'flex', flexWrap: 'wrap' }}>
         <Select
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
@@ -98,7 +80,7 @@ export default function RecruitHeaderSelect({
 
         <SearchBarWrapper>
           <SearchInput onChange={handleChangeSearchInput} placeholder="검색어를 입력해주세요" />
-          <SearchButton onClick={handleClickSearchRequest} />
+          <SearchButton />
         </SearchBarWrapper>
       </form>
     </HeaderSearchBarWrapper>
