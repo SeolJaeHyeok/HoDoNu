@@ -9,9 +9,6 @@ const useRecruitQuery = (paths: string) => {
     {
       staleTime: Infinity,
       cacheTime: Infinity,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      refetchOnWindowFocus: false,
       retry: 0,
     }
   );
