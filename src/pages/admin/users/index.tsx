@@ -167,7 +167,6 @@ export default function AdminUser() {
             handleDeleteUser={handleDeleteUser}
             users={usersData}
             searchQuery={searchQuery}
-            searchQueryKey={searchQueryKey}
           />
           <Target ref={ref}></Target>
         </>

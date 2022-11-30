@@ -26,9 +26,7 @@ const MenuProps = {
 
 interface MultipleSelectProps {
   userId: string;
-  authList: string[];
-  searchQuery: string;
-  searchQueryKey: string;
+  blockTableList: string[];
 }
 
 interface ItemProps {
@@ -36,12 +34,7 @@ interface ItemProps {
   value: string;
 }
 
-export default function MultipleSelectCheckmarks({
-  userId,
-  authList,
-  searchQuery,
-  searchQueryKey,
-}: MultipleSelectProps) {
+export default function MultipleSelectCheckmarks({ userId, blockTableList }: MultipleSelectProps) {
   const queryClient = useQueryClient();
 
   const { mutate: postBlockMutate } = useMutation(adminApi.addBoardBlock, {
@@ -66,21 +59,21 @@ export default function MultipleSelectCheckmarks({
   const [initialItems, setInitialItems] = useState<ItemProps[]>([]);
   const [totalItems, setTotalItems] = useState<ItemProps[]>([]);
 
-  const parsingSelectedItems = (selectedItems: string[]) => {
+  const parsingSelectedItems = React.useCallback((selectedItems: string[]) => {
     return selectedItems.reduce(
       (acc: any, cur: any) => acc.concat({ isSelected: true, value: cur }),
       []
     );
-  };
+  }, []);
 
-  const parsingUnselectedItems = (unselectedItems: string[]) => {
+  const parsingUnselectedItems = React.useCallback((unselectedItems: string[]) => {
     return unselectedItems.reduce(
       (acc: any, cur: any) => acc.concat({ isSelected: false, value: cur }),
       []
     );
-  };
+  }, []);
 
-  const handleBoardAuthChange = (e: React.MouseEvent) => {
+  const handleBoardAuthChange = React.useCallback((e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
 
     setTotalItems((prev: any) => {
@@ -95,9 +88,9 @@ export default function MultipleSelectCheckmarks({
 
       return newItems;
     });
-  };
+  }, []);
 
-  const handleChangedBoardAuthSubmit = () => {
+  const handleChangedBoardAuthSubmit = React.useCallback(() => {
     for (const item of totalItems) {
       for (const iItem of initialItems) {
         if (iItem.value === item.value && item.isSelected !== iItem.isSelected) {
@@ -108,15 +101,14 @@ export default function MultipleSelectCheckmarks({
             // Delete
             deleteBlockMutate({ userId, boardCategory: item.value });
           }
-          queryClient.invalidateQueries(['admin', 'users', searchQueryKey, searchQuery]);
         }
       }
     }
-  };
+  }, [totalItems, initialItems, deleteBlockMutate, postBlockMutate, userId]);
 
   useEffect(() => {
     const totalAuthList = new Set(totalArticleAuthList);
-    const userAuthList = new Set(authList);
+    const userAuthList = new Set(blockTableList);
     const selectedItems = [...new Set([...totalAuthList].filter(x => !userAuthList.has(x)))];
     const unselectedItems = [...new Set([...totalAuthList].filter(x => userAuthList.has(x)))];
 
@@ -129,7 +121,7 @@ export default function MultipleSelectCheckmarks({
       ...parsingSelectedItems(selectedItems),
       ...parsingUnselectedItems(unselectedItems),
     ]);
-  }, [authList]);
+  }, [blockTableList, parsingSelectedItems, parsingUnselectedItems]);
 
   return (
     <span>
