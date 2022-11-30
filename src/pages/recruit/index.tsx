@@ -1,29 +1,33 @@
-import recruitListApi from '@apis/recruit/list';
 import RecruitCardView from '@components/recruit/index/RecruitCardView';
 import RecruitHeader from '@components/recruit/index/RecruitHearder';
 import RecruitTags from '@components/recruit/index/RecruitTags';
 import styled from '@emotion/styled';
-import { RecruitProps } from '@interfaces/recruit/list/list';
+import useRecruitQuery from '@hooks/query/recruit/useRecruitQuery';
+import useRecruitTagQuery from '@hooks/query/recruit/useRecruitTagQuery';
+import filterTagJoinUrl from '@utils/filterTagJoinUrl';
 import { useState } from 'react';
 
 export interface TagsIdState {
   tagIds: number[];
 }
 
-export default function Recruit({ jobList, tagList }: RecruitProps) {
-  const [jobLists, setJobLists] = useState(jobList);
+export default function Recruit() {
   const [searchFilterTagNames, setSearchFilterTagNames] = useState<string[]>(['회사 이름']);
   const [searchBarFilterInput, setSearchBarFilterInput] = useState<string>('');
   const [tagsId, setTagsId] = useState<TagsIdState>({
     tagIds: [],
   });
 
+  const requestURL = filterTagJoinUrl(searchFilterTagNames, tagsId, searchBarFilterInput);
+
+  const { data: jobLists } = useRecruitQuery(requestURL);
+  const { data: tagLists } = useRecruitTagQuery();
+
   return (
     <RecruitWrapper>
       <RecruitContainer>
         <RecruitHeader
           tagsId={tagsId}
-          setJobLists={setJobLists}
           searchFilterTagNames={searchFilterTagNames}
           setSearchFilterTagNames={setSearchFilterTagNames}
           setSearchBarFilterInput={setSearchBarFilterInput}
@@ -32,53 +36,32 @@ export default function Recruit({ jobList, tagList }: RecruitProps) {
       </RecruitContainer>
       <RecruitLine />
       <RecruitTags
-        tags={tagList}
-        setJobList={setJobLists}
+        tags={tagLists?.result}
         tagsId={tagsId}
         setTagsId={setTagsId}
         searchFilterTagNames={searchFilterTagNames}
         searchBarFilterInput={searchBarFilterInput}
       />
       <RecruitContentContainer>
-        {jobLists.length === 0 ? (
+        {jobLists?.result[0]?.length === 0 ? (
           <RecruitSearchNoContent>검색 결과가 존재하지 않습니다.</RecruitSearchNoContent>
         ) : (
-          jobLists
-            ?.filter(el => el.isActive === true)
-            .map((job, idx: number) => (
+          jobLists?.result[0]
+            ?.filter((el: any) => el.isActive === true)
+            .map((job: any, idx: number) => (
               <RecruitCardView
                 key={idx}
                 company={job.company}
                 title={job.title}
                 address={job.address.mainAddress}
                 jobId={job.jobId}
-                images={`/assets/images/wellcheck.png`}
+                images={job.image[0]}
               />
             ))
         )}
       </RecruitContentContainer>
     </RecruitWrapper>
   );
-}
-
-export async function getServerSideProps() {
-  const { data } = await recruitListApi.getRecruitData();
-  const res = await recruitListApi.getRecruitTagData();
-
-  if (!data) {
-    return { notFound: true };
-  }
-
-  if (!res) {
-    return { notFound: true };
-  }
-
-  return {
-    props: {
-      jobList: data.result[0],
-      tagList: res.data.result,
-    },
-  };
 }
 
 const RecruitWrapper = styled.div`

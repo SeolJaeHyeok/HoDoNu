@@ -7,16 +7,16 @@ import { Dispatch, SetStateAction } from 'react';
 import { useRecoilValue } from 'recoil';
 import RecruitHeaderSelect from './RecruitHeaderSelect';
 
-export interface RecruitHeaderProps {
-  tagsId: {
-    tagIds: number[];
-  };
-  setJobLists: Dispatch<SetStateAction<JobList[]>>;
-  searchFilterTagNames: string[];
-  setSearchFilterTagNames: Dispatch<SetStateAction<string[]>>;
-  searchBarFilterInput: string;
-  setSearchBarFilterInput: Dispatch<SetStateAction<string>>;
-}
+// export interface RecruitHeaderProps {
+//   tagsId: {
+//     tagIds: number[];
+//   };
+//   setJobLists: Dispatch<SetStateAction<JobList[]>>;
+//   searchFilterTagNames: string[];
+//   setSearchFilterTagNames: Dispatch<SetStateAction<string[]>>;
+//   searchBarFilterInput: string;
+//   setSearchBarFilterInput: Dispatch<SetStateAction<string>>;
+// }
 
 export default function RecruitHeader({
   tagsId,
@@ -25,7 +25,7 @@ export default function RecruitHeader({
   setSearchFilterTagNames,
   setSearchBarFilterInput,
   searchBarFilterInput,
-}: RecruitHeaderProps) {
+}: any) {
   const userInfo = useRecoilValue(userInfoState);
   const router = useRouter();
 
