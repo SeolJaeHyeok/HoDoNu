@@ -20,7 +20,7 @@ export default function Doctor({ content }: any) {
   }, []);
 
   const { data } = useBoardDetailQuery(boardKeys.detail('Doctor', router.query.id as string));
-
+  console.log(data);
   return <ArticleContent result={data?.result} categoryName={categoryAssertion.DOCTOR} />;
 }
 
