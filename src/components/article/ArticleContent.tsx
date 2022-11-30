@@ -36,7 +36,7 @@ export default function ArticleContent({
 
   // 게시글 수정 클릭시 router에 값 넣어서 보내기!
   const handleMoveToEdit = () => {
-    router.push(`/board/edit?id=${result.articleId}&category=${categoryName.toLowerCase()}`);
+    router.push(`/board/edit?id=${result.articleId}&category=${categoryName}`);
   };
 
   const handleDeleteBoard = () => {
