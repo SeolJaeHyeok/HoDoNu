@@ -4,6 +4,7 @@ import RecruitTags from '@components/recruit/index/RecruitTags';
 import styled from '@emotion/styled';
 import useRecruitQuery from '@hooks/query/recruit/useRecruitQuery';
 import useRecruitTagQuery from '@hooks/query/recruit/useRecruitTagQuery';
+import { JobList } from '@interfaces/recruit/list/list';
 import filterTagJoinUrl from '@utils/filterTagJoinUrl';
 import { useState } from 'react';
 
@@ -47,8 +48,8 @@ export default function Recruit() {
           <RecruitSearchNoContent>검색 결과가 존재하지 않습니다.</RecruitSearchNoContent>
         ) : (
           jobLists?.result[0]
-            ?.filter((el: any) => el.isActive === true)
-            .map((job: any, idx: number) => (
+            ?.filter((el: { isActive: boolean }) => el.isActive === true)
+            .map((job: JobList, idx: number) => (
               <RecruitCardView
                 key={idx}
                 company={job.company}
