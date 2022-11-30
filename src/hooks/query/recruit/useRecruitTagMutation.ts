@@ -1,13 +1,8 @@
 import recruitListApi from '@apis/recruit/list';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import recruitKeys from './recruitKeys';
+import { useMutation } from '@tanstack/react-query';
 
 const useRecruitTagMutation = () => {
-  const queryClient = useQueryClient();
-
-  const recruitTagMutation = useMutation(recruitListApi.getRecruitAllData, {
-    onSuccess: () => queryClient.invalidateQueries(recruitKeys.all),
-  });
+  const recruitTagMutation = useMutation(recruitListApi.getRecruitAllData);
   return recruitTagMutation;
 };
 

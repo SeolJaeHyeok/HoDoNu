@@ -1,10 +1,16 @@
+import { QueryFunctionContext } from '@tanstack/react-query';
 import { instance } from '..';
+
+interface RecruitAllParam {
+  queryKey: string[];
+}
 
 const recruitListApi = {
   getRecruitData: (params?: any) => instance.get(`/jobs`, { params }).then(res => res.data),
-  getRecruitAllData: (paths: any) => {
-    // 호진FIXME: invalidate를 할때 쿼리키로 호출하기 때문에 paths가 object로 넘어와서 값이 제대로 안넘어가는 현상
-    // 그래서 현재는 Object인지 확인하고 object면 invaldate로 호출했기 때문에 queryKey의 첫번째 값을 paths로 사용
+  getRecruitAllData: (
+    paths: string | RecruitAllParam | QueryFunctionContext<readonly ['recruitList', string]>
+  ) => {
+    // 호진FIXME: 쿼리키가 다시 호출될때 객체로 들어와서 해당 부분을 처리해줘야 한다.
     if (paths instanceof Object) {
       paths = paths.queryKey[1];
     }
