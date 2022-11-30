@@ -45,11 +45,10 @@ export default function MyApp({
 MyApp.getInitialProps = async (ctx: any) => {
   const { req, res } = ctx.ctx;
   const refreshToken = getCookie('refreshToken', { req, res });
-  const role = getCookie('role', { req, res });
   const userId = getCookie('userId', { req, res });
   let decodedToken;
 
-  if (userId && role && req && refreshToken) {
+  if (userId && req && refreshToken) {
     try {
       const res = await instance.post(`/users/${userId}/reissue/version2`, {
         refreshToken,

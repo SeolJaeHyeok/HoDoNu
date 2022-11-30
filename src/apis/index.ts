@@ -4,11 +4,9 @@ import { deleteCookie, getCookie } from 'cookies-next';
 
 const refreshToken = getCookie('refreshToken');
 const userId = getCookie('userId');
-const role = getCookie('role');
 
 const refresh = async () => {
   const res = await instance.post(`/users/${userId}/reissue/version2`, {
-    role,
     refreshToken,
   });
 
