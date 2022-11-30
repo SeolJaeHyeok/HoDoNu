@@ -8,19 +8,22 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RecoilRoot } from 'recoil';
 import { getCookie } from 'cookies-next';
 import { instance } from '@apis/index';
-import { isLoginState } from '@atoms/userAtom';
+import { isLoginState, userInfoState } from '@atoms/userAtom';
+import { decodeJWT } from '@utils/decodeJWT';
 
 export default function MyApp({
   Component,
   pageProps,
 }: AppProps<{
   userId: string;
+  decodedToken: any;
   dehydratedState: DehydratedState;
 }>) {
   const queryClient = new QueryClient();
 
   const initializeRecoilState = ({ set }: any) => {
     set(isLoginState, pageProps?.userId ? true : false);
+    set(userInfoState, pageProps.decodedToken ? { ...pageProps.decodedToken } : null);
   };
 
   return (
@@ -44,17 +47,22 @@ MyApp.getInitialProps = async (ctx: any) => {
   const refreshToken = getCookie('refreshToken', { req, res });
   const role = getCookie('role', { req, res });
   const userId = getCookie('userId', { req, res });
+  let decodedToken;
 
-  if (userId && role && req) {
-    const res = await instance.post(`/users/${userId}/reissue/version2`, {
-      role,
-      refreshToken,
-    });
-    const newAccessToken = await res.data.result.accessToken;
-    instance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
+  if (userId && role && req && refreshToken) {
+    try {
+      const res = await instance.post(`/users/${userId}/reissue/version2`, {
+        refreshToken,
+      });
+      const newAccessToken = await res.data.result.accessToken;
+      decodedToken = await decodeJWT(newAccessToken);
+      instance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return {
-    pageProps: { userId },
+    pageProps: { userId, decodedToken },
   };
 };

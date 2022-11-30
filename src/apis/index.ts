@@ -1,6 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-import { getCookie } from 'cookies-next';
+import { deleteCookie, getCookie } from 'cookies-next';
 
 const refreshToken = getCookie('refreshToken');
 const userId = getCookie('userId');
@@ -13,7 +13,7 @@ const refresh = async () => {
   });
 
   const newAccessToken = await res.data.result.accessToken;
-  instance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
+  return (instance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`);
 };
 
 export const instance = axios.create({
@@ -28,8 +28,8 @@ export const instance = axios.create({
   },
   headers: {
     'Content-Type': 'application/json',
+    withCredentials: true,
   },
-  withCredentials: true,
 });
 
 instance.interceptors.request.use((config: any) => {
@@ -51,9 +51,20 @@ instance.interceptors.response.use(
   },
   async function (error) {
     if (error.response && error.response.data && error.response.data.errorCode === 'JwtError') {
+      if (error.response.data.message === '로그인을 다시해주세요') {
+        sessionStorage?.clear();
+        localStorage?.clear();
+        instance.delete;
+
+        deleteCookie('refreshToken');
+        deleteCookie('userId');
+        deleteCookie('role');
+        return;
+      }
       await refresh();
-      return await instance(error.config);
+      return await instance('error.config', error.config);
     }
+
     return Promise.reject(error);
   }
 );

@@ -5,6 +5,7 @@ import { decodeJWT } from '../utils/decodeJWT';
 import { isLoginState, profileUrl, userInfoState } from 'src/atoms/userAtom';
 import { deleteCookie, setCookie } from 'cookies-next';
 import axios from 'axios';
+import { instance } from '@apis/index';
 
 /**
  * 유저 로그인시
@@ -20,8 +21,6 @@ import axios from 'axios';
  *
  * refresh token 만료시
  * 로그아웃!!
- *
- *
  */
 
 export function useUserActions() {
@@ -38,16 +37,23 @@ export function useUserActions() {
   async function login(userData: any) {
     const { accessToken, refreshToken, imgUrl } = await userData.result;
     const profileUrlWithoutS3 = makeProfileUrl(imgUrl);
-
-    setCookie('refreshToken', refreshToken);
+    const decodedToken = await decodeJWT(accessToken);
+    const { role, userId, jobCategory, authStatus, recruiterStatus }: any = decodedToken;
     axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
-    const decodedToken = decodeJWT(accessToken);
+    setCookie('refreshToken', refreshToken, {
+      path: '/',
+      sameSite: true,
+      secure: true,
+      maxAge: 60 * 60 * 24 * 7,
+    });
 
-    const { role, userId, jobCategory, authStatus, recruiterStatus }: any = decodedToken;
-
-    setCookie('role', role);
-    setCookie('userId', userId);
+    setCookie('userId', userId, {
+      path: '/',
+      sameSite: true,
+      secure: true,
+      maxAge: 60 * 60 * 24 * 7,
+    });
 
     setUserInfo({ role, userId, jobCategory, authStatus, recruiterStatus });
     setProfieUrl(profileUrlWithoutS3);
@@ -60,6 +66,8 @@ export function useUserActions() {
     resetIsLogin();
     resetProfileUrl();
     sessionStorage.clear();
+    localStorage.clear();
+    instance.delete;
 
     deleteCookie('refreshToken');
     deleteCookie('userId');

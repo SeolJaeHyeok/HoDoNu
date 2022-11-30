@@ -3,9 +3,14 @@ import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
 const sessionStorage = typeof window !== 'undefined' ? window.sessionStorage : undefined;
+const localStorage = typeof window !== 'undefined' ? window.localStorage : undefined;
 
 const { persistAtom } = recoilPersist({
   storage: sessionStorage,
+});
+
+const { persistAtom: localStoragePersistAtom } = recoilPersist({
+  storage: localStorage,
 });
 
 export const isLoginState = atom<any>({
@@ -23,5 +28,5 @@ export const userInfoState = atom<UserInfo | null>({
 export const profileUrl = atom<string | null>({
   key: 'profileImg',
   default: null,
-  effects_UNSTABLE: [persistAtom],
+  effects_UNSTABLE: [localStoragePersistAtom],
 });
