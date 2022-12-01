@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 const useBoardDetailQuery = ([queryKey, category, articleId]: any) => {
   const boardDetailQuery = useQuery(
     [queryKey, category, articleId],
-    () => detailApi.getDetailData('free', articleId as string),
+    () => detailApi.getDetailData(`${category.toLowerCase()}`, articleId as string),
     {
       staleTime: Infinity,
       cacheTime: Infinity,

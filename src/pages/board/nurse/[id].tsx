@@ -1,37 +1,36 @@
 import ArticleContent from '@components/article/ArticleContent';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { dehydrate, QueryClient, useMutation } from '@tanstack/react-query';
 import detailApi from '@apis/board/detail';
 import { ParamsProps } from '@interfaces/board/detailUserInfoType';
 import { categoryAssertion } from '@utils/const/category';
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import useBoardDetailQuery from '@hooks/query/board/useBoardDetailQuery';
+import boardKeys from '@hooks/query/board/boardKeys';
 
 export default function Nurse({ content }: any) {
+  const router = useRouter();
+  const { data } = useBoardDetailQuery(boardKeys.detail('Nurse', router.query.id as string));
+
   const raiseHitsQuery = useMutation(detailApi.patchRaiseHit);
 
   useEffect(() => {
     raiseHitsQuery.mutate({
       category: 'nurse',
-      articleId: content.articleId,
+      articleId: router.query.id,
     });
   }, []);
 
-  const detailQuery = useQuery(
-    ['detailContent', categoryAssertion.NURSE, content.articleId],
-    () => detailApi.getDetailData('nurse', content.articleId),
-    {
-      initialData: content,
-    }
-  );
-  return (
-    <ArticleContent
-      result={detailQuery.data?.data?.result}
-      categoryName={categoryAssertion.NURSE}
-    />
-  );
+  return <ArticleContent result={data?.result} categoryName={categoryAssertion.NURSE} />;
 }
 
 export const getServerSideProps = async ({ params }: ParamsProps) => {
-  const { data }: any = await detailApi.getDetailData('nurse', params.id);
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery(
+    boardKeys.detail('Nurse', params.id),
+    detailApi.getDetailData('nurse', params.id)
+  );
 
   if (!params) {
     return {
@@ -39,12 +38,9 @@ export const getServerSideProps = async ({ params }: ParamsProps) => {
     };
   }
 
-  if (!data) {
-    return { notFound: true };
-  }
   return {
     props: {
-      content: data.result,
+      dehydratedState: dehydrate(queryClient),
     },
   };
 };
