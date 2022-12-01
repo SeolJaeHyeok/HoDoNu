@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { decodeJWT } from '../utils/decodeJWT';
 import { isLoginState, profileUrl, userInfoState } from 'src/atoms/userAtom';
 import { deleteCookie, setCookie } from 'cookies-next';
-import axios from 'axios';
 import { instance } from '@apis/index';
 
 /**
@@ -39,7 +38,7 @@ export function useUserActions() {
     const profileUrlWithoutS3 = makeProfileUrl(imgUrl);
     const decodedToken = await decodeJWT(accessToken);
     const { role, userId, jobCategory, authStatus, recruiterStatus }: any = decodedToken;
-    axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    instance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
     setCookie('refreshToken', refreshToken, {
       path: '/',
