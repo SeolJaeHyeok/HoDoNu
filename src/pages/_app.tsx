@@ -55,7 +55,7 @@ MyApp.getInitialProps = async (ctx: any) => {
       });
       const newAccessToken = res.data.result.accessToken;
       decodedToken = await decodeJWT(newAccessToken);
-      instance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
+      // instance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
     } catch (err) {
       console.log(err);
     }
