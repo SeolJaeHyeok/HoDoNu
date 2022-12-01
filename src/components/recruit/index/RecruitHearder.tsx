@@ -1,6 +1,5 @@
 import { userInfoState } from '@atoms/userAtom';
 import styled from '@emotion/styled';
-import { JobList } from '@interfaces/recruit/list/list';
 import Button from '@mui/material/Button';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
@@ -11,7 +10,6 @@ export interface RecruitHeaderProps {
   tagsId: {
     tagIds: number[];
   };
-  setJobLists: Dispatch<SetStateAction<JobList[]>>;
   searchFilterTagNames: string[];
   setSearchFilterTagNames: Dispatch<SetStateAction<string[]>>;
   searchBarFilterInput: string;
@@ -20,7 +18,6 @@ export interface RecruitHeaderProps {
 
 export default function RecruitHeader({
   tagsId,
-  setJobLists,
   searchFilterTagNames,
   setSearchFilterTagNames,
   setSearchBarFilterInput,
@@ -43,7 +40,6 @@ export default function RecruitHeader({
       <HeaderTitle>채용 목록</HeaderTitle>
       <RecruitHeaderSelect
         tagsId={tagsId}
-        setJobLists={setJobLists}
         searchFilterTagNames={searchFilterTagNames}
         setSearchFilterTagNames={setSearchFilterTagNames}
         setSearchBarFilterInput={setSearchBarFilterInput}
