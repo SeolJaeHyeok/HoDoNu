@@ -146,11 +146,11 @@ export default function AdminUser() {
 
   // TODO: ServerSide에서 처리
   useEffect(() => {
-    if (userInfo && userInfo?.role !== 'Admin') {
+    if (userInfo && userInfo.role !== 'Admin') {
       alert('관리자가 아니면 접근할 수 없는 페이지입니다.');
       router.push('/home');
     }
-  }, [userInfo]);
+  }, [userInfo, router]);
 
   return (
     <Container>
@@ -167,7 +167,6 @@ export default function AdminUser() {
             handleDeleteUser={handleDeleteUser}
             users={usersData}
             searchQuery={searchQuery}
-            searchQueryKey={searchQueryKey}
           />
           <Target ref={ref}></Target>
         </>

@@ -13,8 +13,6 @@ interface AdminUserTableBodyProps {
   handleDeleteUser: (userId: string) => void;
   handleEditUserRecruitAuth: (userId: string, recruiterStatus: string) => void;
   handleEditUserActiveAuth: (userId: string, authStatus: string) => void;
-  searchQuery: string;
-  searchQueryKey: string;
   modalId: string;
 }
 
@@ -27,8 +25,6 @@ export default function AdminUserTableBody({
   handleDeleteUser,
   handleEditUserRecruitAuth,
   handleEditUserActiveAuth,
-  searchQuery,
-  searchQueryKey,
   modalId,
 }: AdminUserTableBodyProps) {
   const adminModal = useModal(modalId);
@@ -85,12 +81,7 @@ export default function AdminUserTableBody({
           {user.address.mainAddress}, {user.address.detailAddress}
         </TableCell>
         <TableCell align="center">
-          <MultipleSelectCheckmarks
-            searchQuery={searchQuery}
-            searchQueryKey={searchQueryKey}
-            userId={user.userId}
-            authList={user.blockTable}
-          />
+          <MultipleSelectCheckmarks userId={user.userId} blockTableList={user.blockTable} />
         </TableCell>
         <TableCell align="center">
           <Switch

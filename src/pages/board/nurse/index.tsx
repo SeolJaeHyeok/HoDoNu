@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 import { searchDataAtom } from '@atoms/searchAtom';
 import BoardSkeleton from '@components/board/BoardSkeleton';
+import { CategoryType } from '@interfaces/article';
 
 export default function NurseBoard() {
   const router = useRouter();
@@ -34,7 +35,7 @@ export default function NurseBoard() {
   );
 
   // 총 페이지 수
-  const TOTAL_PAGE = Math.ceil(res?.data.result.count / Number(router.query.perPage));
+  const TOTAL_PAGE = res && Math.ceil(res.result.count / Number(router.query.perPage));
 
   // Pagination - page
   const handlePageNavigate = (pageNumber: number) => {
@@ -51,33 +52,35 @@ export default function NurseBoard() {
     });
   };
   return (
-    <BoardContainer>
-      <BoardHeader
-        setSort={setSort}
-        setPage={setPage}
-        setPerPage={setPerPage}
-        page={page}
-        sort={sort}
-        perPage={perPage}
-        category={res?.data.result.category}
-      />
-      {!isLoading ? (
-        <>
-          {res?.data.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
-          <BoardList
-            boardCategory={res?.data.result.category.toLowerCase()}
-            articles={res?.data.result.articles}
-          />
-          <Pagination
-            length={TOTAL_PAGE}
-            start={router.query.page ? +router.query.page - 1 : 0}
-            handler={pageNumber => handlePageNavigate(pageNumber)}
-          />
-        </>
-      ) : (
-        <BoardSkeleton />
-      )}
-    </BoardContainer>
+    res && (
+      <BoardContainer>
+        <BoardHeader
+          setSort={setSort}
+          setPage={setPage}
+          setPerPage={setPerPage}
+          page={page}
+          sort={sort}
+          perPage={perPage}
+          category={res.result.category}
+        />
+        {!isLoading ? (
+          <>
+            {res.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
+            <BoardList
+              boardCategory={res.result.category.toLowerCase() as CategoryType}
+              articles={res.result.articles}
+            />
+            <Pagination
+              length={TOTAL_PAGE}
+              start={router.query.page ? +router.query.page - 1 : 0}
+              handler={pageNumber => handlePageNavigate(pageNumber)}
+            />
+          </>
+        ) : (
+          <BoardSkeleton />
+        )}
+      </BoardContainer>
+    )
   );
 }
 const BoardContainer = styled.div`

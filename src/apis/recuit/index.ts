@@ -5,7 +5,7 @@ import { getDetailRes, getAllRecruitRes, getTagsRes } from '@interfaces/recruit/
 export const recruitApi = {
   getAll: (): Promise<AxiosResponse<getAllRecruitRes>> => instance.get(`/jobs`),
   getOne: (articleId: number): Promise<AxiosResponse<getDetailRes>> =>
-    instance.get(`/jobs/${articleId}`),
+    instance.get(`/jobs/${articleId}`).then(res => res.data),
   getTags: (): Promise<AxiosResponse<getTagsRes>> => instance.get('/tags'),
   deleteOne: (articleId: number): Promise<AxiosResponse<any>> =>
     instance.delete(`/jobs/${articleId}`),

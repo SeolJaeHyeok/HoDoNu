@@ -16,7 +16,6 @@ interface AdminUserTableProps {
   handleEditUserRecruitAuth: (userId: string, recruiterStatus: string) => void;
   handleEditUserActiveAuth: (userId: string, authStatus: string) => void;
   searchQuery: string;
-  searchQueryKey: string;
 }
 
 const TABLE_COLUMN = [
@@ -37,7 +36,6 @@ export default function AdminUserTable({
   handleEditUserRecruitAuth,
   handleEditUserActiveAuth,
   searchQuery,
-  searchQueryKey,
 }: AdminUserTableProps) {
   return users.length > 0 ? (
     <TableContainer sx={{ width: '80%', minWidth: '650px' }} component={Paper}>
@@ -58,8 +56,6 @@ export default function AdminUserTable({
               handleEditUserActiveAuth={handleEditUserActiveAuth}
               handleEditUserRecruitAuth={handleEditUserRecruitAuth}
               handleDeleteUser={handleDeleteUser}
-              searchQuery={searchQuery}
-              searchQueryKey={searchQueryKey}
               user={user}
               modalId={user.userId}
             />

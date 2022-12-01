@@ -1,7 +1,18 @@
 import axios from 'axios';
 import qs from 'qs';
+import { deleteCookie, getCookie } from 'cookies-next';
 
-const sessionStorage = typeof window !== 'undefined' ? window.sessionStorage : undefined;
+const refreshToken = getCookie('refreshToken');
+const userId = getCookie('userId');
+
+const refresh = async () => {
+  const res = await instance.post(`/users/${userId}/reissue/version2`, {
+    refreshToken,
+  });
+
+  const newAccessToken = res.data.result.accessToken;
+  return (instance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`);
+};
 
 export const instance = axios.create({
   baseURL:
@@ -15,12 +26,11 @@ export const instance = axios.create({
   },
   headers: {
     'Content-Type': 'application/json',
+    withCredentials: true,
   },
 });
 
 instance.interceptors.request.use((config: any) => {
-  config.headers.Authorization = `Bearer ${sessionStorage?.getItem('token')}`;
-
   if (
     config.url === '/imgUpload/array' ||
     config.url === '/imgUpload/single' ||
@@ -32,3 +42,27 @@ instance.interceptors.request.use((config: any) => {
   }
   return config;
 });
+
+instance.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  async function (error) {
+    if (error.response && error.response.data && error.response.data.errorCode === 'JwtError') {
+      if (error.response.data.message === '로그인을 다시해주세요') {
+        sessionStorage?.clear();
+        localStorage?.clear();
+        instance.defaults.headers.common.Authorization = '';
+
+        deleteCookie('refreshToken');
+        deleteCookie('userId');
+        deleteCookie('role');
+        return;
+      }
+      refresh();
+      return instance(error.config);
+    }
+
+    return Promise.reject(error);
+  }
+);
