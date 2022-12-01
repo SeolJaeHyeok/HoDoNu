@@ -4,7 +4,7 @@ const SENTRY_DSN =
   process.env.NEXT_PUBLIC_DEVELOPMENT_SENTRY_DSN || process.env.NEXT_PUBLIC_PRODUCTION_SENTRY_DSN;
 
 Sentry.init({
-  dsn: SENTRY_DSN || 'https://examplePublicKey@o0.ingest.sentry.io/0',
+  dsn: SENTRY_DSN,
   // We recommend adjusting this value in production, or using tracesSampler
   // for finer control
   tracesSampleRate: 1.0,
