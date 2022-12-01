@@ -23,7 +23,9 @@ const CustomErrorComponent: NextPage<ErrorProps> = props => {
   // compensate for https://github.com/vercel/next.js/issues/8592
   // Sentry.captureUnderscoreErrorException(props);
 
-  return <NextErrorComponent statusCode={props.statusCode} />;
+  return (
+    <NextErrorComponent statusCode={props.statusCode}>에러가 발생했습니다.</NextErrorComponent>
+  );
 };
 
 CustomErrorComponent.getInitialProps = async contextData => {
