@@ -10,7 +10,7 @@ const refresh = async () => {
     refreshToken,
   });
 
-  const newAccessToken = await res.data.result.accessToken;
+  const newAccessToken = res.data.result.accessToken;
   return (instance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`);
 };
 
@@ -59,8 +59,8 @@ instance.interceptors.response.use(
         deleteCookie('role');
         return;
       }
-      await refresh();
-      return await instance('error.config', error.config);
+      refresh();
+      return instance(error.config);
     }
 
     return Promise.reject(error);

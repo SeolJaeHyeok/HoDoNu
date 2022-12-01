@@ -53,7 +53,7 @@ MyApp.getInitialProps = async (ctx: any) => {
       const res = await instance.post(`/users/${userId}/reissue/version2`, {
         refreshToken,
       });
-      const newAccessToken = await res.data.result.accessToken;
+      const newAccessToken = res.data.result.accessToken;
       decodedToken = await decodeJWT(newAccessToken);
       instance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
     } catch (err) {
