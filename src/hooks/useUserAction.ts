@@ -67,7 +67,7 @@ export function useUserActions() {
     resetProfileUrl();
     sessionStorage.clear();
     localStorage.clear();
-    instance.delete;
+    instance.defaults.headers.common.Authorization = '';
 
     deleteCookie('refreshToken');
     deleteCookie('userId');

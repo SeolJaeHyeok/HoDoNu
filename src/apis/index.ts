@@ -52,7 +52,7 @@ instance.interceptors.response.use(
       if (error.response.data.message === '로그인을 다시해주세요') {
         sessionStorage?.clear();
         localStorage?.clear();
-        instance.delete;
+        instance.defaults.headers.common.Authorization = '';
 
         deleteCookie('refreshToken');
         deleteCookie('userId');
