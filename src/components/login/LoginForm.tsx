@@ -9,9 +9,6 @@ import { loginValidationSchema } from '@utils/validationSchema';
 import authApi from 'src/apis/auth/auth';
 import { useUserActions } from '@hooks/useUserAction';
 
-// 비밀번호 찾기
-// 아이디 찾기
-
 interface UserLoginForm {
   email: string;
   password: string;
@@ -27,7 +24,7 @@ export default function LoginForm() {
 
   const mutation = useMutation(['login'], authApi.login, {
     onSuccess: data => {
-      userAction.login(data);
+      userAction.login(data.data);
     },
     onError: (e: any) => {
       alert(e.response.data.message);
@@ -41,47 +38,45 @@ export default function LoginForm() {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onLoginFormSubmit)}>
+    <form onSubmit={handleSubmit(onLoginFormSubmit)}>
+      <Stack spacing={1}>
         <Stack spacing={1}>
-          <Stack spacing={1}>
-            <Typography variant="subtitle2">이메일</Typography>
-            <TextField
-              id="outlined"
-              type="email"
-              label="email"
-              placeholder="email@email.com"
-              {...register('email')}
-              size="small"
-              helperText={errors.email ? errors.email.message : null}
-            />
-          </Stack>
-          <Stack spacing={1}>
-            <Typography variant="subtitle2">비밀번호</Typography>
-            <TextField
-              {...register('password')}
-              id="outlined"
-              type="password"
-              label="password"
-              placeholder="password"
-              size="small"
-              helperText={errors.password ? errors.password.message : null}
-            />
-          </Stack>
-
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Link href="/">
-              <MuiLink underline="none" sx={linkStyle}>
-                계정 찾기
-              </MuiLink>
-            </Link>
-          </Box>
-          <Button type="submit" variant="contained" size="large" sx={{ color: '#fff' }}>
-            로그인
-          </Button>
+          <Typography variant="subtitle2">이메일</Typography>
+          <TextField
+            id="outlined"
+            type="email"
+            label="email"
+            placeholder="email@email.com"
+            {...register('email')}
+            size="small"
+            helperText={errors.email ? errors.email.message : null}
+          />
         </Stack>
-      </form>
-    </>
+        <Stack spacing={1}>
+          <Typography variant="subtitle2">비밀번호</Typography>
+          <TextField
+            {...register('password')}
+            id="outlined"
+            type="password"
+            label="password"
+            placeholder="password"
+            size="small"
+            helperText={errors.password ? errors.password.message : null}
+          />
+        </Stack>
+
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Link href="/">
+            <MuiLink underline="none" sx={linkStyle}>
+              계정 찾기
+            </MuiLink>
+          </Link>
+        </Box>
+        <Button type="submit" variant="contained" size="large" sx={{ color: '#fff' }}>
+          로그인
+        </Button>
+      </Stack>
+    </form>
   );
 }
 

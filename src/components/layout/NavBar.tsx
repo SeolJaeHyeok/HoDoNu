@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -9,7 +9,7 @@ import { alpha } from '@mui/material';
 
 import ResponsiveNavMenu from './ResponsiveNavMenu';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { isLoginState, userInfoState } from 'src/atoms/userAtom';
+import { isLoginState, profileUrl, userInfoState } from 'src/atoms/userAtom';
 import AvartarMenu from './AvartarMenu';
 import NavButton from './NavButton';
 import { searchDataAtom } from '@atoms/searchAtom';
@@ -17,9 +17,11 @@ import { searchDataAtom } from '@atoms/searchAtom';
 export default function NavBar() {
   const router = useRouter();
   const curPath = router.pathname;
+  const [match, setMatch] = useState(false);
 
   const userInfo = useRecoilValue(userInfoState);
   const isLogin = useRecoilValue(isLoginState);
+  const profileImg = useRecoilValue(profileUrl);
   const resetBoardSearchText = useSetRecoilState(searchDataAtom);
 
   const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
@@ -27,6 +29,14 @@ export default function NavBar() {
   const handleBoardMenuClick = () => {
     resetBoardSearchText('');
   };
+
+  useEffect(() => {
+    if (isLogin) {
+      setMatch(true);
+    } else {
+      setMatch(false);
+    }
+  }, [isLogin]);
 
   return (
     <AppBar position="static" elevation={1} sx={{ backgroundColor: alpha('#17A8FF', 0.6) }}>
@@ -95,9 +105,9 @@ export default function NavBar() {
           </Link>
         </Box>
         <Box sx={style}>
-          {isLogin ? (
+          {match && profileImg ? (
             <Box sx={style}>
-              <AvartarMenu />
+              <AvartarMenu profileImg={profileImg} />
             </Box>
           ) : (
             <NavButton />
