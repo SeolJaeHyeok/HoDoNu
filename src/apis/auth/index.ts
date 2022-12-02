@@ -2,12 +2,12 @@ import { LoginRes, RegisterUserInfo } from '@interfaces/user/index';
 import { AxiosResponse } from 'axios';
 import { instance } from '../index';
 
-interface LoginAPI {
+interface LoginParams {
   email: string;
   password: string;
 }
 
-interface AuthCheckEmail {
+interface RegisterEmailParams {
   email: string;
   authNumber: string;
 }
@@ -17,9 +17,10 @@ const authApi = {
     return instance.post('/users/signup', regisetUserData);
   },
   registerEmailCheck: (email: string) => instance.post(`/users/email/code`, { email }),
-  registerEmailAuth: (authEmail: AuthCheckEmail) => instance.post(`/users/email/verify`, authEmail),
+  registerEmailAuth: (authEmail: RegisterEmailParams) =>
+    instance.post(`/users/email/verify`, authEmail),
 
-  login: ({ email, password }: LoginAPI): Promise<AxiosResponse<LoginRes>> =>
+  login: ({ email, password }: LoginParams): Promise<AxiosResponse<LoginRes>> =>
     instance.post(`/users/signin`, { email, password }),
 };
 
