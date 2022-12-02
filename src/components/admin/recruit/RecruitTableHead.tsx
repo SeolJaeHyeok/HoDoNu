@@ -1,4 +1,4 @@
-import { TableData } from '@interfaces/admin/recruit';
+import { TableData } from '@interfaces/admin';
 import { TableHead, TableCell, Checkbox, TableRow, Box } from '@mui/material';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
@@ -9,9 +9,7 @@ type Order = 'asc' | 'desc';
 
 interface EnhancedTableProps {
   numSelected: number;
-  // eslint-disable-next-line no-unused-vars
   onRequestSort: (event: React.MouseEvent<unknown>, property: keyof TableData) => void;
-  // eslint-disable-next-line no-unused-vars
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
   orderBy: string;

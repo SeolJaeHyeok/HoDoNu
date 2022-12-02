@@ -1,11 +1,11 @@
 import { instance } from '@apis/index';
 
-interface DeleteSingleBoardAPI {
+interface DeleteSingleBoardParams {
   category: string;
   articleId: number;
 }
 
-interface DeleteMultipleBoardAPI {
+interface DeleteMultipleBoardParams {
   category: string;
   articleIds: number[];
 }
@@ -17,12 +17,12 @@ const adminBoardApi = {
     currentFilter?: string,
     adminFilterInput?: string
   ) =>
-    instance.get(
-      `/admin/articles/${category}?${currentFilter}=${adminFilterInput}&page=${page ?? 1}`
-    ),
-  deleteBoardData: ({ category, articleId }: DeleteSingleBoardAPI) =>
+    instance
+      .get(`/admin/articles/${category}?${currentFilter}=${adminFilterInput}&page=${page ?? 1}`)
+      .then(res => res.data.result),
+  deleteBoardData: ({ category, articleId }: DeleteSingleBoardParams) =>
     instance.delete(`admin/articles/${category}/${articleId}`),
-  deleteMutipleBoardData: ({ category, articleIds }: DeleteMultipleBoardAPI) =>
+  deleteMutipleBoardData: ({ category, articleIds }: DeleteMultipleBoardParams) =>
     instance.delete(`/admin/articles/${category}`, {
       data: {
         articleIds,

@@ -1,11 +1,6 @@
 import { instance } from '..';
 
-interface GetMessageRes {
-  result: Message[];
-  status: number;
-}
-
-interface Message {
+interface MessageData {
   messageId: string;
   senderEmail?: string;
   takerEmail?: string;
@@ -14,23 +9,18 @@ interface Message {
   isCheck: boolean;
 }
 
-interface MessageRes {
-  result: string;
-  status: number;
-}
-
 const messageApi = {
-  getSentMessage: (): Promise<GetMessageRes> =>
-    instance.get('/messages/sender').then(res => res.data),
-  getReceivedMessage: (): Promise<GetMessageRes> =>
-    instance.get('/messages/taker').then(res => res.data),
+  getSentMessage: (): Promise<MessageData[]> =>
+    instance.get('/messages/sender').then(res => res.data.result),
+  getReceivedMessage: (): Promise<MessageData[]> =>
+    instance.get('/messages/taker').then(res => res.data.result),
 
-  deleteSentMessage: (messageId: string): Promise<MessageRes> =>
+  deleteSentMessage: (messageId: string) =>
     instance.delete(`/messages/sender/${messageId}`).then(res => res.data),
-  deleteRecievedMessage: (messageId: string): Promise<MessageRes> =>
+  deleteRecievedMessage: (messageId: string) =>
     instance.delete(`/messages/taker/${messageId}`).then(res => res.data),
 
-  patchMessageCheck: (messageId: string): Promise<MessageRes> =>
+  patchMessageCheck: (messageId: string) =>
     instance.delete(`/messages/${messageId}`).then(res => res.data),
 };
 

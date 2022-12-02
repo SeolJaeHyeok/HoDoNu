@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { Button } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import adminApi from '@apis/admin/users';
+import { CategoryUpperType } from '@interfaces/board';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -97,10 +98,10 @@ export default function MultipleSelectCheckmarks({ userId, blockTableList }: Mul
         if (iItem.value === item.value && item.isSelected !== iItem.isSelected) {
           if (iItem.isSelected) {
             // Post
-            postBlockMutate({ userId, boardCategory: item.value });
+            postBlockMutate({ userId, boardCategory: item.value as CategoryUpperType });
           } else {
             // Delete
-            deleteBlockMutate({ userId, boardCategory: item.value });
+            deleteBlockMutate({ userId, boardCategory: item.value as CategoryUpperType });
           }
         }
       }

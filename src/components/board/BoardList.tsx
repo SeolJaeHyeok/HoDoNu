@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
-import { ArticleProps } from '@interfaces/article';
+import { ArticleProps, CategoryType } from '@interfaces/board';
+
 import BoardListItem from './BoardListItem';
 
 interface BoardProps {
-  boardCategory: 'free' | 'doctor' | 'nurse';
+  boardCategory: CategoryType;
   articles: ArticleProps[];
 }
 

@@ -4,8 +4,9 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import ChatIcon from '@mui/icons-material/Chat';
 import CustomAvatarImage from '@components/CustomAvartar';
-import { ArticleProps } from '@interfaces/article';
+
 import { convertTime } from '@utils/func';
+import { ArticleProps } from '@interfaces/board';
 
 interface BoardListItemProps extends ArticleProps {
   boardCategory: string;
