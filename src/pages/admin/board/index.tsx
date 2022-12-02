@@ -27,8 +27,9 @@ export default function AdminBoard() {
     () => boardManageApi.getBoardAllData(selectedCategory),
     {
       onSuccess: data => {
-        setTotalData(data.data.result.count);
-        setBoardData(data.data.result.articles);
+        console.log(data);
+        setTotalData(data.count);
+        setBoardData(data.articles);
       },
     }
   );

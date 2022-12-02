@@ -31,7 +31,7 @@ export default function AdminRecruit() {
         if (debouncedQuery && total > rowsPerPage) setPage(0);
       },
       onError: (e: any) => {
-        alert(e.response.data.message);
+        alert(e);
       },
     }
   );
