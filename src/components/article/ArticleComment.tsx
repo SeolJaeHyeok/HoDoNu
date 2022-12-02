@@ -1,10 +1,11 @@
 import styled from '@emotion/styled';
-import { CommentArticleProps } from '@interfaces/board/detailUserInfoType';
+
 import { Button } from '@mui/material';
 import { convertTime } from '@utils/func';
 import { ChangeEvent, useState } from 'react';
 import CustomAvatarImage from '@components/CustomAvartar';
 import useBoardCommentMutation from '@hooks/query/board/useBoardCommentMutation';
+import { CommentArticleProps } from '@interfaces/board';
 
 export default function Comment({
   content,

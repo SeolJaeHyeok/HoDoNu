@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
+import { ArticleProps, CategoryType } from '@interfaces/board';
 import Link from 'next/link';
-import { ArticleProps, CategoryType } from 'src/interfaces/article';
+
 import MainBoardListItem from './MainBoardListItem';
 import MainBoardNavBar from './MainBoardNavBar';
 
