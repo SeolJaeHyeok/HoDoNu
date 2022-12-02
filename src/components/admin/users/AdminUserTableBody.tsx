@@ -4,15 +4,16 @@ import { Box, Container, IconButton, Switch, TableCell, TableRow } from '@mui/ma
 import { CATEGORY_TABLE } from '@utils/const/category';
 import PersonOffIcon from '@mui/icons-material/PersonOff';
 import CustomModal from '@components/modal/CustomModal';
-import { AdminUserProps } from '@interfaces/admin';
+import { AdminUserData } from '@interfaces/admin';
 import useModal from '@hooks/useModal';
 import Image from 'next/image';
+import { UserAuthType } from '@apis/admin/users';
 
 interface AdminUserTableBodyProps {
-  user: AdminUserProps;
+  user: AdminUserData;
   handleDeleteUser: (userId: string) => void;
-  handleEditUserRecruitAuth: (userId: string, recruiterStatus: string) => void;
-  handleEditUserActiveAuth: (userId: string, authStatus: string) => void;
+  handleEditUserRecruitAuth: (userId: string, recruiterStatus: UserAuthType) => void;
+  handleEditUserActiveAuth: (userId: string, authStatus: UserAuthType) => void;
   modalId: string;
 }
 

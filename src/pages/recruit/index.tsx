@@ -4,7 +4,8 @@ import RecruitTags from '@components/recruit/index/RecruitTags';
 import styled from '@emotion/styled';
 import useRecruitQuery from '@hooks/query/recruit/useRecruitQuery';
 import useRecruitTagQuery from '@hooks/query/recruit/useRecruitTagQuery';
-import { JobList } from '@interfaces/recruit/list/list';
+import { JobList } from '@interfaces/recruit';
+
 import filterTagJoinUrl from '@utils/filterTagJoinUrl';
 import { useState } from 'react';
 

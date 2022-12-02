@@ -4,7 +4,7 @@ import { Box, Typography, Divider, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 import MessageModalForm from '@components/modal/MessageModalForm';
-import messageApi from '@apis/message/message';
+import messageApi from '@apis/message';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface MessageProps {

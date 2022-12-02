@@ -20,8 +20,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import ArticleIcon from '@mui/icons-material/Article';
 
 import { useQuery } from '@tanstack/react-query';
-import userApi from '@apis/user';
-import { UserArticlesProps } from '@interfaces/user/userInfo';
+import userApi from '@apis/mypage/articles';
+import { UserArticlesProps } from '@interfaces/user/index';
 import { useRouter } from 'next/router';
 import { CATEGORY_TABLE } from '@utils/const/category';
 

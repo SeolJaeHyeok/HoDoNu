@@ -1,6 +1,6 @@
 import { alpha, IconButton, Toolbar, Tooltip, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import userApi from '@apis/user';
+import userApi from '@apis/mypage/articles';
 import { SelectedItemsProps } from '@pages/mypage/articles';
 import { useRouter } from 'next/router';
 

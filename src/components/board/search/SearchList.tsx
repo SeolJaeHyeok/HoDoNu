@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import styled from '@emotion/styled';
 import SearchItem from './SearchItem';
-import { ArticleProps } from '@interfaces/article';
+import { ArticleProps } from '@interfaces/board';
 
 interface SearchListProps {
   results: ArticleProps[];

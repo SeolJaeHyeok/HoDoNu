@@ -1,4 +1,4 @@
-import boardManageApi from '@apis/admin/board/boardManage';
+import boardManageApi from '@apis/admin/board';
 import BoardTable from '@components/admin/board/BoardTable';
 import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';
@@ -27,8 +27,9 @@ export default function AdminBoard() {
     () => boardManageApi.getBoardAllData(selectedCategory),
     {
       onSuccess: data => {
-        setTotalData(data.data.result.count);
-        setBoardData(data.data.result.articles);
+        console.log(data);
+        setTotalData(data.count);
+        setBoardData(data.articles);
       },
     }
   );

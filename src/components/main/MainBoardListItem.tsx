@@ -1,8 +1,8 @@
 import CustomAvatarImage from '@components/CustomAvartar';
 import styled from '@emotion/styled';
+import { ArticleProps } from '@interfaces/board';
 import { convertTime } from '@utils/func';
 import Link from 'next/link';
-import { ArticleProps } from 'src/interfaces/article';
 
 export default function MainBoardListItem({
   articleId,

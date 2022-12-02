@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled from '@emotion/styled';
 import filterTagJoinUrl from '@utils/filterTagJoinUrl';
-import { TagList } from '@interfaces/recruit/list/list';
+
 import { TagsIdState } from '@pages/recruit';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import useRecruitTagMutation from '@hooks/query/recruit/useRecruitTagMutation';
+import { TagList } from '@interfaces/recruit';
 
 interface RecruitTagsProps {
   tags: TagList[];

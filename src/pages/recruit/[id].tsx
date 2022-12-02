@@ -1,15 +1,15 @@
 import { useRouter } from 'next/router';
 import { Divider, Typography, Box, Button, Stack } from '@mui/material';
-import { recruitApi } from '@apis/recuit';
 import ImageCarousel from '@components/recruit/detail/ImageCarousel';
 import CompanyInfo from '@components/recruit/detail/CompanyInfo';
-import { getDetailRes, RecruitContent } from '@interfaces/recruit/detail';
 import Contact from '@components/recruit/detail/Contact';
 import Content from '@components/recruit/detail/Content';
 import Tags from '@components/recruit/detail/Tags';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
 import { dehydrate, QueryClient, useMutation, useQuery } from '@tanstack/react-query';
+import recruitDetailApi from '@apis/recruit/detail';
+import { getDetailData, RecruitContent } from '@interfaces/recruit';
 
 export interface ParamProps {
   params: {
@@ -23,7 +23,7 @@ export interface RecruitDetailProps {
 }
 
 export const getStaticPaths = async () => {
-  const res = await recruitApi.getAll();
+  const res = await recruitDetailApi.getAll();
   const posts = res.data.result[0].map(v => ({ params: { id: v.jobId.toString() } }));
 
   return {
@@ -35,7 +35,7 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }: ParamProps) => {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(['recruit', 'detail', params.id], () =>
-    recruitApi.getOne(params.id)
+    recruitDetailApi.getOne(params.id)
   );
 
   if (!params) {
@@ -52,12 +52,12 @@ export const getStaticProps = async ({ params }: ParamProps) => {
 
 export default function RecruitDetail() {
   const router = useRouter();
-  const { data: content } = useQuery<getDetailRes>(['recruit', 'detail', router.query.id]);
+  const { data: content } = useQuery<getDetailData>(['recruit', 'detail', router.query.id]);
 
   const curUser = useRecoilValue(userInfoState);
   const curUserId = curUser?.userId;
 
-  const deleteRecruit = useMutation(['deleteRecruit'], recruitApi.deleteOne, {
+  const deleteRecruit = useMutation(['deleteRecruit'], recruitDetailApi.deleteOne, {
     onSuccess: () => {
       alert('공고가 삭제되었습니다.');
       router.push('/recruit');
