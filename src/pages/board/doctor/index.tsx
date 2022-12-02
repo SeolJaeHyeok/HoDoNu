@@ -5,7 +5,7 @@ import BoardSkeleton from '@components/board/BoardSkeleton';
 import Pagination from '@components/Pagination';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 import { searchDataAtom } from '@atoms/searchAtom';
@@ -48,6 +48,17 @@ export default function DoctorBoard() {
       },
     });
   };
+
+  useEffect(() => {
+    if (
+      router.query.perPage !== '1' &&
+      router.query.perPage !== '5' &&
+      router.query.perPage !== '10'
+    ) {
+      alert('잘못된 접근입니다.');
+      router.push(`${router.pathname}?page=1&perPage=5&sort=createdAt`);
+    }
+  }, []);
 
   return (
     res && (

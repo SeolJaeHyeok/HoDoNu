@@ -4,7 +4,7 @@ import BoardList from '@components/board/BoardList';
 import Pagination from '@components/Pagination';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import BoardHeader from '@components/board/BoardHeader';
@@ -50,6 +50,17 @@ export default function FreeBoard() {
       },
     });
   };
+
+  useEffect(() => {
+    if (
+      router.query.perPage !== '1' &&
+      router.query.perPage !== '5' &&
+      router.query.perPage !== '10'
+    ) {
+      alert('잘못된 접근입니다.');
+      router.push(`${router.pathname}?page=1&perPage=5&sort=createdAt`);
+    }
+  }, []);
 
   return (
     res && (
