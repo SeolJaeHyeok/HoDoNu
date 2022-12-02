@@ -12,15 +12,6 @@ export interface FileProps {
   file: File | null;
 }
 
-export interface RecruitPostProps {
-  title: string;
-  company: string;
-  address: AddressProps;
-  content: string;
-  images?: string[];
-  contact: string;
-}
-
 export interface TagsProps {
   tags: number[];
 }
@@ -134,4 +125,8 @@ export interface RecruitProps2 {
     content: string;
     tagId: number;
   }[];
+}
+
+export interface RecruitAllTagData {
+  result: TagList[];
 }
