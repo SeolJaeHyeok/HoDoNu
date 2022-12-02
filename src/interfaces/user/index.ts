@@ -46,7 +46,7 @@ export interface UserArticlesProps {
   updater: string;
 }
 
-export interface UserDetail {
+export interface UserDetailData {
   userId: string;
   email: string;
   name: string;
@@ -69,6 +69,7 @@ export interface UserDetail {
   recruiterStatus: Status;
 }
 
-export interface GetUserRes {
-  result: UserDetail;
+export interface PatchUserProfileData {
+  imgURL: string;
+  userId: string;
 }

@@ -5,18 +5,18 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import EastIcon from '@mui/icons-material/East';
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
-
-import authApi from '@apis/auth';
 import UserActiveCertificationModal from '../modal/UserActiveCertificationModal';
-import { UserDetail } from '@interfaces/user/index';
+import mypageApi from '@apis/mypage/articles';
+import { UserDetailData } from '@interfaces/user';
 
-export default function Account({ user }: { user: UserDetail }) {
+export default function Account({ user }: { user: UserDetailData }) {
   const queryClient = useQueryClient();
   const [nickname, setNickname] = useState(user.nickname);
   const [isNicknameEdit, setIsNicknameEdit] = useState<boolean>(false);
 
-  const updateNickname = useMutation(authApi.patchNickname, {
-    onSuccess: () => {
+  const updateNickname = useMutation(mypageApi.patchNickname, {
+    onSuccess: data => {
+      console.log(data);
       queryClient.invalidateQueries(['detailUser', user.userId]);
     },
     onError: (e: any) => {

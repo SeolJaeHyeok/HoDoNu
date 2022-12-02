@@ -11,18 +11,18 @@ import {
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import React, { ChangeEvent, useRef, useState } from 'react';
-import authApi from '@apis/auth';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { UserDetail } from '@interfaces/user/index';
+import mypageApi from '@apis/mypage/articles';
+import { UserDetailData } from '@interfaces/user';
 
-export default function ProfileCard({ user }: { user: UserDetail }) {
+export default function ProfileCard({ user }: { user: UserDetailData }) {
   const [introduce, setIntroduce] = useState<string>(user.introduce);
   const [isIntroduceEdit, setIsIntroduceEdit] = useState<boolean>(false);
 
   const queryClient = useQueryClient();
   const fileInput = useRef<HTMLInputElement>(null);
 
-  const updateProfileImg = useMutation(authApi.patchProfile, {
+  const updateProfileImg = useMutation(mypageApi.patchProfile, {
     onSuccess: () => {
       queryClient.invalidateQueries(['detailUser', user.userId]);
       alert('프로필 이미지가 성공적으로 변경되었습니다.');
@@ -32,7 +32,7 @@ export default function ProfileCard({ user }: { user: UserDetail }) {
     },
   });
 
-  const updateIntoduce = useMutation(authApi.patchIntroduce, {
+  const updateIntoduce = useMutation(mypageApi.patchIntroduce, {
     onSuccess: () => {
       queryClient.invalidateQueries(['detailUser', user.userId]);
       alert('자기소개가 성공적으로 변경되었습니다.');

@@ -3,37 +3,38 @@ import { useQuery } from '@tanstack/react-query';
 import { Grid } from '@mui/material';
 import Job from '@components/mypage/Job';
 import ProfileCard from '@components/mypage/ProfileCard';
-
 import Account from '@components/mypage/Account';
 import Security from '@components/mypage/Security';
 import Activity from '@components/mypage/Acivity';
-import authApi from '@apis/auth';
 import { profileUrl, userInfoState } from '@atoms/userAtom';
 import Sent from '@components/mypage/message/Sent';
 import Received from '@components/mypage/message/Received';
 import { makeProfileUrl } from '@utils/func';
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
+import mypageApi from '@apis/mypage/articles';
 
 export default function MypageIndex() {
   const router = useRouter();
   const user = useRecoilValue(userInfoState);
   const setProfileImg = useSetRecoilState(profileUrl);
 
-  const { data } = useQuery(['detailUser', user?.userId], () => authApi.getOne(user?.userId!), {
-    onSuccess: data => {
-      setProfileImg(makeProfileUrl(data.data.result.imgUrl));
-    },
-    onError: (e: any) => {
-      if (!getCookie('refreshToken')) {
-        alert('로그인이 만료되었습니다.');
-        return router.push('/login');
-      }
-      alert(e.response.data.message);
-    },
-  });
-
-  const userInfo = data?.data.result;
+  const { data: userInfo } = useQuery(
+    ['detailUser', user?.userId],
+    () => mypageApi.getOne(user?.userId!),
+    {
+      onSuccess: data => {
+        setProfileImg(makeProfileUrl(data.imgUrl));
+      },
+      onError: (e: any) => {
+        if (!getCookie('refreshToken')) {
+          alert('로그인이 만료되었습니다.');
+          return router.push('/login');
+        }
+        alert(e.response.data.message);
+      },
+    }
+  );
 
   return (
     <Grid
