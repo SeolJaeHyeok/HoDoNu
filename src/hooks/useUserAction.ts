@@ -38,6 +38,7 @@ export function useUserActions() {
     const profileUrlWithoutS3 = makeProfileUrl(imgUrl);
     const decodedToken = await decodeJWT(accessToken);
     const { role, userId, jobCategory, authStatus, recruiterStatus }: any = decodedToken;
+
     instance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
     setCookie('refreshToken', refreshToken, {
