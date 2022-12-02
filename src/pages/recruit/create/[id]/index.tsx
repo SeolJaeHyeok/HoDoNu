@@ -1,9 +1,9 @@
-import recruitApi from '@apis/recruit';
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useMutation } from '@tanstack/react-query';
+import recruitCreateApi from '@apis/recruit/create';
 
 interface TagsResponseProps {
   content: string;
@@ -11,7 +11,7 @@ interface TagsResponseProps {
 }
 
 export const getServerSideProps = async () => {
-  const response = await recruitApi.getAllTags();
+  const response = await recruitCreateApi.getAllTags();
 
   if (!response) {
     return {
@@ -21,7 +21,7 @@ export const getServerSideProps = async () => {
 
   return {
     props: {
-      tags: response.data.result,
+      tags: response.result,
     },
   };
 };
@@ -38,7 +38,7 @@ export default function RecruitTagsPage({ tags }: any) {
     )
   );
 
-  const { mutate: tagsMutate } = useMutation(recruitApi.postRecruitTags, {
+  const { mutate: tagsMutate } = useMutation(recruitCreateApi.postRecruitTags, {
     onSuccess: () => {
       alert('정상적으로 등록됐습니다:)');
       router.push(`/recruit`);

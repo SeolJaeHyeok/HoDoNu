@@ -3,10 +3,10 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Divider, TextField, Typography } from '@mui/material';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import authApi from '@apis/auth';
 import CustomModal from '@components/modal/CustomModal';
 import { updatePasswordSchema } from '@utils/validationSchema';
 import useModal from '@hooks/useModal';
+import mypageApi from '@apis/mypage/articles';
 
 interface UpdatePassword {
   presentPassword: string;
@@ -23,7 +23,7 @@ export default function PasswordModal() {
     formState: { errors },
   } = useForm<UpdatePassword>({ resolver: yupResolver(updatePasswordSchema) });
 
-  const patchPassword = useMutation(authApi.patchPassword, {
+  const patchPassword = useMutation(mypageApi.patchPassword, {
     onSuccess: () => {
       reset();
       alert('비밀번호가 성공적으로 변경되었습니다.');

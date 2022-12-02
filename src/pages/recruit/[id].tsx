@@ -1,9 +1,7 @@
 import { useRouter } from 'next/router';
 import { Divider, Typography, Box, Button, Stack } from '@mui/material';
-
 import ImageCarousel from '@components/recruit/detail/ImageCarousel';
 import CompanyInfo from '@components/recruit/detail/CompanyInfo';
-
 import Contact from '@components/recruit/detail/Contact';
 import Content from '@components/recruit/detail/Content';
 import Tags from '@components/recruit/detail/Tags';
@@ -11,7 +9,7 @@ import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
 import { dehydrate, QueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import recruitDetailApi from '@apis/recruit/detail';
-import { getDetailRes, RecruitContent } from '@interfaces/recruit';
+import { getDetailData, RecruitContent } from '@interfaces/recruit';
 
 export interface ParamProps {
   params: {
@@ -26,7 +24,7 @@ export interface RecruitDetailProps {
 
 export const getStaticPaths = async () => {
   const res = await recruitDetailApi.getAll();
-  const posts = res.data.result[0].map((v: any) => ({ params: { id: v.jobId.toString() } }));
+  const posts = res.data.result[0].map(v => ({ params: { id: v.jobId.toString() } }));
 
   return {
     paths: posts,
@@ -54,7 +52,7 @@ export const getStaticProps = async ({ params }: ParamProps) => {
 
 export default function RecruitDetail() {
   const router = useRouter();
-  const { data: content } = useQuery<getDetailRes>(['recruit', 'detail', router.query.id]);
+  const { data: content } = useQuery<getDetailData>(['recruit', 'detail', router.query.id]);
 
   const curUser = useRecoilValue(userInfoState);
   const curUserId = curUser?.userId;

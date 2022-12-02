@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { AddressProps, FileProps } from '@interfaces/recruit';
-import recruitApi from '@apis/recruit';
 import { recruitPostSchema } from '@utils/validationSchema';
 import { useQuill } from 'react-quilljs';
 import 'quill/dist/quill.snow.css';
@@ -15,6 +14,7 @@ import FileUploader from '@components/recruit/FileUploader';
 import { useMutation } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
+import recruitCreateApi from '@apis/recruit/create';
 
 interface RecruitPostProps {
   companyRecruitmentTitle: string;
@@ -63,7 +63,7 @@ export default function RecruitCreatePage() {
     open({ onComplete: handleComplete });
   };
 
-  const { mutate: postMutate } = useMutation(recruitApi.postRecruit, {
+  const { mutate: postMutate } = useMutation(recruitCreateApi.postRecruit, {
     onSuccess: (data: any) => {
       const {
         data: {
@@ -130,7 +130,7 @@ export default function RecruitCreatePage() {
   const postImageArray = async (formData: FormData) => {
     let responseImageArr;
     try {
-      responseImageArr = await recruitApi.postImageArray(formData);
+      responseImageArr = await recruitCreateApi.postImageArray(formData);
     } catch (e: unknown) {
       alert(e);
     }
