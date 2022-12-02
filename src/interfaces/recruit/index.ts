@@ -22,7 +22,7 @@ export interface AddressProps {
   detailAddress?: string;
 }
 
-export interface getDetailRes {
+export interface getDetailData {
   result: RecruitContent;
   status: number;
 }
@@ -74,12 +74,12 @@ export interface RecruitList {
   tags: string[];
 }
 
-export interface getAllRecruitRes {
+export interface getAllRecruitData {
   result: [RecruitList[], number];
   status: number;
 }
 
-export interface getTagsRes {
+export interface getTagsData {
   result: [{ content: string; tagId: number }];
   status: number;
 }
