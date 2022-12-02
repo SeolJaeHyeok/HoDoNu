@@ -1,6 +1,6 @@
 import ArticleContent from '@components/article/ArticleContent';
 import { dehydrate, QueryClient, useMutation } from '@tanstack/react-query';
-import detailApi from '@apis/board/detail';
+import boardDetailApi from '@apis/board/detail';
 
 import { categoryAssertion } from '@utils/const/category';
 import { useEffect } from 'react';
@@ -13,7 +13,7 @@ export default function Free() {
   const router = useRouter();
   const { data } = useBoardDetailQuery(boardKeys.detail('Free', router.query.id as string));
 
-  const raiseHitsQuery = useMutation(detailApi.patchRaiseHit);
+  const raiseHitsQuery = useMutation(boardDetailApi.patchRaiseHit);
 
   useEffect(() => {
     raiseHitsQuery.mutate({
@@ -22,7 +22,7 @@ export default function Free() {
     });
   }, []);
 
-  return <ArticleContent result={data?.result} categoryName={categoryAssertion.FREE} />;
+  return <ArticleContent result={data} categoryName={categoryAssertion.FREE} />;
 }
 
 export const getServerSideProps = async ({ params }: ParamsProps) => {
@@ -30,7 +30,7 @@ export const getServerSideProps = async ({ params }: ParamsProps) => {
 
   await queryClient.prefetchQuery(
     boardKeys.detail('Free', params.id),
-    detailApi.getDetailData('free', params.id)
+    boardDetailApi.getDetailData('free', params.id)
   );
 
   if (!params) {

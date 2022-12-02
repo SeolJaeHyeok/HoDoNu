@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import ReactQuill, { ReactQuillProps } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styled from '@emotion/styled';
-import boardApi from '@apis/board';
+import boardCreatApi from '@apis/board/create';
 import LoadingSpinner from './LoadingSpinner';
 
 interface ArticleFormEditorProps {
@@ -62,7 +62,7 @@ export default function ArticleFormEditor({ onChange, content, height }: Article
       }
 
       try {
-        const res = await boardApi.createArticleImg(formData);
+        const res = await boardCreatApi.createArticleImg(formData);
         const IMG_URL = res.data.result;
         const range = QuillRef.current.getEditor().getSelection();
         const quillEditor = QuillRef.current.getEditor();

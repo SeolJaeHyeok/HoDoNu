@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 import MainBoardSkeleton from '@components/main/MainBoardSkeleton';
 import queryKeys from '@hooks/query/home/queryKeys';
-import { GetArticleRes } from '@interfaces/board';
+import { GetArticleData } from '@interfaces/board';
 import boardListApi from '@apis/board/list';
 
 const API_PARAMS = { page: '1', perPage: '5' };
@@ -32,9 +32,9 @@ export const getStaticProps = async () => {
 };
 
 export default function Home() {
-  const { data: freeArticles } = useQuery<GetArticleRes>(['main', 'board', 'free']);
-  const { data: doctorArticles } = useQuery<GetArticleRes>(['main', 'board', 'doctor']);
-  const { data: nurseArticles } = useQuery<GetArticleRes>(['main', 'board', 'nurse']);
+  const { data: freeArticles } = useQuery<GetArticleData>(['main', 'board', 'free']);
+  const { data: doctorArticles } = useQuery<GetArticleData>(['main', 'board', 'doctor']);
+  const { data: nurseArticles } = useQuery<GetArticleData>(['main', 'board', 'nurse']);
 
   return (
     <>

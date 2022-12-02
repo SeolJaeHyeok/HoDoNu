@@ -7,9 +7,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { TextField, Stack, Button, Box } from '@mui/material';
 
 import ArticleFormEditor from '@components/ArticleFormEditor';
-import boardApi from 'src/apis/board';
+import boardCreatApi from 'src/apis/board/create';
 import { boardValidationSchema } from '@utils/validationSchema';
-import { ArticleForm } from '@interfaces/article';
+import { ArticleFormProps } from '@interfaces/board';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
 import { useEffect, useState } from 'react';
@@ -26,14 +26,14 @@ export default function ArticleCreateForm({ categories }: { categories: string[]
     getValues,
     reset,
     formState: { errors },
-  } = useForm<ArticleForm>({
+  } = useForm<ArticleFormProps>({
     resolver: yupResolver(boardValidationSchema),
     defaultValues: {
       category: category,
     },
   });
 
-  const postArticle = useMutation(['createArticle'], boardApi.createArticle, {
+  const postArticle = useMutation(['createArticle'], boardCreatApi.createArticle, {
     onSuccess: res => {
       const { articleId } = res.data.result;
       const category = getValues('category');
@@ -44,7 +44,7 @@ export default function ArticleCreateForm({ categories }: { categories: string[]
     },
   });
 
-  const onSubmit: SubmitHandler<ArticleForm> = data => {
+  const onSubmit: SubmitHandler<ArticleFormProps> = data => {
     const { title, category, content } = data;
     setCategory(category);
     postArticle.mutate({ title, category, content });
