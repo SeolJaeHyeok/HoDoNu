@@ -16,38 +16,22 @@ import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
 
 interface BoardHeaderProps {
-  setSort: Dispatch<SetStateAction<string>>;
   setPage: Dispatch<SetStateAction<string>>;
-  setPerPage: Dispatch<SetStateAction<string>>;
-  sort: string | undefined;
   page: string | undefined;
-  perPage: string | undefined;
   category: 'Free' | 'Doctor' | 'Nurse';
 }
 
-export default function BoardHeader({
-  setSort,
-  setPage,
-  setPerPage,
-  sort,
-  perPage,
-  category,
-}: BoardHeaderProps) {
+export default function BoardHeader({ setPage, category }: BoardHeaderProps) {
   const router = useRouter();
   const loginInfo = useRecoilValue(userInfoState);
 
   // 최신 순, 조회순 정렬
   const handleSortClick = (sort: string) => {
-    // Sort 정렬 기준 설정
-    setSort(() => sort);
-    setPage(() => '1');
-    setPerPage(() => '5');
-
     // 해당 값으로 URL 변경
     router.push({
       query: {
         page: '1',
-        perPage,
+        perPage: router.query.perPage,
         sort,
       },
     });
@@ -55,16 +39,12 @@ export default function BoardHeader({
 
   // 모아보기 - perPage
   const handlePerPage = (e: SelectChangeEvent<string>) => {
-    // Per Page 정렬 기준 설정
-    setPerPage(() => e.target.value);
-    setPage(() => '1');
-
     // 해당 값으로 URL 변경
     router.push({
       query: {
         page: '1',
         perPage: e.target.value,
-        sort,
+        sort: router.query.sort,
       },
     });
   };
@@ -79,7 +59,7 @@ export default function BoardHeader({
         />
         <FilterButton
           value={'조회순'}
-          clicked={router.query.sort === 'hits'}
+          clicked={router.query.sort === 'hits' || router.query.sort === 'Hits'}
           onClick={() => handleSortClick('hits')}
         />
       </div>
@@ -91,7 +71,7 @@ export default function BoardHeader({
             width: '150px',
           }}
           labelId="perpage-label"
-          value={perPage}
+          value={router.query.perPage as string}
           onChange={handlePerPage}
         >
           <MenuItem value={5}>5개씩 보기</MenuItem>
