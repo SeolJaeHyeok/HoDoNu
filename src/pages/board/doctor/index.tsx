@@ -13,10 +13,7 @@ import { CategoryType } from '@interfaces/article';
 
 export default function DoctorBoard() {
   const router = useRouter();
-
-  const [sort, setSort] = useState('createdAt');
   const [page, setPage] = useState('1');
-  const [perPage, setPerPage] = useState('5');
   const searchText = useRecoilValue<string>(searchDataAtom);
 
   const { data: res, isLoading } = useQuery(
@@ -55,15 +52,7 @@ export default function DoctorBoard() {
   return (
     res && (
       <BoardContainer>
-        <BoardHeader
-          setSort={setSort}
-          setPage={setPage}
-          setPerPage={setPerPage}
-          page={page}
-          sort={sort}
-          perPage={perPage}
-          category={res.result.category}
-        />
+        <BoardHeader setPage={setPage} page={page} category={res.result.category} />
         {!isLoading ? (
           <>
             {res.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
