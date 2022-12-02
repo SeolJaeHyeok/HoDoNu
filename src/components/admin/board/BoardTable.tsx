@@ -8,7 +8,7 @@ import BoardTableRow from './BoardTableRow';
 import React, { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { TextField } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import boardManageApi from '@apis/admin/board/boardManage';
+import boardManageApi from '@apis/admin/board';
 import { board, filter } from '@utils/const/adminBoardSelectFilter';
 import { debounce } from 'lodash';
 import { Pagination, PaginationItem } from '@mui/material';

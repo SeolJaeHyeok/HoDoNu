@@ -1,4 +1,4 @@
-import boardManageApi from '@apis/admin/board/boardManage';
+import boardManageApi from '@apis/admin/board';
 import BoardTable from '@components/admin/board/BoardTable';
 import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';

@@ -1,4 +1,4 @@
-import authApi from '@apis/auth/auth';
+import authApi from '@apis/auth';
 import { userInfoState } from '@atoms/userAtom';
 import ArticleCreateForm from '@components/board/ArticleCreateForm';
 import { Container, Box, Typography } from '@mui/material';

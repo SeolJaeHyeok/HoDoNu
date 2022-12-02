@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography, Divider } from '@mui/material';
 import InboxIcon from '@mui/icons-material/Inbox';
 import { useQuery } from '@tanstack/react-query';
-import messageApi from '@apis/message/message';
+import messageApi from '@apis/message';
 import MessageItem from './MessageItem';
 
 export default function Received() {

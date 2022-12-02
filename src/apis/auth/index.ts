@@ -1,6 +1,5 @@
-import { GetUserRes, LoginRes } from '@interfaces/user/userInfo';
+import { GetUserRes, LoginRes, RegisterUserInfo } from '@interfaces/user/index';
 import { AxiosResponse } from 'axios';
-import { RegisterUserInfo } from 'src/interfaces/user/registerUserInfo';
 import { instance } from '../index';
 
 interface LoginAPI {

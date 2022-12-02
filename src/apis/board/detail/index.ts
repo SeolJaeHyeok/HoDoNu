@@ -1,3 +1,5 @@
+import { GetOneArticleRes } from '@interfaces/board';
+
 import {
   CommentDeleteProps,
   CommentDeleteResponseAPI,
@@ -5,11 +7,19 @@ import {
   CommentRegisterResponseAPI,
   CommentUpdateProps,
   CommentUpdateResponseAPI,
-} from '@interfaces/board/detailUserInfoType';
+} from '@interfaces/board/index';
 import { AxiosResponse } from 'axios';
-import { instance } from '../index';
+import { instance } from '@apis/index';
 
-const detailApi = {
+interface articlaParamProps {
+  category: string | string[] | undefined;
+  id: string | string[] | undefined;
+}
+
+const boardDetailApi = {
+  getOneArticle: (articleParams?: articlaParamProps): Promise<AxiosResponse<GetOneArticleRes>> =>
+    instance.get(`/${articleParams?.category}/articles/${articleParams?.id}`),
+
   commentRegister: (
     commentRequestData: CommentProps
   ): Promise<AxiosResponse<CommentRegisterResponseAPI>> => {
@@ -18,8 +28,7 @@ const detailApi = {
       commentRequestData
     );
   },
-  // 호진 FIXME: 현재 categoryName이 맨 앞글자만 대문자인 상태인데 백엔드 api는 소문자로 보내야한다.
-  // 근데 대문자로 요청해도 제대로 들어가는 이유는?
+
   commentDelete: (
     commentDeleteProp: CommentDeleteProps
   ): Promise<AxiosResponse<CommentDeleteResponseAPI>> => {
@@ -27,6 +36,7 @@ const detailApi = {
       `/${commentDeleteProp.categoryName}/comments/${commentDeleteProp.commentId}`
     );
   },
+
   commentUpdate: ({
     commentUpdateId,
     commentUpdateMsg,
@@ -34,9 +44,11 @@ const detailApi = {
   }: CommentUpdateProps): Promise<AxiosResponse<CommentUpdateResponseAPI>> => {
     return instance.patch(`/${categoryName}/comments/${commentUpdateId}`, commentUpdateMsg);
   },
+
   getDetailData: (category: string, articleId?: string): any => {
     return instance.get(`/${category}/articles/${articleId}`).then(res => res.data);
   },
+
   // 카테고리별 데이터 불러오기!
   getDetailAllData: (category: string) => {
     return instance.get(`/${category}/articles`);
@@ -50,4 +62,4 @@ const detailApi = {
     instance.patch(`/${category}/articles/${articleId}/hits`),
 };
 
-export default detailApi;
+export default boardDetailApi;

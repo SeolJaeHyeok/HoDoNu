@@ -1,4 +1,4 @@
-import { instance } from '..';
+import { instance } from '../..';
 
 interface AdminGetParams {
   page?: string;
@@ -9,7 +9,7 @@ interface AdminGetParams {
   endDate?: string;
 }
 
-const adminApi = {
+const adminUserApi = {
   getAllUsers: (params?: AdminGetParams) => instance.get(`/admin/users`, { params }),
   deleteUser: (userId: string) => instance.delete(`/admin/users/${userId}`),
   editUserRecruitAuth: ({ userId, bodyData }: any) =>
@@ -22,4 +22,4 @@ const adminApi = {
     instance.delete(`/admin/article/block/${userId}`, { data: { boardCategory } }),
 };
 
-export default adminApi;
+export default adminUserApi;

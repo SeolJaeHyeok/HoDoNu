@@ -6,9 +6,9 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import EastIcon from '@mui/icons-material/East';
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
 
-import authApi from '@apis/auth/auth';
+import authApi from '@apis/auth';
 import UserActiveCertificationModal from '../modal/UserActiveCertificationModal';
-import { UserDetail } from '@interfaces/user/userInfo';
+import { UserDetail } from '@interfaces/user/index';
 
 export default function Account({ user }: { user: UserDetail }) {
   const queryClient = useQueryClient();

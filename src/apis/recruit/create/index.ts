@@ -1,12 +1,12 @@
 import { RecruitPostProps } from '@interfaces/recruit';
-import { instance } from '..';
+import { instance } from '@apis/index';
 
 interface PostRecruitTagsProps {
   jobId: string;
   tagIds: number[];
 }
 
-const recruitApi = {
+const recruitCreateApi = {
   postImageArray: (bodyData: any) => instance.post(`/imgUpload/array`, bodyData),
   postRecruit: (bodyData: RecruitPostProps) => instance.post(`/jobs`, bodyData),
   getAllTags: () => instance.get('/tags'),
@@ -14,4 +14,4 @@ const recruitApi = {
     instance.post(`/job-tags/job/${jobId}`, { tagIds }),
 };
 
-export default recruitApi;
+export default recruitCreateApi;

@@ -1,5 +1,5 @@
 import { QueryFunctionContext } from '@tanstack/react-query';
-import { instance } from '..';
+import { instance } from '@apis/index';
 
 interface RecruitAllParam {
   queryKey: string[];

@@ -3,11 +3,11 @@ import styled from '@emotion/styled';
 import { useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import boardApi from '@apis/board';
+import boardListApi from '@apis/board/list';
 import useDebounce from '@hooks/useDebounce';
-import { ArticleCategoryProps } from '@interfaces/article';
 import SearchForm from '@components/board/search/SearchForm';
 import SearchList from '@components/board/search/SearchList';
+import { ArticleCategoryProps } from '@interfaces/board';
 
 const Search = ({ category, setPage }: ArticleCategoryProps) => {
   const scrollRef = useRef(null);
@@ -20,15 +20,15 @@ const Search = ({ category, setPage }: ArticleCategoryProps) => {
     ['search', 'preview', debouncedQuery],
     () => {
       if (category === 'Free') {
-        return boardApi.getAllFreeBoards({ search: debouncedQuery });
+        return boardListApi.getAllFreeBoards({ search: debouncedQuery });
       }
 
       if (category === 'Doctor') {
-        return boardApi.getAllDoctorBoards({ search: debouncedQuery });
+        return boardListApi.getAllDoctorBoards({ search: debouncedQuery });
       }
 
       if (category === 'Nurse') {
-        return boardApi.getAllNurseBoards({ search: debouncedQuery });
+        return boardListApi.getAllNurseBoards({ search: debouncedQuery });
       }
     },
     {
@@ -50,12 +50,12 @@ const Search = ({ category, setPage }: ArticleCategoryProps) => {
       />
       {query && searchResults && (
         <SearchResult>
-          {searchResults.result.articles.length === 0 && <NoResult>검색 결과 없음</NoResult>}
+          {searchResults.articles.length === 0 && <NoResult>검색 결과 없음</NoResult>}
           <SearchList
             ref={scrollRef}
             setIndex={setIndex}
             index={index}
-            results={searchResults.result.articles.slice(0, 10)}
+            results={searchResults.articles.slice(0, 10)}
             query={query}
           />
         </SearchResult>

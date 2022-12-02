@@ -1,7 +1,7 @@
 import { Box, Typography, Divider } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { useQuery } from '@tanstack/react-query';
-import messageApi from '@apis/message/message';
+import messageApi from '@apis/message';
 import MessageItem from './MessageItem';
 
 export default function Sent() {

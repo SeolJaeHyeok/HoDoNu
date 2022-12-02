@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
 
 import { loginValidationSchema } from '@utils/validationSchema';
-import authApi from 'src/apis/auth/auth';
+import authApi from '@apis/auth';
 import { useUserActions } from '@hooks/useUserAction';
 
 interface UserLoginForm {

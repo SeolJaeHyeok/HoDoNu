@@ -1,4 +1,4 @@
-import { UserInfo } from 'src/interfaces/user/userInfo';
+import { UserInfo } from '@interfaces/user/index';
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 

@@ -11,9 +11,9 @@ import {
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import React, { ChangeEvent, useRef, useState } from 'react';
-import authApi from '@apis/auth/auth';
+import authApi from '@apis/auth';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { UserDetail } from '@interfaces/user/userInfo';
+import { UserDetail } from '@interfaces/user/index';
 
 export default function ProfileCard({ user }: { user: UserDetail }) {
   const [introduce, setIntroduce] = useState<string>(user.introduce);

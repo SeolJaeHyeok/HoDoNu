@@ -1,4 +1,5 @@
 import { instance } from '@apis/index';
+
 interface DeleteSingleBoardAPI {
   category: string;
   articleId: number;
@@ -9,7 +10,7 @@ interface DeleteMultipleBoardAPI {
   articleIds: number[];
 }
 
-const boardManageApi = {
+const adminBoardApi = {
   getBoardAllData: (
     category: string,
     page?: number,
@@ -29,4 +30,4 @@ const boardManageApi = {
     }),
 };
 
-export default boardManageApi;
+export default adminBoardApi;

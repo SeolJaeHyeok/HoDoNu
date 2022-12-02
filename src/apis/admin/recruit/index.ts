@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { instance } from '..';
+import { instance } from '../..';
 
 interface IsActiveProps {
   jobIds: number[];

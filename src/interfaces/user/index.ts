@@ -1,3 +1,19 @@
+export type Status = 'InActive' | 'Pending' | 'Active' | 'Reject';
+
+export interface RegisterUserInfo {
+  name: string;
+  email: string;
+  password: string;
+  checkPassword: string;
+  phoneNumber: string;
+  birth: string;
+  jobCategory: string;
+  authCheck?: string;
+  postalCode: string;
+  mainAddress: string;
+  detailAddress: string;
+}
+
 export interface LoginRes {
   result: {
     accesToken: string;
@@ -30,7 +46,6 @@ export interface UserArticlesProps {
   updater: string;
 }
 
-export type Status = 'InActive' | 'Pending' | 'Active' | 'Reject';
 export interface UserDetail {
   userId: string;
   email: string;

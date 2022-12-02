@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Divider, TextField, Typography } from '@mui/material';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import authApi from '@apis/auth/auth';
+import authApi from '@apis/auth';
 import CustomModal from '@components/modal/CustomModal';
 import { updatePasswordSchema } from '@utils/validationSchema';
 import useModal from '@hooks/useModal';

@@ -7,7 +7,7 @@ import ProfileCard from '@components/mypage/ProfileCard';
 import Account from '@components/mypage/Account';
 import Security from '@components/mypage/Security';
 import Activity from '@components/mypage/Acivity';
-import authApi from '@apis/auth/auth';
+import authApi from '@apis/auth';
 import { profileUrl, userInfoState } from '@atoms/userAtom';
 import Sent from '@components/mypage/message/Sent';
 import Received from '@components/mypage/message/Received';

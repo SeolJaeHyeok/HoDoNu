@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { Button } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import adminApi from '@apis/admin';
+import adminApi from '@apis/admin/users';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

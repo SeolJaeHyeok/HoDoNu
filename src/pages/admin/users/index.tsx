@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import AdminUserSearch from '@components/admin/users/AdminUserSearch';
 import AdminUserTable from '@components/admin/users/AdminUserTable';
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import adminApi from '@apis/admin';
+import adminApi from '@apis/admin/users';
 import styled from '@emotion/styled';
 import useInterSectionObeserver from '@hooks/useInterSectionObeserver';
 import LoadingSpinner from '@components/LoadingSpinner';
