@@ -1,4 +1,3 @@
-// import { RecruitContent } from '@interfaces/recruit/detail';
 import { Box, Typography } from '@mui/material';
 import Map from './Map';
 import BusinessIcon from '@mui/icons-material/Business';

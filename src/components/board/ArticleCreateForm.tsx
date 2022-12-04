@@ -7,12 +7,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { TextField, Stack, Button, Box } from '@mui/material';
 
 import ArticleFormEditor from '@components/ArticleFormEditor';
-import boardApi from 'src/apis/board';
+
 import { boardValidationSchema } from '@utils/validationSchema';
-import { ArticleForm } from '@interfaces/article';
+
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
 import { useEffect, useState } from 'react';
+import { ArticleForm } from '@interfaces/board';
+import boardCreatApi from '@apis/board/create';
 
 export default function ArticleCreateForm({ categories }: { categories: string[] }) {
   const router = useRouter();
@@ -33,7 +35,7 @@ export default function ArticleCreateForm({ categories }: { categories: string[]
     },
   });
 
-  const postArticle = useMutation(['createArticle'], boardApi.createArticle, {
+  const postArticle = useMutation(['createArticle'], boardCreatApi.createArticle, {
     onSuccess: res => {
       const { articleId } = res.data.result;
       const category = getValues('category');

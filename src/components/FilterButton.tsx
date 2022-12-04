@@ -7,11 +7,6 @@ interface ButtonProps {
   onClick?: any;
 }
 
-// const enum FilterState {
-//   '최신순' = 'recent',
-//   '조회순' = 'views',
-// }
-
 /**
  * @param {string} value - button안에 들어갈 값
  * @param {boolean} clicked - 클릭 여부
