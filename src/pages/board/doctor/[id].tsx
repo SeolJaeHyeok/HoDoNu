@@ -3,10 +3,11 @@ import { dehydrate, QueryClient, useMutation } from '@tanstack/react-query';
 import detailApi from '@apis/board/detail';
 import { categoryAssertion } from '@utils/const/category';
 import { useEffect } from 'react';
-import { ParamsProps } from '@interfaces/board/detailUserInfoType';
+
 import boardKeys from '@hooks/query/board/boardKeys';
 import useBoardDetailQuery from '@hooks/query/board/useBoardDetailQuery';
 import { useRouter } from 'next/router';
+import { ParamsProps } from '@interfaces/board';
 
 export default function Doctor({ content }: any) {
   const raiseHitsQuery = useMutation(detailApi.patchRaiseHit);

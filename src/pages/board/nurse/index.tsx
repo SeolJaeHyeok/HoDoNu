@@ -1,4 +1,3 @@
-import boardApi from '@apis/board';
 import BoardHeader from '@components/board/BoardHeader';
 import BoardList from '@components/board/BoardList';
 import Pagination from '@components/Pagination';
@@ -9,7 +8,8 @@ import { useQuery } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 import { searchDataAtom } from '@atoms/searchAtom';
 import BoardSkeleton from '@components/board/BoardSkeleton';
-import { CategoryType } from '@interfaces/article';
+import boardListApi from '@apis/board/list';
+import { CategoryType } from '@interfaces/board';
 
 export default function NurseBoard() {
   const router = useRouter();
@@ -22,7 +22,7 @@ export default function NurseBoard() {
   const { data: res, isLoading } = useQuery(
     ['board', 'nurse', router.query.sort, router.query.page, router.query.perPage, searchText],
     () =>
-      boardApi.getAllNurseBoards({
+      boardListApi.getAllNurseBoards({
         page: router.query.page,
         perPage: router.query.perPage,
         sort: router.query.sort,
@@ -35,7 +35,7 @@ export default function NurseBoard() {
   );
 
   // 총 페이지 수
-  const TOTAL_PAGE = res && Math.ceil(res.result.count / Number(router.query.perPage));
+  const TOTAL_PAGE = res && Math.ceil(res.count / Number(router.query.perPage));
 
   // Pagination - page
   const handlePageNavigate = (pageNumber: number) => {
@@ -61,14 +61,14 @@ export default function NurseBoard() {
           page={page}
           sort={sort}
           perPage={perPage}
-          category={res.result.category}
+          category={res.category}
         />
         {!isLoading ? (
           <>
-            {res.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
+            {res.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
             <BoardList
-              boardCategory={res.result.category.toLowerCase() as CategoryType}
-              articles={res.result.articles}
+              boardCategory={res.category.toLowerCase() as CategoryType}
+              articles={res.articles}
             />
             <Pagination
               length={TOTAL_PAGE}
