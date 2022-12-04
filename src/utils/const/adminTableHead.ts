@@ -1,4 +1,4 @@
-import { HeadCell } from '@interfaces/admin/recruit';
+import { HeadCell } from '@interfaces/admin';
 
 export const HEADCELLS: readonly HeadCell[] = [
   {
