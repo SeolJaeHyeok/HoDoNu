@@ -3,33 +3,37 @@ import CommentIcon from '@mui/icons-material/Comment';
 import ArticleComment from '@components/article/ArticleComment';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
-import { ChangeEvent, useState } from 'react';
 import { Button } from '@mui/material';
+import { useForm } from 'react-hook-form';
 import useBoardCommentMutation from '@hooks/query/board/useBoardCommentMutation';
+
+interface ArticleCommentContainerHookForm {
+  comment: string;
+}
 
 export default function ArticleCommentContainer({ result, categoryName }: any) {
   const loginUserId = useRecoilValue(userInfoState);
   const { fetchPostComment } = useBoardCommentMutation();
-
-  const [comment, setComment] = useState<string>('');
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    setValue,
+    formState: { errors },
+  } = useForm<ArticleCommentContainerHookForm>();
 
   const handleRequestCommentData = () => {
     fetchPostComment.mutate({
       category: categoryName,
-      content: comment,
+      content: getValues('comment'),
       articleId: result?.articleId,
     });
   };
 
-  const handleChangeCommentInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(e.target.value);
-  };
-
   const handleClickCommentRegister = () => {
     handleRequestCommentData();
-    setComment('');
+    setValue('comment', '');
   };
-
   return (
     <>
       <CommentWrapper>
@@ -40,26 +44,31 @@ export default function ArticleCommentContainer({ result, categoryName }: any) {
         />
         <CommentTitle>댓글</CommentTitle>
       </CommentWrapper>
-      <CommnetInputContainer>
-        <CommentTextArea
-          value={
-            loginUserId === null ? `로그인이 필요한 서비스입니다. 로그인을 진행해주세요!` : comment
-          }
-          onChange={handleChangeCommentInput}
-        />
-        <Button
-          variant="outlined"
-          type="submit"
-          sx={{
-            display: 'block',
-            float: 'right',
-            mt: '8px',
-          }}
-          onClick={handleClickCommentRegister}
-        >
-          댓글 등록
-        </Button>
-      </CommnetInputContainer>
+      <form onSubmit={handleSubmit(handleClickCommentRegister)}>
+        <CommnetInputContainer>
+          <CommentTextArea
+            value={
+              loginUserId === null ? `로그인이 필요한 서비스입니다. 로그인을 진행해주세요!` : null
+            }
+            {...register('comment', {
+              required: '내용을 최소 1자 이상 입력해주세요',
+              minLength: 1,
+            })}
+          />
+          {<ErrorMsg>{errors.comment?.message}</ErrorMsg>}
+          <Button
+            variant="outlined"
+            type="submit"
+            sx={{
+              display: 'block',
+              float: 'right',
+              mt: '8px',
+            }}
+          >
+            댓글 등록
+          </Button>
+        </CommnetInputContainer>
+      </form>
       {result?.comments?.map((content: any, i: number) => {
         return (
           <ArticleComment
@@ -92,7 +101,7 @@ const CommnetInputContainer = styled.div`
   margin-top: 15px;
 `;
 
-const CommentTextArea = styled.textarea`
+const CommentTextArea = styled.textarea<any>`
   width: 100%;
   border: 1px solid #e5e7eb;
   resize: none;
@@ -103,4 +112,10 @@ const CommentTextArea = styled.textarea`
   @media screen and (min-width: 320px) and (max-width: 768px) {
     width: 83vw;
   }
+`;
+
+const ErrorMsg = styled.span`
+  display: block;
+  margin-top: 8px;
+  color: red;
 `;

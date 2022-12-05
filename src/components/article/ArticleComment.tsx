@@ -2,10 +2,15 @@ import styled from '@emotion/styled';
 
 import { Button } from '@mui/material';
 import { convertTime } from '@utils/func';
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 import CustomAvatarImage from '@components/CustomAvartar';
 import useBoardCommentMutation from '@hooks/query/board/useBoardCommentMutation';
+import { useForm } from 'react-hook-form';
 import { CommentArticleProps } from '@interfaces/board';
+
+interface ArticleCommentHookForm {
+  userComment: string;
+}
 
 export default function Comment({
   content,
@@ -15,8 +20,17 @@ export default function Comment({
   categoryName,
 }: CommentArticleProps) {
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const [commentUpdateData, setCommentUpdateData] = useState({
-    content: content.content,
+
+  const {
+    register,
+    getValues,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<ArticleCommentHookForm>({
+    defaultValues: {
+      userComment: content?.content,
+    },
   });
 
   const { fetchDeleteComment, fetchUpdateComment } = useBoardCommentMutation();
@@ -24,18 +38,15 @@ export default function Comment({
   // 댓글 수정 로직
   const handleUpdateCommentData = () => {
     setIsEdit(!isEdit);
-  };
-
-  const handleChangeUpdateCommentData = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setCommentUpdateData({
-      content: e.target.value,
-    });
+    setValue('userComment', content?.content);
   };
 
   const handleRegisetUpdateComment = () => {
     fetchUpdateComment.mutate({
       commentUpdateId: commentId,
-      commentUpdateMsg: commentUpdateData,
+      commentUpdateMsg: {
+        content: getValues('userComment'),
+      },
       categoryName,
     });
     setIsEdit(!isEdit);
@@ -53,50 +64,60 @@ export default function Comment({
           <NameContent>{content?.user?.nickname}</NameContent>
           <TimeContent>{convertTime(content?.createdAt!)}</TimeContent>
         </ContentContainer>
-        {isEdit ? (
-          <CommentTextArea
-            value={commentUpdateData.content}
-            onChange={handleChangeUpdateCommentData}
-          />
-        ) : (
-          <CommentContent>{content?.content}</CommentContent>
-        )}
+        <form onSubmit={handleSubmit(handleRegisetUpdateComment)}>
+          {isEdit ? (
+            <>
+              <CommentTextArea
+                {...register('userComment', {
+                  required: '1자리 이상 입력해주세요.',
+                  minLength: {
+                    value: 1,
+                    message: '1자리 이상 입력해주세요.',
+                  },
+                })}
+              />
+              <ErrorMsg>{errors.userComment?.message}</ErrorMsg>
+            </>
+          ) : (
+            <CommentContent>{content?.content}</CommentContent>
+          )}
 
-        {userId === commentUserId && (
-          <>
-            {isEdit ? (
-              <>
-                <Button
-                  variant="outlined"
-                  sx={{
-                    mr: '10px',
-                  }}
-                  onClick={handleUpdateCommentData}
-                >
-                  취소
-                </Button>
-                <Button variant="outlined" onClick={handleRegisetUpdateComment}>
-                  등록
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button
-                  variant="outlined"
-                  sx={{
-                    mr: '10px',
-                  }}
-                  onClick={handleUpdateCommentData}
-                >
-                  수정
-                </Button>
-                <Button variant="outlined" onClick={handleDeleteCommentData}>
-                  삭제
-                </Button>
-              </>
-            )}
-          </>
-        )}
+          {userId === commentUserId && (
+            <>
+              {isEdit ? (
+                <>
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      mr: '10px',
+                    }}
+                    onClick={handleUpdateCommentData}
+                  >
+                    취소
+                  </Button>
+                  <Button type="submit" variant="outlined">
+                    등록
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      mr: '10px',
+                    }}
+                    onClick={handleUpdateCommentData}
+                  >
+                    수정
+                  </Button>
+                  <Button variant="outlined" onClick={handleDeleteCommentData}>
+                    삭제
+                  </Button>
+                </>
+              )}
+            </>
+          )}
+        </form>
       </CommentContainer>
     </CommentWrapper>
   );
@@ -150,4 +171,10 @@ const CommentTextArea = styled.textarea`
   width: 360px;
   overflow: hidden;
   margin-right: 8px;
+`;
+
+const ErrorMsg = styled.span<any>`
+  display: block;
+  margin-top: 8px;
+  color: red;
 `;
