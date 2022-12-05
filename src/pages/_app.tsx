@@ -10,7 +10,7 @@ import { getCookie } from 'cookies-next';
 
 import { isLoginState, userInfoState } from '@atoms/userAtom';
 import { instance } from '@apis/index';
-import { decodeJWT } from '@utils/decodeJWT';
+import { decodeJWT } from '@utils/func';
 
 export default function MyApp({
   Component,

@@ -2,10 +2,11 @@ import { Box, Divider, Typography } from '@mui/material';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import EastIcon from '@mui/icons-material/East';
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
-import { UserDetail } from '@interfaces/user/index';
-import RecruiterCertificationModal from '@components/modal/RecruiterCertificationModal';
 
-export default function Job({ user }: { user: UserDetail }) {
+import RecruiterCertificationModal from '@components/modal/RecruiterCertificationModal';
+import { UserDetailData } from '@interfaces/user';
+
+export default function Job({ user }: { user: UserDetailData }) {
   return (
     <Box
       sx={{

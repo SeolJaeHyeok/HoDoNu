@@ -3,16 +3,14 @@ import { useRouter } from 'next/router';
 import { useMutation } from '@tanstack/react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
 import { TextField, Stack, Button, Box } from '@mui/material';
-
 import ArticleFormEditor from '@components/ArticleFormEditor';
-import boardCreatApi from 'src/apis/board/create';
 import { boardValidationSchema } from '@utils/validationSchema';
-import { ArticleFormProps } from '@interfaces/board';
+import boardCreatApi from 'src/apis/board/create';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
 import { useEffect, useState } from 'react';
+import { ArticleFormProps } from '@interfaces/board';
 
 export default function ArticleCreateForm({ categories }: { categories: string[] }) {
   const router = useRouter();

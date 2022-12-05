@@ -1,4 +1,4 @@
-import authApi from '@apis/auth';
+import mypageApi from '@apis/mypage/articles';
 import { userInfoState } from '@atoms/userAtom';
 import ArticleCreateForm from '@components/board/ArticleCreateForm';
 import { Container, Box, Typography } from '@mui/material';
@@ -16,9 +16,9 @@ export default function CreateBoard() {
 
   const userInfo = useRecoilValue(userInfoState);
 
-  useQuery(['board', 'create', userInfo?.userId], () => authApi.getOne(userInfo?.userId!), {
+  useQuery(['board', 'create', userInfo?.userId], () => mypageApi.getOne(userInfo?.userId!), {
     onSuccess: data => {
-      const block = data.data.result.blockArticleCategoties;
+      const block = data.blockArticleCategoties;
       const newCategory = categories.filter(category => !block.includes(category));
       setCategories(newCategory);
     },

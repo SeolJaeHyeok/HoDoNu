@@ -5,8 +5,8 @@ import styled from '@emotion/styled';
 import useRecruitQuery from '@hooks/query/recruit/useRecruitQuery';
 import useRecruitTagQuery from '@hooks/query/recruit/useRecruitTagQuery';
 import { JobList } from '@interfaces/recruit';
+import { filterTagJoinUrl } from '@utils/func';
 
-import filterTagJoinUrl from '@utils/filterTagJoinUrl';
 import { useState } from 'react';
 
 export interface TagsIdState {

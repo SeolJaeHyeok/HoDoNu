@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -41,8 +40,8 @@ export default function BoardTable({
       boardManageApi.getBoardAllData(currentBoard, currentPage, currentFilter, adminFilterInput),
     {
       onSuccess: data => {
-        setTotalData(data.data.result.count);
-        setBoardData(data.data.result.articles);
+        setTotalData(data.count);
+        setBoardData(data.articles);
         if (adminFilterInput && total > 10) {
           return;
         } else if (adminFilterInput) {

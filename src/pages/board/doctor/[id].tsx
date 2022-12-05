@@ -3,6 +3,7 @@ import { dehydrate, QueryClient, useMutation } from '@tanstack/react-query';
 import boardDetailApi from '@apis/board/detail';
 import { categoryAssertion } from '@utils/const/category';
 import { useEffect } from 'react';
+
 import { ParamsProps } from '@interfaces/board/';
 import boardKeys from '@hooks/query/board/boardKeys';
 import useBoardDetailQuery from '@hooks/query/board/useBoardDetailQuery';
