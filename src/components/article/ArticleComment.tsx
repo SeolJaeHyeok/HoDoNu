@@ -8,6 +8,10 @@ import useBoardCommentMutation from '@hooks/query/board/useBoardCommentMutation'
 import { useForm } from 'react-hook-form';
 import { CommentArticleProps } from '@interfaces/board';
 
+interface ArticleCommentHookForm {
+  userComment: string;
+}
+
 export default function Comment({
   content,
   userId,
@@ -24,7 +28,7 @@ export default function Comment({
     setValue,
     watch,
     formState: { errors },
-  } = useForm({
+  } = useForm<ArticleCommentHookForm>({
     defaultValues: {
       userComment: content?.content,
     },
