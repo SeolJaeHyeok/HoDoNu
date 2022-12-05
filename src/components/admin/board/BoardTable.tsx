@@ -40,8 +40,8 @@ export default function BoardTable({
       boardManageApi.getBoardAllData(currentBoard, currentPage, currentFilter, adminFilterInput),
     {
       onSuccess: data => {
-        setTotalData(data.data.result.count);
-        setBoardData(data.data.result.articles);
+        setTotalData(data.count);
+        setBoardData(data.articles);
         if (adminFilterInput && total > 10) {
           return;
         } else if (adminFilterInput) {
