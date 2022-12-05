@@ -4,7 +4,7 @@ import BoardList from '@components/board/BoardList';
 import Pagination from '@components/Pagination';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import BoardHeader from '@components/board/BoardHeader';
@@ -16,10 +16,7 @@ import { CategoryType } from '@interfaces/board';
 export default function FreeBoard() {
   const router = useRouter();
   const searchText = useRecoilValue<string>(searchDataAtom);
-
-  const [sort, setSort] = useState('createdAt');
   const [page, setPage] = useState('1');
-  const [perPage, setPerPage] = useState('5');
 
   const { data: res, isLoading } = useQuery(
     ['board', 'free', router.query.sort, router.query.page, router.query.perPage, searchText],
@@ -54,19 +51,22 @@ export default function FreeBoard() {
     });
   };
 
+  useEffect(() => {
+    if (
+      router.query.perPage !== '1' &&
+      router.query.perPage !== '5' &&
+      router.query.perPage !== '10'
+    ) {
+      alert('잘못된 접근입니다.');
+      router.push(`${router.pathname}?page=1&perPage=5&sort=createdAt`);
+    }
+  }, []);
+
   return (
     res && (
       <BoardContainer>
-        <BoardHeader
-          setSort={setSort}
-          setPage={setPage}
-          setPerPage={setPerPage}
-          page={page}
-          sort={sort}
-          perPage={perPage}
-          category={res.category}
-        />
-        {res?.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
+        <BoardHeader setPage={setPage} page={page} category={res.category} />
+        {res.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
         {!isLoading ? (
           <>
             <BoardList
