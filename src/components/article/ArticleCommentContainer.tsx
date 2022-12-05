@@ -17,7 +17,6 @@ export default function ArticleCommentContainer({ result, categoryName }: any) {
   const {
     register,
     handleSubmit,
-    watch,
     getValues,
     setValue,
     formState: { errors },
@@ -49,9 +48,7 @@ export default function ArticleCommentContainer({ result, categoryName }: any) {
         <CommnetInputContainer>
           <CommentTextArea
             value={
-              loginUserId === null
-                ? `로그인이 필요한 서비스입니다. 로그인을 진행해주세요!`
-                : watch('comment')
+              loginUserId === null ? `로그인이 필요한 서비스입니다. 로그인을 진행해주세요!` : null
             }
             {...register('comment', {
               required: '내용을 최소 1자 이상 입력해주세요',
