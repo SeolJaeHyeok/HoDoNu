@@ -26,7 +26,6 @@ export default function Comment({
     getValues,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors },
   } = useForm<ArticleCommentHookForm>({
     defaultValues: {
@@ -69,7 +68,6 @@ export default function Comment({
           {isEdit ? (
             <>
               <CommentTextArea
-                value={watch('userComment')}
                 {...register('userComment', {
                   required: '1자리 이상 입력해주세요.',
                   minLength: {
