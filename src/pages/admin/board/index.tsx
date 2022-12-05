@@ -1,9 +1,9 @@
 import boardManageApi from '@apis/admin/board';
-import { instance } from '@apis/index';
 import BoardTable from '@components/admin/board/BoardTable';
 import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';
-import { decodeJWT } from '@utils/decodeJWT';
+import { getUserRole } from '@utils/func';
+
 import { getCookie } from 'cookies-next';
 import { useState } from 'react';
 
@@ -70,23 +70,14 @@ export const getServerSideProps = async (context: any) => {
 
   const refreshToken = getCookie('refreshToken', { req, res });
   const userId = getCookie('userId', { req, res });
-  let role;
-
-  if (userId && req && refreshToken) {
-    const res = await instance.post(`/users/${userId}/reissue/version2`, {
-      refreshToken,
-    });
-    const newAccessToken = res.data.result.accessToken;
-    const decodedToken = await decodeJWT(newAccessToken);
-    role = decodedToken.role;
-  }
+  const role = await getUserRole(userId as string, refreshToken as string);
 
   //role이 admin이 아니면 login 페이지로
   if (role !== 'Admin') {
     return {
       redirect: {
-        destination: '/login',
-        permenent: false,
+        destination: '/home',
+        permanent: true,
       },
     };
   }
