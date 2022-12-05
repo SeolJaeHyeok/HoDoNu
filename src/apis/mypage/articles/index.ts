@@ -1,7 +1,7 @@
 import { PatchUserProfileData, UserDetailData } from '@interfaces/user';
 import { instance } from '../..';
 
-interface UpdatePasswordAPI {
+interface UpdatePasswordParams {
   presentPassword: string;
   updatePassword: string;
 }
@@ -23,7 +23,7 @@ const mypageApi = {
   patchIntroduce: (introduce: string): Promise<string> =>
     instance.patch('/users/introduce', { introduce }).then(res => res.data.result),
 
-  patchPassword: ({ presentPassword, updatePassword }: UpdatePasswordAPI): Promise<string> =>
+  patchPassword: ({ presentPassword, updatePassword }: UpdatePasswordParams): Promise<string> =>
     instance
       .patch('/users/password', { presentPassword, updatePassword })
       .then(res => res.data.result),

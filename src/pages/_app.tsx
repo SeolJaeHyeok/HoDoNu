@@ -9,7 +9,7 @@ import { RecoilRoot } from 'recoil';
 import { getCookie } from 'cookies-next';
 import { instance } from '@apis/index';
 import { isLoginState, userInfoState } from '@atoms/userAtom';
-import { decodeJWT } from '@utils/decodeJWT';
+import { decodeJWT } from '@utils/func';
 
 export default function MyApp({
   Component,

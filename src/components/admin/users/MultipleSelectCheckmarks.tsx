@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { Button } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import adminApi from '@apis/admin/users';
+import adminUserApi from '@apis/admin/users';
 import { CategoryUpperType } from '@interfaces/board';
 
 const ITEM_HEIGHT = 48;
@@ -38,7 +38,7 @@ interface ItemProps {
 export default function MultipleSelectCheckmarks({ userId, blockTableList }: MultipleSelectProps) {
   const queryClient = useQueryClient();
 
-  const { mutate: postBlockMutate } = useMutation(adminApi.addBoardBlock, {
+  const { mutate: postBlockMutate } = useMutation(adminUserApi.addBoardBlock, {
     onSuccess: () => {
       alert('성공적으로 변경되었습니다.');
       queryClient.invalidateQueries(['admin', 'users']);
@@ -47,7 +47,7 @@ export default function MultipleSelectCheckmarks({ userId, blockTableList }: Mul
       alert(e.response.data.message);
     },
   });
-  const { mutate: deleteBlockMutate } = useMutation(adminApi.deleteBoardBlock, {
+  const { mutate: deleteBlockMutate } = useMutation(adminUserApi.deleteBoardBlock, {
     onSuccess: () => {
       alert('성공적으로 변경되었습니다.');
       queryClient.invalidateQueries(['admin', 'users', 'pagination']);

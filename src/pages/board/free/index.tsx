@@ -11,7 +11,7 @@ import BoardHeader from '@components/board/BoardHeader';
 import { searchDataAtom } from '@atoms/searchAtom';
 import { useRecoilValue } from 'recoil';
 import BoardSkeleton from '@components/board/BoardSkeleton';
-import { CategoryType } from '@interfaces/article';
+import { CategoryType } from '@interfaces/board';
 
 export default function FreeBoard() {
   const router = useRouter();

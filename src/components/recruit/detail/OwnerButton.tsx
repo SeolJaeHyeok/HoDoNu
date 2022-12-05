@@ -1,15 +1,15 @@
 import { useRouter } from 'next/router';
 import { Box, Button } from '@mui/material';
-import { recruitApi } from '@apis/recuit';
 import { useMutation } from '@tanstack/react-query';
+import recruitDetailApi from '@apis/recruit/detail';
 
-interface Props {
+interface OwnerButtonProps {
   articleId: number;
 }
 
-export default function OwnerButton({ articleId }: Props) {
+export default function OwnerButton({ articleId }: OwnerButtonProps) {
   const router = useRouter();
-  const deleteRecruit = useMutation(['deleteRecruit'], recruitApi.deleteOne, {
+  const deleteRecruit = useMutation(['deleteRecruit'], recruitDetailApi.deleteOne, {
     onSuccess: () => {
       router.push('/recruit');
     },

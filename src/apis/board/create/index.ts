@@ -1,6 +1,5 @@
-import { ArticleFormProps } from '@interfaces/board';
-
 import { instance } from '@apis/index';
+import { ArticleFormProps } from '@interfaces/board';
 
 const boardCreatApi = {
   //게시글 생성

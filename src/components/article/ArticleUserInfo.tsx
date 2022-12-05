@@ -6,7 +6,7 @@ import { ChangeEvent, MouseEvent, useState } from 'react';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { useMutation } from '@tanstack/react-query';
-import detailApi from '@apis/board/detail';
+import boardDetailApi from '@apis/board/detail';
 import MessageSendModal from '@components/modal/MessageSendModal';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
@@ -53,7 +53,7 @@ export default function ArticleUserInfo({ content }: ArticleUserInfoProps) {
       [name]: value,
     });
   };
-  const requsetSendMessage = useMutation(detailApi.postSendMessage, {
+  const requsetSendMessage = useMutation(boardDetailApi.postSendMessage, {
     onSuccess: () => {
       alert(`쪽지가 전송되었습니다.`);
     },
