@@ -58,7 +58,7 @@ export default function DoctorBoard() {
       alert('잘못된 접근입니다.');
       router.push(`${router.pathname}?page=1&perPage=5&sort=createdAt`);
     }
-  }, []);
+  }, [router]);
 
   return (
     res && (
