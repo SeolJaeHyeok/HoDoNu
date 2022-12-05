@@ -1,62 +1,42 @@
-export interface PostArticleRes {
-  result: {
-    articleId: number;
-    title: string;
-    content: string;
-  };
-  status: number;
-}
-
-export interface PostImgRes {
-  result: string;
-  status: number;
-}
-
-export interface PatchArticleRes {
-  result: {
-    createdAt: string;
+export interface PatchArticleData {
+  createdAt: string;
+  userId: string;
+  hits: number;
+  isActive: boolean;
+  articleId: number;
+  title: string;
+  content: string;
+  Image: string[];
+  user: {
     userId: string;
-    hits: number;
-    isActive: boolean;
-    articleId: number;
-    title: string;
-    content: string;
-    Image: string[];
-    user: {
-      userId: string;
-      email: string;
-      imgUrl: string;
-      nickname: string;
-    };
+    email: string;
+    imgUrl: string;
+    nickname: string;
   };
-  status: number;
 }
 
-export interface GetArticleRes {
+export interface GetArticleData {
   articles: ArticleProps[];
   category: CategoryUpperType;
   count: number;
 }
 
-export interface GetOneArticleRes {
-  result: {
-    createdAt: string;
+export interface GetOneArticleData {
+  createdAt: string;
+  userId: string;
+  hits: number;
+  isActive: boolean;
+  articleId: number;
+  title: string;
+  content: string;
+  Image: string[];
+  user: {
     userId: string;
-    hits: number;
-    isActive: boolean;
-    articleId: number;
-    title: string;
-    content: string;
-    Image: string[];
-    user: {
-      userId: string;
-      email: string;
-      imgUrl: string;
-      nickname: string;
-    };
-    comments: string[];
+    email: string;
+    imgUrl: string;
+    nickname: string;
   };
-  status: number;
+  comments: string[];
 }
 
 export interface BoardUserInfo {
@@ -121,40 +101,6 @@ export interface CommentUpdateProps {
   };
 }
 
-export interface CommentRegisterResponseAPI {
-  result: {
-    articleId: number;
-    userId: string;
-    content: string;
-    commentId: string;
-  };
-  status: number;
-}
-
-export interface CommentDeleteResponseAPI {
-  result: {
-    message: string;
-  };
-}
-
-export interface CommentUpdateResponseAPI {
-  result: {
-    createdAt: string;
-    commentId: number;
-    content: string;
-    userId: string;
-    user: {
-      userId: string;
-      imgUrl: string;
-      nickname: string;
-    };
-  };
-}
-
-export interface GetDetailDataResponseAPI {
-  result: BoardUserInfo;
-}
-
 export interface UserProps {
   userId: string;
   email: string;
@@ -183,7 +129,7 @@ export interface ArticleCategoryProps {
   setPage: any;
 }
 
-export interface ArticleForm {
+export interface ArticleFormProps {
   category: string;
   title: string;
   content: string;

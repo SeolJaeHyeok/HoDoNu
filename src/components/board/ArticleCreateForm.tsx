@@ -3,18 +3,14 @@ import { useRouter } from 'next/router';
 import { useMutation } from '@tanstack/react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
 import { TextField, Stack, Button, Box } from '@mui/material';
-
 import ArticleFormEditor from '@components/ArticleFormEditor';
-
 import { boardValidationSchema } from '@utils/validationSchema';
-
+import boardCreatApi from 'src/apis/board/create';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
 import { useEffect, useState } from 'react';
-import { ArticleForm } from '@interfaces/board';
-import boardCreatApi from '@apis/board/create';
+import { ArticleFormProps } from '@interfaces/board';
 
 export default function ArticleCreateForm({ categories }: { categories: string[] }) {
   const router = useRouter();
@@ -28,7 +24,7 @@ export default function ArticleCreateForm({ categories }: { categories: string[]
     getValues,
     reset,
     formState: { errors },
-  } = useForm<ArticleForm>({
+  } = useForm<ArticleFormProps>({
     resolver: yupResolver(boardValidationSchema),
     defaultValues: {
       category: category,
@@ -46,7 +42,7 @@ export default function ArticleCreateForm({ categories }: { categories: string[]
     },
   });
 
-  const onSubmit: SubmitHandler<ArticleForm> = data => {
+  const onSubmit: SubmitHandler<ArticleFormProps> = data => {
     const { title, category, content } = data;
     setCategory(category);
     postArticle.mutate({ title, category, content });

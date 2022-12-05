@@ -1,17 +1,15 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-
 import { useMutation } from '@tanstack/react-query';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { boardValidationSchema } from '@utils/validationSchema';
 import { Box, Button, Stack, TextField } from '@mui/material';
 import ArticleFormEditor from '@components/ArticleFormEditor';
 import { useRouter } from 'next/router';
-
+import boardEditApi from '@apis/board/edit';
 import React, { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
-import { ArticleForm } from '@interfaces/board';
-import boardEditApi from '@apis/board/edit';
+import { ArticleFormProps } from '@interfaces/board';
 
 export default function EditForm({ data, category }: any) {
   const router = useRouter();
@@ -31,7 +29,7 @@ export default function EditForm({ data, category }: any) {
     setValue,
     reset,
     formState: { errors },
-  } = useForm<ArticleForm>({
+  } = useForm<ArticleFormProps>({
     resolver: yupResolver(boardValidationSchema),
     defaultValues: {
       title,
@@ -42,7 +40,7 @@ export default function EditForm({ data, category }: any) {
 
   const mutation = useMutation(['createArticle'], boardEditApi.updateArticle, {
     onSuccess: res => {
-      const { articleId } = res.data.result;
+      const { articleId } = res;
       router.push(`${category.toLowerCase()}/${articleId}`);
     },
     onError: (e: any) => {
@@ -55,7 +53,7 @@ export default function EditForm({ data, category }: any) {
     setValue('content', editorState);
   };
 
-  const onSubmit: SubmitHandler<ArticleForm> = async data => {
+  const onSubmit: SubmitHandler<ArticleFormProps> = async data => {
     const { title, category, content } = data;
     mutation.mutate({ title, category, content, articleId });
   };

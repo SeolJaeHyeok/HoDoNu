@@ -1,3 +1,4 @@
+import boardListApi from '@apis/board/list';
 import BoardHeader from '@components/board/BoardHeader';
 import BoardList from '@components/board/BoardList';
 import BoardSkeleton from '@components/board/BoardSkeleton';
@@ -9,7 +10,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 import { searchDataAtom } from '@atoms/searchAtom';
 import { CategoryType } from '@interfaces/board';
-import boardListApi from '@apis/board/list';
 
 export default function DoctorBoard() {
   const router = useRouter();

@@ -1,11 +1,9 @@
-import { ArticleForm, PostArticleRes } from '@interfaces/board';
-
-import { AxiosResponse } from 'axios';
 import { instance } from '@apis/index';
+import { ArticleFormProps } from '@interfaces/board';
 
 const boardCreatApi = {
   //게시글 생성
-  createArticle: (articleForm: ArticleForm): Promise<AxiosResponse<PostArticleRes>> =>
+  createArticle: (articleForm: ArticleFormProps) =>
     instance.post(`/${articleForm.category}/articles`, articleForm),
 
   //이미지 생성

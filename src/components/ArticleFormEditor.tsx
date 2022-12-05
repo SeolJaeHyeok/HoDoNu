@@ -3,9 +3,8 @@ import dynamic from 'next/dynamic';
 import ReactQuill, { ReactQuillProps } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styled from '@emotion/styled';
-
-import LoadingSpinner from './LoadingSpinner';
 import boardCreatApi from '@apis/board/create';
+import LoadingSpinner from './LoadingSpinner';
 
 interface ArticleFormEditorProps {
   content?: string;
