@@ -7,6 +7,10 @@ import { Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import useBoardCommentMutation from '@hooks/query/board/useBoardCommentMutation';
 
+interface ArticleCommentContainerHookForm {
+  comment: string;
+}
+
 export default function ArticleCommentContainer({ result, categoryName }: any) {
   const loginUserId = useRecoilValue(userInfoState);
   const { fetchPostComment } = useBoardCommentMutation();
@@ -17,7 +21,7 @@ export default function ArticleCommentContainer({ result, categoryName }: any) {
     getValues,
     setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm<ArticleCommentContainerHookForm>();
 
   const handleRequestCommentData = () => {
     fetchPostComment.mutate({
