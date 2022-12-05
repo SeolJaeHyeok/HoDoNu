@@ -1,7 +1,7 @@
-import { makeProfileUrl } from './../utils/func';
+import { decodeJWT, makeProfileUrl } from './../utils/func';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
-import { decodeJWT } from '../utils/decodeJWT';
+
 import { isLoginState, profileUrl, userInfoState } from 'src/atoms/userAtom';
 import { deleteCookie, setCookie } from 'cookies-next';
 import { instance } from '@apis/index';
@@ -38,6 +38,7 @@ export function useUserActions() {
     const profileUrlWithoutS3 = makeProfileUrl(imgUrl);
     const decodedToken = await decodeJWT(accessToken);
     const { role, userId, jobCategory, authStatus, recruiterStatus }: any = decodedToken;
+
     instance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
     setCookie('refreshToken', refreshToken, {

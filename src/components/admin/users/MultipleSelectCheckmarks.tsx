@@ -11,7 +11,8 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { Button } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import adminApi from '@apis/admin';
+import adminUserApi from '@apis/admin/users';
+import { CategoryUpperType } from '@interfaces/board';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -37,7 +38,7 @@ interface ItemProps {
 export default function MultipleSelectCheckmarks({ userId, blockTableList }: MultipleSelectProps) {
   const queryClient = useQueryClient();
 
-  const { mutate: postBlockMutate } = useMutation(adminApi.addBoardBlock, {
+  const { mutate: postBlockMutate } = useMutation(adminUserApi.addBoardBlock, {
     onSuccess: () => {
       alert('성공적으로 변경되었습니다.');
       queryClient.invalidateQueries(['admin', 'users']);
@@ -46,7 +47,7 @@ export default function MultipleSelectCheckmarks({ userId, blockTableList }: Mul
       alert(e.response.data.message);
     },
   });
-  const { mutate: deleteBlockMutate } = useMutation(adminApi.deleteBoardBlock, {
+  const { mutate: deleteBlockMutate } = useMutation(adminUserApi.deleteBoardBlock, {
     onSuccess: () => {
       alert('성공적으로 변경되었습니다.');
       queryClient.invalidateQueries(['admin', 'users', 'pagination']);
@@ -97,10 +98,10 @@ export default function MultipleSelectCheckmarks({ userId, blockTableList }: Mul
         if (iItem.value === item.value && item.isSelected !== iItem.isSelected) {
           if (iItem.isSelected) {
             // Post
-            postBlockMutate({ userId, boardCategory: item.value });
+            postBlockMutate({ userId, boardCategory: item.value as CategoryUpperType });
           } else {
             // Delete
-            deleteBlockMutate({ userId, boardCategory: item.value });
+            deleteBlockMutate({ userId, boardCategory: item.value as CategoryUpperType });
           }
         }
       }

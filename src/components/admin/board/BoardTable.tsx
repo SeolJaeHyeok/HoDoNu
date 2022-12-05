@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -8,7 +7,7 @@ import BoardTableRow from './BoardTableRow';
 import React, { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { TextField } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import boardManageApi from '@apis/admin/board/boardManage';
+import boardManageApi from '@apis/admin/board';
 import { board, filter } from '@utils/const/adminBoardSelectFilter';
 import { debounce } from 'lodash';
 import { Pagination, PaginationItem } from '@mui/material';
@@ -41,8 +40,8 @@ export default function BoardTable({
       boardManageApi.getBoardAllData(currentBoard, currentPage, currentFilter, adminFilterInput),
     {
       onSuccess: data => {
-        setTotalData(data.data.result.count);
-        setBoardData(data.data.result.articles);
+        setTotalData(data.count);
+        setBoardData(data.articles);
         if (adminFilterInput && total > 10) {
           return;
         } else if (adminFilterInput) {

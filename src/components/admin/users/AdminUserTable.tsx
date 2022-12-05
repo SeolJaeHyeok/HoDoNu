@@ -6,15 +6,17 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { AdminUserProps } from '@interfaces/admin';
+
 import AdminUserTableBody from './AdminUserTableBody';
 import NoSearchResult from './NoSearchResult';
+import { UserAuthType } from '@apis/admin/users';
+import { AdminUserData } from '@interfaces/admin';
 
 interface AdminUserTableProps {
-  users: AdminUserProps[];
+  users: AdminUserData[];
   handleDeleteUser: (userId: string) => void;
-  handleEditUserRecruitAuth: (userId: string, recruiterStatus: string) => void;
-  handleEditUserActiveAuth: (userId: string, authStatus: string) => void;
+  handleEditUserRecruitAuth: (userId: string, recruiterStatus: UserAuthType) => void;
+  handleEditUserActiveAuth: (userId: string, authStatus: UserAuthType) => void;
   searchQuery: string;
 }
 
@@ -50,7 +52,7 @@ export default function AdminUserTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {users?.map((user: AdminUserProps) => (
+          {users?.map((user: AdminUserData) => (
             <AdminUserTableBody
               key={user.userId}
               handleEditUserActiveAuth={handleEditUserActiveAuth}

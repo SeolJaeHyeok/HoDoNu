@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Link from 'next/link';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import boardManageApi from '@apis/admin/board/boardManage';
+import boardManageApi from '@apis/admin/board';
 import { BoardDataState } from '@pages/admin/board';
 import { dateFormatter } from '@utils/func';
 

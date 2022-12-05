@@ -1,12 +1,12 @@
-import LoadingSpinner from '@components/LoadingSpinner';
 import RecruitCardView from '@components/recruit/index/RecruitCardView';
 import RecruitHeader from '@components/recruit/index/RecruitHearder';
 import RecruitTags from '@components/recruit/index/RecruitTags';
 import styled from '@emotion/styled';
 import useRecruitQuery from '@hooks/query/recruit/useRecruitQuery';
 import useRecruitTagQuery from '@hooks/query/recruit/useRecruitTagQuery';
-import { JobList } from '@interfaces/recruit/list/list';
-import filterTagJoinUrl from '@utils/filterTagJoinUrl';
+import { JobList } from '@interfaces/recruit';
+import { filterTagJoinUrl } from '@utils/func';
+
 import { useState } from 'react';
 
 export interface TagsIdState {
@@ -22,16 +22,8 @@ export default function Recruit() {
 
   const requestURL = filterTagJoinUrl(searchFilterTagNames, tagsId, searchBarFilterInput);
 
-  const { data: jobLists, isFetching } = useRecruitQuery(requestURL);
+  const { data: jobLists } = useRecruitQuery(requestURL);
   const { data: tagLists } = useRecruitTagQuery();
-
-  if (isFetching) {
-    return (
-      <LoadingWrapper>
-        <LoadingSpinner />
-      </LoadingWrapper>
-    );
-  }
 
   return (
     <RecruitWrapper>
@@ -53,10 +45,10 @@ export default function Recruit() {
         searchBarFilterInput={searchBarFilterInput}
       />
       <RecruitContentContainer>
-        {jobLists.result[0]?.length === 0 ? (
+        {jobLists?.result[0]?.length === 0 ? (
           <RecruitSearchNoContent>검색 결과가 존재하지 않습니다.</RecruitSearchNoContent>
         ) : (
-          jobLists.result[0]
+          jobLists?.result[0]
             ?.filter((el: { isActive: boolean }) => el.isActive === true)
             .map((job: JobList, idx: number) => (
               <RecruitCardView
@@ -110,11 +102,4 @@ const RecruitContentContainer = styled.div`
   margin: 0 auto;
   flex-wrap: wrap;
   justify-content: center;
-`;
-
-const LoadingWrapper = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
 `;

@@ -1,12 +1,16 @@
 import { Box, Typography, Divider } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { useQuery } from '@tanstack/react-query';
-import messageApi from '@apis/message/message';
+import messageApi from '@apis/message';
 import MessageItem from './MessageItem';
 
 export default function Sent() {
-  const { data } = useQuery(['message', 'sent'], () => messageApi.getSentMessage());
-  const dataBeforeCheck = data?.result.filter(item => item.isCheck === false);
+  const { data } = useQuery(['message', 'sent'], () => messageApi.getSentMessage(), {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
+
+  const dataBeforeCheck = data?.filter(item => item.isCheck === false);
   return (
     <Box
       sx={{

@@ -2,11 +2,12 @@ import MainBoardList from '@components/main/MainBoardList';
 import Carousel from '@components/MainCarousel';
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import boardApi from 'src/apis/board';
+
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 import MainBoardSkeleton from '@components/main/MainBoardSkeleton';
 import queryKeys from '@hooks/query/home/queryKeys';
-import { GetArticleRes } from '@interfaces/board/article';
+import { GetArticleData } from '@interfaces/board';
+import boardListApi from '@apis/board/list';
 
 const API_PARAMS = { page: '1', perPage: '5' };
 
@@ -14,13 +15,13 @@ export const getStaticProps = async () => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery(queryKeys.detail('free'), () =>
-    boardApi.getAllFreeBoards(API_PARAMS)
+    boardListApi.getAllFreeBoards(API_PARAMS)
   );
   await queryClient.prefetchQuery(queryKeys.detail('doctor'), () =>
-    boardApi.getAllDoctorBoards(API_PARAMS)
+    boardListApi.getAllDoctorBoards(API_PARAMS)
   );
   await queryClient.prefetchQuery(queryKeys.detail('nurse'), () =>
-    boardApi.getAllNurseBoards(API_PARAMS)
+    boardListApi.getAllNurseBoards(API_PARAMS)
   );
 
   return {
@@ -31,9 +32,9 @@ export const getStaticProps = async () => {
 };
 
 export default function Home() {
-  const { data: freeArticles } = useQuery<GetArticleRes>(['main', 'board', 'free']);
-  const { data: doctorArticles } = useQuery<GetArticleRes>(['main', 'board', 'doctor']);
-  const { data: nurseArticles } = useQuery<GetArticleRes>(['main', 'board', 'nurse']);
+  const { data: freeArticles } = useQuery<GetArticleData>(['main', 'board', 'free']);
+  const { data: doctorArticles } = useQuery<GetArticleData>(['main', 'board', 'doctor']);
+  const { data: nurseArticles } = useQuery<GetArticleData>(['main', 'board', 'nurse']);
 
   return (
     <>
@@ -55,9 +56,9 @@ export default function Home() {
           <MainBoardSkeleton />
         ) : (
           <>
-            <MainBoardList category={'자유 게시판'} articles={freeArticles.result.articles} />
-            <MainBoardList category={'의사 게시판'} articles={doctorArticles.result.articles} />
-            <MainBoardList category={'간호사 게시판'} articles={nurseArticles.result.articles} />
+            <MainBoardList category={'자유 게시판'} articles={freeArticles.articles} />
+            <MainBoardList category={'의사 게시판'} articles={doctorArticles.articles} />
+            <MainBoardList category={'간호사 게시판'} articles={nurseArticles.articles} />
           </>
         )}
       </BoardContainer>

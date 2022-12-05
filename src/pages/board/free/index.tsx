@@ -1,4 +1,4 @@
-import boardApi from '@apis/board';
+import boardListApi from '@apis/board/list';
 import BoardList from '@components/board/BoardList';
 
 import Pagination from '@components/Pagination';
@@ -11,7 +11,7 @@ import BoardHeader from '@components/board/BoardHeader';
 import { searchDataAtom } from '@atoms/searchAtom';
 import { useRecoilValue } from 'recoil';
 import BoardSkeleton from '@components/board/BoardSkeleton';
-import { CategoryType } from '@interfaces/article';
+import { CategoryType } from '@interfaces/board';
 
 export default function FreeBoard() {
   const router = useRouter();
@@ -24,7 +24,7 @@ export default function FreeBoard() {
   const { data: res, isLoading } = useQuery(
     ['board', 'free', router.query.sort, router.query.page, router.query.perPage, searchText],
     () =>
-      boardApi.getAllFreeBoards({
+      boardListApi.getAllFreeBoards({
         page: router.query.page,
         perPage: router.query.perPage,
         sort: router.query.sort,
@@ -37,7 +37,7 @@ export default function FreeBoard() {
   );
 
   // 총 페이지 수
-  const TOTAL_PAGE = res && Math.ceil(res.result.count / Number(router.query.perPage));
+  const TOTAL_PAGE = res && Math.ceil(res.count / Number(router.query.perPage));
 
   // Pagination - page!
   const handlePageNavigate = (pageNumber: number) => {
@@ -64,14 +64,14 @@ export default function FreeBoard() {
           page={page}
           sort={sort}
           perPage={perPage}
-          category={res.result.category}
+          category={res.category}
         />
-        {res?.result.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
+        {res?.articles.length === 0 && <div>검색 결과가 없습니다.</div>}
         {!isLoading ? (
           <>
             <BoardList
-              boardCategory={res.result.category.toLowerCase() as CategoryType}
-              articles={res.result.articles}
+              boardCategory={res.category.toLowerCase() as CategoryType}
+              articles={res.articles}
             />
             <Pagination
               length={TOTAL_PAGE}

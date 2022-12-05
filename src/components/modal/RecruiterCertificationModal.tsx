@@ -3,12 +3,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import BadgeIcon from '@mui/icons-material/Badge';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import authApi from '@apis/auth/auth';
 import CustomModal from '@components/modal/CustomModal';
-import { Status } from '@interfaces/user/userInfo';
+import { Status } from '@interfaces/user/index';
 import FileUploader from '@components/recruit/FileUploader';
 import { FileProps } from '@interfaces/recruit';
 import useModal from '@hooks/useModal';
+import mypageApi from '@apis/mypage/articles';
 
 //recruitStatus : inActive, pending, active, reject
 /**
@@ -28,7 +28,7 @@ export default function RecruiterCertificationModal({
   const [fileList, setFileList] = useState<FileProps[]>([]);
   const queryClient = useQueryClient();
 
-  const updateFile = useMutation(authApi.postRecruiterCertification, {
+  const updateFile = useMutation(mypageApi.postRecruiterCertification, {
     onSuccess: () => {
       queryClient.invalidateQueries(['detailUser', userId]);
       alert('성공적으로 등록되었습니다. ');

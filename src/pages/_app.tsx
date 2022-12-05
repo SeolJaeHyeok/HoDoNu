@@ -7,9 +7,10 @@ import { Hydrate, QueryClient, QueryClientProvider, DehydratedState } from '@tan
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RecoilRoot } from 'recoil';
 import { getCookie } from 'cookies-next';
-import { instance } from '@apis/index';
+
 import { isLoginState, userInfoState } from '@atoms/userAtom';
-import { decodeJWT } from '@utils/decodeJWT';
+import { instance } from '@apis/index';
+import { decodeJWT } from '@utils/func';
 
 export default function MyApp({
   Component,
@@ -49,16 +50,12 @@ MyApp.getInitialProps = async (ctx: any) => {
   let decodedToken;
 
   if (userId && req && refreshToken) {
-    try {
-      const res = await instance.post(`/users/${userId}/reissue/version2`, {
-        refreshToken,
-      });
-      const newAccessToken = res.data.result.accessToken;
-      decodedToken = await decodeJWT(newAccessToken);
-      instance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
-    } catch (err) {
-      console.log(err);
-    }
+    const res = await instance.post(`/users/${userId}/reissue/version2`, {
+      refreshToken,
+    });
+    const newAccessToken = res.data.result.accessToken;
+    decodedToken = decodeJWT(newAccessToken);
+    instance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
   }
 
   return {

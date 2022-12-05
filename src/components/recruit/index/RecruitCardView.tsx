@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { RecruitCardViewProps } from '@interfaces/recruit/list/list';
+import { RecruitCardViewProps } from '@interfaces/recruit';
+
 import Image from 'next/image';
 import Link from 'next/link';
 

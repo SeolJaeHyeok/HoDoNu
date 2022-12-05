@@ -14,8 +14,9 @@ import {
 } from '@mui/material';
 import RecruitTableToolbar from './RecruitTableToolbar';
 import RecruitTableHead from './RecruitTableHead';
-import { TableData } from '@interfaces/admin/recruit';
+
 import { dateFormatter, getComparator } from '@utils/func';
+import { TableData } from '@interfaces/admin';
 
 type Order = 'asc' | 'desc';
 

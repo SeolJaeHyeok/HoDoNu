@@ -1,3 +1,6 @@
+import authApi from '@apis/auth';
+import { searchFilterTagsObj } from '@utils/const/searchFilterTags';
+
 export function convertTime(date: string) {
   // http://ccambo.github.io/Dev/Typescript/1.typescript-problem-solving-and-tips/
   const start = +new Date(date);
@@ -72,4 +75,37 @@ export const makeProfileUrl = (imgUrl: string): string => {
       : `https://${process.env.NEXT_PUBLIC_PRODUCTION_IMAGE_BASE_URL}`;
 
   return imgUrl.replace(s3Url!, '');
+};
+
+export const decodeJWT = (token: string) => {
+  if (!token) return;
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split('')
+      .map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join('')
+  );
+
+  return JSON.parse(jsonPayload);
+};
+
+export const filterTagJoinUrl = (searchTagNames: any, searchTagIds: any, searchInput: any) => {
+  const searchRequestTagName = searchTagNames
+    .map((tag: any) => searchFilterTagsObj[tag] + `=${searchInput}`)
+    .join('&');
+
+  const searchRequestTagId = searchTagIds.tagIds.map((tag: number) => `tagIds[]=${tag}`).join('&');
+  const searchRequestURL = searchRequestTagName + `&${searchRequestTagId}`;
+  return searchRequestURL;
+};
+
+export const getUserRole = async (userId: string, refreshToken: string) => {
+  const res = await authApi.getAccessToken(userId, refreshToken);
+  const newAccessToken = res.accessToken;
+  const decodedToken = decodeJWT(newAccessToken);
+  return decodedToken.role;
 };

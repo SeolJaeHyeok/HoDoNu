@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import AdminUserSearch from '@components/admin/users/AdminUserSearch';
 import AdminUserTable from '@components/admin/users/AdminUserTable';
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import adminApi from '@apis/admin';
+import adminUserApi, { UserAuthType } from '@apis/admin/users';
 import styled from '@emotion/styled';
 import useInterSectionObeserver from '@hooks/useInterSectionObeserver';
 import LoadingSpinner from '@components/LoadingSpinner';
@@ -11,6 +11,8 @@ import { Box } from '@mui/material';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '@atoms/userAtom';
 import { useRouter } from 'next/router';
+import { getCookie } from 'cookies-next';
+import { getUserRole } from '@utils/func';
 
 const CATEGORY_TABLE: {
   [index: string]: 'Doctor' | 'Nurse';
@@ -36,7 +38,7 @@ export default function AdminUser() {
     ['admin', 'users', 'pagination', searchQueryKey, searchQuery],
     ({ pageParam = 1 }) => {
       if (searchQueryKey === 'name') {
-        return adminApi.getAllUsers({
+        return adminUserApi.getAllUsers({
           name: searchQuery,
           page: pageParam,
           perPage: String(10),
@@ -44,23 +46,23 @@ export default function AdminUser() {
       }
       if (searchQueryKey === 'jobCategory') {
         if (CATEGORY_TABLE[searchQuery]) {
-          return adminApi.getAllUsers({
+          return adminUserApi.getAllUsers({
             jobCategory: CATEGORY_TABLE[searchQuery],
             page: pageParam,
             perPage: String(10),
           });
         }
-        return adminApi.getAllUsers({ page: pageParam, perPage: String(10) });
+        return adminUserApi.getAllUsers({ page: pageParam, perPage: String(10) });
       }
       if (searchQueryKey === 'startDate') {
-        return adminApi.getAllUsers({
+        return adminUserApi.getAllUsers({
           startDate: searchQuery,
           page: pageParam,
           perPage: String(10),
         });
       }
       if (searchQueryKey === '') {
-        return adminApi.getAllUsers({ page: pageParam, perPage: String(10) });
+        return adminUserApi.getAllUsers({ page: pageParam, perPage: String(10) });
       }
     },
     {
@@ -76,7 +78,7 @@ export default function AdminUser() {
   );
 
   // 회원 삭제 API
-  const { mutateAsync: deleteUserMutate } = useMutation(adminApi.deleteUser, {
+  const { mutateAsync: deleteUserMutate } = useMutation(adminUserApi.deleteUser, {
     onSuccess: () => {
       alert('성공적으로 삭제되었습니다.');
       queryClient.invalidateQueries(['admin', 'users', 'pagination', searchQueryKey, searchQuery]);
@@ -87,7 +89,7 @@ export default function AdminUser() {
   });
 
   // 채용 권한 변경 API
-  const { mutateAsync: editUserRecruitAuthMutate } = useMutation(adminApi.editUserRecruitAuth, {
+  const { mutateAsync: editUserRecruitAuthMutate } = useMutation(adminUserApi.editUserRecruitAuth, {
     onSuccess: data => {
       alert(data.data.result);
       queryClient.invalidateQueries(['admin', 'users', 'pagination', searchQueryKey, searchQuery]);
@@ -98,7 +100,7 @@ export default function AdminUser() {
   });
 
   // 활동 권한 변경 API
-  const { mutateAsync: editUserActiveAuthMutate } = useMutation(adminApi.editUserActiveAuth, {
+  const { mutateAsync: editUserActiveAuthMutate } = useMutation(adminUserApi.editUserActiveAuth, {
     onSuccess: data => {
       alert(data.data.result);
       queryClient.invalidateQueries(['admin', 'users', 'pagination', searchQueryKey, searchQuery]);
@@ -114,13 +116,13 @@ export default function AdminUser() {
   };
 
   // 관리자 - 채용 권한 변경 함수
-  const handleEditUserRecruitAuth = async (userId: string, recruiterStatus: string) => {
+  const handleEditUserRecruitAuth = async (userId: string, recruiterStatus: UserAuthType) => {
     const bodyData = { recruiterStatus };
     await editUserRecruitAuthMutate({ userId, bodyData });
   };
 
   // 관리자 - 회원 활동 권한 함수
-  const handleEditUserActiveAuth = async (userId: string, authStatus: string) => {
+  const handleEditUserActiveAuth = async (userId: string, authStatus: UserAuthType) => {
     const bodyData = { authStatus };
     await editUserActiveAuthMutate({ userId, bodyData });
   };
@@ -144,7 +146,6 @@ export default function AdminUser() {
     [userData]
   );
 
-  // TODO: ServerSide에서 처리
   useEffect(() => {
     if (userInfo && userInfo.role !== 'Admin') {
       alert('관리자가 아니면 접근할 수 없는 페이지입니다.');
@@ -190,3 +191,34 @@ const Container = styled.div`
 const Target = styled.div`
   height: 1px;
 `;
+
+export const getServerSideProps = async (context: any) => {
+  const { req, res } = context;
+  // 로그인 안한 유저는 login 페이지로
+  if (!context.req.cookies.refreshToken) {
+    return {
+      redirect: {
+        destination: '/login',
+        permenent: false,
+      },
+    };
+  }
+
+  const refreshToken = getCookie('refreshToken', { req, res });
+  const userId = getCookie('userId', { req, res });
+  const role = await getUserRole(userId as string, refreshToken as string);
+
+  //role이 admin이 아니면 login 페이지로
+  if (role !== 'Admin') {
+    return {
+      redirect: {
+        destination: '/home',
+        permanent: true,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
