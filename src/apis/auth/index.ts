@@ -12,6 +12,10 @@ interface RegisterEmailParams {
   authNumber: string;
 }
 
+interface AccessTokenData {
+  accessToken: string;
+}
+
 const authApi = {
   register: (regisetUserData: RegisterUserInfo): Promise<AxiosResponse<any, any>> => {
     return instance.post('/users/signup', regisetUserData);
@@ -22,6 +26,13 @@ const authApi = {
 
   login: ({ email, password }: LoginParams): Promise<AxiosResponse<LoginRes>> =>
     instance.post(`/users/signin`, { email, password }),
+
+  getAccessToken: (userId: string, refreshToken: string): Promise<AccessTokenData> =>
+    instance
+      .post(`/users/${userId}/reissue/version2`, {
+        refreshToken,
+      })
+      .then(res => res.data.result),
 };
 
 export default authApi;

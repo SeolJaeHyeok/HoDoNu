@@ -1,6 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 import { deleteCookie, getCookie } from 'cookies-next';
+import Router from 'next/router';
 
 const refreshToken = getCookie('refreshToken');
 const userId = getCookie('userId');
@@ -11,7 +12,7 @@ const refresh = async () => {
   });
 
   const newAccessToken = res.data.result.accessToken;
-  return (instance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`);
+  instance.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
 };
 
 export const instance = axios.create({
@@ -49,6 +50,7 @@ instance.interceptors.response.use(
   },
   async function (error) {
     if (error.response && error.response.data && error.response.data.errorCode === 'JwtError') {
+      // refresh token 만료시
       if (error.response.data.message === '로그인을 다시해주세요') {
         sessionStorage?.clear();
         localStorage?.clear();
@@ -56,11 +58,17 @@ instance.interceptors.response.use(
 
         deleteCookie('refreshToken');
         deleteCookie('userId');
-        deleteCookie('role');
-        return;
+        alert('로그인이 만료되었습니다.');
+        return Router.reload();
       }
+
       refresh();
-      return instance(error.config);
+      const res = await instance.post(`/users/${userId}/reissue/version2`, {
+        refreshToken,
+      });
+      const newAccessToken = res.data.result.accessToken;
+
+      return instance({ ...error.config, headers: { Authorization: `Bearer ${newAccessToken}` } });
     }
 
     return Promise.reject(error);

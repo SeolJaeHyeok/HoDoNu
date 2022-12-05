@@ -1,3 +1,4 @@
+import authApi from '@apis/auth';
 import { searchFilterTagsObj } from '@utils/const/searchFilterTags';
 
 export function convertTime(date: string) {
@@ -100,4 +101,11 @@ export const filterTagJoinUrl = (searchTagNames: any, searchTagIds: any, searchI
   const searchRequestTagId = searchTagIds.tagIds.map((tag: number) => `tagIds[]=${tag}`).join('&');
   const searchRequestURL = searchRequestTagName + `&${searchRequestTagId}`;
   return searchRequestURL;
+};
+
+export const getUserRole = async (userId: string, refreshToken: string) => {
+  const res = await authApi.getAccessToken(userId, refreshToken);
+  const newAccessToken = res.accessToken;
+  const decodedToken = decodeJWT(newAccessToken);
+  return decodedToken.role;
 };
