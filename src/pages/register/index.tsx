@@ -35,7 +35,6 @@ export default function Register() {
     });
   };
 
-  // react-hook-form 관련
   const {
     register,
     handleSubmit,
