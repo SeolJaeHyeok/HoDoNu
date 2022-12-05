@@ -114,7 +114,7 @@ const CommentTextArea = styled.textarea<any>`
   }
 `;
 
-const ErrorMsg = styled.span<any>`
+const ErrorMsg = styled.span`
   display: block;
   margin-top: 8px;
   color: red;
