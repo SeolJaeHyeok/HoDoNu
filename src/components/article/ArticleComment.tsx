@@ -168,12 +168,12 @@ const CommentTextArea = styled.textarea`
   resize: none;
   padding: 10px 15px;
   border-radius: 15px;
-  width: 360px;
+  width: 330px;
   overflow: hidden;
   margin-right: 8px;
 `;
 
-const ErrorMsg = styled.span<any>`
+const ErrorMsg = styled.span`
   display: block;
   margin-top: 8px;
   color: red;
