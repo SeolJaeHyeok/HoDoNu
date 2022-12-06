@@ -114,4 +114,11 @@ const BoardHeaderConatiner = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 20px 0px;
+  flex-wrap: wrap;
+
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    * {
+      margin-bottom: 5px;
+    }
+  }
 `;

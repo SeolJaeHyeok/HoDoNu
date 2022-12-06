@@ -39,7 +39,10 @@ export default function BoardSkeleton() {
 }
 
 const BoardSkeletonContainer = styled.div`
-  width: 900px;
+  width: 850px;
   position: relative;
   margin: 20px auto;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 320px;
+  }
 `;

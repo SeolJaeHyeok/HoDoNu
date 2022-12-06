@@ -43,7 +43,7 @@ export default function Pagination({ length, show, start, handler }: PaginationP
             if (pageKey > 0) numberingHandler(0);
           }}
         >
-          <KeyboardDoubleArrowLeftIcon />
+          <KeyboardDoubleArrowLeftIcon sx={{ fontSize: { xs: 'small', md: 'medium' } }} />
         </Card>
         {/* 한 페이지 앞 */}
         <Card
@@ -52,7 +52,7 @@ export default function Pagination({ length, show, start, handler }: PaginationP
             numberingHandler(pageKey - 1);
           }}
         >
-          <KeyboardArrowLeftIcon />
+          <KeyboardArrowLeftIcon sx={{ fontSize: { xs: 'small', md: 'medium' } }} />
         </Card>
       </CardContainer>
       <CardContainer>
@@ -99,7 +99,7 @@ export default function Pagination({ length, show, start, handler }: PaginationP
             numberingHandler(pageKey + 1);
           }}
         >
-          <KeyboardArrowRightIcon />
+          <KeyboardArrowRightIcon sx={{ fontSize: { xs: 'small', md: 'medium' } }} />
         </Card>
         {/* 맨 뒤로 */}
         <Card
@@ -108,7 +108,7 @@ export default function Pagination({ length, show, start, handler }: PaginationP
             if (pageKey < length - 1) numberingHandler(length - 1);
           }}
         >
-          <KeyboardDoubleArrowRightIcon />
+          <KeyboardDoubleArrowRightIcon sx={{ fontSize: { xs: 'small', md: 'medium' } }} />
         </Card>
       </CardContainer>
     </Container>
@@ -120,7 +120,11 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 1rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    margin-left: 0;
+  }
 `;
 
 const CardContainer = styled.div`
