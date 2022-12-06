@@ -53,10 +53,6 @@ const ItemTitle = styled.a`
     text-decoration: underline;
     font-weight: 500;
   }
-
-  @media (max-width: 432px) {
-    padding: 0;
-  }
 `;
 
 const AuthorContainer = styled.div`

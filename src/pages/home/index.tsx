@@ -32,9 +32,15 @@ export const getStaticProps = async () => {
 };
 
 export default function Home() {
-  const { data: freeArticles } = useQuery<GetArticleData>(['main', 'board', 'free']);
-  const { data: doctorArticles } = useQuery<GetArticleData>(['main', 'board', 'doctor']);
-  const { data: nurseArticles } = useQuery<GetArticleData>(['main', 'board', 'nurse']);
+  const { data: freeArticles } = useQuery<GetArticleData>(['main', 'board', 'free'], () =>
+    boardListApi.getAllFreeBoards(API_PARAMS)
+  );
+  const { data: doctorArticles } = useQuery<GetArticleData>(['main', 'board', 'doctor'], () =>
+    boardListApi.getAllDoctorBoards(API_PARAMS)
+  );
+  const { data: nurseArticles } = useQuery<GetArticleData>(['main', 'board', 'nurse'], () =>
+    boardListApi.getAllNurseBoards(API_PARAMS)
+  );
 
   return (
     <>
