@@ -161,7 +161,7 @@ export default function MyPageArticles() {
 
   return (
     <Container>
-      <Box sx={{ width: '1000px', margin: '50px auto' }}>
+      <Box sx={{ width: { xs: '320px', sm: '100%' }, margin: '50px auto' }}>
         <Paper sx={{ width: '100%', mb: 2 }}>
           <MyPageTableToolbar selectedItems={selected} />
           <TableContainer>
