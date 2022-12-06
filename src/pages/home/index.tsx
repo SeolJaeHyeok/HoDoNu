@@ -32,9 +32,30 @@ export const getStaticProps = async () => {
 };
 
 export default function Home() {
-  const { data: freeArticles } = useQuery<GetArticleData>(['main', 'board', 'free']);
-  const { data: doctorArticles } = useQuery<GetArticleData>(['main', 'board', 'doctor']);
-  const { data: nurseArticles } = useQuery<GetArticleData>(['main', 'board', 'nurse']);
+  const { data: freeArticles } = useQuery<GetArticleData>(
+    ['main', 'board', 'free'],
+    () => boardListApi.getAllFreeBoards(API_PARAMS),
+    {
+      staleTime: 1000 * 60 * 30,
+      cacheTime: 1000 * 60 * 30,
+    }
+  );
+  const { data: doctorArticles } = useQuery<GetArticleData>(
+    ['main', 'board', 'doctor'],
+    () => boardListApi.getAllDoctorBoards(API_PARAMS),
+    {
+      staleTime: 1000 * 60 * 30,
+      cacheTime: 1000 * 60 * 30,
+    }
+  );
+  const { data: nurseArticles } = useQuery<GetArticleData>(
+    ['main', 'board', 'nurse'],
+    () => boardListApi.getAllNurseBoards(API_PARAMS),
+    {
+      staleTime: 1000 * 60 * 30,
+      cacheTime: 1000 * 60 * 30,
+    }
+  );
 
   return (
     <>
@@ -71,11 +92,21 @@ const BoardContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 10px;
   margin: 50px 0px;
+  @media (max-width: 432px) {
+    grid-template-columns: 1fr;
+    margin: 0;
+  }
 `;
 
 const MainCarouselContainer = styled.div`
-  width: 1200px;
+  width: 100%;
   margin: 50px auto;
+  padding: 0 20px;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: inherit;
+    padding: 0;
+    margin-top: 10px;
+  }
 `;
 
 const CarouselImage = styled.img`
