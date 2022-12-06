@@ -42,7 +42,7 @@ const ItemNumber = styled.span`
 `;
 
 const ItemTitle = styled.a`
-  width: 150px;
+  width: inherit;
   padding: 0 5px;
   overflow: hidden;
   text-overflow: ellipsis;

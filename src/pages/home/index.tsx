@@ -71,11 +71,21 @@ const BoardContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 10px;
   margin: 50px 0px;
+  @media (max-width: 432px) {
+    grid-template-columns: 1fr;
+    margin: 0;
+  }
 `;
 
 const MainCarouselContainer = styled.div`
-  width: 1200px;
+  width: 100%;
   margin: 50px auto;
+  padding: 0 20px;
+  @media (max-width: 432px) {
+    width: inherit;
+    padding: 0;
+    margin-top: 10px;
+  }
 `;
 
 const CarouselImage = styled.img`

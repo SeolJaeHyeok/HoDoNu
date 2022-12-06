@@ -58,4 +58,9 @@ const BoardTitle = styled.h1`
 
 const ListContainer = styled.div`
   margin: 40px;
+
+  @media (max-width: 432px) {
+    margin: 10px 0;
+    padding: 0 10px;
+  }
 `;
