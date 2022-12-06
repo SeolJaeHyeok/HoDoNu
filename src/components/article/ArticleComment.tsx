@@ -135,7 +135,7 @@ const CommentContainer = styled.div`
 `;
 const CommentContent = styled.p`
   display: inline-block;
-  width: 360px;
+  width: 100%;
   word-break: break-all;
   margin: auto 0;
   margin-left: 20px;
@@ -168,12 +168,13 @@ const CommentTextArea = styled.textarea`
   resize: none;
   padding: 10px 15px;
   border-radius: 15px;
-  width: 360px;
+  width: 78vw;
   overflow: hidden;
+  overflow-y: scroll;
   margin-right: 8px;
 `;
 
-const ErrorMsg = styled.span<any>`
+const ErrorMsg = styled.span`
   display: block;
   margin-top: 8px;
   color: red;
