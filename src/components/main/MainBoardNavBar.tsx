@@ -32,8 +32,25 @@ const BoardNav = styled.nav`
   .time {
     margin-right: 20px;
   }
+  @media (max-width: 432px) {
+    .number {
+      margin-left: 0;
+    }
+
+    .author {
+      margin-left: 30px;
+      margin-right: 0;
+    }
+
+    .time {
+      margin-right: 0;
+    }
+  }
 `;
 
 const BoardNavItem = styled.span`
   text-align: center;
+  @media (max-width: 432px) {
+    font-size: 75%;
+  }
 `;
