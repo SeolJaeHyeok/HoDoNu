@@ -32,7 +32,7 @@ const BoardNav = styled.nav`
   .time {
     margin-right: 20px;
   }
-  @media (max-width: 432px) {
+  @media screen and (min-width: 320px) and (max-width: 768px) {
     .number {
       margin-left: 0;
     }
@@ -50,7 +50,7 @@ const BoardNav = styled.nav`
 
 const BoardNavItem = styled.span`
   text-align: center;
-  @media (max-width: 432px) {
+  @media screen and (min-width: 320px) and (max-width: 768px) {
     font-size: 75%;
   }
 `;

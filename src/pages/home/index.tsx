@@ -102,7 +102,7 @@ const MainCarouselContainer = styled.div`
   width: 100%;
   margin: 50px auto;
   padding: 0 20px;
-  @media (max-width: 432px) {
+  @media screen and (min-width: 320px) and (max-width: 768px) {
     width: inherit;
     padding: 0;
     margin-top: 10px;

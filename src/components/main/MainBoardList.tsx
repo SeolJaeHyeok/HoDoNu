@@ -59,7 +59,7 @@ const BoardTitle = styled.h1`
 const ListContainer = styled.div`
   margin: 40px;
 
-  @media (max-width: 432px) {
+  @media screen and (min-width: 320px) and (max-width: 768px) {
     margin: 10px 0;
     padding: 0 10px;
   }
