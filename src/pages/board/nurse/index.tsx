@@ -75,6 +75,7 @@ export default function NurseBoard() {
               length={TOTAL_PAGE}
               start={router.query.page ? +router.query.page - 1 : 0}
               handler={pageNumber => handlePageNavigate(pageNumber)}
+              show={3}
             />
           </>
         ) : (
@@ -85,9 +86,12 @@ export default function NurseBoard() {
   );
 }
 const BoardContainer = styled.div`
-  width: 900px;
+  width: 850px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   margin: 0 auto;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 320px;
+  }
 `;

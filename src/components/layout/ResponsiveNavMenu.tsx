@@ -7,7 +7,11 @@ import { Link as MuiLink, Box, IconButton, MenuItem, Menu } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu';
 
 export default function ResponsiveNavMenu() {
-  const menuItems: any = { home: '/home', 게시판: '/board/free', 채용: '/recruit' };
+  const menuItems: any = {
+    home: '/home',
+    게시판: '/board/free?page=1&perPage=5&sort=createdAt',
+    채용: '/recruit',
+  };
   const pages = ['home', '게시판', '채용'];
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

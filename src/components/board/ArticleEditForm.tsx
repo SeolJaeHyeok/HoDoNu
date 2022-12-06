@@ -72,6 +72,7 @@ export default function EditForm({ data, category }: any) {
           '& > :not(style) + :not(style)': {
             mt: 2,
           },
+          width: { xs: '300px', sm: '650px' },
         }}
       >
         <TextField

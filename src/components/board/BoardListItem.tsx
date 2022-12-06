@@ -49,10 +49,13 @@ export default function BoardListItem(props: BoardListItemProps) {
 }
 
 const ItemContainer = styled.div`
-  width: 900px;
+  width: 850px;
   border-bottom: 1px solid #f3f2f5;
   padding: 10px 0px;
   position: relative;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 320px;
+  }
 `;
 
 const ItemHeader = styled.div`
