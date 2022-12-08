@@ -3,6 +3,7 @@ import React, { Suspense, useState } from 'react';
 import BoardHeader from '@components/board/BoardHeader';
 import BoardSkeleton from '@components/board/BoardSkeleton';
 import BoardList from '@components/board/BoardList';
+import SSRSafeSuspense from '@components/SSRSafeSuspense';
 // import dynamic from 'next/dynamic';
 
 export default function FreeBoard() {
@@ -17,9 +18,9 @@ export default function FreeBoard() {
   return (
     <BoardContainer>
       <BoardHeader setPage={setPage} page={page} category={'Free'} />
-      <Suspense fallback={<BoardSkeleton />}>
+      <SSRSafeSuspense fallback={<BoardSkeleton />}>
         <BoardList boardCategory={'free'} />
-      </Suspense>
+      </SSRSafeSuspense>
     </BoardContainer>
   );
 }
