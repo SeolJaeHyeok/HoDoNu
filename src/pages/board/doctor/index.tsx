@@ -1,23 +1,19 @@
 import BoardHeader from '@components/board/BoardHeader';
 import BoardSkeleton from '@components/board/BoardSkeleton';
 import styled from '@emotion/styled';
-import { Suspense, useState } from 'react';
-import dynamic from 'next/dynamic';
+import { useState } from 'react';
+import SSRSafeSuspense from '@components/SSRSafeSuspense';
+import BoardList from '@components/board/BoardList';
 
 export default function DoctorBoard() {
-  const BoardList = dynamic(() => import('@components/board/BoardList'), {
-    suspense: true,
-    ssr: false,
-  });
-
   const [page, setPage] = useState('1');
 
   return (
     <BoardContainer>
       <BoardHeader setPage={setPage} page={page} category={'Doctor'} />
-      <Suspense fallback={<BoardSkeleton />}>
+      <SSRSafeSuspense fallback={<BoardSkeleton />}>
         <BoardList boardCategory={'doctor'} />
-      </Suspense>
+      </SSRSafeSuspense>
     </BoardContainer>
   );
 }

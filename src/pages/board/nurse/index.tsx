@@ -1,23 +1,19 @@
 import BoardHeader from '@components/board/BoardHeader';
 import styled from '@emotion/styled';
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 import BoardSkeleton from '@components/board/BoardSkeleton';
-import dynamic from 'next/dynamic';
+import SSRSafeSuspense from '@components/SSRSafeSuspense';
+import BoardList from '@components/board/BoardList';
 
 export default function NurseBoard() {
-  const BoardList = dynamic(() => import('@components/board/BoardList'), {
-    suspense: true,
-    ssr: false,
-  });
-
   const [page, setPage] = useState('1');
 
   return (
     <BoardContainer>
       <BoardHeader setPage={setPage} page={page} category={'Nurse'} />
-      <Suspense fallback={<BoardSkeleton />}>
+      <SSRSafeSuspense fallback={<BoardSkeleton />}>
         <BoardList boardCategory={'nurse'} />
-      </Suspense>
+      </SSRSafeSuspense>
     </BoardContainer>
   );
 }
