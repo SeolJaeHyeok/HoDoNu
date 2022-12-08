@@ -12,10 +12,9 @@ import BoardListItem from './BoardListItem';
 
 interface BoardProps {
   boardCategory: CategoryType;
-  setPage: any;
 }
 
-export default function BoardList({ boardCategory, setPage }: BoardProps) {
+export default function BoardList({ boardCategory }: BoardProps) {
   const searchText = useRecoilValue<string>(searchDataAtom);
   const router = useRouter();
   const params = {
@@ -24,8 +23,16 @@ export default function BoardList({ boardCategory, setPage }: BoardProps) {
     sort: router.query.sort,
     search: searchText,
   };
+
   const { data: res } = useQuery(
-    ['board', 'free', router.query.sort, router.query.page, router.query.perPage, searchText],
+    [
+      'board',
+      boardCategory,
+      router.query.sort,
+      router.query.page,
+      router.query.perPage,
+      searchText,
+    ],
     () => {
       if (boardCategory === 'free') {
         return boardListApi.getAllFreeBoards(params);
@@ -49,9 +56,6 @@ export default function BoardList({ boardCategory, setPage }: BoardProps) {
 
   // Pagination - page!
   const handlePageNavigate = (pageNumber: number) => {
-    // Page 정렬 기준 설정
-    setPage(() => String(pageNumber + 1));
-
     // 해당 값으로 URL 변경
     router.push({
       query: {
@@ -78,6 +82,7 @@ export default function BoardList({ boardCategory, setPage }: BoardProps) {
       {res?.articles.map((article: ArticleProps) => (
         <BoardListItem key={article.articleId} boardCategory={boardCategory} {...article} />
       ))}
+
       <Pagination
         length={TOTAL_PAGE}
         start={router.query.page ? +router.query.page - 1 : 0}
@@ -94,3 +99,30 @@ const BoardListContainer = styled.div`
   align-items: center;
   flex-direction: column;
 `;
+
+// import styled from '@emotion/styled';
+// import { ArticleProps, CategoryType } from '@interfaces/board';
+
+// import BoardListItem from './BoardListItem';
+
+// interface BoardProps {
+//   boardCategory: CategoryType;
+//   articles: ArticleProps[];
+// }
+
+// export default function BoardList({ boardCategory, articles }: BoardProps) {
+//   return (
+//     <BoardListContainer>
+//       {articles?.map((article: ArticleProps) => (
+//         <BoardListItem key={article.articleId} boardCategory={boardCategory} {...article} />
+//       ))}
+//     </BoardListContainer>
+//   );
+// }
+
+// const BoardListContainer = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   flex-direction: column;
+// `;

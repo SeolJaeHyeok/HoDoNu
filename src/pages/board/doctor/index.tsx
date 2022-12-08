@@ -16,7 +16,7 @@ export default function DoctorBoard() {
     <BoardContainer>
       <BoardHeader setPage={setPage} page={page} category={'Doctor'} />
       <Suspense fallback={<BoardSkeleton />}>
-        <BoardList boardCategory={'doctor'} setPage={setPage} />
+        <BoardList boardCategory={'doctor'} />
       </Suspense>
     </BoardContainer>
   );
