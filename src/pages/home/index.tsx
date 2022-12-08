@@ -59,6 +59,9 @@ export default function Home() {
 
   return (
     <>
+      <Link href="/recruit">Recruit</Link>
+      <Link href="/board/free?page=1&perPage=5&sort=createdAt">BOard</Link>
+      <Link href="/recruit/12">Recruit Detail</Link>
       <MainCarouselContainer>
         <Carousel>
           <Link href={'#'}>

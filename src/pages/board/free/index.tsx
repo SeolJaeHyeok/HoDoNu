@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { Suspense, useState } from 'react';
+import React, { useState } from 'react';
 import BoardHeader from '@components/board/BoardHeader';
 import BoardSkeleton from '@components/board/BoardSkeleton';
 import BoardList from '@components/board/BoardList';
