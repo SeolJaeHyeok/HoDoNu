@@ -19,7 +19,7 @@
 <table>
   <tr>
     <td align="center">
-        <a href="https://github.com/milkboy2564" >
+        <a href="https://github.com/seoljaehyeok" >
             <img src="./public/assets/images/wellcheck.png"  width="100px" alt="설재혁"/><br />
             <sub>
                 <b>설재혁</b><br>
