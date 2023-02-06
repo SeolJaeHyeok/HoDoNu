@@ -1,0 +1,111 @@
+import React, { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Box, Button, Divider, Typography } from '@mui/material';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CustomModal from '@components/modal/CustomModal';
+import { Status } from '@interfaces/user/index';
+import FileUploader from '@components/recruit/FileUploader';
+import { FileProps } from '@interfaces/recruit';
+import useModal from '@hooks/useModal';
+import mypageApi from '@apis/mypage/articles';
+
+//authStatus : inActive, pending, active, reject
+export default function UserActiveCertificationModal({
+  status,
+  userId,
+}: {
+  status: Status;
+  userId: string;
+}) {
+  const userActiveCertificationModal = useModal('userActiveCertificationModal');
+  const [fileList, setFileList] = useState<FileProps[]>([]);
+  const queryClient = useQueryClient();
+
+  const updateFile = useMutation(mypageApi.postCertification, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['detailUser', userId]);
+      alert('성공적으로 등록되었습니다. ');
+      userActiveCertificationModal.closeModal();
+    },
+    onError: (e: any) => {
+      alert(e.response.data.message);
+    },
+  });
+
+  const handleUploadAuthFile = async (e: React.SyntheticEvent<HTMLElement>) => {
+    e.preventDefault();
+    const formData = new FormData();
+    if (fileList.length === 0) {
+      alert('파일을 선택해주세요.');
+    }
+    formData.append('certification', fileList[0].file!);
+    updateFile.mutate(formData);
+  };
+
+  const btnStyle = { boxShadow: 0, color: 'primary' };
+
+  return (
+    <CustomModal modal={userActiveCertificationModal} btnContent="회원인증하기" btnStyle={btnStyle}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <AdminPanelSettingsIcon sx={{ mr: 1 }} color="primary" />
+          <Typography fontSize={20}>회원 인증</Typography>
+        </Box>
+        <Divider textAlign="left" sx={{ width: '100%', my: 1 }}></Divider>
+        <Box sx={{ my: 1, py: 1 }}>
+          <Box sx={{ display: 'flex' }}>
+            <CheckCircleOutlineIcon sx={{ mr: 1 }} fontSize="small" color="primary" />
+            <Typography fontSize={15}>
+              사이트의 모든 기능을 이용하기 위해서는 의료인 인증이 필요합니다.
+            </Typography>
+          </Box>
+          <Box sx={{ display: 'flex' }}>
+            <CheckCircleOutlineIcon sx={{ mr: 1 }} fontSize="small" color="primary" />
+            <Typography fontSize={15}>
+              인증서류는 유저가 의료인임을 확인할 수 있는 서류 중 어느 것이든 제출 가능합니다.
+              <br />
+              (이미지 파일만 업로드 가능합니다.)
+            </Typography>
+          </Box>
+          <Box sx={{ display: 'flex' }}>
+            <CheckCircleOutlineIcon sx={{ mr: 1 }} fontSize="small" color="primary" />
+            <Typography fontSize={15}>
+              인증 결과는 해당 페이지에서 일주일 이내에 확인하실 수 있습니다.
+            </Typography>
+          </Box>
+        </Box>
+        <Box sx={{ my: 1, py: 1 }}>
+          {status === 'Pending' && (
+            <Box>
+              <Typography fontSize={15} color="#FF5353">
+                관리자가 인증서류를 확인중입니다.
+              </Typography>
+            </Box>
+          )}
+
+          {status === 'Reject' && (
+            <Box>
+              <Typography fontSize={15} color="#FF5353" sx={{ mb: 1 }}>
+                인증 서류가 거절되었습니다. 인증서류를 다시 제출해주세요.
+              </Typography>
+            </Box>
+          )}
+        </Box>
+        <Box>
+          <form onSubmit={handleUploadAuthFile}>
+            <FileUploader fileList={fileList} setFileList={setFileList} name="userAuth" />
+            <Button type="submit" variant="contained" sx={{ color: '#fff', width: '100%', mt: 1 }}>
+              인증서류 업로드하기
+            </Button>
+          </form>
+        </Box>
+        <Box sx={{ my: 1, py: 1 }}>
+          <Typography color="grey" fontStyle="oblique" fontSize={13}>
+            인증 서류는 회원 인증 서류로만 활용되며 이외의 목적으로 사용되지 않습니다.
+          </Typography>
+        </Box>
+      </Box>
+    </CustomModal>
+  );
+}
