@@ -12,10 +12,12 @@
 
 ## 🔗 Link
 
-☞ https://toy-project-web-green.vercel.app/home
+☞ [프로젝트 보러가기](https://toy-project-web-green.vercel.app/home)
 > Test 계정<br />
 id: admin@admin.com <br/>
-pw: 12345678
+pw: 12345678 <br />
+
+☞ [회고 보러가기](https://velog.io/@milkboy2564/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EB%A1%9C-%EB%B0%B0%EC%9A%B0%EB%8A%94-NextJS)
 
 ## 😀 구성원
 
