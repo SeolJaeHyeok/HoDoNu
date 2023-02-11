@@ -13,6 +13,9 @@
 ## 🔗 Link
 
 ☞ https://toy-project-web-green.vercel.app/home
+> Test 계정<br />
+id: admin@admin.com <br/>
+pw: 12345678
 
 ## 😀 구성원
 
