@@ -7,11 +7,6 @@
 
 ## Link
 
-> [서비스 Link](https://toy-project-web-green.vercel.app/home)<br/>
-> Test 계정
-    id: admin@admin.com
-    pw: 12345678
-
 [회고 Link](https://velog.io/@milkboy2564/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EB%A1%9C-%EB%B0%B0%EC%9A%B0%EB%8A%94-NextJS)
 
 ## 기술 스택
