@@ -21,7 +21,7 @@
     1. ESLint, Prettier, Husky 설정
     2. Convention 정의
 2. 게시판 목록 페이지
-    1. 단 하나의 state도 가지고 있지 않은 Pagination
+    1. Pagination
     2. 키보드 이동 및 자동 완성을 포함한 검색 기능
     3. Skeleton UI
 3. 관리자 페이지
